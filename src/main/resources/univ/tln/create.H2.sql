@@ -1,0 +1,29 @@
+create table USERACCOUNTS
+(
+    ID        INT auto_increment,
+    FIRSTNAME VARCHAR       not null,
+    LASTNAME  VARCHAR       not null,
+    USERNAME  VARCHAR       not null,
+    PASSWORD  VARCHAR(5000) not null,
+    ROLE      VARCHAR       not null,
+    constraint USERACCOUNTS_PK
+        primary key (ID)
+);
+
+create unique index USERACCOUNTS_ID_UINDEX
+    on USERACCOUNTS (ID);
+
+create unique index USERACCOUNTS_USERNAME_UINDEX
+    on USERACCOUNTS (USERNAME);
+
+insert INTO USERACCOUNTS (FIRSTNAME, LASTNAME, Username, PASSWORD,ROLE) VALUES ( 'NEO' ,'ANDERSON','MATRIX','ABCD','PROF');
+insert INTO USERACCOUNTS (FIRSTNAME, LASTNAME, Username, PASSWORD,ROLE) VALUES ( 'UHG' ,'DDD','FFF','VDS','ETU' );
+
+insert INTO USERACCOUNTS (FIRSTNAME, LASTNAME, USERNAME, PASSWORD,ROLE) VALUES ( 'abc' ,'bbbb','cccc','dddd','RES' );
+
+
+SELECT  count(1) from USERACCOUNTS where USERNAME= 'cccc' AND PASSWORD = HASH('SHA256', 'dddd', 1000);
+
+UPDATE USERACCOUNTS SET PASSWORD = HASH('SHA256', PASSWORD, 1000);
+
+SELECT count(1) from USERACCOUNTS where USERNAME= 'MATRIX' AND PASSWORD = HASH('SHA256', 'ABCD', 1000);

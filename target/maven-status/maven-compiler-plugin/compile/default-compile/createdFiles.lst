@@ -1,0 +1,14 @@
+univ\tln\utilisateurs\Utilisateur.class
+univ\tln\groupes\Groupe.class
+univ\tln\SecondaryController.class
+univ\tln\creneaux\Cours.class
+univ\tln\utilisateurs\Enseignant.class
+univ\tln\utilisateurs\Responsable.class
+univ\tln\database\DbManager.class
+univ\tln\salles\Salle.class
+module-info.class
+univ\tln\filieres\Filiere.class
+univ\tln\creneaux\Creneau.class
+univ\tln\utilisateurs\Etudiant.class
+univ\tln\PrimaryController.class
+univ\tln\App.class
