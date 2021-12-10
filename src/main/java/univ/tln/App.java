@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,44 +17,39 @@ import java.util.Properties;
  * JavaFX App
  */
 public class App extends Application {
-
     protected static final Properties properties = new Properties();
 
-    static void loadProperties(String propFileName) throws IOException {
+    public static void loadProperties(String propFileName) throws IOException {
         InputStream inputstream = App.class.getClassLoader().getResourceAsStream(propFileName);
         if (inputstream == null) throw new FileNotFoundException();
         properties.load(inputstream);
     }
 
-    static void configureLogger() {
+    public static void configureLogger() {
+        //Regarder src/main/ressources/logging.properties pour fixer le niveau de log
         String path;
         path = Objects.requireNonNull(App.class
-                .getClassLoader()
-                .getResource("logging.properties"))
+                        .getClassLoader()
+                        .getResource("logging.properties"))
                 .getFile();
         System.setProperty("java.util.logging.config.file", path);
     }
 
-    public static String getProperty(String s) {
-        return properties.getProperty(s);
-    }
 
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        Parent root = FXMLLoader.load(App.class.getResource("hello-view.fxml"));
+        stage.initStyle(StageStyle.UNDECORATED);
+        Scene scene = new Scene(root, 540, 400);
         stage.setScene(scene);
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+    public static String getProperty(String s) {
+        return properties.getProperty(s);
     }
 
     public static void main(String[] args) {
