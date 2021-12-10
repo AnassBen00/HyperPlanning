@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.LoginController">
+   <left>
+      <AnchorPane prefHeight="407.0" prefWidth="228.0" style="-fx-background-color: #3F2B63;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="1.0" layoutY="162.0" prefHeight="0.0" prefWidth="227.0" text="Bien plus que le planning!" textFill="WHITE">
+               <font>
+                  <Font name="Rasa" size="15.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect></Label>
+            <Label alignment="CENTER" layoutX="1.0" layoutY="91.0" prefHeight="0.0" prefWidth="227.0" text="HyperPlanning" textFill="WHITE">
+               <font>
+                  <Font name="Yrsa SemiBold" size="30.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <Line endX="100.0" layoutX="114.0" layoutY="147.0" startX="-100.0" stroke="#391616" />
+            <Label alignment="CENTER" layoutX="15.0" layoutY="363.0" prefHeight="0.0" prefWidth="227.0" text="Copyright (c). All Rights Reserved" textFill="WHITE">
+               <font>
+                  <Font name="Rasa" size="12.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <ImageView fitHeight="48.0" fitWidth="52.0" layoutX="15.0" layoutY="14.0">
+               <image>
+                  <Image url="file:/home/youness/Hyper-Planning/src/main/resources/univ/tln/H.jpeg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="400.0" prefWidth="332.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="24.0" layoutY="78.0" prefHeight="0.0" prefWidth="227.0" text="Secure Login" textFill="#1a0b43">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </Label>
+            <Label alignment="CENTER" layoutX="7.0" layoutY="147.0" prefHeight="18.0" prefWidth="82.0" text="Usernae" textFill="#575757">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </Label>
+            <Label alignment="CENTER" layoutX="8.0" layoutY="202.0" prefHeight="18.0" prefWidth="81.0" text="Password" textFill="#575757">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <effect>
+                  <InnerShadow />
+               </effect>
+            </Label>
+            <TextField fx:id="usernametxt" layoutX="105.0" layoutY="141.0" promptText="Username" />
+            <PasswordField fx:id="passwrdtxt" layoutX="105.0" layoutY="196.0" promptText="Password" />
+            <Button fx:id="loginbtn" layoutX="30.0" layoutY="257.0" mnemonicParsing="false" onAction="#loginbuttononaction" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: #3F2B63;" text="Login" textFill="WHITE" />
+            <Button fx:id="cancelbtn" layoutX="30.0" layoutY="305.0" mnemonicParsing="false" onAction="#cancelbtnOnAction" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: #3F2B63;" text="Cancel" textFill="WHITE" />
+            <ImageView fitHeight="31.0" fitWidth="134.0" layoutX="9.0" layoutY="14.0">
+               <image>
+                  <Image url="file:/home/youness/Hyper-Planning/src/main/resources/univ/tln/univ.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="loginmessage" alignment="CENTER" layoutX="6.0" layoutY="107.0" prefHeight="18.0" prefWidth="255.0" textFill="#ff0909" />
+         </children></AnchorPane>
+   </right>
+</BorderPane>
