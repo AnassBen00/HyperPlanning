@@ -53,7 +53,7 @@ public class LoginController extends Application {
         stage.close();
     }
 
-  public void validatelogin(){
+  public void validatelogin(){ // on verifie le login
         DatabaseConnection connection = new DatabaseConnection();
         Connection connection1 = connection.connectDB();
         String prof ="PROF";
@@ -94,7 +94,7 @@ public class LoginController extends Application {
         }
     }
 
-    public void switchtomanagerscene()  {
+    public void switchtomanagerscene()  { // on change l'ecran si c'est bon
 
         try {
             Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));

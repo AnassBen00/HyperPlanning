@@ -41,15 +41,15 @@ public class Controller implements Initializable {
     int max_cours = 60;
     private String[][] creneau= new String[max_cours][7];
     @FXML
-    private AnchorPane scene1 ;
+    private AnchorPane scene1 ; //le planning
     @FXML
-    private AnchorPane scene2 ;
+    private AnchorPane scene2 ; //la partie pour modifier ajouter
     @FXML
-    private AnchorPane scene3 ;
+    private AnchorPane scene3 ; //le compte
     @FXML
-    private AnchorPane scene4 ;
+    private AnchorPane scene4 ; //les parametre
     @FXML
-    private AnchorPane scene5 ;
+    private AnchorPane scene5 ; //l'abcenses
     @FXML
     private Button btnaccount;
     @FXML
@@ -102,10 +102,10 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXMLLoader loader =new FXMLLoader(App.class.getResource("hello-view.fxml"));
 
-        System.out.println(LoginController.user1 + "++++++++++");
+        //System.out.println(LoginController.user1 + "++++++++++");
         castdatetime();
         try {
-            drawrect();
+            drawrect(); //on dessine l'emploie du temps
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -113,7 +113,7 @@ public class Controller implements Initializable {
         setcalendar();
     }
 
-public void handleclicks (ActionEvent e){
+public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
     if(e.getSource()==btnaccount){
         lblstatus.setText("Account");
@@ -159,23 +159,23 @@ public void handleclicks (ActionEvent e){
     @FXML
     Group group = new Group();
 
-    public double houretopxl(double a ){return (a-8)*45.9+47;} //fonction qui donne le pixel de l'heure
+    public double houretopxl(double a ){return (a-8)*45.9+47;} //fonction qui donne le pixel exact de l'heure
 
-    public int datetopxl(int a ){return (a-2)*126+125;} // fonction qui retourne le pixel de la date
+    public int datetopxl(int a ){return (a-2)*126+125;} // fonction qui retourne le pixel exact de la date
 
-    public Calendar getmonday(){
+    public Calendar getmonday(){ //retoune le lundi de cette semaine
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         return c;
     }
-    public Calendar getsunday(){
+    public Calendar getsunday(){ // retourne le dimache
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
         c.add(Calendar.DATE, 7);
         return c;
     }
 
-    public void setcalendar(){
+    public void setcalendar(){ //pour afficher les dates sous les jours
         Label Tlabel[]=new Label[7];
         Tlabel[0]= idlundi;
         Tlabel[1]=idmardi;
@@ -197,7 +197,7 @@ public void handleclicks (ActionEvent e){
 
     }
 
-    public void castdatetime() { //fonction qui remplie une liste des creneaux
+    public void castdatetime() { //fonction qui remplie une liste des creneaux d'une semaine
          i = 0;
         DatabaseConnection connection = new DatabaseConnection();
         Connection connection1 = connection.connectDB();
@@ -206,8 +206,8 @@ public void handleclicks (ActionEvent e){
         try {
 
             Statement statement = connection1.createStatement();
-            PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
-            //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
 
             pstmt.setString(1,LoginController.user1);
             name.setText("User: "+LoginController.user1);
@@ -238,7 +238,7 @@ public void handleclicks (ActionEvent e){
 
 
         @FXML
-    public void drawrect() throws ParseException { //fonction qui dessine
+    public void drawrect() throws ParseException { //fonction qui dessine l'emlpoie du temps
 
 
 

@@ -5,6 +5,7 @@ module univ.tln {
     requires static lombok;
     requires com.h2database;
     requires commons.dbcp2;
+    requires java.management;
 
     opens univ.tln to javafx.fxml;
     exports univ.tln;
