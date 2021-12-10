@@ -66,7 +66,7 @@
                <children>
                   <ImageView fitHeight="645.0" fitWidth="1007.0">
                      <image>
-                        <Image url="file:/home/youness/Hyper-Planning/src/main/resources/univ/tln/planning.png" />
+                        <Image url="@planning.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="idlundi" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="28.0" text="06/12/2021" />
@@ -86,7 +86,7 @@
                <children>
                   <ImageView fitHeight="58.0" fitWidth="59.0" layoutX="22.0" layoutY="26.0">
                      <image>
-                        <Image url="file:/home/youness/Hyper-Planning/src/main/resources/univ/tln/H.jpeg" />
+                        <Image url="@H.jpeg" />
                      </image>
                   </ImageView>
                   <Text fill="WHITE" layoutX="87.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ypper">
@@ -102,7 +102,7 @@
                   <Line endX="100.0" layoutX="123.0" layoutY="176.0" startX="-100.0" stroke="#110e0e" />
                </children>
             </Pane>
-            <Button fx:id="btnplanning" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="file:/home/youness/Hyper-Planning/src/main/resources/univ/tln/styes.css" text="Planning" textFill="WHITE">
+            <Button fx:id="btnplanning" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Planning" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -110,7 +110,7 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnmodify" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="file:/home/youness/Hyper-Planning/src/main/resources/univ/tln/styes.css" text="Modify" textFill="WHITE">
+            <Button fx:id="btnmodify" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Modify" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -118,7 +118,7 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnaccount" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="file:/home/youness/Hyper-Planning/src/main/resources/univ/tln/styes.css" text="Account" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="btnaccount" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Account" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -126,7 +126,7 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnsettings" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="file:/home/youness/Hyper-Planning/src/main/resources/univ/tln/styes.css" text="Settings" textFill="WHITE">
+            <Button fx:id="btnsettings" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Settings" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -147,7 +147,7 @@
                   <Label layoutX="13.0" layoutY="334.0" text="Copyright (c). All Rights Reserved" textFill="WHITE" />
                   <ImageView fitHeight="79.0" fitWidth="200.0" layoutX="21.0" layoutY="197.0">
                      <image>
-                        <Image url="file:/home/youness/Hyper-Planning/src/main/resources/univ/tln/test.jpg" />
+                        <Image url="@test.jpg" />
                      </image>
                   </ImageView>
                </children>
