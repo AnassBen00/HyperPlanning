@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DBCPDataSource {
+
     private static BasicDataSource ds = new BasicDataSource();
 
     static {
@@ -17,6 +18,9 @@ public class DBCPDataSource {
         ds.setMinIdle(5);
         ds.setMaxIdle(10);
         ds.setMaxOpenPreparedStatements(100);
+    }
+
+    private DBCPDataSource() {
     }
 
     public static Connection getConnection() throws SQLException {
