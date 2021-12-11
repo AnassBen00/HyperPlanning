@@ -3,6 +3,7 @@ package univ.tln.entities.utilisateurs;
 import lombok.Getter;
 
 public class Etudiant extends Utilisateur{
+
     @Getter
     private String id;
 

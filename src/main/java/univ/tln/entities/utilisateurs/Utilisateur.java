@@ -1,9 +1,12 @@
 package univ.tln.entities.utilisateurs;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-public abstract class Utilisateur {
+@NoArgsConstructor
+public class Utilisateur {
 
     @Getter
     @Setter

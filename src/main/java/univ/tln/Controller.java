@@ -2,6 +2,10 @@ package univ.tln;
 
 
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +24,9 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import univ.tln.daos.EtudiantDAO;
+import univ.tln.entities.utilisateurs.Etudiant;
 
 import java.net.URL;
 import java.sql.*;
@@ -35,9 +42,6 @@ import java.util.*;
 
 public class Controller implements Initializable {
     public int i ;
-    private Stage stage;
-    private Scene scene;
-    private Parent root ;
     int max_cours = 60;
     private String[][] creneau= new String[max_cours][7];
     @FXML
@@ -84,25 +88,18 @@ public class Controller implements Initializable {
 
     @FXML
     private Label idvendredi;
+
     @FXML
     private TableView listEtudiantId;
 
-
     @FXML
     private Label name;
-
-    @FXML
-    private Label role;
-
-    private static String username;
 
 
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXMLLoader loader =new FXMLLoader(App.class.getResource("hello-view.fxml"));
-
-        //System.out.println(LoginController.user1 + "++++++++++");
         castdatetime();
         try {
             drawrect(); //on dessine l'emploie du temps
@@ -121,8 +118,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene3.toFront();
     }
-    else
-    if(e.getSource()==btnmodify){
+    else if(e.getSource()==btnmodify){
         lblstatus.setText("Modify");
         lblstatusmini.setText("/home/modify");
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
@@ -141,20 +137,45 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         scene4.toFront();
     }
     else if(e.getSource()==btnabsences){
-
-        lblstatus.setText("Absences");
-        lblstatusmini.setText("/home/absences");
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene5.toFront();
+        lblstatus.setText("Absences");
+        lblstatusmini.setText("/home/absences");
 
+        TableColumn<Map.Entry<String, String>, String> column1 = new TableColumn<>("Fist name");
+        column1.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
 
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
+                // for first column
+                return new SimpleStringProperty(p.getValue().getKey());
+            }
+        });
+
+        TableColumn<Map.Entry<String, String>, String> column2 = new TableColumn<>("Last name");
+        column2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
+
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
+                // for second column
+                return new SimpleStringProperty(p.getValue().getValue());
+            }
+        });
+
+        ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
+        listEtudiantId.setItems(items);
+        listEtudiantId.getColumns().setAll(column1, column2);
     }
-
-
 }
 
-
-
+    public Map<String,String> afficherEtudiants(){
+        Map <String,String> etudiants = new TreeMap<>() {};
+        EtudiantDAO etudiantDAO = new EtudiantDAO();
+        for(Etudiant etudiant : etudiantDAO.findall()) {
+            etudiants.put(etudiant.getNom(), etudiant.getPrenom());
+        }
+        return etudiants;
+    }
 
     @FXML
     Group group = new Group();
@@ -249,14 +270,10 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-       // System.out.println(now.get());
-
-
         Label cours = new Label();
 
         Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][0]);
         Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);
-        //System.out.println(date1);
         x.setTime(date1);
         int dayOfWeek = x.get(x.DAY_OF_WEEK);
         datetopxl(dayOfWeek);
@@ -286,7 +303,6 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         else if(creneau[r][6].trim().equals("CM"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
 
         scene1.getChildren().add(cours);
-        //scene1.getChildren().addAll(t);
     }
 
     }
