@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import univ.tln.daos.EnseignantDAO;
 
 import java.io.IOException;
 import java.net.URL;
@@ -54,32 +55,15 @@ public class LoginController extends Application {
     }
 
   public void validatelogin(){ // on verifie le login
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection connection1 = connection.connectDB();
-        String prof ="PROF";
-        String etud="ETU";
-        String res="RES";
-            //if(getuser(username.txt,password.tx) == true switchtomanagerscene();
-        String verifylogin=  "SELECT  count(1) from UTILISATEUR where LOGIN= '"+usernametxt.getText()+"' AND PASSWORD = HASH('SHA256','"+passwrdtxt.getText()+"',1000)";
 
-          LoginController.user1= String.valueOf(usernametxt.getText());
+      EnseignantDAO enseignantDAO = new EnseignantDAO();
 
-      System.out.println(getUsernametxt()+"wtffffffffff");
-        try {
-            Statement statement = connection1.createStatement();
-            Statement statement2 = connection1.createStatement();
-            ResultSet queryResult = statement.executeQuery(verifylogin);
+      if(enseignantDAO.checkEnseignant(usernametxt.getText() , passwrdtxt.getText())) {
+          switchtomanagerscene();
+      } else {
+          loginmessage.setText("invalid try again");
+      }
 
-            while ((queryResult.next())){
-                if( queryResult.getInt(1)==1){
-                    switchtomanagerscene();
-
-                }else loginmessage.setText("invalid try again");
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML

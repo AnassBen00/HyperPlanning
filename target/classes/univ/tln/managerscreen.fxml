@@ -56,8 +56,6 @@
                   </Label>
                   <TableView fx:id="listEtudiantId" prefHeight="647.0" prefWidth="1007.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
                     </columns>
                   </TableView>
                </children>
