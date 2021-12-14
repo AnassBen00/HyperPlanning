@@ -13,17 +13,13 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.entities.utilisateurs.Etudiant;
@@ -40,7 +36,7 @@ import java.util.*;
 
 //import static univ.tln.LoginController.getUsernametxt;
 
-public class Controller implements Initializable {
+public class StudentController implements Initializable {
     public int i ;
     int max_cours = 60;
     private String[][] creneau= new String[max_cours][7];

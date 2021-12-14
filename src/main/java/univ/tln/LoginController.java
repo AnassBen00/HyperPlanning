@@ -102,7 +102,7 @@ public class LoginController extends Application {
     public void switchtostudentscene()  { // on change l'ecran si c'est bon
 
         try {
-            Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
+            Parent root = FXMLLoader.load(App.class.getResource("studentscreen.fxml"));
 
             Stage managerstage = new Stage();
 
@@ -122,7 +122,7 @@ public class LoginController extends Application {
     public void switchtoteacherscene()  { // on change l'ecran si c'est bon
 
         try {
-            Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
+            Parent root = FXMLLoader.load(App.class.getResource("teacherscrenn.fxml"));
 
             Stage managerstage = new Stage();
 
