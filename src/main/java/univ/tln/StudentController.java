@@ -43,23 +43,17 @@ public class StudentController implements Initializable {
     @FXML
     private AnchorPane scene1 ; //le planning
     @FXML
-    private AnchorPane scene2 ; //la partie pour modifier ajouter
-    @FXML
     private AnchorPane scene3 ; //le compte
     @FXML
     private AnchorPane scene4 ; //les parametre
-    @FXML
-    private AnchorPane scene5 ; //l'abcenses
+
     @FXML
     private Button btnaccount;
-    @FXML
-    private Button btnmodify;
+
     @FXML
     private Button btnplanning;
     @FXML
     private Button btnsettings;
-    @FXML
-    private Button btnabsences;
     @FXML
     private Label lblstatus;
     @FXML
@@ -114,12 +108,6 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene3.toFront();
     }
-    else if(e.getSource()==btnmodify){
-        lblstatus.setText("Modify");
-        lblstatusmini.setText("/home/modify");
-        btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
-        scene2.toFront();
-    }
     else if(e.getSource()==btnplanning){
         lblstatus.setText("Planning");
         lblstatusmini.setText("/home/planning");
@@ -132,46 +120,10 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene4.toFront();
     }
-    else if(e.getSource()==btnabsences){
-        btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
-        scene5.toFront();
-        lblstatus.setText("Absences");
-        lblstatusmini.setText("/home/absences");
 
-        TableColumn<Map.Entry<String, String>, String> column1 = new TableColumn<>("Fist name");
-        column1.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
-
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
-                // for first column
-                return new SimpleStringProperty(p.getValue().getKey());
-            }
-        });
-
-        TableColumn<Map.Entry<String, String>, String> column2 = new TableColumn<>("Last name");
-        column2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
-
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
-                // for second column
-                return new SimpleStringProperty(p.getValue().getValue());
-            }
-        });
-
-        ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
-        listEtudiantId.setItems(items);
-        listEtudiantId.getColumns().setAll(column1, column2);
-    }
 }
 
-    public Map<String,String> afficherEtudiants(){
-        Map <String,String> etudiants = new TreeMap<>() {};
-        EtudiantDAO etudiantDAO = new EtudiantDAO();
-        for(Etudiant etudiant : etudiantDAO.findall()) {
-            etudiants.put(etudiant.getNom(), etudiant.getPrenom());
-        }
-        return etudiants;
-    }
+
 
     @FXML
     Group group = new Group();

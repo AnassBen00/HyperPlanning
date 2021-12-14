@@ -63,11 +63,11 @@ public class LoginController extends Application {
       ResponsableDao responsableDao = new ResponsableDao();
 
       if(enseignantDAO.checkEnseignant(usernametxt.getText() , passwrdtxt.getText())) {
-          System.out.println("je suis etudiant");
+          System.out.println("je suis enseignant");
           user1=usernametxt.getText();
           switchtoteacherscene();
       } else if (etudiantDAO.checkEtudiant(usernametxt.getText() , passwrdtxt.getText())){
-          System.out.println("je suis enseignant");
+          System.out.println("je suis etudiant");
           user1 = usernametxt.getText();
           switchtostudentscene();
       } else if (responsableDao.checkResponsable(usernametxt.getText() , passwrdtxt.getText())) {

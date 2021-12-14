@@ -4,7 +4,6 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -108,14 +107,6 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnmodify" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Modify" textFill="WHITE">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Button>
             <Button fx:id="btnaccount" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Account" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
@@ -125,14 +116,6 @@
                </font>
             </Button>
             <Button fx:id="btnsettings" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Settings" textFill="WHITE">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnabsences" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Abcenses" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
