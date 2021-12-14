@@ -9,7 +9,7 @@ public class DatabaseConnection {
     public Connection conn ;
     public Connection connectDB() {
         try {
-            conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "123");
+            conn = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "root");
 
         } catch (SQLException e) {
             e.printStackTrace();

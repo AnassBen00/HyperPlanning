@@ -1,29 +1,3 @@
-drop table RESPONSABLE;
-
-drop table COURS_FILIERE;
-
-drop table GROUP_COURS;
-
-drop table COURS;
-
-drop table ENSEIGNANT;
-
-drop table GROUP_FILIERE;
-
-drop table CRENEAUX;
-
-drop table SALLE;
-
-drop table GROUPE;
-
-drop table ETUDIANT;
-
-drop table UTILISATEUR;
-
-drop table FILIERE;
-
-
-
 create table if not exists  UTILISATEUR
 (
     LOGIN    CHAR(15) not null,
@@ -105,6 +79,17 @@ CREATE TABLE if not exists COURS (
                                      CONSTRAINT COURS_U unique (ID_C)
 );
 
+CREATE TABLE if not exists COURS_FILIERE(
+                                            ID_C CHAR(15) not null ,
+                                            ID_F INT not null ,
+                                            TAUX_H NUMERIC(6,2),
+                                            constraint COURS_FILIERE_PK
+                                                primary key (ID_C,ID_F),
+                                            constraint COURS_FILIERE_FK1
+                                                foreign key (ID_C) references COURS(ID_C),
+                                            constraint COURS_FILIERE_FK2
+                                                foreign key (ID_F) references FILIERE(ID_F)
+);
 
 CREATE TABLE if not exists GROUPE (
                                       ID_G INT not null ,
@@ -118,16 +103,23 @@ CREATE TABLE if not exists GROUPE (
 CREATE TABLE if not exists GROUP_COURS (
                                            ID_G INT not null,
                                            ID_C INT,
-                                           ID_F INT,
-                                           TAUX_H NUMERIC(6,2),
                                            constraint GROUP_COURS_PK
-                                               primary key (ID_G,ID_C),
+                                               primary key (ID_G),
                                            constraint GROUP_COURS_FK1
                                                foreign key  (ID_G) references GROUPE(ID_G),
                                            constraint GROUP_COURS_FK2
-                                               foreign key  (ID_C) references COURS(ID_C),
-                                            CONSTRAINT FK_F
-                                                FOREIGN KEY (ID_F) REFERENCES FILIERE(ID_F)
+                                               foreign key  (ID_C) references COURS(ID_C)
+);
+
+CREATE TABLE if not exists GROUP_FILIERE(
+                                            ID_G INT,
+                                            ID_F INT,
+                                            constraint GROUP_FILIERE_PK
+                                                primary key (ID_G),
+                                            constraint GROUP_FILIERE_FK1
+                                                foreign key  (ID_G) references GROUPE(ID_G),
+                                            constraint GROUP_FILIERE_FK2
+                                                foreign key  (ID_F) references FILIERE(ID_F)
 );
 
 create table if not exists CRENEAUX
@@ -136,14 +128,12 @@ create table if not exists CRENEAUX
     DATE_F DATETIME,
     ID_S   int not null,
     ID_G INT      not null,
-    ID_C int,
     constraint CRENAUX_PK
         primary key (DATE_D, ID_S, ID_G),
     constraint CRENAUX_GROUPE_ID_G_FK
         foreign key (ID_G) references GROUPE (ID_G),
     constraint CRENAUX_SALLE_ID_FK
-        foreign key (ID_S) references SALLE(ID_S),
-
+        foreign key (ID_S) references SALLE(ID_S)
 );
 
 
@@ -165,16 +155,14 @@ insert into COURS(LOGIN, nature, nom) values ( 'FFF','TD','LINUX' );
 insert into COURS_FILIERE (id_c, id_f, taux_h) values ( 1,1,22.5 );
 insert into GROUPE(ID_G,LOGIN) values (1,'MATRIX');
 insert into GROUP_COURS(ID_G, ID_C) values ( 1,1 ) ;
-insert into GROUP_COURS(ID_G, ID_C) values ( 1,2 ) ;
-insert into GROUP_COURS(ID_G, ID_C) values ( 1,3 ) ;
 INSERT INTO CRENEAUX (DATE_D, DATE_F, ID_S, ID_G) VALUES ( '2021-12-15 09:45:23.000000
 ','2021-12-15 12:30:00.000000',1,1);
 INSERT INTO CRENEAUX (DATE_D, DATE_F, ID_S, ID_G) VALUES ( '2021-12-16 09:00:00.000000
 ','2021-12-16 10:15:00.000000',1,1);
-INSERT INTO CRENEAUX (DATE_D, DATE_F, ID_S, ID_G) VALUES ( '2021-12-15 13:30:23.000000
-','2021-12-15 17:30:00.000000',2,1);
+INSERT INTO CRENEAUX (DATE_D, DATE_F, ID_S, ID_G) VALUES ( '2021-12-15 08:45:23.000000
+','2021-12-15 11:30:00.000000',2,1);
 INSERT INTO CRENEAUX (DATE_D, DATE_F, ID_S, ID_G) VALUES ( '2021-12-16 12:00:00.000000
-','2021-12-16 15:15:00.000000',3,1);
+','2021-12-16 16:15:00.000000',3,1);
 
 
 UPDATE UTILISATEUR SET PASSWORD = HASH('SHA256', PASSWORD, 1000);
@@ -186,3 +174,5 @@ where LOGIN ='FFF' AND DATE_D>='2021-12-15 09:45:23.000000' AND DATE_F <='2021-1
 select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on CRENEAUX.ID_G = GROUPE.ID_G
 where GROUPE.LOGIN ='cccc' AND DATE_D>='2021-12-15 09:45:23.000000' AND DATE_F <='2021-12-15 09:45:23.000000';/*GET SYSTEM DATE calender get monday =<0*/
 
+//ET SYSTEM DATE calender get monday =<0
+SELECT  count(1) from UTILISATEUR join RESPONSABLE on (UTILISATEUR.LOGIN = RESPONSABLE.LOGIN) where LOGIN= '"MATRIX"' AND PASSWORD = HASH('SHA256','"ABCD"',1000)
