@@ -1,3 +1,27 @@
+drop table RESPONSABLE;
+
+drop table COURS_FILIERE;
+
+drop table GROUP_COURS;
+
+drop table COURS;
+
+drop table ENSEIGNANT;
+
+drop table GROUP_FILIERE;
+
+drop table CRENEAUX;
+
+drop table SALLE;
+
+drop table GROUPE;
+
+drop table ETUDIANT;
+
+drop table UTILISATEUR;
+
+drop table FILIERE;
+
 
 create table if not exists  UTILISATEUR
 (
@@ -139,10 +163,10 @@ create table if not exists CRENEAUX
 
 
 insert INTO UTILISATEUR (NOM, PRENOM, LOGIN, PASSWORD) VALUES ( 'NEO' ,'ANDERSON','MATRIX','ABCD');
-insert INTO UTILISATEUR (NOM, PRENOM, LOGIN, PASSWORD) VALUES ( 'UHG' ,'DDD','FFF','VDS' );
+insert INTO UTILISATEUR (NOM, PRENOM, LOGIN, PASSWORD) VALUES ( 'YOUNESS' ,'DDD','FFF','VDS' );
 
 
-insert INTO UTILISATEUR (NOM, PRENOM, LOGIN, PASSWORD) VALUES ( 'abc' ,'bbbb','cccc','dddd' );
+insert INTO UTILISATEUR (NOM, PRENOM, LOGIN, PASSWORD) VALUES ( 'AHMED' ,'bbbb','cccc','dddd' );
 insert into RESPONSABLE (login)values ( 'cccc' );
 insert into ENSEIGNANT(login)values('FFF');
 insert into FILIERE(NOM) values ( 'DID' );
@@ -175,6 +199,6 @@ where LOGIN ='FFF' AND DATE_D>='2021-12-15 09:45:23.000000' AND DATE_F <='2021-1
 select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on CRENEAUX.ID_G = GROUPE.ID_G
 where GROUPE.LOGIN ='cccc' AND DATE_D>='2021-12-15 09:45:23.000000' AND DATE_F <='2021-12-15 09:45:23.000000';/*GET SYSTEM DATE calender get monday =<0*/
 
-SELECT  count(1) from UTILISATEUR join RESPONSABLE on (UTILISATEUR.LOGIN = RESPONSABLE.LOGIN) where LOGIN= '"MATRIX"' AND PASSWORD = HASH('SHA256','"ABCD"',1000)
+SELECT  count(1) from UTILISATEUR join RESPONSABLE on (UTILISATEUR.LOGIN = RESPONSABLE.LOGIN) where RESPONSABLE.LOGIN= '"MATRIX"' AND PASSWORD = HASH('SHA256','"ABCD"',1000);
 
 select nom from UTILISATEUR where login = 'FFF';

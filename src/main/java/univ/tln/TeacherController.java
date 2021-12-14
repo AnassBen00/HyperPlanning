@@ -13,6 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -20,10 +22,12 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.entities.utilisateurs.Etudiant;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.text.DateFormat;
@@ -68,22 +72,43 @@ public class TeacherController implements Initializable {
     private Label iddimanche;
 
     @FXML
+    private Label iddimanche1;
+
+    @FXML
     private Label idjeudi;
+
+    @FXML
+    private Label idjeudi1;
 
     @FXML
     private Label idlundi;
 
     @FXML
+    private Label idlundi1;
+
+    @FXML
     private Label idmardi;
+
+    @FXML
+    private Label idmardi1;
 
     @FXML
     private Label idmercredi;
 
     @FXML
+    private Label idmercredi1;
+
+    @FXML
     private Label idsamedi;
 
     @FXML
+    private Label idsamedi1;
+
+    @FXML
     private Label idvendredi;
+
+    @FXML
+    private Label idvendredi1;
 
     @FXML
     private TableView listEtudiantId;
@@ -91,6 +116,10 @@ public class TeacherController implements Initializable {
     @FXML
     private Label name;
 
+    @FXML
+    private Label messageinstruction;
+    @FXML
+    private Label role;
 
     @Override
     @FXML
@@ -99,11 +128,13 @@ public class TeacherController implements Initializable {
         castdatetime();
         try {
             drawrect(); //on dessine l'emploie du temps
+            drawrect2();
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         setcalendar();
+        setcalendar2();
     }
 
 public void handleclicks (ActionEvent e){ //pour changer l'ecran
@@ -111,24 +142,28 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
     if(e.getSource()==btnaccount){
         lblstatus.setText("Account");
         lblstatusmini.setText("/home/account");
+        messageinstruction.setText("");
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene3.toFront();
     }
     else if(e.getSource()==btnmodify){
         lblstatus.setText("Modify");
         lblstatusmini.setText("/home/modify");
+        messageinstruction.setText("Cliquer sur le creneaux que vous voulez modifier ");
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene2.toFront();
     }
     else if(e.getSource()==btnplanning){
         lblstatus.setText("Planning");
         lblstatusmini.setText("/home/planning");
+        messageinstruction.setText("");
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene1.toFront();
     }
     else if(e.getSource()==btnsettings){
         lblstatus.setText("Settings");
         lblstatusmini.setText("/home/settings");
+        messageinstruction.setText("");
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene4.toFront();
     }
@@ -136,6 +171,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene5.toFront();
         lblstatus.setText("Absences");
+        messageinstruction.setText("");
         lblstatusmini.setText("/home/absences");
 
         TableColumn<Map.Entry<String, String>, String> column1 = new TableColumn<>("Fist name");
@@ -210,8 +246,25 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
             Tlabel[i].setTextFill(Color.rgb(255, 255, 255));
             c.add(Calendar.DATE, 1);
         }
-
-
+    }
+    public void setcalendar2(){ //pour afficher les dates sous les jours
+        Label Tlabel[]=new Label[7];
+        Tlabel[0]= idlundi1;
+        Tlabel[1]=idmardi1;
+        Tlabel[2]=idmercredi1;
+        Tlabel[3]=idjeudi1;
+        Tlabel[4]=idvendredi1;
+        Tlabel[5]=idsamedi1;
+        Tlabel[6]=iddimanche1;
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        for (int i = 0; i < 7; i++) {
+            Tlabel[i].setText(df.format(c.getTime()));
+            Tlabel[i].setTextAlignment(TextAlignment.CENTER);
+            Tlabel[i].setTextFill(Color.rgb(255, 255, 255));
+            c.add(Calendar.DATE, 1);
+        }
     }
 
     public void castdatetime() { //fonction qui remplie une liste des creneaux d'une semaine
@@ -227,7 +280,8 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
             //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             //System.out.println(LoginController.user1);
             pstmt.setString(1,LoginController.user1);
-            name.setText("User: "+LoginController.user1);
+            name.setText("Login: "+LoginController.user1);
+            role.setText("Name : "+LoginController.name1);
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday().getTime())));
@@ -257,11 +311,6 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
         @FXML
     public void drawrect() throws ParseException { //fonction qui dessine l'emlpoie du temps
-
-
-
-
-
     Calendar x = Calendar.getInstance();
 
 
@@ -272,6 +321,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         Label cours = new Label();
+
 
         Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][0]);
         Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);
@@ -306,8 +356,84 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         else if(creneau[r][6].trim().equals("CM"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
 
         scene1.getChildren().add(cours);
+
     }
 
+
+    }
+
+    @FXML
+    public void drawrect2() throws ParseException { //fonction qui dessine l'emlpoie du temps
+        Calendar x = Calendar.getInstance();
+
+
+        for (int r = 0; r <= i - 1; r++) {
+            //System.out.println(i);
+            String m;
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            Label cours = new Label();
+
+
+            Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][0]);
+            Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);
+            x.setTime(date1);
+            int dayOfWeek = x.get(x.DAY_OF_WEEK);
+            datetopxl(dayOfWeek);
+            double hourofday = x.get(x.HOUR_OF_DAY) + (float) x.get(x.MINUTE) / 60;
+
+            int z = datetopxl(dayOfWeek);
+            double y = houretopxl(hourofday);
+            x.setTime(date2);
+            double hourofday2 = x.get(x.HOUR_OF_DAY) + (float) x.get(x.MINUTE) / 60;
+            //System.out.println(hourofday2);
+            double w = houretopxl(hourofday2) - y;
+            //System.out.println(w);
+
+            cours.setTranslateX(z);
+            cours.setTranslateY(y);
+            cours.setMinWidth(126);
+            cours.setMinHeight(w);
+            if (creneau[r][4].equals("true")) m = "Oui";
+            else m = "Non";
+            cours.setText("Battiment: " + creneau[r][2] + "\nSalle N°: " + creneau[r][3] + "\nVideo projecteur: " + m + "\n" + creneau[r][5] + "\n" + creneau[r][6] + "\n");
+
+            cours.setTextFill(Color.rgb(255, 255, 255));
+            cours.setTextAlignment(TextAlignment.CENTER);
+            cours.setAlignment(Pos.CENTER);
+            //System.out.println(creneau[r][6]);
+
+            if (creneau[r][6].trim().equals("TP"))
+                cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
+            else if (creneau[r][6].trim().equals("TD"))
+                cours.setBackground(new Background(new BackgroundFill(Color.rgb(5, 52, 14), CornerRadii.EMPTY, Insets.EMPTY)));
+            else if (creneau[r][6].trim().equals("CM"))
+                cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
+         cours.setOnMouseClicked((mouseEvent)->{
+             switchtopopupscene();
+         });
+            scene2.getChildren().add(cours);
+
+        }
+    }
+
+    public void switchtopopupscene()  { // on change l'ecran si c'est bon
+
+        try {
+            Parent root = FXMLLoader.load(App.class.getResource("Popupscene.fxml"));
+
+            Stage managerstage = new Stage();
+
+            Scene scene = new Scene(root, 540, 400);
+
+            managerstage.setScene(scene);
+            managerstage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
     }
 
 

@@ -42,6 +42,7 @@ public class LoginController extends Application {
 
 
     public static String user1;
+    public static String name1;
 
     public String getUsernametxt() {
         return LoginController.user1;
@@ -64,15 +65,18 @@ public class LoginController extends Application {
 
       if(enseignantDAO.checkEnseignant(usernametxt.getText() , passwrdtxt.getText())) {
           System.out.println("je suis enseignant");
-          user1=enseignantDAO.getEnseignantNameBylogin(usernametxt.getText()) + "/ ENSEIGNANT";
+          user1=usernametxt.getText();
+          name1=enseignantDAO.getEnseignantNameBylogin(usernametxt.getText()) +"\n ENSEIGNANT";
           switchtoteacherscene();
       } else if (etudiantDAO.checkEtudiant(usernametxt.getText() , passwrdtxt.getText())){
           System.out.println("je suis etudiant");
-          user1 = etudiantDAO.getEtudiantNameBylogin(usernametxt.getText()) + "/ ETUDIANT";
+          user1=usernametxt.getText();
+          name1 = etudiantDAO.getEtudiantNameBylogin(usernametxt.getText()) + "\n ETUDIANT";
           switchtostudentscene();
       } else if (responsableDao.checkResponsable(usernametxt.getText() , passwrdtxt.getText())) {
           System.out.println("je suis responsable");
-          user1 = responsableDao.getResponsableNameBylogin(usernametxt.getText()) + "/ RESPONSABLE";
+          user1=usernametxt.getText();
+          user1 = responsableDao.getResponsableNameBylogin(usernametxt.getText()) + "\n RESPONSABLE";
           switchtomanagerscene();
       } else {
           loginmessage.setText("invalid try again");
@@ -99,9 +103,6 @@ public class LoginController extends Application {
 
             Stage managerstage = new Stage();
 
-            //VBox vBox = new VBox(group,root);
-            //managerstage.initStyle(StageStyle.UNDECORATED);
-            //drawrect();
             Scene scene = new Scene(root, 1305, 782);
 
             managerstage.setScene(scene);
