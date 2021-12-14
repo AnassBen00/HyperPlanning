@@ -14,7 +14,7 @@ public class EnseignantDAO {
         Connection connection1 = connection.connectDB();
 
 
-        String verifylogin=  "SELECT  count(1) from UTILISATEUR where LOGIN= '"+username+"' AND PASSWORD = HASH('SHA256','"+password+"',1000)";
+        String verifylogin=  "SELECT  count(1) from UTILISATEUR join ENSEIGNANT on (UTILISATEUR.LOGIN = ENSEIGNANT.LOGIN) where ENSEIGNANT.LOGIN= '"+username+"' AND PASSWORD = HASH('SHA256','"+password+"',1000)";
 
 
         try {

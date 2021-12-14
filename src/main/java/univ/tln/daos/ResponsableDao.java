@@ -17,7 +17,7 @@ public class ResponsableDao {
         String etud="ETU";
         String res="RES";*/
 
-        String verifylogin=  "SELECT  count(1) from UTILISATEUR where LOGIN= '"+username+"' AND PASSWORD = HASH('SHA256','"+password+"',1000)";
+        String verifylogin=  "SELECT  count(1) from UTILISATEUR join RESPONSABLE on (UTILISATEUR.LOGIN = RESPONSABLE.LOGIN) where RESPONSABLE.LOGIN= '"+username+"' AND PASSWORD = HASH('SHA256','"+password+"',1000)";
 
         //LoginController.user1= String.valueOf(usernametxt.getText());*
         //System.out.println(getUsernametxt()+"wtffffffffff");

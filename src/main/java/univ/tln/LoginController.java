@@ -12,6 +12,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import univ.tln.daos.EnseignantDAO;
+import univ.tln.daos.EtudiantDAO;
+import univ.tln.daos.ResponsableDao;
 
 import java.io.IOException;
 import java.net.URL;
@@ -57,9 +59,20 @@ public class LoginController extends Application {
   public void validatelogin(){ // on verifie le login
 
       EnseignantDAO enseignantDAO = new EnseignantDAO();
+      EtudiantDAO etudiantDAO = new EtudiantDAO();
+      ResponsableDao responsableDao = new ResponsableDao();
 
       if(enseignantDAO.checkEnseignant(usernametxt.getText() , passwrdtxt.getText())) {
+          System.out.println("je suis etudiant");
           user1=usernametxt.getText();
+          switchtoteacherscene();
+      } else if (etudiantDAO.checkEtudiant(usernametxt.getText() , passwrdtxt.getText())){
+          System.out.println("je suis enseignant");
+          user1 = usernametxt.getText();
+          switchtostudentscene();
+      } else if (responsableDao.checkResponsable(usernametxt.getText() , passwrdtxt.getText())) {
+          System.out.println("je suis responsable");
+          user1 = usernametxt.getText();
           switchtomanagerscene();
       } else {
           loginmessage.setText("invalid try again");
@@ -102,7 +115,7 @@ public class LoginController extends Application {
     public void switchtostudentscene()  { // on change l'ecran si c'est bon
 
         try {
-            Parent root = FXMLLoader.load(App.class.getResource("studentscreen.fxml"));
+            Parent root = FXMLLoader.load(App.class.getResource("studentrscreen.fxml"));
 
             Stage managerstage = new Stage();
 
@@ -122,7 +135,7 @@ public class LoginController extends Application {
     public void switchtoteacherscene()  { // on change l'ecran si c'est bon
 
         try {
-            Parent root = FXMLLoader.load(App.class.getResource("teacherscrenn.fxml"));
+            Parent root = FXMLLoader.load(App.class.getResource("teacherscreen.fxml"));
 
             Stage managerstage = new Stage();
 
