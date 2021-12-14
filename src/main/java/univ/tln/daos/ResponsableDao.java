@@ -2,10 +2,7 @@ package univ.tln.daos;
 
 import univ.tln.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class ResponsableDao {
     public boolean checkResponsable(String username, String password){
@@ -46,5 +43,27 @@ public class ResponsableDao {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public String getResponsableNameBylogin(String l) {
+        String m = null;
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connection1 = connection.connectDB();
+
+        try {
+
+            String queryString = "select nom from UTILISATEUR where login = ?";
+            PreparedStatement statement = connection1.prepareStatement(queryString);
+            statement.setString(1, l);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                m = resultSet.getString("NOM");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return m;
     }
 }

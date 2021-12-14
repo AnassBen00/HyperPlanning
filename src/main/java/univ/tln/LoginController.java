@@ -64,15 +64,15 @@ public class LoginController extends Application {
 
       if(enseignantDAO.checkEnseignant(usernametxt.getText() , passwrdtxt.getText())) {
           System.out.println("je suis enseignant");
-          user1=usernametxt.getText();
+          user1=enseignantDAO.getEnseignantNameBylogin(usernametxt.getText()) + "/ ENSEIGNANT";
           switchtoteacherscene();
       } else if (etudiantDAO.checkEtudiant(usernametxt.getText() , passwrdtxt.getText())){
           System.out.println("je suis etudiant");
-          user1 = usernametxt.getText();
+          user1 = etudiantDAO.getEtudiantNameBylogin(usernametxt.getText()) + "/ ETUDIANT";
           switchtostudentscene();
       } else if (responsableDao.checkResponsable(usernametxt.getText() , passwrdtxt.getText())) {
           System.out.println("je suis responsable");
-          user1 = usernametxt.getText();
+          user1 = responsableDao.getResponsableNameBylogin(usernametxt.getText()) + "/ RESPONSABLE";
           switchtomanagerscene();
       } else {
           loginmessage.setText("invalid try again");
