@@ -121,6 +121,12 @@ public class TeacherController implements Initializable {
     @FXML
     private Label role;
 
+
+    @FXML
+    private Button supbtn;
+
+    public static String d1;
+
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -301,7 +307,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
             }
 
 
-            System.out.println(Arrays.deepToString(creneau));
+           // System.out.println(Arrays.deepToString(creneau));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -310,7 +316,9 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
 
         @FXML
-    public void drawrect() throws ParseException { //fonction qui dessine l'emlpoie du temps
+    public void drawrect() throws ParseException {
+        //fonction qui dessine l'emlpoie du temps
+
     Calendar x = Calendar.getInstance();
 
 
@@ -324,6 +332,9 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
 
         Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][0]);
+        d1=creneau[r][0];
+        System.out.println(creneau[r][0]);
+
         Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);
         x.setTime(date1);
         int dayOfWeek = x.get(x.DAY_OF_WEEK);
@@ -425,7 +436,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
             Stage managerstage = new Stage();
 
-            Scene scene = new Scene(root, 540, 400);
+            Scene scene = new Scene(root, 919, 667);
 
             managerstage.setScene(scene);
             managerstage.show();
@@ -435,6 +446,15 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
             e.getCause();
         }
     }
+
+    public void cancelbtnOnAction(ActionEvent e){
+        Stage stage = (Stage) supbtn.getScene().getWindow();
+        stage.close();
+    }
+
+
+
+
 
 
     @FXML

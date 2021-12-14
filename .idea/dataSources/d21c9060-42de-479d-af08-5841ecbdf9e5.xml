@@ -176,23 +176,23 @@
       <Admin>1</Admin>
       <ObjectId>2</ObjectId>
     </user>
-    <sequence id="164" parent="162" name="SYSTEM_SEQUENCE_312B6023_2D4C_4AEA_B881_1D6B5FE38A4E">
+    <sequence id="164" parent="162" name="SYSTEM_SEQUENCE_136E5D20_29E8_40DF_9C65_B809E7ED9EF4">
+      <AutoCreated>1</AutoCreated>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>27</ObjectId>
+      <SequenceIdentity>null(4)</SequenceIdentity>
+    </sequence>
+    <sequence id="165" parent="162" name="SYSTEM_SEQUENCE_23DF9BF5_8A17_4136_941F_781709F4A801">
       <AutoCreated>1</AutoCreated>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>33</ObjectId>
       <SequenceIdentity>null(4)</SequenceIdentity>
     </sequence>
-    <sequence id="165" parent="162" name="SYSTEM_SEQUENCE_7EB630CD_C4E7_469A_A546_B34A62BFD5DB">
+    <sequence id="166" parent="162" name="SYSTEM_SEQUENCE_938AA1CB_4244_4FBE_9F94_D91452576CCA">
       <AutoCreated>1</AutoCreated>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>15</ObjectId>
       <SequenceIdentity>null(2)</SequenceIdentity>
-    </sequence>
-    <sequence id="166" parent="162" name="SYSTEM_SEQUENCE_8C01916B_DCB1_4F69_8210_AD9B84541281">
-      <AutoCreated>1</AutoCreated>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>27</ObjectId>
-      <SequenceIdentity>null(4)</SequenceIdentity>
     </sequence>
     <table id="167" parent="162" name="COURS">
       <ObjectId>32</ObjectId>

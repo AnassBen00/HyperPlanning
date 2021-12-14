@@ -41,6 +41,9 @@ public class LoginController extends Application {
 
 
 
+
+
+
     public static String user1;
     public static String name1;
 
@@ -64,17 +67,17 @@ public class LoginController extends Application {
       ResponsableDao responsableDao = new ResponsableDao();
 
       if(enseignantDAO.checkEnseignant(usernametxt.getText() , passwrdtxt.getText())) {
-          System.out.println("je suis enseignant");
+          //System.out.println("je suis enseignant");
           user1=usernametxt.getText();
           name1=enseignantDAO.getEnseignantNameBylogin(usernametxt.getText()) +"\n ENSEIGNANT";
           switchtoteacherscene();
       } else if (etudiantDAO.checkEtudiant(usernametxt.getText() , passwrdtxt.getText())){
-          System.out.println("je suis etudiant");
+          //System.out.println("je suis etudiant");
           user1=usernametxt.getText();
           name1 = etudiantDAO.getEtudiantNameBylogin(usernametxt.getText()) + "\n ETUDIANT";
           switchtostudentscene();
       } else if (responsableDao.checkResponsable(usernametxt.getText() , passwrdtxt.getText())) {
-          System.out.println("je suis responsable");
+          //System.out.println("je suis responsable");
           user1=usernametxt.getText();
           user1 = responsableDao.getResponsableNameBylogin(usernametxt.getText()) + "\n RESPONSABLE";
           switchtomanagerscene();
@@ -163,6 +166,8 @@ public class LoginController extends Application {
     public void start(Stage primaryStage) {
 
     }
+
+
 
 
     @FXML

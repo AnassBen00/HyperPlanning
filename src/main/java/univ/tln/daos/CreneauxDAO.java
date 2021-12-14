@@ -5,6 +5,7 @@ import univ.tln.entities.creneaux.Creneau;
 
 import java.sql.*;
 import java.util.Arrays;
+import java.util.Date;
 
 public class CreneauxDAO {
 
@@ -52,6 +53,25 @@ public class CreneauxDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("unable to save creneau");
+        }
+
+    }
+
+    public void RemoveCreneauByDated(String d){
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connection1 = connection.connectDB();
+        try {
+            PreparedStatement statement = connection1.prepareStatement("DELETE FROM CRENEAUX WHERE DATE_D=? ");
+            //long timeInMilliSeconds = d.getTime();
+            //java.sql.Date date1 = new java.sql.Date(timeInMilliSeconds);
+            //System.out.println(date1);
+            statement.setString(1, d);
+
+            statement.executeUpdate();
+            System.out.println("deleted succesflly");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }
