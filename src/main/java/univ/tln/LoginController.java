@@ -59,6 +59,7 @@ public class LoginController extends Application {
       EnseignantDAO enseignantDAO = new EnseignantDAO();
 
       if(enseignantDAO.checkEnseignant(usernametxt.getText() , passwrdtxt.getText())) {
+          user1=usernametxt.getText();
           switchtomanagerscene();
       } else {
           loginmessage.setText("invalid try again");
@@ -79,6 +80,46 @@ public class LoginController extends Application {
     }
 
     public void switchtomanagerscene()  { // on change l'ecran si c'est bon
+
+        try {
+            Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
+
+            Stage managerstage = new Stage();
+
+            //VBox vBox = new VBox(group,root);
+            //managerstage.initStyle(StageStyle.UNDECORATED);
+            //drawrect();
+            Scene scene = new Scene(root, 1305, 782);
+
+            managerstage.setScene(scene);
+            managerstage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+    public void switchtostudentscene()  { // on change l'ecran si c'est bon
+
+        try {
+            Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
+
+            Stage managerstage = new Stage();
+
+            //VBox vBox = new VBox(group,root);
+            //managerstage.initStyle(StageStyle.UNDECORATED);
+            //drawrect();
+            Scene scene = new Scene(root, 1305, 782);
+
+            managerstage.setScene(scene);
+            managerstage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+    public void switchtoteacherscene()  { // on change l'ecran si c'est bon
 
         try {
             Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));

@@ -227,15 +227,15 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         try {
 
             Statement statement = connection1.createStatement();
-            //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
-            PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
-
+            PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            //System.out.println(LoginController.user1);
             pstmt.setString(1,LoginController.user1);
             name.setText("User: "+LoginController.user1);
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday().getTime())));
-            System.out.println(df.format(getmonday().getTime()));
+            //System.out.println(df.format(getmonday().getTime()));
             pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday().getTime())));
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
@@ -249,6 +249,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
                 creneau[i][6] = queryResult.getString("NATURE");
                 i++;
             }
+
 
             System.out.println(Arrays.deepToString(creneau));
         } catch (SQLException e) {
@@ -269,6 +270,8 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
 
     for (int r = 0;r<=i-1;r++) {
+        //System.out.println(i);
+        String m ;
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
@@ -285,20 +288,22 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         double y = houretopxl(hourofday);
         x.setTime(date2);
         double hourofday2 = x.get(x.HOUR_OF_DAY) + (float) x.get(x.MINUTE) / 60;
-        System.out.println(hourofday2);
+        //System.out.println(hourofday2);
         double w = houretopxl(hourofday2) - y;
-        System.out.println(w);
+        //System.out.println(w);
 
         cours.setTranslateX(z);
         cours.setTranslateY(y);
         cours.setMinWidth(126);
         cours.setMinHeight(w);
-        cours.setText(creneau[r][2] +"\n"+  creneau[r][3]+"\n"+ creneau[r][4]+"\n"+ creneau[r][5]+"\n"+ creneau[r][6] +"\n");
+        if(creneau[r][4].equals("true")) m="Oui";
+        else m="Non";
+        cours.setText("Battiment: "+creneau[r][2] +"\nSalle N°: "+  creneau[r][3]+"\nVideo projecteur: "+ m+"\n"+ creneau[r][5]+"\n"+ creneau[r][6] +"\n");
 
         cours.setTextFill(Color.rgb(255, 255, 255));
         cours.setTextAlignment(TextAlignment.CENTER);
         cours.setAlignment(Pos.CENTER);
-        System.out.println(creneau[r][6]);
+        //System.out.println(creneau[r][6]);
 
         if(creneau[r][6].trim().equals("TP"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
         else if(creneau[r][6].trim().equals("TD"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(5, 52, 14), CornerRadii.EMPTY, Insets.EMPTY)));
