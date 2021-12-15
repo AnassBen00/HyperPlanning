@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import  javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -29,6 +30,10 @@ public class PopupControler {
             // Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
             FXMLLoader loader = new FXMLLoader(getClass().getResource("teacherscreen.fxml"));
             Parent root = loader.load();
+            Scene scene = new Scene(root, 1305, 782);
+
+            LoginController.managerstage.setScene(scene);
+            LoginController.managerstage.show();
 
 
 
@@ -49,6 +54,7 @@ public class PopupControler {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
+
 
 
         stage.close();

@@ -40,6 +40,8 @@ public class LoginController extends Application {
     private PasswordField passwrdtxt;
 
 
+    static  Stage managerstage = new Stage();
+
 
 
 
@@ -138,10 +140,10 @@ public class LoginController extends Application {
     }
     public void switchtoteacherscene()  { // on change l'ecran si c'est bon
 
+
         try {
             Parent root = FXMLLoader.load(App.class.getResource("teacherscreen.fxml"));
 
-            Stage managerstage = new Stage();
 
             //VBox vBox = new VBox(group,root);
             //managerstage.initStyle(StageStyle.UNDECORATED);

@@ -181,7 +181,6 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="refrech" layoutX="490.0" layoutY="62.0" mnemonicParsing="false" onAction="#updatewindow" style="-fx-background-color: #7156DD;" text="Refresh" textFill="WHITE" />
          </children>
       </Pane>
    </children>
