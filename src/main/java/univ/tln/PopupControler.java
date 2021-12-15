@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import  javafx.fxml.FXMLLoader;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import univ.tln.daos.CreneauxDAO;
@@ -35,8 +35,6 @@ public class PopupControler {
             LoginController.managerstage.setScene(scene);
             LoginController.managerstage.show();
 
-
-
             CreneauxDAO d = new CreneauxDAO();
             //System.out.println(TeacherController.d1);
 
@@ -47,19 +45,15 @@ public class PopupControler {
 
             System.out.println("yupi");
 
-
-
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
 
-
-
         stage.close();
 
-        }
-
     }
+
+}
 

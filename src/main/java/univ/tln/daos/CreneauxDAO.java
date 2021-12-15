@@ -21,7 +21,7 @@ public class CreneauxDAO {
 
             while ((queryResult.next())) {
                 creneau[i][0] = String.valueOf(queryResult.getTimestamp("DATE_D"));
-                creneau[i][1]= String.valueOf(queryResult.getTimestamp("DATE_F"));
+                creneau[i][1] = String.valueOf(queryResult.getTimestamp("DATE_F"));
                 creneau[i][2] = queryResult.getString("BATIMENT");
                 creneau[i][3] = String.valueOf(queryResult.getInt("NUM"));
                 creneau[i][4] = String.valueOf(queryResult.getBoolean("VIDEO_P"));
@@ -43,12 +43,12 @@ public class CreneauxDAO {
         try {
 
             PreparedStatement statement = connection1.prepareStatement("insert into salle (date_d,date_f , id_s , id_g) values (?,?,?,?) ");
-            statement.setString(1,creneau.getDateDebut());
-            statement.setString(2,creneau.getDateFin());
-            statement.setString(3,creneau.getIdSalle());
-            statement.setString(4,creneau.getIdCours());
+            statement.setString(1, creneau.getDateDebut());
+            statement.setString(2, creneau.getDateFin());
+            statement.setString(3, creneau.getIdSalle());
+            statement.setString(4, creneau.getIdCours());
             statement.executeQuery();
-            System.out.println(creneau.getIdCours() +  "saved into database");
+            System.out.println(creneau.getIdCours() + "saved into database");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,7 +57,7 @@ public class CreneauxDAO {
 
     }
 
-    public void RemoveCreneauByDated(String d){
+    public void RemoveCreneauByDated(String d) {
         DatabaseConnection connection = new DatabaseConnection();
         Connection connection1 = connection.connectDB();
         try {

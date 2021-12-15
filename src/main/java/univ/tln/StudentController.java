@@ -179,7 +179,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
             //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             //System.out.println(LoginController.user1);
             pstmt.setString(1,LoginController.user1);
-            name.setText("User: "+LoginController.user1);
+            name.setText("Login: " + LoginController.user1 + "\n" +LoginController.name1);
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday().getTime())));
@@ -243,10 +243,13 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         cours.setTranslateX(z);
         cours.setTranslateY(y);
         cours.setMinWidth(126);
+        cours.setMaxWidth(126);
+        cours.setMaxHeight(w);
         cours.setMinHeight(w);
-        if(creneau[r][4].equals("true")) m="Oui";
-        else m="Non";
-        cours.setText("Battiment: "+creneau[r][2] +"\nSalle N°: "+  creneau[r][3]+"\nVideo projecteur: "+ m+"\n"+ creneau[r][5]+"\n"+ creneau[r][6] +"\n");
+        //cours.setFont(new Font("Serif", 14));
+        if (creneau[r][4].equals("true")) m = "Oui";
+        else m = "Non";
+        cours.setText("Salle: " + creneau[r][2] + " " + creneau[r][3] + "\n" + creneau[r][5] + " " + creneau[r][6] + "\nprojecteur: " + m +"\n prof :");
 
         cours.setTextFill(Color.rgb(255, 255, 255));
         cours.setTextAlignment(TextAlignment.CENTER);

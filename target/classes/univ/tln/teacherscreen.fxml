@@ -166,12 +166,7 @@
                </font>
             </Label>
             <Label fx:id="lblstatusmini" layoutX="51.0" layoutY="14.0" text="/home/planning" textFill="WHITE" />
-            <Label fx:id="name" layoutX="845.0" layoutY="16.0" prefHeight="26.0" prefWidth="142.0" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="role" layoutX="835.0" layoutY="54.0" prefHeight="40.0" prefWidth="152.0" textFill="WHITE">
+            <Label fx:id="name" layoutX="845.0" layoutY="16.0" prefHeight="67.0" prefWidth="142.0" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>

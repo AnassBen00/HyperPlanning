@@ -18,19 +18,18 @@ public class CoursDAO {
     }
 
     public void removeCours(String id) {
-            DatabaseConnection connection = new DatabaseConnection();
-            Connection connection1 = connection.connectDB();
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connection1 = connection.connectDB();
 
-            try {
-                String queryString = "delete from cours where id = ? ";
-                PreparedStatement statement = connection1.prepareStatement(queryString);
-                statement.setString(1, id);
-                statement.executeUpdate();
-                System.out.println("Data deleted Successfully");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
+        try {
+            String queryString = "delete from cours where id = ? ";
+            PreparedStatement statement = connection1.prepareStatement(queryString);
+            statement.setString(1, id);
+            statement.executeUpdate();
+            System.out.println("Data deleted Successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void insertCours(Cours cours) {
