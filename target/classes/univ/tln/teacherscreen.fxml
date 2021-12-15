@@ -171,16 +171,17 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="role" layoutX="845.0" layoutY="49.0" prefHeight="45.0" prefWidth="142.0" textFill="WHITE">
+            <Label fx:id="role" layoutX="835.0" layoutY="54.0" prefHeight="40.0" prefWidth="152.0" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="messageinstruction" layoutX="290.0" layoutY="28.0" textFill="WHITE">
+            <Label fx:id="messageinstruction" layoutX="236.0" layoutY="34.0" prefHeight="29.0" prefWidth="596.0" textFill="WHITE">
                <font>
-                  <Font size="23.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
+            <Button fx:id="refrech" layoutX="490.0" layoutY="62.0" mnemonicParsing="false" onAction="#updatewindow" style="-fx-background-color: #7156DD;" text="Refresh" textFill="WHITE" />
          </children>
       </Pane>
    </children>
