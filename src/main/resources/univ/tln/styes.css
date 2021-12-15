@@ -8,3 +8,35 @@
 {
     -fx-background-color:  #7156DD ;
 }
+
+.tab {
+
+    -fx-font-size: 20;
+    -fx-pref-width: 330;
+    -fx-background-color:#7156DD
+
+}
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-color: transparent;
+}
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
+    -fx-alignment: CENTER;
+    -fx-pref-width: 330;
+
+}
+
+.tab-label{
+
+    -fx-text-fill: #ffffff;
+
+}
+
+
+.tab-pane{
+    -fx-padding: 0 -1 -1 -1
+}
+.tab-pane .tab:selected
+{
+    -fx-background-color: #7d49a8;
+}
+

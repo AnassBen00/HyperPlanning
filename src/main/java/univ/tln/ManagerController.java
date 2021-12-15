@@ -88,7 +88,8 @@ public class ManagerController implements Initializable {
 
     @FXML
     private Label name;
-
+    @FXML
+    private Label infomessage;
 
     @Override
     @FXML
@@ -110,23 +111,28 @@ public class ManagerController implements Initializable {
             lblstatus.setText("Account");
             lblstatusmini.setText("/home/account");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
+            infomessage.setText("");
             scene3.toFront();
         } else if (e.getSource() == btnmodify) {
             lblstatus.setText("Modify");
             lblstatusmini.setText("/home/modify");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
+            infomessage.setText("Slectionner ce que vous voulez modifier");
             scene2.toFront();
         } else if (e.getSource() == btnplanning) {
             lblstatus.setText("Planning");
             lblstatusmini.setText("/home/planning");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
+            infomessage.setText("");
             scene1.toFront();
         } else if (e.getSource() == btnsettings) {
             lblstatus.setText("Settings");
             lblstatusmini.setText("/home/settings");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
+            infomessage.setText("");
             scene4.toFront();
         } else if (e.getSource() == btnabsences) {
+            infomessage.setText("");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             scene5.toFront();
             lblstatus.setText("Absences");

@@ -22,6 +22,7 @@ drop table IF EXISTS GROUPS;
 
 
 
+
 create table if not exists  UTILISATEUR
 (
     LOGIN    CHAR(15) not null,
@@ -415,7 +416,7 @@ insert into salle (NUM,BATIMENT, video_p) values ( '001','X',FALSE );
 insert into COURS(LOGIN, nature, nom) values ( '1jJQ0','CM','Anglais 1' );
 insert into COURS(LOGIN , NATURE ,nom) values ('LmaqA' , 'TP' , 'JAVA');
 insert into COURS(LOGIN , NATURE,nom) values ('NrsB7' , 'CM' , 'UML');
-insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'CM' , 'Machine learning');
+insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'CM' , 'M_learning');
 
 INSERT into GROUPS(NOM) values ( 'anglais L1' ),('DID master1'),('DID L1'),('MIR L1'),('INFO L1'),('ECO L1'),('MIAGE L1');
 
@@ -428,10 +429,10 @@ INSERT INTO CRENEAUX (DATE_D, DATE_F, ID_S, ID_G,ID_C) VALUES ( '2021-12-15 09:4
 UPDATE UTILISATEUR SET PASSWORD = HASH('SHA256', PASSWORD, 1000);
 
 
-select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,U.NOM,U.PRENOM,U.EMAIL,C2.NOM,C2.NATURE from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C JOIN GROUP_ETUDIANT GE on GC.ID_G=GE.ID_G JOIN COURS C2 on GC.ID_C = C2.ID_C JOIN UTILISATEUR U on C2.LOGIN = U.LOGIN WHERE GE.LOGIN='U2WAs';
+//select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,U.NOM,U.PRENOM,U.EMAIL,C2.NOM,C2.NATURE from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C JOIN GROUP_ETUDIANT GE on GC.ID_G=GE.ID_G JOIN COURS C2 on GC.ID_C = C2.ID_C JOIN UTILISATEUR U on C2.LOGIN = U.LOGIN WHERE GE.LOGIN='U2WAs';
 
 
-select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,C2.NOM,C2.NATURE,G.nom from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C join COURS C2 on GC.ID_C = C2.ID_C join GROUPS G on GC.ID_G = G.ID_G where C2.LOGIN='1jJQ0';
+//select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,C2.NOM,C2.NATURE,G.nom from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C join COURS C2 on GC.ID_C = C2.ID_C join GROUPS G on GC.ID_G = G.ID_G where C2.LOGIN='1jJQ0';
 
 
-Select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,C2.NOM,C2.NATURE,G.nom from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C join COURS C2 on GC.ID_C = C2.ID_C join GROUPS G on GC.ID_G = G.ID_G where C2.LOGIN ='1jJQ0' AND DATE_D<;
+//Select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,C2.NOM,C2.NATURE,G.nom from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C join COURS C2 on GC.ID_C = C2.ID_C join GROUPS G on GC.ID_G = G.ID_G where C2.LOGIN ='1jJQ0' AND DATE_D;

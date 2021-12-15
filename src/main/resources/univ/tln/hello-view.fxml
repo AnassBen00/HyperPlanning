@@ -60,7 +60,7 @@
                   <InnerShadow />
                </effect>
             </Label>
-            <Label alignment="CENTER" layoutX="7.0" layoutY="147.0" prefHeight="18.0" prefWidth="82.0" text="Usernae" textFill="#575757">
+            <Label alignment="CENTER" layoutX="7.0" layoutY="147.0" prefHeight="18.0" prefWidth="82.0" text="Username" textFill="#575757">
                <font>
                   <Font size="14.0" />
                </font>
