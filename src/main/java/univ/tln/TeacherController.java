@@ -43,7 +43,7 @@ import java.util.*;
 public class TeacherController implements Initializable {
     public int i;
     int max_cours = 60;
-    public String[][] creneau = new String[max_cours][7];
+    public String[][] creneau = new String[max_cours][8];
     @FXML
     private AnchorPane scene1; //le planning
     @FXML
@@ -293,7 +293,7 @@ public class TeacherController implements Initializable {
         try {
 
             Statement statement = connection1.createStatement();
-            PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,C2.NOM,C2.NATURE,G.nom from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C join COURS C2 on GC.ID_C = C2.ID_C join GROUPS G on GC.ID_G = G.ID_G where C2.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             System.out.println(LoginController.user1);
             pstmt.setString(1, LoginController.user1);
@@ -314,6 +314,7 @@ public class TeacherController implements Initializable {
                 creneau[i][4] = String.valueOf(queryResult.getBoolean("VIDEO_P"));
                 creneau[i][5] = queryResult.getString("NOM");
                 creneau[i][6] = queryResult.getString("NATURE");
+                creneau[i][7] = queryResult.getString("nom");
                 i++;
             }
 

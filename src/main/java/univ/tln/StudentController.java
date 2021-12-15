@@ -39,7 +39,7 @@ import java.util.*;
 public class StudentController implements Initializable {
     public int i ;
     int max_cours = 60;
-    private String[][] creneau= new String[max_cours][7];
+    private String[][] creneau= new String[max_cours][10];
     @FXML
     private AnchorPane scene1 ; //le planning
     @FXML
@@ -175,7 +175,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         try {
 
             Statement statement = connection1.createStatement();
-            PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,U.NOM,U.PRENOM,U.EMAIL,C2.NOM,C2.NATURE from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C JOIN GROUP_ETUDIANT GE on GC.ID_G=GE.ID_G JOIN COURS C2 on GC.ID_C = C2.ID_C JOIN UTILISATEUR U on C2.LOGIN = U.LOGIN WHERE GE.LOGIN=? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             //System.out.println(LoginController.user1);
             pstmt.setString(1,LoginController.user1);
@@ -194,7 +194,10 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
                 creneau[i][3] = String.valueOf(queryResult.getInt("NUM"));
                 creneau[i][4] = String.valueOf(queryResult.getBoolean("VIDEO_P"));
                 creneau[i][5] = queryResult.getString("NOM");
-                creneau[i][6] = queryResult.getString("NATURE");
+                creneau[i][6] = queryResult.getString("PRENOM");
+                creneau[i][7] = queryResult.getString("EMAIL");
+                creneau[i][8] = queryResult.getString("NOM");
+                creneau[i][9] = queryResult.getString("NATURE");
                 i++;
             }
 
@@ -256,9 +259,9 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         cours.setAlignment(Pos.CENTER);
         //System.out.println(creneau[r][6]);
 
-        if(creneau[r][6].trim().equals("TP"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
-        else if(creneau[r][6].trim().equals("TD"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(5, 52, 14), CornerRadii.EMPTY, Insets.EMPTY)));
-        else if(creneau[r][6].trim().equals("CM"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
+        if(creneau[r][9].trim().equals("TP"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
+        else if(creneau[r][9].trim().equals("TD"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(5, 52, 14), CornerRadii.EMPTY, Insets.EMPTY)));
+        else if(creneau[r][9].trim().equals("CM"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
 
         scene1.getChildren().add(cours);
     }

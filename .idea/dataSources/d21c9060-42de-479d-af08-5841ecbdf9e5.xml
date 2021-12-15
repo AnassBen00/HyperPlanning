@@ -176,32 +176,35 @@
       <Admin>1</Admin>
       <ObjectId>2</ObjectId>
     </user>
-    <sequence id="164" parent="162" name="SYSTEM_SEQUENCE_136E5D20_29E8_40DF_9C65_B809E7ED9EF4">
+    <sequence id="164" parent="162" name="SYSTEM_SEQUENCE_043FFA24_0A5B_4C6A_A4C5_11095AD4562B">
+      <AutoCreated>1</AutoCreated>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>31</ObjectId>
+      <SequenceIdentity>null(2)</SequenceIdentity>
+    </sequence>
+    <sequence id="165" parent="162" name="SYSTEM_SEQUENCE_3394F1CA_7F5D_4481_854B_5449C165DC6C">
       <AutoCreated>1</AutoCreated>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>27</ObjectId>
-      <SequenceIdentity>null(4)</SequenceIdentity>
+      <SequenceIdentity>null(13)</SequenceIdentity>
     </sequence>
-    <sequence id="165" parent="162" name="SYSTEM_SEQUENCE_23DF9BF5_8A17_4136_941F_781709F4A801">
+    <sequence id="166" parent="162" name="SYSTEM_SEQUENCE_5E09AB92_9844_4B9F_A94D_73B0BE25F7F8">
       <AutoCreated>1</AutoCreated>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>33</ObjectId>
-      <SequenceIdentity>null(4)</SequenceIdentity>
+      <ObjectId>39</ObjectId>
+      <SequenceIdentity>null(8)</SequenceIdentity>
     </sequence>
-    <sequence id="166" parent="162" name="SYSTEM_SEQUENCE_938AA1CB_4244_4FBE_9F94_D91452576CCA">
+    <sequence id="167" parent="162" name="SYSTEM_SEQUENCE_9D794EE4_8040_4AB9_B800_1EB337AA65AA">
       <AutoCreated>1</AutoCreated>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>15</ObjectId>
-      <SequenceIdentity>null(2)</SequenceIdentity>
+      <SequenceIdentity>null(6)</SequenceIdentity>
     </sequence>
-    <table id="167" parent="162" name="COURS">
-      <ObjectId>32</ObjectId>
-    </table>
-    <table id="168" parent="162" name="COURS_FILIERE">
-      <ObjectId>40</ObjectId>
+    <table id="168" parent="162" name="COURS">
+      <ObjectId>30</ObjectId>
     </table>
     <table id="169" parent="162" name="CRENEAUX">
-      <ObjectId>65</ObjectId>
+      <ObjectId>56</ObjectId>
     </table>
     <table id="170" parent="162" name="ENSEIGNANT">
       <ObjectId>10</ObjectId>
@@ -212,14 +215,14 @@
     <table id="172" parent="162" name="FILIERE">
       <ObjectId>14</ObjectId>
     </table>
-    <table id="173" parent="162" name="GROUPE">
-      <ObjectId>47</ObjectId>
+    <table id="173" parent="162" name="GROUPS">
+      <ObjectId>38</ObjectId>
     </table>
     <table id="174" parent="162" name="GROUP_COURS">
-      <ObjectId>52</ObjectId>
+      <ObjectId>48</ObjectId>
     </table>
-    <table id="175" parent="162" name="GROUP_FILIERE">
-      <ObjectId>59</ObjectId>
+    <table id="175" parent="162" name="GROUP_ETUDIANT">
+      <ObjectId>40</ObjectId>
     </table>
     <table id="176" parent="162" name="RESPONSABLE">
       <ObjectId>6</ObjectId>
@@ -230,28 +233,28 @@
     <table id="178" parent="162" name="UTILISATEUR">
       <ObjectId>3</ObjectId>
     </table>
-    <column id="179" parent="167" name="ID_C">
+    <column id="179" parent="168" name="ID_C">
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null(4)</SequenceIdentity>
+      <SequenceIdentity>null(2)</SequenceIdentity>
     </column>
-    <column id="180" parent="167" name="NATURE">
+    <column id="180" parent="168" name="NATURE">
       <DataType>CHAR(15)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="181" parent="167" name="NOM">
+    <column id="181" parent="168" name="NOM">
       <DataType>CHAR(15)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="182" parent="167" name="LOGIN">
+    <column id="182" parent="168" name="LOGIN">
       <DataType>CHAR(15)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <foreign-key id="183" parent="167" name="COURS_ENSEIGNANT">
+    <foreign-key id="183" parent="168" name="COURS_ENSEIGNANT">
       <ColNames>LOGIN</ColNames>
       <OnDelete>restrict</OnDelete>
       <OnUpdate>restrict</OnUpdate>
@@ -259,118 +262,65 @@
       <RefKeyName>PRIMARY_KEY_7</RefKeyName>
       <RefTableName>ENSEIGNANT</RefTableName>
     </foreign-key>
-    <index id="184" parent="167" name="COURS_U_INDEX_3">
+    <index id="184" parent="168" name="COURS_U_INDEX_3">
       <AutoCreated>1</AutoCreated>
       <ColNames>ID_C</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>38</ObjectId>
+      <ObjectId>36</ObjectId>
       <SourceTextLength>74</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <index id="185" parent="167" name="PRIMARY_KEY_3">
+    <index id="185" parent="168" name="PRIMARY_KEY_3">
       <AutoCreated>1</AutoCreated>
       <ColNames>NOM
 LOGIN
 NATURE</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>34</ObjectId>
+      <ObjectId>32</ObjectId>
       <SourceTextLength>89</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <index id="186" parent="167" name="COURS_ENSEIGNANT_INDEX_3">
+    <index id="186" parent="168" name="COURS_ENSEIGNANT_INDEX_3">
       <AutoCreated>1</AutoCreated>
       <ColNames>LOGIN</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>36</ObjectId>
+      <ObjectId>34</ObjectId>
       <SourceTextLength>77</SourceTextLength>
     </index>
-    <key id="187" parent="167" name="COURS_PK">
+    <key id="187" parent="168" name="COURS_PK">
       <ColNames>NOM
 LOGIN
 NATURE</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="188" parent="167" name="COURS_U">
+    <key id="188" parent="168" name="COURS_U">
       <ColNames>ID_C</ColNames>
     </key>
-    <column id="189" parent="168" name="ID_C">
-      <DataType>CHAR(15)|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="190" parent="168" name="ID_F">
-      <DataType>INT|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="191" parent="168" name="TAUX_H">
-      <DataType>NUMERIC(6,2)|0s</DataType>
-      <Position>3</Position>
-    </column>
-    <foreign-key id="192" parent="168" name="COURS_FILIERE_FK1">
-      <ColNames>ID_C</ColNames>
-      <OnDelete>restrict</OnDelete>
-      <OnUpdate>restrict</OnUpdate>
-      <RefColNames>ID_C</RefColNames>
-      <RefKeyName>COURS_U_INDEX_3</RefKeyName>
-      <RefTableName>COURS</RefTableName>
-    </foreign-key>
-    <foreign-key id="193" parent="168" name="COURS_FILIERE_FK2">
-      <ColNames>ID_F</ColNames>
-      <OnDelete>restrict</OnDelete>
-      <OnUpdate>restrict</OnUpdate>
-      <RefColNames>ID_F</RefColNames>
-      <RefKeyName>PRIMARY_KEY_F</RefKeyName>
-      <RefTableName>FILIERE</RefTableName>
-    </foreign-key>
-    <index id="194" parent="168" name="PRIMARY_KEY_1">
-      <AutoCreated>1</AutoCreated>
-      <ColNames>ID_C
-ID_F</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>41</ObjectId>
-      <SourceTextLength>87</SourceTextLength>
-      <Unique>1</Unique>
-    </index>
-    <index id="195" parent="168" name="COURS_FILIERE_FK1_INDEX_1">
-      <AutoCreated>1</AutoCreated>
-      <ColNames>ID_C</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>43</ObjectId>
-      <SourceTextLength>85</SourceTextLength>
-    </index>
-    <index id="196" parent="168" name="COURS_FILIERE_FK2_INDEX_1">
-      <AutoCreated>1</AutoCreated>
-      <ColNames>ID_F</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>45</ObjectId>
-      <SourceTextLength>85</SourceTextLength>
-    </index>
-    <key id="197" parent="168" name="COURS_FILIERE_PK">
-      <ColNames>ID_C
-ID_F</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="198" parent="169" name="DATE_D">
+    <column id="189" parent="169" name="DATE_D">
       <DataType>DATETIME|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="199" parent="169" name="DATE_F">
+    <column id="190" parent="169" name="DATE_F">
       <DataType>DATETIME|0s</DataType>
       <Position>2</Position>
     </column>
-    <column id="200" parent="169" name="ID_S">
+    <column id="191" parent="169" name="ID_S">
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="201" parent="169" name="ID_G">
+    <column id="192" parent="169" name="ID_G">
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <foreign-key id="202" parent="169" name="CRENAUX_SALLE_ID_FK">
+    <column id="193" parent="169" name="ID_C">
+      <DataType>INT|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <foreign-key id="194" parent="169" name="CRENAUX_SALLE_ID_FK">
       <ColNames>ID_S</ColNames>
       <OnDelete>restrict</OnDelete>
       <OnUpdate>restrict</OnUpdate>
@@ -378,50 +328,53 @@ ID_F</ColNames>
       <RefKeyName>CRENAUX_SALLE_ID_FK_INDEX_4</RefKeyName>
       <RefTableName>SALLE</RefTableName>
     </foreign-key>
-    <foreign-key id="203" parent="169" name="CRENAUX_GROUPE_ID_G_FK">
-      <ColNames>ID_G</ColNames>
+    <foreign-key id="195" parent="169" name="CRENAUX_GROUPE_ID_G_FK">
+      <ColNames>ID_G
+ID_C</ColNames>
       <OnDelete>restrict</OnDelete>
       <OnUpdate>restrict</OnUpdate>
-      <RefColNames>ID_G</RefColNames>
-      <RefKeyName>GROUP_COURS_FK1_INDEX_7</RefKeyName>
-      <RefTableName>GROUPE</RefTableName>
+      <RefColNames>ID_G
+ID_C</RefColNames>
+      <RefKeyName>CRENAUX_GROUPE_ID_G_FK_INDEX_F</RefKeyName>
+      <RefTableName>GROUP_COURS</RefTableName>
     </foreign-key>
-    <index id="204" parent="169" name="PRIMARY_KEY_9">
+    <index id="196" parent="169" name="PRIMARY_KEY_9">
       <AutoCreated>1</AutoCreated>
       <ColNames>DATE_D
 ID_S
 ID_G</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>66</ObjectId>
+      <ObjectId>57</ObjectId>
       <SourceTextLength>92</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <index id="205" parent="169" name="CRENAUX_SALLE_ID_FK_INDEX_9">
+    <index id="197" parent="169" name="CRENAUX_SALLE_ID_FK_INDEX_9">
       <AutoCreated>1</AutoCreated>
       <ColNames>ID_S</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>70</ObjectId>
+      <ObjectId>62</ObjectId>
       <SourceTextLength>82</SourceTextLength>
     </index>
-    <index id="206" parent="169" name="CRENAUX_GROUPE_ID_G_FK_INDEX_9">
+    <index id="198" parent="169" name="CRENAUX_GROUPE_ID_G_FK_INDEX_9">
       <AutoCreated>1</AutoCreated>
-      <ColNames>ID_G</ColNames>
+      <ColNames>ID_G
+ID_C</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>68</ObjectId>
-      <SourceTextLength>85</SourceTextLength>
+      <ObjectId>59</ObjectId>
+      <SourceTextLength>93</SourceTextLength>
     </index>
-    <key id="207" parent="169" name="CRENAUX_PK">
+    <key id="199" parent="169" name="CRENAUX_PK">
       <ColNames>DATE_D
 ID_S
 ID_G</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="208" parent="170" name="LOGIN">
+    <column id="200" parent="170" name="LOGIN">
       <DataType>CHAR(15)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <foreign-key id="209" parent="170" name="ENSEIGNANT_UTILISATEUR_LOGIN_FK">
+    <foreign-key id="201" parent="170" name="ENSEIGNANT_UTILISATEUR_LOGIN_FK">
       <ColNames>LOGIN</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
@@ -429,7 +382,7 @@ ID_G</ColNames>
       <RefKeyName>PRIMARY_KEY_5</RefKeyName>
       <RefTableName>UTILISATEUR</RefTableName>
     </foreign-key>
-    <index id="210" parent="170" name="PRIMARY_KEY_7">
+    <index id="202" parent="170" name="PRIMARY_KEY_7">
       <AutoCreated>1</AutoCreated>
       <ColNames>LOGIN</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -437,28 +390,28 @@ ID_G</ColNames>
       <SourceTextLength>77</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <key id="211" parent="170" name="ENSEIGNANT_PK">
+    <key id="203" parent="170" name="ENSEIGNANT_PK">
       <ColNames>LOGIN</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="212" parent="171" name="LOGIN">
+    <column id="204" parent="171" name="LOGIN">
       <DataType>CHAR(15)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="213" parent="171" name="NVX_ETUDE">
+    <column id="205" parent="171" name="NVX_ETUDE">
       <DataType>CHAR(15)|0s</DataType>
       <Position>2</Position>
     </column>
-    <column id="214" parent="171" name="PROMO">
+    <column id="206" parent="171" name="PROMO">
       <DataType>CHAR(15)|0s</DataType>
       <Position>3</Position>
     </column>
-    <column id="215" parent="171" name="ID_F">
+    <column id="207" parent="171" name="ID_F">
       <DataType>INT|0s</DataType>
       <Position>4</Position>
     </column>
-    <foreign-key id="216" parent="171" name="ETUDIANT_UTILISATEUR_FK">
+    <foreign-key id="208" parent="171" name="ETUDIANT_UTILISATEUR_FK">
       <ColNames>LOGIN</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
@@ -466,7 +419,7 @@ ID_G</ColNames>
       <RefKeyName>PRIMARY_KEY_5</RefKeyName>
       <RefTableName>UTILISATEUR</RefTableName>
     </foreign-key>
-    <foreign-key id="217" parent="171" name="ETUDIANT_FILIERE_FK">
+    <foreign-key id="209" parent="171" name="ETUDIANT_FILIERE_FK">
       <ColNames>ID_F</ColNames>
       <OnDelete>restrict</OnDelete>
       <OnUpdate>restrict</OnUpdate>
@@ -474,7 +427,7 @@ ID_G</ColNames>
       <RefKeyName>PRIMARY_KEY_F</RefKeyName>
       <RefTableName>FILIERE</RefTableName>
     </foreign-key>
-    <index id="218" parent="171" name="CONSTRAINT_INDEX_F">
+    <index id="210" parent="171" name="CONSTRAINT_INDEX_F">
       <AutoCreated>1</AutoCreated>
       <ColNames>LOGIN</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -482,7 +435,7 @@ ID_G</ColNames>
       <SourceTextLength>81</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <index id="219" parent="171" name="PRIMARY_KEY_F0">
+    <index id="211" parent="171" name="PRIMARY_KEY_F0">
       <AutoCreated>1</AutoCreated>
       <ColNames>LOGIN</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -490,32 +443,32 @@ ID_G</ColNames>
       <SourceTextLength>76</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <index id="220" parent="171" name="ETUDIANT_FILIERE_FK_INDEX_F">
+    <index id="212" parent="171" name="ETUDIANT_FILIERE_FK_INDEX_F">
       <AutoCreated>1</AutoCreated>
       <ColNames>ID_F</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>23</ObjectId>
       <SourceTextLength>82</SourceTextLength>
     </index>
-    <key id="221" parent="171" name="ETUDIANT_PK">
+    <key id="213" parent="171" name="ETUDIANT_PK">
       <ColNames>LOGIN</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="222" parent="171" name="CONSTRAINT_F">
+    <key id="214" parent="171" name="CONSTRAINT_F">
       <ColNames>LOGIN</ColNames>
       <NameSurrogate>1</NameSurrogate>
     </key>
-    <column id="223" parent="172" name="ID_F">
+    <column id="215" parent="172" name="ID_F">
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null(2)</SequenceIdentity>
+      <SequenceIdentity>null(6)</SequenceIdentity>
     </column>
-    <column id="224" parent="172" name="NOM">
+    <column id="216" parent="172" name="NOM">
       <DataType>CHAR(30)|0s</DataType>
       <Position>2</Position>
     </column>
-    <index id="225" parent="172" name="PRIMARY_KEY_F">
+    <index id="217" parent="172" name="PRIMARY_KEY_F">
       <AutoCreated>1</AutoCreated>
       <ColNames>ID_F</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -523,75 +476,55 @@ ID_G</ColNames>
       <SourceTextLength>73</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <key id="226" parent="172" name="FILIERE_PK">
+    <key id="218" parent="172" name="FILIERE_PK">
       <ColNames>ID_F</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="227" parent="173" name="ID_G">
+    <column id="219" parent="173" name="ID_G">
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <SequenceIdentity>null(8)</SequenceIdentity>
     </column>
-    <column id="228" parent="173" name="LOGIN">
-      <DataType>CHAR(15)|0s</DataType>
+    <column id="220" parent="173" name="NOM">
+      <DataType>CHAR(30)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <foreign-key id="229" parent="173" name="GROUP_FK">
-      <ColNames>LOGIN</ColNames>
-      <OnDelete>restrict</OnDelete>
-      <OnUpdate>restrict</OnUpdate>
-      <RefColNames>LOGIN</RefColNames>
-      <RefKeyName>CONSTRAINT_INDEX_F</RefKeyName>
-      <RefTableName>ETUDIANT</RefTableName>
-    </foreign-key>
-    <index id="230" parent="173" name="PRIMARY_KEY_7D">
-      <AutoCreated>1</AutoCreated>
-      <ColNames>ID_G
-LOGIN</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>48</ObjectId>
-      <SourceTextLength>82</SourceTextLength>
-      <Unique>1</Unique>
-    </index>
-    <index id="231" parent="173" name="GROUP_COURS_FK1_INDEX_7">
+    <index id="221" parent="173" name="GROUP_FK1_INDEX_7">
       <AutoCreated>1</AutoCreated>
       <ColNames>ID_G</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>55</ObjectId>
-      <SourceTextLength>83</SourceTextLength>
+      <ObjectId>46</ObjectId>
+      <SourceTextLength>77</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <index id="232" parent="173" name="GROUP_FK_INDEX_7">
-      <AutoCreated>1</AutoCreated>
-      <ColNames>LOGIN</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>50</ObjectId>
-      <SourceTextLength>70</SourceTextLength>
-    </index>
-    <key id="233" parent="173" name="GROUP_PK">
-      <ColNames>ID_G
-LOGIN</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="234" parent="174" name="ID_G">
+    <column id="222" parent="174" name="ID_G">
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="235" parent="174" name="ID_C">
+    <column id="223" parent="174" name="ID_C">
       <DataType>INT|0s</DataType>
       <Position>2</Position>
     </column>
-    <foreign-key id="236" parent="174" name="GROUP_COURS_FK1">
+    <column id="224" parent="174" name="ID_F">
+      <DataType>INT|0s</DataType>
+      <Position>3</Position>
+    </column>
+    <column id="225" parent="174" name="TAUX_H">
+      <DataType>NUMERIC(6,2)|0s</DataType>
+      <Position>4</Position>
+    </column>
+    <foreign-key id="226" parent="174" name="GROUP_COURS_FK1">
       <ColNames>ID_G</ColNames>
       <OnDelete>restrict</OnDelete>
       <OnUpdate>restrict</OnUpdate>
       <RefColNames>ID_G</RefColNames>
-      <RefKeyName>GROUP_COURS_FK1_INDEX_7</RefKeyName>
-      <RefTableName>GROUPE</RefTableName>
+      <RefKeyName>GROUP_FK1_INDEX_7</RefKeyName>
+      <RefTableName>GROUPS</RefTableName>
     </foreign-key>
-    <foreign-key id="237" parent="174" name="GROUP_COURS_FK2">
+    <foreign-key id="227" parent="174" name="GROUP_COURS_FK2">
       <ColNames>ID_C</ColNames>
       <OnDelete>restrict</OnDelete>
       <OnUpdate>restrict</OnUpdate>
@@ -599,43 +532,7 @@ LOGIN</ColNames>
       <RefKeyName>COURS_U_INDEX_3</RefKeyName>
       <RefTableName>COURS</RefTableName>
     </foreign-key>
-    <index id="238" parent="174" name="PRIMARY_KEY_F7">
-      <AutoCreated>1</AutoCreated>
-      <ColNames>ID_G</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>53</ObjectId>
-      <SourceTextLength>78</SourceTextLength>
-      <Unique>1</Unique>
-    </index>
-    <index id="239" parent="174" name="GROUP_COURS_FK2_INDEX_F">
-      <AutoCreated>1</AutoCreated>
-      <ColNames>ID_C</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>57</ObjectId>
-      <SourceTextLength>81</SourceTextLength>
-    </index>
-    <key id="240" parent="174" name="GROUP_COURS_PK">
-      <ColNames>ID_G</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="241" parent="175" name="ID_G">
-      <DataType>INT|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-    </column>
-    <column id="242" parent="175" name="ID_F">
-      <DataType>INT|0s</DataType>
-      <Position>2</Position>
-    </column>
-    <foreign-key id="243" parent="175" name="GROUP_FILIERE_FK1">
-      <ColNames>ID_G</ColNames>
-      <OnDelete>restrict</OnDelete>
-      <OnUpdate>restrict</OnUpdate>
-      <RefColNames>ID_G</RefColNames>
-      <RefKeyName>GROUP_COURS_FK1_INDEX_7</RefKeyName>
-      <RefTableName>GROUPE</RefTableName>
-    </foreign-key>
-    <foreign-key id="244" parent="175" name="GROUP_FILIERE_FK2">
+    <foreign-key id="228" parent="174" name="FK_F">
       <ColNames>ID_F</ColNames>
       <OnDelete>restrict</OnDelete>
       <OnUpdate>restrict</OnUpdate>
@@ -643,31 +540,101 @@ LOGIN</ColNames>
       <RefKeyName>PRIMARY_KEY_F</RefKeyName>
       <RefTableName>FILIERE</RefTableName>
     </foreign-key>
-    <index id="245" parent="175" name="PRIMARY_KEY_8">
+    <index id="229" parent="174" name="CRENAUX_GROUPE_ID_G_FK_INDEX_F">
+      <AutoCreated>1</AutoCreated>
+      <ColNames>ID_G
+ID_C</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>60</ObjectId>
+      <SourceTextLength>103</SourceTextLength>
+      <Unique>1</Unique>
+    </index>
+    <index id="230" parent="174" name="PRIMARY_KEY_F7">
       <AutoCreated>1</AutoCreated>
       <ColNames>ID_G</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>60</ObjectId>
-      <SourceTextLength>79</SourceTextLength>
+      <ObjectId>49</ObjectId>
+      <SourceTextLength>78</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <index id="246" parent="175" name="GROUP_FILIERE_FK2_INDEX_8">
+    <index id="231" parent="174" name="GROUP_COURS_FK2_INDEX_F">
+      <AutoCreated>1</AutoCreated>
+      <ColNames>ID_C</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>54</ObjectId>
+      <SourceTextLength>81</SourceTextLength>
+    </index>
+    <index id="232" parent="174" name="FK_F_INDEX_F">
       <AutoCreated>1</AutoCreated>
       <ColNames>ID_F</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>63</ObjectId>
-      <SourceTextLength>85</SourceTextLength>
+      <ObjectId>51</ObjectId>
+      <SourceTextLength>70</SourceTextLength>
     </index>
-    <key id="247" parent="175" name="GROUP_FILIERE_PK">
+    <key id="233" parent="174" name="GROUP_COURS_PK">
       <ColNames>ID_G</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="248" parent="176" name="LOGIN">
+    <column id="234" parent="175" name="ID_G">
+      <DataType>INT|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="235" parent="175" name="LOGIN">
+      <DataType>CHAR(15)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <foreign-key id="236" parent="175" name="GROUP_FK1">
+      <ColNames>ID_G</ColNames>
+      <OnDelete>restrict</OnDelete>
+      <OnUpdate>restrict</OnUpdate>
+      <RefColNames>ID_G</RefColNames>
+      <RefKeyName>GROUP_FK1_INDEX_7</RefKeyName>
+      <RefTableName>GROUPS</RefTableName>
+    </foreign-key>
+    <foreign-key id="237" parent="175" name="GROUP_FK">
+      <ColNames>LOGIN</ColNames>
+      <OnDelete>restrict</OnDelete>
+      <OnUpdate>restrict</OnUpdate>
+      <RefColNames>LOGIN</RefColNames>
+      <RefKeyName>CONSTRAINT_INDEX_F</RefKeyName>
+      <RefTableName>ETUDIANT</RefTableName>
+    </foreign-key>
+    <index id="238" parent="175" name="PRIMARY_KEY_2">
+      <AutoCreated>1</AutoCreated>
+      <ColNames>ID_G
+LOGIN</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>41</ObjectId>
+      <SourceTextLength>89</SourceTextLength>
+      <Unique>1</Unique>
+    </index>
+    <index id="239" parent="175" name="GROUP_FK1_INDEX_2">
+      <AutoCreated>1</AutoCreated>
+      <ColNames>ID_G</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>45</ObjectId>
+      <SourceTextLength>78</SourceTextLength>
+    </index>
+    <index id="240" parent="175" name="GROUP_FK_INDEX_2">
+      <AutoCreated>1</AutoCreated>
+      <ColNames>LOGIN</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>43</ObjectId>
+      <SourceTextLength>78</SourceTextLength>
+    </index>
+    <key id="241" parent="175" name="GROUP_PK">
+      <ColNames>ID_G
+LOGIN</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="242" parent="176" name="LOGIN">
       <DataType>CHAR(15)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <foreign-key id="249" parent="176" name="RESPONSABLE_UTILISATEUR_LOGIN_FK">
+    <foreign-key id="243" parent="176" name="RESPONSABLE_UTILISATEUR_LOGIN_FK">
       <ColNames>LOGIN</ColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
@@ -675,7 +642,7 @@ LOGIN</ColNames>
       <RefKeyName>PRIMARY_KEY_5</RefKeyName>
       <RefTableName>UTILISATEUR</RefTableName>
     </foreign-key>
-    <index id="250" parent="176" name="PRIMARY_KEY_E">
+    <index id="244" parent="176" name="PRIMARY_KEY_E">
       <AutoCreated>1</AutoCreated>
       <ColNames>LOGIN</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -683,85 +650,75 @@ LOGIN</ColNames>
       <SourceTextLength>78</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <key id="251" parent="176" name="RESPONSABLE_PK">
+    <key id="245" parent="176" name="RESPONSABLE_PK">
       <ColNames>LOGIN</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="252" parent="177" name="ID_S">
+    <column id="246" parent="177" name="ID_S">
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null(4)</SequenceIdentity>
+      <SequenceIdentity>null(13)</SequenceIdentity>
     </column>
-    <column id="253" parent="177" name="NUM">
+    <column id="247" parent="177" name="NUM">
       <DataType>CHAR(15)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="254" parent="177" name="BATIMENT">
+    <column id="248" parent="177" name="BATIMENT">
       <DataType>CHAR(15)|0s</DataType>
+      <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="255" parent="177" name="VIDEO_P">
+    <column id="249" parent="177" name="VIDEO_P">
       <DataType>BOOLEAN|0s</DataType>
       <Position>4</Position>
     </column>
-    <index id="256" parent="177" name="CRENAUX_SALLE_ID_FK_INDEX_4">
+    <index id="250" parent="177" name="CRENAUX_SALLE_ID_FK_INDEX_4">
       <AutoCreated>1</AutoCreated>
       <ColNames>ID_S</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>71</ObjectId>
+      <ObjectId>63</ObjectId>
       <SourceTextLength>86</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <index id="257" parent="177" name="PRIMARY_KEY_4">
+    <index id="251" parent="177" name="PRIMARY_KEY_4">
       <AutoCreated>1</AutoCreated>
-      <ColNames>NUM</ColNames>
+      <ColNames>NUM
+BATIMENT</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>28</ObjectId>
-      <SourceTextLength>70</SourceTextLength>
+      <SourceTextLength>82</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <index id="258" parent="177" name="SALLE_U_INDEX_4">
-      <AutoCreated>1</AutoCreated>
-      <ColNames>BATIMENT
-NUM</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>30</ObjectId>
-      <SourceTextLength>85</SourceTextLength>
-      <Unique>1</Unique>
-    </index>
-    <key id="259" parent="177" name="SALLE_PK">
-      <ColNames>NUM</ColNames>
+    <key id="252" parent="177" name="SALLE_PK">
+      <ColNames>NUM
+BATIMENT</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="260" parent="177" name="SALLE_U">
-      <ColNames>BATIMENT
-NUM</ColNames>
-    </key>
-    <column id="261" parent="178" name="LOGIN">
+    <column id="253" parent="178" name="LOGIN">
       <DataType>CHAR(15)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="262" parent="178" name="PASSWORD">
+    <column id="254" parent="178" name="PASSWORD">
       <DataType>CHAR|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="263" parent="178" name="NOM">
+    <column id="255" parent="178" name="NOM">
       <DataType>CHAR(30)|0s</DataType>
       <Position>3</Position>
     </column>
-    <column id="264" parent="178" name="PRENOM">
+    <column id="256" parent="178" name="PRENOM">
       <DataType>CHAR(30)|0s</DataType>
       <Position>4</Position>
     </column>
-    <column id="265" parent="178" name="EMAIL">
+    <column id="257" parent="178" name="EMAIL">
       <DataType>CHAR(50)|0s</DataType>
       <Position>5</Position>
     </column>
-    <index id="266" parent="178" name="PRIMARY_KEY_5">
+    <index id="258" parent="178" name="PRIMARY_KEY_5">
       <AutoCreated>1</AutoCreated>
       <ColNames>LOGIN</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -769,7 +726,7 @@ NUM</ColNames>
       <SourceTextLength>78</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <key id="267" parent="178" name="UTILISATEUR_PK">
+    <key id="259" parent="178" name="UTILISATEUR_PK">
       <ColNames>LOGIN</ColNames>
       <Primary>1</Primary>
     </key>
