@@ -91,6 +91,39 @@ public class ManagerController implements Initializable {
     @FXML
     private Label infomessage;
 
+    @FXML
+    private ComboBox<?> md_bat;
+
+    @FXML
+    private ComboBox<?> md_c;
+
+    @FXML
+    private DatePicker md_date;
+
+    @FXML
+    private ComboBox<?> md_ens;
+
+    @FXML
+    private ComboBox<?> md_f;
+
+    @FXML
+    private Spinner<?> md_h_d;
+
+    @FXML
+    private Spinner<?> md_h_f;
+
+    @FXML
+    private Spinner<?> md_m_d;
+
+    @FXML
+    private Spinner<?> md_m_f;
+
+    @FXML
+    private ComboBox<?> md_n;
+
+    @FXML
+    private ComboBox<?> md_s;
+
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -119,6 +152,7 @@ public class ManagerController implements Initializable {
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             infomessage.setText("Slectionner ce que vous voulez modifier");
             scene2.toFront();
+            md_date.setValue(java.time.LocalDate.now());
         } else if (e.getSource() == btnplanning) {
             lblstatus.setText("Planning");
             lblstatusmini.setText("/home/planning");
