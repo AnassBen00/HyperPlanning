@@ -1,24 +1,24 @@
-drop table IF EXISTS RESPONSABLE;
+drop table if exists RESPONSABLE;
 
-drop table IF EXISTS GROUP_ETUDIANT;
+drop table if exists GROUP_ETUDIANT;
 
-drop table IF EXISTS ETUDIANT;
+drop table if exists ETUDIANT;
 
-drop table IF EXISTS  CRENEAUX;
+drop table if exists CRENEAUX;
 
-drop table  IF EXISTS SALLE;
+drop table if exists SALLE;
 
-drop table IF EXISTS  GROUP_COURS;
+drop table if exists GROUP_COURS;
 
-drop table IF EXISTS FILIERE;
+drop table if exists FILIERE;
 
-drop table IF EXISTS COURS;
+drop table if exists COURS;
 
-drop table IF EXISTS ENSEIGNANT;
+drop table if exists ENSEIGNANT;
 
-drop table IF EXISTS UTILISATEUR;
+drop table if exists UTILISATEUR;
 
-drop table IF EXISTS GROUPS;
+drop table if exists GROUPS;
 
 
 
