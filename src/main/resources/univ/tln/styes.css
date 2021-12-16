@@ -40,3 +40,19 @@
     -fx-background-color: #7d49a8;
 }
 
+.combo-box-base {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-border-color: #a064d9
+}
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-body-color: #ffffff;
+}
+
+.spinner {
+    -fx-border-color: #a064d9
+}
+
+
