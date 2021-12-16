@@ -94,7 +94,7 @@ CREATE TABLE if not exists SALLE(
 CREATE TABLE if not exists COURS (
                                      ID_C INT NOT NULL AUTO_INCREMENT,
                                      NATURE CHAR(15),
-                                     NOM CHAR(15),
+                                     NOM CHAR(50),
                                      LOGIN CHAR(15) not null,
                                      constraint COURS_PK
                                          primary key (NOM,LOGIN,NATURE),
@@ -126,7 +126,7 @@ CREATE TABLE if not exists GROUP_COURS (
                                            ID_F INT,
                                            TAUX_H NUMERIC (6,2),
                                            constraint GROUP_COURS_PK
-                                               primary key (ID_G),
+                                               primary key (ID_G,ID_C),
                                             CONSTRAINT fk_f foreign key (ID_F)
                                                 references FILIERE(ID_F),
                                            constraint GROUP_COURS_FK1
@@ -417,12 +417,26 @@ insert into COURS(LOGIN, nature, nom) values ( '1jJQ0','CM','Anglais 1' );
 insert into COURS(LOGIN , NATURE ,nom) values ('LmaqA' , 'TP' , 'JAVA');
 insert into COURS(LOGIN , NATURE,nom) values ('NrsB7' , 'CM' , 'UML');
 insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'CM' , 'M_learning');
+insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'TD' , 'M_learning');
+insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'CM' , 'Traitement_db_1');
+insert into COURS(LOGIN , NATURE ,nom) values ('XF4yo' , 'TP' , 'JAVA');
+insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'COURS' , 'JAVA');
+insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'COURS' , 'Analyse_conception_II');
+
+
 
 INSERT into GROUPS(NOM) values ( 'anglais L1' ),('DID master1'),('DID L1'),('MIR L1'),('INFO L1'),('ECO L1'),('MIAGE L1');
 
 insert into GROUP_ETUDIANT(ID_G,LOGIN) values (1,'88PVC'),(1,'U2WAs'),(1,'7aH93'),(1,'SDQyB'),(1,'lYF6R'),(1,'MOgJV'),(1,'VTq3z'),(1,'tybMi'),(1,'SfnDp'),(1,'u5elS'),(1,'hXUTx'),(1,'Iglkc'),(1,'kvIEo'),(1,'V0C2V'),(1,'McAHi'),(1,'hV23S'),(1,'2WVJA'),(1,'KBXO7');
-
+insert into GROUP_ETUDIANT(ID_G,LOGIN) select 2,login from ETUDIANT where NVX_ETUDE='master 1' LIMIT 14;
+insert into GROUP_ETUDIANT(ID_G,LOGIN) select 3,login from ETUDIANT where NVX_ETUDE='licence 1' LIMIT 14;
+insert into GROUP_ETUDIANT(ID_G,LOGIN) select 5,login from ETUDIANT where NVX_ETUDE='licence 1' and login not in (select login from GROUP_ETUDIANT where ID_G=3) LIMIT 14;
 insert into GROUP_COURS(ID_G, ID_C) values ( 1,1 ) ;
+insert into GROUP_COURS(ID_G, ID_C,ID_F,TAUX_H) values ( 2,2,1,23.5) ;
+insert into GROUP_COURS(ID_G, ID_C,ID_F,TAUX_H) values ( 2,9,1,9) ;
+insert into GROUP_COURS(ID_G, ID_C,ID_F,TAUX_H) values ( 3,9,1,13) ;
+insert into GROUP_COURS(ID_G, ID_C,ID_F,TAUX_H) values ( 5,6,3,10.7) ;
+
 INSERT INTO CRENEAUX (DATE_D, DATE_F, ID_S, ID_G,ID_C) VALUES ( '2021-12-15 09:45:23.000000
 ','2021-12-15 12:30:00.000000',1,1,1);
 
