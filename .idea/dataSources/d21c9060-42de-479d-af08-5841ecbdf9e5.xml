@@ -176,35 +176,35 @@
       <Admin>1</Admin>
       <ObjectId>2</ObjectId>
     </user>
-    <sequence id="164" parent="162" name="SYSTEM_SEQUENCE_043FFA24_0A5B_4C6A_A4C5_11095AD4562B">
-      <AutoCreated>1</AutoCreated>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>31</ObjectId>
-      <SequenceIdentity>null(2)</SequenceIdentity>
-    </sequence>
-    <sequence id="165" parent="162" name="SYSTEM_SEQUENCE_3394F1CA_7F5D_4481_854B_5449C165DC6C">
-      <AutoCreated>1</AutoCreated>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>27</ObjectId>
-      <SequenceIdentity>null(13)</SequenceIdentity>
-    </sequence>
-    <sequence id="166" parent="162" name="SYSTEM_SEQUENCE_5E09AB92_9844_4B9F_A94D_73B0BE25F7F8">
-      <AutoCreated>1</AutoCreated>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>39</ObjectId>
-      <SequenceIdentity>null(8)</SequenceIdentity>
-    </sequence>
-    <sequence id="167" parent="162" name="SYSTEM_SEQUENCE_9D794EE4_8040_4AB9_B800_1EB337AA65AA">
+    <sequence id="164" parent="162" name="SYSTEM_SEQUENCE_2B4BB96E_A92F_49AA_9AF7_A7E6BAE6D8FC">
       <AutoCreated>1</AutoCreated>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>15</ObjectId>
       <SequenceIdentity>null(6)</SequenceIdentity>
     </sequence>
+    <sequence id="165" parent="162" name="SYSTEM_SEQUENCE_31B14005_693C_4FAD_AEFD_BA5AABAD71A5">
+      <AutoCreated>1</AutoCreated>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>27</ObjectId>
+      <SequenceIdentity>null(13)</SequenceIdentity>
+    </sequence>
+    <sequence id="166" parent="162" name="SYSTEM_SEQUENCE_AB12D88B_96F2_484A_9ED5_D9394A27E949">
+      <AutoCreated>1</AutoCreated>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>31</ObjectId>
+      <SequenceIdentity>null(10)</SequenceIdentity>
+    </sequence>
+    <sequence id="167" parent="162" name="SYSTEM_SEQUENCE_D0F598C9_A1EC_4409_959E_7C11F23A86AA">
+      <AutoCreated>1</AutoCreated>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>39</ObjectId>
+      <SequenceIdentity>null(8)</SequenceIdentity>
+    </sequence>
     <table id="168" parent="162" name="COURS">
       <ObjectId>30</ObjectId>
     </table>
     <table id="169" parent="162" name="CRENEAUX">
-      <ObjectId>56</ObjectId>
+      <ObjectId>57</ObjectId>
     </table>
     <table id="170" parent="162" name="ENSEIGNANT">
       <ObjectId>10</ObjectId>
@@ -237,7 +237,7 @@
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null(2)</SequenceIdentity>
+      <SequenceIdentity>null(10)</SequenceIdentity>
     </column>
     <column id="180" parent="168" name="NATURE">
       <DataType>CHAR(15)|0s</DataType>
@@ -245,7 +245,7 @@
       <Position>2</Position>
     </column>
     <column id="181" parent="168" name="NOM">
-      <DataType>CHAR(15)|0s</DataType>
+      <DataType>CHAR(50)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
@@ -335,7 +335,7 @@ ID_C</ColNames>
       <OnUpdate>restrict</OnUpdate>
       <RefColNames>ID_G
 ID_C</RefColNames>
-      <RefKeyName>CRENAUX_GROUPE_ID_G_FK_INDEX_F</RefKeyName>
+      <RefKeyName>PRIMARY_KEY_F7</RefKeyName>
       <RefTableName>GROUP_COURS</RefTableName>
     </foreign-key>
     <index id="196" parent="169" name="PRIMARY_KEY_9">
@@ -344,7 +344,7 @@ ID_C</RefColNames>
 ID_S
 ID_G</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>57</ObjectId>
+      <ObjectId>58</ObjectId>
       <SourceTextLength>92</SourceTextLength>
       <Unique>1</Unique>
     </index>
@@ -360,7 +360,7 @@ ID_G</ColNames>
       <ColNames>ID_G
 ID_C</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>59</ObjectId>
+      <ObjectId>60</ObjectId>
       <SourceTextLength>93</SourceTextLength>
     </index>
     <key id="199" parent="169" name="CRENAUX_PK">
@@ -506,6 +506,7 @@ ID_G</ColNames>
     </column>
     <column id="223" parent="174" name="ID_C">
       <DataType>INT|0s</DataType>
+      <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
     <column id="224" parent="174" name="ID_F">
@@ -540,28 +541,27 @@ ID_G</ColNames>
       <RefKeyName>PRIMARY_KEY_F</RefKeyName>
       <RefTableName>FILIERE</RefTableName>
     </foreign-key>
-    <index id="229" parent="174" name="CRENAUX_GROUPE_ID_G_FK_INDEX_F">
+    <index id="229" parent="174" name="PRIMARY_KEY_F7">
       <AutoCreated>1</AutoCreated>
       <ColNames>ID_G
 ID_C</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>60</ObjectId>
-      <SourceTextLength>103</SourceTextLength>
+      <ObjectId>49</ObjectId>
+      <SourceTextLength>86</SourceTextLength>
       <Unique>1</Unique>
     </index>
-    <index id="230" parent="174" name="PRIMARY_KEY_F7">
+    <index id="230" parent="174" name="GROUP_COURS_FK1_INDEX_F">
       <AutoCreated>1</AutoCreated>
       <ColNames>ID_G</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>49</ObjectId>
-      <SourceTextLength>78</SourceTextLength>
-      <Unique>1</Unique>
+      <ObjectId>53</ObjectId>
+      <SourceTextLength>81</SourceTextLength>
     </index>
     <index id="231" parent="174" name="GROUP_COURS_FK2_INDEX_F">
       <AutoCreated>1</AutoCreated>
       <ColNames>ID_C</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>54</ObjectId>
+      <ObjectId>55</ObjectId>
       <SourceTextLength>81</SourceTextLength>
     </index>
     <index id="232" parent="174" name="FK_F_INDEX_F">
@@ -572,7 +572,8 @@ ID_C</ColNames>
       <SourceTextLength>70</SourceTextLength>
     </index>
     <key id="233" parent="174" name="GROUP_COURS_PK">
-      <ColNames>ID_G</ColNames>
+      <ColNames>ID_G
+ID_C</ColNames>
       <Primary>1</Primary>
     </key>
     <column id="234" parent="175" name="ID_G">

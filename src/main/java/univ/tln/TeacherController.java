@@ -343,7 +343,7 @@ public class TeacherController implements Initializable {
             l.add(cours);
 
             Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][0]);
-            d1 = creneau[r][0];
+
             System.out.println(creneau[r][0]);
 
             Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);
@@ -408,6 +408,7 @@ public class TeacherController implements Initializable {
 
             Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][0]);
             Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);
+
             x.setTime(date1);
             int dayOfWeek = x.get(x.DAY_OF_WEEK);
             datetopxl(dayOfWeek);
@@ -444,7 +445,10 @@ public class TeacherController implements Initializable {
                 cours.setBackground(new Background(new BackgroundFill(Color.rgb(5, 52, 14), CornerRadii.EMPTY, Insets.EMPTY)));
             else if (creneau[r][6].trim().equals("CM"))
                 cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
+            int finalR = r;
             cours.setOnMouseClicked((mouseEvent) -> {
+                System.out.println(creneau[finalR][0]);
+                d1 = creneau[finalR][0];
                 switchtopopupscene();
             });
             scene2.getChildren().add(cours);
@@ -496,7 +500,7 @@ public class TeacherController implements Initializable {
         setcalendar();
         setcalendar2();
 
-        System.out.println("updated");
+        //System.out.println("updated");
     }
 
 

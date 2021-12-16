@@ -64,6 +64,8 @@ public class LoginController extends Application {
 
   public void validatelogin(){ // on verifie le login
 
+
+
       EnseignantDAO enseignantDAO = new EnseignantDAO();
       EtudiantDAO etudiantDAO = new EtudiantDAO();
       ResponsableDao responsableDao = new ResponsableDao();
