@@ -1,15 +1,23 @@
 package univ.tln.entities.utilisateurs;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class Etudiant extends Utilisateur{
 
     @Getter
-    private String id;
+    @Setter
+    private String nvxEtude;
 
-    public Etudiant(String login, String password, String nom, String prenom, String email, String id) {
+    @Getter
+    @Setter
+    private String promo;
+
+    @Getter
+    @Setter
+    private int idFiliere;
+
+    public Etudiant(String login, String password, String nom, String prenom, String email, String login1) {
         super(login, password, nom, prenom, email);
-        this.id = id;
     }
-
 }

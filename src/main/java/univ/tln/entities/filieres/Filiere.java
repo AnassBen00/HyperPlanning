@@ -11,4 +11,9 @@ public class Filiere {
     @Getter
     @Setter
     private String nomDuFiliere;
+
+    public Filiere(String id, String nomDuFiliere) {
+        this.id = id;
+        this.nomDuFiliere = nomDuFiliere;
+    }
 }
