@@ -27,10 +27,12 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 //import static univ.tln.LoginController.getUsernametxt;
 
@@ -107,16 +109,16 @@ public class ManagerController implements Initializable {
     private ComboBox<?> md_f;
 
     @FXML
-    private Spinner<?> md_h_d;
+    private Spinner<Integer> md_h_d;
 
     @FXML
-    private Spinner<?> md_h_f;
+    private Spinner<Integer> md_h_f;
 
     @FXML
-    private Spinner<?> md_m_d;
+    private Spinner<Integer> md_m_d;
 
     @FXML
-    private Spinner<?> md_m_f;
+    private Spinner<Integer> md_m_f;
 
     @FXML
     private ComboBox<?> md_n;
@@ -126,10 +128,24 @@ public class ManagerController implements Initializable {
 
     @Override
     @FXML
+
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // FXMLLoader loader =new FXMLLoader(App.class.getResource("hello-view.fxml"));
         castdatetime();
+AtomicInteger x = new AtomicInteger();
+        md_h_d.valueProperty().addListener((obs, oldValue, newValue) ->{
+            SpinnerValueFactory<Integer> valuehoure2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(newValue, 19, 1);
+            md_h_f.setValueFactory(valuehoure2);
+
+
+            //System.out.println("New value: "+newValue);
+        });
         try {
+            md_h_d.setValueFactory(valuehoure);
+
+            md_m_d.setValueFactory(valueminute);
+            md_m_f.setValueFactory(valueminute2);
             drawrect(); //on dessine l'emploie du temps
         } catch (ParseException e) {
             e.printStackTrace();
@@ -137,6 +153,11 @@ public class ManagerController implements Initializable {
 
         setcalendar();
     }
+    SpinnerValueFactory<Integer> valuehoure = new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 19, 1);
+    SpinnerValueFactory<Integer> valueminute = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 1);
+
+    SpinnerValueFactory<Integer> valueminute2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 1);
+
 
     public void handleclicks(ActionEvent e) { //pour changer l'ecran
 
@@ -146,6 +167,7 @@ public class ManagerController implements Initializable {
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             infomessage.setText("");
             scene3.toFront();
+
         } else if (e.getSource() == btnmodify) {
             lblstatus.setText("Modify");
             lblstatusmini.setText("/home/modify");
@@ -153,6 +175,17 @@ public class ManagerController implements Initializable {
             infomessage.setText("Slectionner ce que vous voulez modifier");
             scene2.toFront();
             md_date.setValue(java.time.LocalDate.now());
+            md_date.setDayCellFactory(picker -> new DateCell() {
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    LocalDate today = LocalDate.now();
+
+                    setDisable(empty || date.compareTo(today) < 0 );
+                }
+
+
+            });
+
         } else if (e.getSource() == btnplanning) {
             lblstatus.setText("Planning");
             lblstatusmini.setText("/home/planning");
@@ -283,7 +316,7 @@ public class ManagerController implements Initializable {
             }
 
 
-            System.out.println(Arrays.deepToString(creneau));
+            //System.out.println(Arrays.deepToString(creneau));
         } catch (SQLException e) {
             e.printStackTrace();
         }
