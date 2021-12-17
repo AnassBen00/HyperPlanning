@@ -4,7 +4,7 @@ import univ.tln.DatabaseConnection;
 
 import java.sql.*;
 
-public class ResponsableDao {
+public class ResponsableDAO {
     public boolean checkResponsable(String username, String password){
 
         DatabaseConnection connection = new DatabaseConnection();

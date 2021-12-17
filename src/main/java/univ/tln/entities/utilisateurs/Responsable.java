@@ -1,6 +1,5 @@
 package univ.tln.entities.utilisateurs;
 
-import lombok.Getter;
 
 public class Responsable extends Utilisateur{
 
