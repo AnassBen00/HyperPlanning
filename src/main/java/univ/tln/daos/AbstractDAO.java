@@ -1,6 +1,7 @@
 package univ.tln.daos;
 
 import lombok.extern.java.Log;
+import univ.tln.DatabaseConnection;
 import univ.tln.datasource.DBCPDataSource;
 import univ.tln.exceptions.DataAccessException;
 import univ.tln.exceptions.NotFoundException;
@@ -23,7 +24,9 @@ public abstract class AbstractDAO<E extends Object> implements DAO<E> {
         Connection _connection = null;
         PreparedStatement _findPS = null, _findAllPS = null, _persistPS = null, _updatePS = null;
         try {
-            _connection = DBCPDataSource.getConnection();
+            DatabaseConnection connection = new DatabaseConnection();
+            Connection connection1 = connection.connectDB();
+            _connection = connection1;
             _findPS = _connection.prepareStatement(findPS);
             _findAllPS = _connection.prepareStatement("SELECT * FROM " + getTableName());
             _persistPS = _connection.prepareStatement(persistPS, Statement.RETURN_GENERATED_KEYS);
@@ -68,18 +71,6 @@ public abstract class AbstractDAO<E extends Object> implements DAO<E> {
             throw new DataAccessException(e.getLocalizedMessage());
         }
         return Optional.ofNullable(entity);
-    }
-
-    @Override
-    public List<E> findAll() throws DataAccessException {
-        List<E> entityList = new ArrayList<>();
-        try {
-            ResultSet rs = findAllPS.executeQuery();
-            while (rs.next()) entityList.add(fromResultSet(rs));
-        } catch (SQLException e) {
-            throw new DataAccessException(e.getLocalizedMessage());
-        }
-        return entityList;
     }
 
     protected abstract E fromResultSet(ResultSet resultSet) throws SQLException;

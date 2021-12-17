@@ -12,12 +12,13 @@ import java.sql.*;
 public class EnseignantDAO extends AbstractDAO<Enseignant>{
     public EnseignantDAO() {
         super("INSERT INTO UTILISATEUR(LOGIN, NOM, PRENOM, PASSWORD, EMAIL) VALUES (?,?,?,?,?)",
-                "UPDATE UTILISATEUR SET LOGIN=?, NOM=?, PRENOM=?, PASSWORD=?, EMAIL=? WHERE LOGIN=?");
+                "UPDATE UTILISATEUR SET LOGIN=?, NOM=?, PRENOM=?, PASSWORD=?, EMAIL=? WHERE LOGIN=?",
+                "SELECT * from ENSEIGNANT joint UTILISATEUR ON ENSEIGNANT.login = UTILISATEUR.login  ");
     }
 
     @Override
     public String getTableName() {
-        return "CRENEAUX";
+        return "ENSEIGNANT";
     }
 
     @Override
@@ -60,6 +61,21 @@ public class EnseignantDAO extends AbstractDAO<Enseignant>{
             return null;
         }
         return m;
+    }
+
+    public void findAll() {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * from ENSEIGNANT joint UTILISATEUR ON ENSEIGNANT.login = UTILISATEUR.login  ");
+            ResultSet resultset = statement.executeQuery();
+
+            while (resultset.next()) {
+                System.out.println("id" + resultset.getString("id") + ",Nom" + resultset.getString("nom") +
+                        ",Prenom" + resultset.getString("prenom") + ",Email" + resultset.getString("prenom"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

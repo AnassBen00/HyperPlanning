@@ -1,41 +1,45 @@
 package univ.tln.daos;
 
 import univ.tln.DatabaseConnection;
+import univ.tln.entities.utilisateurs.Enseignant;
+import univ.tln.entities.utilisateurs.Responsable;
+import univ.tln.entities.utilisateurs.Utilisateur;
+import univ.tln.exceptions.DataAccessException;
 
 import java.sql.*;
 
-public class ResponsableDAO {
+public class ResponsableDAO extends AbstractDAO<Responsable>{
+    public ResponsableDAO() {
+        super("INSERT INTO UTILISATEUR(LOGIN, NOM, PRENOM, PASSWORD, EMAIL) VALUES (?,?,?,?,?)",
+                "UPDATE UTILISATEUR SET LOGIN=?, NOM=?, PRENOM=?, PASSWORD=?, EMAIL=? WHERE LOGIN=?",
+                "SELECT * from RESPONSABLE joint UTILISATEUR ON ENSEIGNANT.login = UTILISATEUR.login  ");
+    }
+
+    @Override
+    public String getTableName() {
+        return "RESPONSABLE";
+    }
+
+    @Override
+    protected Responsable fromResultSet(ResultSet resultSet) throws SQLException {
+        return (Responsable) Utilisateur.builder()
+                .login(resultSet.getString("LOGIN"))
+                .nom(resultSet.getString("NOM"))
+                .prenom(resultSet.getString("PRENOM"))
+                .password(resultSet.getString("PASSWORD"))
+                .email(resultSet.getString("EMAIL"))
+                .build();
+    }
+
     public boolean checkResponsable(String username, String password){
-
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection connection1 = connection.connectDB();
-
-        /*String prof ="PROF";
-        String etud="ETU";
-        String res="RES";*/
-
-        String verifylogin=  "SELECT  count(1) from UTILISATEUR join RESPONSABLE on (UTILISATEUR.LOGIN = RESPONSABLE.LOGIN) where RESPONSABLE.LOGIN= '"+username+"' AND PASSWORD = HASH('SHA256','"+password+"',1000)";
-
-        //LoginController.user1= String.valueOf(usernametxt.getText());*
-        //System.out.println(getUsernametxt()+"wtffffffffff");
-
         try {
-            Statement statement = connection1.createStatement();
-            Statement statement2 = connection1.createStatement();
-            ResultSet queryResult = statement.executeQuery(verifylogin);
-            //ResultSet roleresult = statement2.executeQuery(getrole);
-            //roleresult.next();
-            //String R = roleresult.getString("ROLE");
+            Statement statement = connection.createStatement();
+            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join RESPONSABLE on (UTILISATEUR.LOGIN = RESPONSABLE.LOGIN) where RESPONSABLE.LOGIN= '"+username+"' AND PASSWORD = HASH('SHA256','"+password+"',1000)");
 
             while ((queryResult.next())){
                 if( queryResult.getInt(1)==1){
-
-                    /*if(R.trim().equals(prof)) loginmessage.setText("welcome profesor");
-                    if(R.trim().equals(etud)) loginmessage.setText("welcome student");
-                    if(R.trim().equals(res)) loginmessage.setText("welcome manager");*/
                     return true;
-
-                }else return false;//loginmessage.setText("invalid try again");
+                }else return false;
             }
         }
         catch (
@@ -65,5 +69,58 @@ public class ResponsableDAO {
             return null;
         }
         return m;
+    }
+
+    public void findAll() {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * from RESPONSABLE joint UTILISATEUR ON RESPONSABLE.login = UTILISATEUR.login  ");
+            ResultSet resultset = statement.executeQuery();
+
+            while (resultset.next()) {
+                System.out.println("id" + resultset.getString("id") + ",Nom" + resultset.getString("nom") +
+                        ",Prenom" + resultset.getString("prenom") + ",Email" + resultset.getString("prenom"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Responsable persist(Responsable responsable) throws DataAccessException {
+        try {
+            persistPS.setString(1, responsable.getLogin());
+            persistPS.setString(2, responsable.getNom());
+            persistPS.setString(3,responsable.getPrenom());
+            persistPS.setString(4,responsable.getPassword());
+            persistPS.setString(5,responsable.getEmail());
+        } catch (SQLException throwables) {
+            throw new DataAccessException(throwables.getLocalizedMessage());
+        }
+        return super.persist();
+    }
+
+    @Override
+    public void remove(Object responsable) throws DataAccessException {
+        try {
+            connection.createStatement().execute("DELETE FROM " + getTableName() + " WHERE LOGIN=" + ((Responsable)responsable).getLogin());
+        } catch (SQLException throwables) {
+            throw new DataAccessException(throwables.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void update(Responsable responsable) throws DataAccessException {
+        try {
+            updatePS.setString(1, responsable.getLogin());
+            updatePS.setString(2, responsable.getNom());
+            updatePS.setString(3,responsable.getPrenom());
+            updatePS.setString(4,responsable.getPassword());
+            updatePS.setString(5,responsable.getEmail());
+        } catch (SQLException throwables) {
+            throw new DataAccessException(throwables.getLocalizedMessage());
+        }
+        super.update();
+
     }
 }

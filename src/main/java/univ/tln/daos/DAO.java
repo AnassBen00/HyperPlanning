@@ -24,14 +24,6 @@ public interface DAO<E extends Object> extends AutoCloseable {
     Optional<E> find(long id) throws DataAccessException;
 
     /**
-     * Return the complete list of entities managed by the DAO from the database.
-     *
-     * @return the list of entities managed by the DAO.
-     * @throws DataAccessException If there is a data access error (see message).
-     */
-    List<E> findAll() throws DataAccessException;
-
-    /**
      * Persists a new entity in the database.
      *
      * @param e The entity to be persisted.
