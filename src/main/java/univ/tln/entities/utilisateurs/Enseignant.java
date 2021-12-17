@@ -1,9 +1,5 @@
 package univ.tln.entities.utilisateurs;
 
-import lombok.Getter;
-import univ.tln.entities.creneaux.Creneau;
-
-import java.util.List;
 
 public class Enseignant extends Utilisateur{
 

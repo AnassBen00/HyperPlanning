@@ -235,7 +235,7 @@ AtomicInteger x = new AtomicInteger();
         Map<String, String> etudiants = new TreeMap<>() {
         };
         EtudiantDAO etudiantDAO = new EtudiantDAO();
-        for (Etudiant etudiant : etudiantDAO.findall()) {
+        for (Etudiant etudiant : etudiantDAO.findAll()) {
             etudiants.put(etudiant.getNom(), etudiant.getPrenom());
         }
         return etudiants;

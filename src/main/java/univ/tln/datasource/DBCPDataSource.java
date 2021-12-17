@@ -20,9 +20,6 @@ public class DBCPDataSource {
         ds.setMaxOpenPreparedStatements(100);
     }
 
-    private DBCPDataSource() {
-    }
-
     public static Connection getConnection() throws SQLException {
         return ds.getConnection();
     }

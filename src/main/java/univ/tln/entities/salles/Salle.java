@@ -12,7 +12,7 @@ public class Salle {
     private int id;
     @Getter
     @Setter
-    private String numSalle;
+    private String nomSalle;
     @Getter
     @Setter
     private String batiment;
@@ -20,9 +20,9 @@ public class Salle {
     @Setter
     private boolean videoProjecteur;
 
-    public Salle(int id, String numSalle, String batiment, boolean videoProjecteur) {
+    public Salle(int id, String nomSalle, String batiment, boolean videoProjecteur) {
         this.id = id;
-        this.numSalle = numSalle;
+        this.nomSalle = nomSalle;
         this.batiment = batiment;
         this.videoProjecteur = videoProjecteur;
     }
