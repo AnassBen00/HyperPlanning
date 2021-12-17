@@ -418,10 +418,10 @@ insert into COURS(LOGIN , NATURE ,nom) values ('LmaqA' , 'TP' , 'JAVA');
 insert into COURS(LOGIN , NATURE,nom) values ('NrsB7' , 'CM' , 'UML');
 insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'CM' , 'M_learning');
 insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'TD' , 'M_learning');
-insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'CM' , 'Traitement_db_1');
+insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'TD' , 'Traitement_db_1');
 insert into COURS(LOGIN , NATURE ,nom) values ('XF4yo' , 'TP' , 'JAVA');
-insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'COURS' , 'JAVA');
-insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'COURS' , 'Analyse_conception_II');
+insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'TD' , 'JAVA');
+insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'TP' , 'Analyse_conception_II');
 
 
 
@@ -443,9 +443,13 @@ INSERT INTO CRENEAUX (DATE_D, DATE_F, ID_S, ID_G,ID_C) VALUES ( '2021-12-15 09:4
 INSERT INTO CRENEAUX (DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ( '2021-12-16 16:00:00','2021-12-16 18:00:00',1,1,1 );
 INSERT INTO CRENEAUX(DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ( '2021-12-14 14:00:00','2021-12-14 18:00:00',3,1,1 );
 INSERT INTO CRENEAUX(DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ( '2021-12-18 09:00:00','2021-12-18 11:00:00',2,1,1);
+INSERT INTO CRENEAUX(DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ( '2021-12-17 08:00:00','2021-12-17 11:30:00',7,5,6);
+INSERT INTO CRENEAUX(DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ( '2021-12-18 16:00:00','2021-12-18 18:30:00',9,3,9);
+
 
 UPDATE UTILISATEUR SET PASSWORD = HASH('SHA256', PASSWORD, 1000);
 
+//select distinct batiment from salle where ID_S not in ( select ID_S FROM CRENEAUX WHERE(DATE_D <= ? and date_f >= ?)and ((date_d between ? and ?)or (date_f between ? and ?)))
 
 //select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,U.NOM,U.PRENOM,U.EMAIL,C2.NOM,C2.NATURE from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C JOIN GROUP_ETUDIANT GE on GC.ID_G=GE.ID_G JOIN COURS C2 on GC.ID_C = C2.ID_C JOIN UTILISATEUR U on C2.LOGIN = U.LOGIN WHERE GE.LOGIN='U2WAs';
 

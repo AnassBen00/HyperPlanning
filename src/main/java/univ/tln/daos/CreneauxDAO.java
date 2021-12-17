@@ -5,7 +5,6 @@ import univ.tln.entities.creneaux.Creneau;
 
 import java.sql.*;
 import java.util.Arrays;
-import java.util.Date;
 
 public class CreneauxDAO {
 
@@ -36,14 +35,14 @@ public class CreneauxDAO {
         }
     }
 
-
+/*
     public void insertCreaneaux(Creneau creneau) {
         DatabaseConnection connection = new DatabaseConnection();
         Connection connection1 = connection.connectDB();
         try {
 
             PreparedStatement statement = connection1.prepareStatement("insert into salle (date_d,date_f , id_s , id_g) values (?,?,?,?) ");
-            statement.setString(1, creneau.getDateDebut());
+            statement.setDate(1, (Date) creneau.getDateDebut());
             statement.setString(2, creneau.getDateFin());
             statement.setString(3, creneau.getIdSalle());
             statement.setString(4, creneau.getIdCours());
@@ -56,6 +55,7 @@ public class CreneauxDAO {
         }
 
     }
+    */
 
     public void RemoveCreneauByDated(String d) {
         DatabaseConnection connection = new DatabaseConnection();

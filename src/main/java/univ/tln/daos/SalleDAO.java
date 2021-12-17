@@ -11,6 +11,9 @@ import java.util.Locale;
 
 public class SalleDAO {
 
+
+
+    /*
     public Salle getSalleByNom(String nom) {
         DatabaseConnection connection = new DatabaseConnection();
         Connection connection1 = connection.connectDB();
@@ -79,6 +82,6 @@ public class SalleDAO {
         }
     }
 
-
+*/
 
 }
