@@ -76,8 +76,8 @@
                   <InnerShadow />
                </effect>
             </Label>
-            <TextField fx:id="usernametxt" layoutX="105.0" layoutY="141.0" promptText="Username" text="eTNwi" />
-            <PasswordField fx:id="passwrdtxt" layoutX="105.0" layoutY="196.0" promptText="Password" text="bZe" />
+            <TextField fx:id="usernametxt" layoutX="105.0" layoutY="141.0" promptText="Username" text="7aH93" />
+            <PasswordField fx:id="passwrdtxt" layoutX="105.0" layoutY="196.0" promptText="Password" text="2RT" />
             <Button fx:id="loginbtn" defaultButton="true" layoutX="30.0" layoutY="257.0" mnemonicParsing="false" onAction="#loginbuttononaction" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: #3F2B63;" text="Login" textFill="WHITE" />
             <Button fx:id="cancelbtn" cancelButton="true" layoutX="30.0" layoutY="305.0" mnemonicParsing="false" onAction="#cancelbtnOnAction" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: #3F2B63;" text="Cancel" textFill="WHITE" />
             <ImageView fitHeight="31.0" fitWidth="134.0" layoutX="9.0" layoutY="14.0">

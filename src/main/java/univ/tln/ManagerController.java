@@ -12,6 +12,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -20,9 +21,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 import univ.tln.daos.CreneauxDAO;
+//import univ.tln.daos.DaoajoutCreneau;
 import univ.tln.daos.EtudiantDAO;
-import univ.tln.entities.utilisateurs.Etudiant;
+//import univ.tln.entities.utilisateurs.Etudiant;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.text.DateFormat;
@@ -33,6 +36,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 //import static univ.tln.LoginController.getUsernametxt;
 
@@ -53,6 +57,21 @@ public class ManagerController implements Initializable {
     @FXML
     private AnchorPane scene5; //l'abcenses
     @FXML
+    private AnchorPane scenea;
+
+    @FXML
+    private AnchorPane sceneabs;
+
+    @FXML
+    private AnchorPane scenem;
+
+    @FXML
+    private AnchorPane scenep;
+
+    @FXML
+    private AnchorPane scenes;
+
+    @FXML
     private Button btnaccount;
     @FXML
     private Button btnmodify;
@@ -62,6 +81,10 @@ public class ManagerController implements Initializable {
     private Button btnsettings;
     @FXML
     private Button btnabsences;
+
+    @FXML
+    private Button btnvaliderfiltre;
+
     @FXML
     private Label lblstatus;
     @FXML
@@ -97,6 +120,11 @@ public class ManagerController implements Initializable {
 
     @FXML
     private ComboBox<String> md_bat;
+    @FXML
+    private ComboBox<String> pickfomation;
+
+    @FXML
+    private ComboBox<String> pickteacher;
 
     @FXML
     private ComboBox<String> md_c;
@@ -127,14 +155,26 @@ public class ManagerController implements Initializable {
 
     @FXML
     private ComboBox<String> md_s;
+    @FXML
+    private ImageView frontarrow;
+    @FXML
+    private ImageView backarrow;
+
+    private int r=-7;
+    private int w = 7;
+    List<Label> l = new ArrayList<>();
+
     @Override
     @FXML
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //DaoajoutCreneau c = new DaoajoutCreneau();
+        //c.connect();
         disabledate();
+
         // FXMLLoader loader =new FXMLLoader(App.class.getResource("hello-view.fxml"));
-        castdatetime();
+        castdatetime(0);
         setspinner();
         initSalle();
         initcours();
@@ -148,9 +188,61 @@ public class ManagerController implements Initializable {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        setcalendar();
+        arrowinputback();
+        arrowinputfront();
+        setcalendar(0);
     }
+
+    public void arrowinputback(){ // pour voir la semaine precedente
+
+        backarrow.setOnMouseClicked((mouseEvent) -> {
+            getmonday(r);
+            getsunday(r);
+
+            for (Label g : l) {
+                scene1.getChildren().remove(g);
+            }
+            castdatetime(r);
+
+            try {
+                drawrect();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            setcalendar(r);
+            System.out.println("loool");
+
+            r=r-7;
+            w=w-7;
+        });
+
+    }
+
+    public void arrowinputfront(){ //pour voir la semaine suivante
+
+        frontarrow.setOnMouseClicked((mouseEvent) -> {
+            getmonday(w);
+            getsunday(w);
+
+            for (Label g : l) {
+                scene1.getChildren().remove(g);
+            }
+            castdatetime(w);
+
+            try {
+                drawrect();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            setcalendar(w);
+            System.out.println("loool");
+
+            w=w+7;
+            r=r+7;
+        });
+
+    }
+
 
     public void disabledate() {
         md_date.setValue(java.time.LocalDate.now());
@@ -300,18 +392,17 @@ public class ManagerController implements Initializable {
     public void handleclicks(ActionEvent e) { //pour changer l'ecran
 
         if (e.getSource() == btnaccount) {
-            lblstatus.setText("Account");
-            lblstatusmini.setText("/home/account");
+
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
-            infomessage.setText("");
             scene3.toFront();
+            scenea.toFront();
 
         } else if (e.getSource() == btnmodify) {
-            lblstatus.setText("Modify");
-            lblstatusmini.setText("/home/modify");
+
+
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
-            infomessage.setText("Slectionner ce que vous voulez modifier");
             scene2.toFront();
+            scenem.toFront();
             md_date.setValue(java.time.LocalDate.now());
             md_date.setDayCellFactory(picker -> new DateCell() {
                 public void updateItem(LocalDate date, boolean empty) {
@@ -325,23 +416,34 @@ public class ManagerController implements Initializable {
             });
 
         } else if (e.getSource() == btnplanning) {
-            lblstatus.setText("Planning");
-            lblstatusmini.setText("/home/planning");
+
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
-            infomessage.setText("");
+
             scene1.toFront();
+            scenep.toFront();
+            pickfomation.setOnMouseClicked(mouseEvent -> {
+                boolean disable = !pickteacher.isDisabled();
+                pickteacher.setDisable(disable);
+
+            });
+            pickteacher.setOnMouseClicked(mouseEvent -> {
+                boolean disable = !pickfomation.isDisabled();
+                pickfomation.setDisable(disable);
+
+            });
+
         } else if (e.getSource() == btnsettings) {
-            lblstatus.setText("Settings");
-            lblstatusmini.setText("/home/settings");
+
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
-            infomessage.setText("");
+
             scene4.toFront();
+            scenes.toFront();
         } else if (e.getSource() == btnabsences) {
-            infomessage.setText("");
+
+
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             scene5.toFront();
-            lblstatus.setText("Absences");
-            lblstatusmini.setText("/home/absences");
+            sceneabs.toFront();
 
             TableColumn<Map.Entry<String, String>, String> column1 = new TableColumn<>("Fist name");
             column1.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
@@ -363,22 +465,27 @@ public class ManagerController implements Initializable {
                 }
             });
 
-            ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
-            listEtudiantId.setItems(items);
-            listEtudiantId.getColumns().setAll(column1, column2);
+           // ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
+           // listEtudiantId.setItems(items);
+           // listEtudiantId.getColumns().setAll(column1, column2);
         }
     }
-
+    @FXML
+    public  void validatebuttononaction (ActionEvent e) throws IOException, ParseException {
+        System.out.println("lol");
+           // drawrect();
+    }
+/*
     public Map<String, String> afficherEtudiants() {
         Map<String, String> etudiants = new TreeMap<>() {
         };
         EtudiantDAO etudiantDAO = new EtudiantDAO();
-        for (Etudiant etudiant : etudiantDAO.findAll()) {
+        for (Etudiant etudiant : etudiantDAO.findall()) {
             etudiants.put(etudiant.getNom(), etudiant.getPrenom());
         }
         return etudiants;
     }
-
+*/
     @FXML
     Group group = new Group();
 
@@ -390,20 +497,22 @@ public class ManagerController implements Initializable {
         return (a - 2) * 126 + 125;
     } // fonction qui retourne le pixel exact de la date
 
-    public Calendar getmonday() { //retoune le lundi de cette semaine
+    public Calendar getmonday(int i) { //retoune le lundi de cette semaine
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        c.add(Calendar.DATE, i);
         return c;
     }
 
-    public Calendar getsunday() { // retourne le dimache
+    public Calendar getsunday(int i) { // retourne le dimache
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
         c.add(Calendar.DATE, 7);
+        c.add(Calendar.DATE, i);
         return c;
     }
 
-    public void setcalendar() { //pour afficher les dates sous les jours
+    public void setcalendar(int z) { //pour afficher les dates sous les jours
         Label Tlabel[] = new Label[7];
         Tlabel[0] = idlundi;
         Tlabel[1] = idmardi;
@@ -414,6 +523,7 @@ public class ManagerController implements Initializable {
         Tlabel[6] = iddimanche;
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        c.add(Calendar.DATE, z);
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (int i = 0; i < 7; i++) {
             Tlabel[i].setText(df.format(c.getTime()));
@@ -423,7 +533,7 @@ public class ManagerController implements Initializable {
         }
     }
 
-    public void castdatetime() { //fonction qui remplie une liste des creneaux d'une semaine
+    public void castdatetime(int w) { //fonction qui remplie une liste des creneaux d'une semaine
         i = 0;
         DatabaseConnection connection = new DatabaseConnection();
         Connection connection1 = connection.connectDB();
@@ -437,9 +547,9 @@ public class ManagerController implements Initializable {
             name.setText("Name: " + LoginController.user1 );
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday().getTime())));
+            pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(w).getTime())));
             //System.out.println(df.format(getmonday().getTime()));
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday().getTime())));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(w).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {
@@ -459,9 +569,13 @@ public class ManagerController implements Initializable {
             e.printStackTrace();
         }
     }
-    public void addcreneau() {
+
+    @FXML
+    public  void addcreneau (ActionEvent e) throws IOException {
         c.insertcreneau(md_date,md_h_d,md_m_d,md_h_f,md_m_f,md_bat,md_s,md_f,md_c,md_n,md_ens);
+        System.out.println("great");
     }
+
 
     @FXML
     public void drawrect() throws ParseException { //fonction qui dessine l'emlpoie du temps
@@ -475,6 +589,7 @@ public class ManagerController implements Initializable {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
             Label cours = new Label();
+            l.add(cours);
 
             Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][0]);
             Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);

@@ -14,16 +14,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 import univ.tln.daos.EtudiantDAO;
-import univ.tln.entities.utilisateurs.Etudiant;
+//import univ.tln.entities.utilisateurs.Etudiant;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.text.DateFormat;
@@ -46,6 +45,15 @@ public class StudentController implements Initializable {
     private AnchorPane scene3 ; //le compte
     @FXML
     private AnchorPane scene4 ; //les parametre
+
+    @FXML
+    private Pane scenecmt;
+
+    @FXML
+    private Pane scenepln;
+
+    @FXML
+    private Pane sceneset;
 
     @FXML
     private Button btnaccount;
@@ -85,43 +93,103 @@ public class StudentController implements Initializable {
     @FXML
     private Label name;
 
+    @FXML
+    private ImageView backarrow;
+
+    @FXML
+    private ImageView frontarrow;
+    private int r=-7;
+    private int w = 7;
+
+    List<Label> l = new ArrayList<>();
+    List<Label> l2 = new ArrayList<>();
+
 
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXMLLoader loader =new FXMLLoader(App.class.getResource("hello-view.fxml"));
-        castdatetime();
+        castdatetime(0);
+
         try {
             drawrect(); //on dessine l'emploie du temps
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        setcalendar();
+        arrowinputback();
+        arrowinputfront();
+        setcalendar(0);
     }
 
 public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
     if(e.getSource()==btnaccount){
-        lblstatus.setText("Account");
-        lblstatusmini.setText("/home/account");
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene3.toFront();
+        scenecmt.toFront();
     }
     else if(e.getSource()==btnplanning){
-        lblstatus.setText("Planning");
-        lblstatusmini.setText("/home/planning");
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene1.toFront();
+        scenepln.toFront();
     }
     else if(e.getSource()==btnsettings){
-        lblstatus.setText("Settings");
-        lblstatusmini.setText("/home/settings");
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene4.toFront();
+        sceneset.toFront();
     }
 
 }
+
+public void arrowinputback(){ // pour voir la semaine precedente
+
+    backarrow.setOnMouseClicked((mouseEvent) -> {
+        getmonday(r);
+        getsunday(r);
+
+        for (Label g : l) {
+            scene1.getChildren().remove(g);
+        }
+        castdatetime(r);
+
+        try {
+            drawrect();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        setcalendar(r);
+        System.out.println("loool");
+
+        r=r-7;
+        w=w-7;
+    });
+
+}
+
+    public void arrowinputfront(){ //pour voir la semaine suivante
+
+        frontarrow.setOnMouseClicked((mouseEvent) -> {
+            getmonday(w);
+            getsunday(w);
+
+            for (Label g : l) {
+                scene1.getChildren().remove(g);
+            }
+            castdatetime(w);
+
+            try {
+                drawrect();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            setcalendar(w);
+            System.out.println("loool");
+
+            w=w+7;
+            r=r+7;
+        });
+
+    }
 
 
 
@@ -132,19 +200,24 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
     public int datetopxl(int a ){return (a-2)*126+125;} // fonction qui retourne le pixel exact de la date
 
-    public Calendar getmonday(){ //retoune le lundi de cette semaine
+    public Calendar getmonday(int i ){ //retoune le lundi de cette semaine
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY  );
+        c.add(Calendar.DATE, i);
+        System.out.println(c.getTime());
         return c;
     }
-    public Calendar getsunday(){ // retourne le dimache
+    public Calendar getsunday(int i ){ // retourne le dimache
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY );
         c.add(Calendar.DATE, 7);
+        c.add(Calendar.DATE, i);
         return c;
     }
 
-    public void setcalendar(){ //pour afficher les dates sous les jours
+
+
+    public void setcalendar(int a){ //pour afficher les dates sous les jours
         Label Tlabel[]=new Label[7];
         Tlabel[0]= idlundi;
         Tlabel[1]=idmardi;
@@ -155,6 +228,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         Tlabel[6]=iddimanche;
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        c.add(Calendar.DATE, a);
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (int i = 0; i < 7; i++) {
             Tlabel[i].setText(df.format(c.getTime()));
@@ -166,7 +240,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
     }
 
-    public void castdatetime() { //fonction qui remplie une liste des creneaux d'une semaine
+    public void castdatetime(int z) { //fonction qui remplie une liste des creneaux d'une semaine
          i = 0;
         DatabaseConnection connection = new DatabaseConnection();
         Connection connection1 = connection.connectDB();
@@ -182,9 +256,9 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
             name.setText("Login: " + LoginController.user1 + "\n" +LoginController.name1);
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday().getTime())));
+            pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(z).getTime())));
             //System.out.println(df.format(getmonday().getTime()));
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday().getTime())));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(z).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {
@@ -227,7 +301,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         Label cours = new Label();
-
+        l.add(cours);
         Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][0]);
         Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);
         x.setTime(date1);
