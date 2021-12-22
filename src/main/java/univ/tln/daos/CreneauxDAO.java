@@ -330,7 +330,6 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
             while ((queryResult.next())) {
                 ens_libre[i] = String.valueOf(queryResult.getString("nom"))+" "+String.valueOf(queryResult.getString("prenom"));
                 i++;
-                System.out.println(ens_libre[i]);
             }
         } catch (Exception e) {
             System.out.println("aaaaaaaaa" + e);
@@ -345,12 +344,12 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
 
     }
 
-    public void insertcreneau(DatePicker md_date,Spinner<Integer>md_h_d,Spinner<Integer>md_m_d,Spinner<Integer>md_h_f,Spinner<Integer>md_m_f,ComboBox<String>md_bat,ComboBox<String>md_s,ComboBox<String>md_f,ComboBox<String>md_c,ComboBox<String>md_n,ComboBox<String>md_ens) {
+    public void insertcreneau(DatePicker md_date,Spinner<Integer>md_h_d,Spinner<Integer>md_m_d,Spinner<Integer>md_h_f,Spinner<Integer>md_m_f,ComboBox<String>md_bat,ComboBox<String>md_s,ComboBox<String>md_f,ComboBox<String>md_c,ComboBox<String>md_n,ComboBox<String>md_ens) throws SQLException {
         SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         String date1 = md_date.getValue().toString() + " " + md_h_d.getValue().toString() + ":" + md_m_d.getValue().toString() + ":00";
         String date2 = md_date.getValue().toString() + " " + md_h_f.getValue().toString() + ":" + md_m_f.getValue().toString() + ":00";
-        try {
-            PreparedStatement pstmt = connection.prepareStatement("insert into creneaux values(?,?,select id_s from salle where num=? and bat=?,select id_g from group where nom=? ,select id_c from cours where nom=? and nature =? and login in(select login from utilisateur where CONCAT(nom, ' ', prenom)=?))");
+        PreparedStatement pstmt = connection.prepareStatement("insert into creneaux values( ?,?,(select id_s from salle where num=? and batiment=?),(select id_g from groups where nom=? ),(select id_c from cours where nom=? and nature =? and login in(select login from utilisateur where CONCAT(nom, ' ', prenom)=?)))");
+        if(md_bat.getValue()!=null && md_s.getValue()!=null && md_f.getValue()!=null && md_c.getValue()!=null && md_n.getValue()!=null && md_ens.getValue()!=null && md_date.getValue()!=null) {
             pstmt.setString(1, date1);
             pstmt.setString(2, date2);
             pstmt.setString(3, md_s.getValue());
@@ -359,9 +358,18 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
             pstmt.setString(6, md_c.getValue());
             pstmt.setString(7, md_n.getValue());
             pstmt.setString(8, md_ens.getValue());
-            pstmt.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        }else{
+            System.out.println("you must provide all values");
+        }
+        try {
+            int row = pstmt.executeUpdate();
+            System.out.println("test:"+row);
+
+        }catch (SQLException e) {
+        System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+        e.printStackTrace();
         }
     }
 

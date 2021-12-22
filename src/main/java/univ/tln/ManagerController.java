@@ -571,9 +571,8 @@ public class ManagerController implements Initializable {
     }
 
     @FXML
-    public  void addcreneau (ActionEvent e) throws IOException {
+    public  void addcreneau (ActionEvent e) throws IOException, SQLException {
         c.insertcreneau(md_date,md_h_d,md_m_d,md_h_f,md_m_f,md_bat,md_s,md_f,md_c,md_n,md_ens);
-        System.out.println("great");
     }
 
 
