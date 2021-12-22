@@ -39,6 +39,8 @@ import java.util.*;
 public class ManagerController implements Initializable {
     public int i;
     int max_cours = 60;
+    CreneauxDAO c = new CreneauxDAO();
+
     private String[][] creneau = new String[max_cours][7];
     @FXML
     private AnchorPane scene1; //le planning
@@ -97,16 +99,16 @@ public class ManagerController implements Initializable {
     private ComboBox<String> md_bat;
 
     @FXML
-    private ComboBox<?> md_c;
+    private ComboBox<String> md_c;
 
     @FXML
     private DatePicker md_date;
 
     @FXML
-    private ComboBox<?> md_ens;
+    private ComboBox<String> md_ens;
 
     @FXML
-    private ComboBox<?> md_f;
+    private ComboBox<String> md_f;
 
     @FXML
     private Spinner<Integer> md_h_d;
@@ -121,11 +123,10 @@ public class ManagerController implements Initializable {
     private Spinner<Integer> md_m_f;
 
     @FXML
-    private ComboBox<?> md_n;
+    private ComboBox<String> md_n;
 
     @FXML
-    private ComboBox<?> md_s;
-
+    private ComboBox<String> md_s;
     @Override
     @FXML
 
@@ -135,6 +136,10 @@ public class ManagerController implements Initializable {
         // FXMLLoader loader =new FXMLLoader(App.class.getResource("hello-view.fxml"));
         castdatetime();
         setspinner();
+        initSalle();
+        initcours();
+        initnature();
+        initens();
 
         try {
             md_h_d.setValueFactory(valuehoure);
@@ -161,8 +166,75 @@ public class ManagerController implements Initializable {
         });
     }
 
+    public void initens(){
+        md_n.setEditable(true);
+
+        md_n.valueProperty().addListener((options, oldValue, newValue) ->{
+            try {
+                c.initialize_enseignant(md_date,md_m_f,md_m_d,md_h_f,md_h_d, md_ens,md_c,md_n);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        });
+    }
+
+    public void initSalle(){
+        md_bat.setEditable(true);
+        md_bat.valueProperty().addListener((options, oldValue, newValue) ->{
+            try {
+                c.initialize_salle(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date,md_s);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        });
+    }
+    public void initnature(){
+        md_c.setEditable(true);
+        md_c.valueProperty().addListener((options1, oldValue1, newValue1) ->{
+            try {
+                c.initialize_nature_cours(md_f,md_c,md_n);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        });
+
+    }
+    public void initcours(){
+        md_f.setEditable(true);
+        md_f.valueProperty().addListener((options, oldValue, newValue) ->{
+            try {
+                md_n.getItems().removeAll(md_n.getItems());
+                c.initialize_cours(md_f,md_c);
+                md_c.setEditable(true);
+                md_c.valueProperty().addListener((options1, oldValue1, newValue1) ->{
+                    try {
+                        c.initialize_nature_cours(md_f,md_c,md_n);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                });
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        });
+    }
     public void setspinner(){
-        CreneauxDAO c = new CreneauxDAO();
+
         md_h_d.valueProperty().addListener((obs, oldValue, newValue) ->{
             SpinnerValueFactory<Integer> valuehoure2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(newValue, 19, 1);
             md_h_f.setValueFactory(valuehoure2);
@@ -184,6 +256,7 @@ public class ManagerController implements Initializable {
                         try {
 
                             c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date);
+                            c.initialize_formation(md_m_f,md_m_d,md_h_f,md_h_d,md_f, md_date);
                         } catch (SQLException e) {
                             e.printStackTrace();
                         } catch (ParseException e) {
@@ -201,6 +274,7 @@ public class ManagerController implements Initializable {
 
                             try {
                                 c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date);
+                                c.initialize_formation(md_m_f,md_m_d,md_h_f,md_h_d,md_f, md_date);
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             } catch (ParseException e) {
@@ -216,12 +290,7 @@ public class ManagerController implements Initializable {
 
 
     }
-/*
-    public void initSalle(){
-        md_bat.setEditable(true);
-        md_bat.valueProperty().addListener(); ->{
-    }
-*/
+
     SpinnerValueFactory<Integer> valuehoure = new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 19, 1);
     SpinnerValueFactory<Integer> valueminute = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 1);
 
@@ -390,7 +459,9 @@ public class ManagerController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    public void addcreneau() {
+        c.insertcreneau(md_date,md_h_d,md_m_d,md_h_f,md_m_f,md_bat,md_s,md_f,md_c,md_n,md_ens);
+    }
 
     @FXML
     public void drawrect() throws ParseException { //fonction qui dessine l'emlpoie du temps

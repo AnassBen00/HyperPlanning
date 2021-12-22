@@ -458,3 +458,5 @@ UPDATE UTILISATEUR SET PASSWORD = HASH('SHA256', PASSWORD, 1000);
 
 
 //Select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,C2.NOM,C2.NATURE,G.nom from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C join COURS C2 on GC.ID_C = C2.ID_C join GROUPS G on GC.ID_G = G.ID_G where C2.LOGIN ='1jJQ0' AND DATE_D;
+
+select distinct U.nom,U.prenom from utilisateur U join cours C on C.login=U.login where C.nom='Anglais 1' and C.nature='CM' and login not in(select login from creneaux CR join cours C1 on CR.id_c=C1.id_c and ((DATE_D <= '2021-12-18 16:00:00' and date_f >= '2021-12-18 16:00:00')and ((date_d between '2021-12-18 16:00:00' and '2021-12-18 16:00:00')or (date_f between '2021-12-18 16:00:00' and '2021-12-18 16:00:00'))))
