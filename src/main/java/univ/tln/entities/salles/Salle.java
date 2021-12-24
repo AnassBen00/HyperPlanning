@@ -9,13 +9,21 @@ import java.util.List;
 public class Salle {
 
     @Getter
-    private String id;
+    private int id;
     @Getter
     @Setter
-    private String nomDuSalle;
+    private String numSalle;
+    @Getter
+    @Setter
+    private String batiment;
     @Getter
     @Setter
     private boolean videoProjecteur;
 
-
+    public Salle(int id, String numSalle, String batiment, boolean videoProjecteur) {
+        this.id = id;
+        this.numSalle = numSalle;
+        this.batiment = batiment;
+        this.videoProjecteur = videoProjecteur;
+    }
 }

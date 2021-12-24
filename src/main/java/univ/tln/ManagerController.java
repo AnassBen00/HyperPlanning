@@ -19,6 +19,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
+import univ.tln.daos.CreneauxDAO;
+import univ.tln.daos.DaoajoutCreneau;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.entities.utilisateurs.Etudiant;
 
@@ -27,10 +29,12 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 //import static univ.tln.LoginController.getUsernametxt;
 
@@ -88,14 +92,58 @@ public class ManagerController implements Initializable {
 
     @FXML
     private Label name;
+    @FXML
+    private Label infomessage;
 
+    @FXML
+    private ComboBox<String> md_bat;
+
+    @FXML
+    private ComboBox<?> md_c;
+
+    @FXML
+    private DatePicker md_date;
+
+    @FXML
+    private ComboBox<?> md_ens;
+
+    @FXML
+    private ComboBox<?> md_f;
+
+    @FXML
+    private Spinner<Integer> md_h_d;
+
+    @FXML
+    private Spinner<Integer> md_h_f;
+
+    @FXML
+    private Spinner<Integer> md_m_d;
+
+    @FXML
+    private Spinner<Integer> md_m_f;
+
+    @FXML
+    private ComboBox<?> md_n;
+
+    @FXML
+    private ComboBox<?> md_s;
 
     @Override
     @FXML
+
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        DaoajoutCreneau c = new DaoajoutCreneau();
+        c.connect();
+        disabledate();
+
         // FXMLLoader loader =new FXMLLoader(App.class.getResource("hello-view.fxml"));
         castdatetime();
+        setspinner();
+
         try {
+            md_h_d.setValueFactory(valuehoure);
+            md_m_d.setValueFactory(valueminute);
             drawrect(); //on dessine l'emploie du temps
         } catch (ParseException e) {
             e.printStackTrace();
@@ -104,29 +152,129 @@ public class ManagerController implements Initializable {
         setcalendar();
     }
 
+    public void disabledate() {
+        md_date.setValue(java.time.LocalDate.now());
+        md_date.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+
+                setDisable(empty || date.compareTo(today) < 0);
+            }
+
+
+        });
+    }
+
+    public void setspinner(){
+        DaoajoutCreneau c = new DaoajoutCreneau();
+        c.connect();
+        md_h_d.valueProperty().addListener((obs, oldValue, newValue) ->{
+            SpinnerValueFactory<Integer> valuehoure2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(newValue, 19, 1);
+            md_h_f.setValueFactory(valuehoure2);
+
+
+
+        });
+        md_m_d.valueProperty().addListener((obs, oldValue, newValue) ->{
+            SpinnerValueFactory<Integer> valuehoure2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(newValue, 59, 1);
+            md_m_f.setValueFactory(valuehoure2);
+
+
+
+        });
+                md_date.valueProperty().addListener((ov, oldValue, newValue) -> {
+                md_h_f.valueProperty().addListener((obs, oldValue3, newValue3) -> {
+                    md_m_f.valueProperty().addListener((obs2, oldValue2, newValue2) -> {
+                        //System.out.println("lol");
+                        try {
+
+                            c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (md_m_f.getValue() != null && md_h_f.getValue() != null) {
+                            /*
+                            System.out.println(md_m_f.getValue());
+                            System.out.println(md_m_d.getValue());
+                            System.out.println(md_h_f.getValue());
+                            System.out.println(md_h_d.getValue());
+                            System.out.println(md_bat.getValue());
+                            System.out.println(md_date.getValue());
+*/
+
+                            try {
+                                c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date);
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                });
+                });
+
+
+
+
+
+    }
+/*
+    public void initSalle(){
+        md_bat.setEditable(true);
+        md_bat.valueProperty().addListener(); ->{
+    }
+*/
+    SpinnerValueFactory<Integer> valuehoure = new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 19, 1);
+    SpinnerValueFactory<Integer> valueminute = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 1);
+
+    SpinnerValueFactory<Integer> valueminute2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 1);
+
+
     public void handleclicks(ActionEvent e) { //pour changer l'ecran
 
         if (e.getSource() == btnaccount) {
             lblstatus.setText("Account");
             lblstatusmini.setText("/home/account");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
+            infomessage.setText("");
             scene3.toFront();
+
         } else if (e.getSource() == btnmodify) {
             lblstatus.setText("Modify");
             lblstatusmini.setText("/home/modify");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
+            infomessage.setText("Slectionner ce que vous voulez modifier");
             scene2.toFront();
+            md_date.setValue(java.time.LocalDate.now());
+            md_date.setDayCellFactory(picker -> new DateCell() {
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    LocalDate today = LocalDate.now();
+
+                    setDisable(empty || date.compareTo(today) < 0 );
+                }
+
+
+            });
+
         } else if (e.getSource() == btnplanning) {
             lblstatus.setText("Planning");
             lblstatusmini.setText("/home/planning");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
+            infomessage.setText("");
             scene1.toFront();
         } else if (e.getSource() == btnsettings) {
             lblstatus.setText("Settings");
             lblstatusmini.setText("/home/settings");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
+            infomessage.setText("");
             scene4.toFront();
         } else if (e.getSource() == btnabsences) {
+            infomessage.setText("");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             scene5.toFront();
             lblstatus.setText("Absences");
@@ -223,7 +371,7 @@ public class ManagerController implements Initializable {
             //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             //System.out.println(LoginController.user1);
             pstmt.setString(1, LoginController.user1);
-            name.setText("Login: " + LoginController.user1 + "\n" +LoginController.name1);
+            name.setText("Name: " + LoginController.user1 );
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday().getTime())));
@@ -243,7 +391,7 @@ public class ManagerController implements Initializable {
             }
 
 
-            System.out.println(Arrays.deepToString(creneau));
+            //System.out.println(Arrays.deepToString(creneau));
         } catch (SQLException e) {
             e.printStackTrace();
         }

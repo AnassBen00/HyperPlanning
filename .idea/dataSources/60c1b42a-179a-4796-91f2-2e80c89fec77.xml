@@ -179,25 +179,25 @@
     <sequence id="164" parent="4" name="SYSTEM_SEQUENCE_372EE2E1_CB24_4167_A38C_58AADD8C6980">
       <ObjectId>15</ObjectId>
       <NameSurrogate>1</NameSurrogate>
-      <SequenceIdentity>null(6)</SequenceIdentity>
+      <SequenceIdentity>null(33)</SequenceIdentity>
       <AutoCreated>1</AutoCreated>
     </sequence>
     <sequence id="165" parent="4" name="SYSTEM_SEQUENCE_D4CA6CEC_BA77_4FF8_9913_AED5EA36579E">
       <ObjectId>31</ObjectId>
       <NameSurrogate>1</NameSurrogate>
-      <SequenceIdentity>null(2)</SequenceIdentity>
+      <SequenceIdentity>null(33)</SequenceIdentity>
       <AutoCreated>1</AutoCreated>
     </sequence>
     <sequence id="166" parent="4" name="SYSTEM_SEQUENCE_EF0B369B_6A1F_40EA_90C7_FDFDA9E814B9">
       <ObjectId>27</ObjectId>
       <NameSurrogate>1</NameSurrogate>
-      <SequenceIdentity>null(13)</SequenceIdentity>
+      <SequenceIdentity>null(33)</SequenceIdentity>
       <AutoCreated>1</AutoCreated>
     </sequence>
     <sequence id="167" parent="4" name="SYSTEM_SEQUENCE_F55D9136_2C61_4151_B3AB_52A83BE58612">
       <ObjectId>39</ObjectId>
       <NameSurrogate>1</NameSurrogate>
-      <SequenceIdentity>null(8)</SequenceIdentity>
+      <SequenceIdentity>null(33)</SequenceIdentity>
       <AutoCreated>1</AutoCreated>
     </sequence>
     <table id="168" parent="4" name="COURS">
@@ -237,7 +237,7 @@
       <Position>1</Position>
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>null(2)</SequenceIdentity>
+      <SequenceIdentity>null(33)</SequenceIdentity>
     </column>
     <column id="180" parent="168" name="NATURE">
       <Position>2</Position>
@@ -462,7 +462,7 @@ ID_C</RefColNames>
       <Position>1</Position>
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>null(6)</SequenceIdentity>
+      <SequenceIdentity>null(33)</SequenceIdentity>
     </column>
     <column id="216" parent="172" name="NOM">
       <Position>2</Position>
@@ -484,7 +484,7 @@ ID_C</RefColNames>
       <Position>1</Position>
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>null(8)</SequenceIdentity>
+      <SequenceIdentity>null(33)</SequenceIdentity>
     </column>
     <column id="220" parent="173" name="NOM">
       <Position>2</Position>
@@ -658,7 +658,7 @@ LOGIN</ColNames>
       <Position>1</Position>
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>null(13)</SequenceIdentity>
+      <SequenceIdentity>null(33)</SequenceIdentity>
     </column>
     <column id="247" parent="177" name="NUM">
       <Position>2</Position>

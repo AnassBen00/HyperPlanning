@@ -36,14 +36,14 @@ public class PopupControler {
             LoginController.managerstage.show();
 
             CreneauxDAO d = new CreneauxDAO();
-            //System.out.println(TeacherController.d1);
+            System.out.println(TeacherController.d1);
 
             d.RemoveCreneauByDated(TeacherController.d1);
             TeacherController T = new TeacherController();
             TeacherController teacherController = loader.getController();
             teacherController.updatewindow();
 
-            System.out.println("yupi");
+            //System.out.println("yupi");
 
         } catch (IOException ex) {
             ex.printStackTrace();

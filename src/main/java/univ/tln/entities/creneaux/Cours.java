@@ -17,4 +17,10 @@ public class Cours {
     @Setter
     private String nomduCours;
 
+    public Cours(String id, int duree, String nature, String nomduCours) {
+        this.id = id;
+        this.duree = duree;
+        this.nature = nature;
+        this.nomduCours = nomduCours;
+    }
 }
