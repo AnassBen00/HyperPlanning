@@ -1,8 +1,9 @@
 package univ.tln.daos;
 
 import org.w3c.dom.Entity;
-import univ.tln.exceptions.DataAccessException;
+import univ.tln.daos.exceptions.DataAccessException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,15 +14,6 @@ import java.util.Optional;
  * @param <E> is the type of entities managed by the DAO
  */
 public interface DAO<E extends Object> extends AutoCloseable {
-    /**
-     * Finds and returns an entity by id in the database.
-     * Note the usage of Optional to avoir Null Pointer Exception (NPE).
-     *
-     * @param id the id of the entity
-     * @return the entity with the given id from the database.
-     * @throws DataAccessException If there is a data access error (see message).
-     */
-    Optional<E> find(long id) throws DataAccessException;
 
     /**
      * Persists a new entity in the database.
@@ -30,7 +22,7 @@ public interface DAO<E extends Object> extends AutoCloseable {
      * @return The entity or a clone if the id has been updated by the database.
      * @throws DataAccessException If there is a data access error (see message).
      */
-    E persist(E e) throws DataAccessException;
+    void persist(E e) throws DataAccessException, SQLException;
 
     /**
      * A default method to persist a list of entities.
@@ -39,11 +31,11 @@ public interface DAO<E extends Object> extends AutoCloseable {
      * @return The list of entities or clones if their id has been updated by the database.
      * @throws DataAccessException If there is a data access error (see message).
      */
-    default List<E> persist(List<E> list) throws DataAccessException {
+    /*default List<E> persist(List<E> list) throws DataAccessException, SQLException {
         List<E> resultList = new ArrayList<>();
         for (E e : list) resultList.add(persist(e));
         return resultList;
-    }
+    }*/
 
     /**
      * Update the entity in the database with the parameter.
