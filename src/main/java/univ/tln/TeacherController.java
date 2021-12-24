@@ -145,8 +145,16 @@ public class TeacherController implements Initializable {
     @FXML
     private ImageView backarrow;
 
+    @FXML
+    private ImageView frontarrow2;
+    @FXML
+    private ImageView backarrow2;
+
     private int r=-7;
     private int w = 7;
+
+    private int z=-7;
+    private int y = 7;
 
     List<Label> l = new ArrayList<>();
     List<Label> l2 = new ArrayList<>();
@@ -166,6 +174,8 @@ public class TeacherController implements Initializable {
         }
         arrowinputback();
         arrowinputfront();
+        arrowinputback2();
+        arrowinputfront2();
         setcalendar(0);
         setcalendar2(0);
     }
@@ -218,6 +228,58 @@ public class TeacherController implements Initializable {
         });
 
     }
+
+    public void arrowinputback2(){ // pour voir la semaine precedente
+
+        backarrow2.setOnMouseClicked((mouseEvent) -> {
+            getmonday(z);
+            getsunday(z);
+
+            for (Label g : l2) {
+                scene2.getChildren().remove(g);
+            }
+            castdatetime(z);
+
+            try {
+                drawrect2();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            setcalendar2(z);
+            System.out.println("loool");
+
+            z=z-7;
+            y=y-7;
+        });
+
+    }
+
+    public void arrowinputfront2(){ //pour voir la semaine suivante
+
+        frontarrow2.setOnMouseClicked((mouseEvent) -> {
+            getmonday(y);
+            getsunday(y);
+
+            for (Label g : l2) {
+                scene2.getChildren().remove(g);
+            }
+            castdatetime(y);
+
+            try {
+                drawrect2();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            setcalendar2(y);
+            System.out.println("loool");
+
+            y=y+7;
+            z=z+7;
+        });
+
+    }
+
+
 
     public void handleclicks(ActionEvent e) throws ParseException { //pour changer l'ecran
 
