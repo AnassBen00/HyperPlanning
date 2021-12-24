@@ -286,7 +286,7 @@
                         <Label fx:id="infomessage" alignment="CENTER" contentDisplay="CENTER" layoutX="294.0" layoutY="-3.0" prefHeight="35.0" prefWidth="419.0" text="Filtrer par :" textFill="WHITE" />
                         <ComboBox fx:id="pickfomation" layoutX="372.0" layoutY="36.0" prefHeight="24.0" prefWidth="87.0" stylesheets="@styes.css" />
                         <ComboBox fx:id="pickteacher" layoutX="544.0" layoutY="36.0" prefHeight="24.0" prefWidth="87.0" stylesheets="@styes.css" />
-                        <Button fx:id="btnvaliderfiltre" layoutX="473.0" layoutY="69.0" mnemonicParsing="false" style="-fx-background-color: GREEN;" text="Valider" />
+                        <Button fx:id="btnvaliderfiltre" layoutX="473.0" layoutY="69.0" mnemonicParsing="false" onAction="#validatebuttononaction" style="-fx-background-color: GREEN;" text="Valider" />
                         <Label layoutX="295.0" layoutY="41.0" text="Formation" textFill="WHITE" />
                         <Label layoutX="646.0" layoutY="41.0" text="Enseignant" textFill="WHITE" />
                         <ImageView fitHeight="24.0" fitWidth="20.0" layoutX="494.0" layoutY="38.0">

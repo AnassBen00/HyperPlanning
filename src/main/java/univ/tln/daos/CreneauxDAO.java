@@ -250,6 +250,63 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         }
     }
 
+    public void initialize_pickformation(ComboBox<String>  pickfomation) throws SQLException, ParseException {
+
+        String[] formation_libre = new String[13];
+        PreparedStatement pstmt = connection.prepareStatement(" select nom from groups");
+
+            int i = 0;
+            try {
+
+                ResultSet queryResult = pstmt.executeQuery();
+
+                while ((queryResult.next())) {
+                    formation_libre[i] = String.valueOf(queryResult.getString("nom"));
+                    System.out.println(formation_libre);
+                    i++;
+                }
+            } catch (Exception e) {
+                System.out.println("aaaaaaaaa" + e);
+            }
+
+
+            pickfomation.getItems().removeAll(pickfomation.getItems());
+            for (int r = 0; r < i; r++) {
+
+                pickfomation.getItems().add(formation_libre[r]);
+            }
+    }
+
+
+    public void initialize_pickenseignant(ComboBox<String>  pickteacher) throws SQLException, ParseException {
+
+        String[] formation_libre = new String[13];
+        PreparedStatement pstmt = connection.prepareStatement(" select LOGIN from ENSEIGNANT");
+
+        int i = 0;
+        try {
+
+            ResultSet queryResult = pstmt.executeQuery();
+
+            while ((queryResult.next())) {
+                formation_libre[i] = String.valueOf(queryResult.getString("LOGIN"));
+                System.out.println(formation_libre);
+                i++;
+            }
+        } catch (Exception e) {
+            System.out.println("aaaaaaaaa" + e);
+        }
+
+
+        pickteacher.getItems().removeAll(pickteacher.getItems());
+        for (int r = 0; r < i; r++) {
+
+            pickteacher.getItems().add(formation_libre[r]);
+        }
+    }
+
+
+
     public void initialize_cours(ComboBox<String> md_f,ComboBox<String> md_c) throws SQLException, ParseException {
 
         String[] cours_libre = new String[13];

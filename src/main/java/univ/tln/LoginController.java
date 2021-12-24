@@ -36,7 +36,7 @@ public class LoginController extends Application {
     private PasswordField passwrdtxt;
 
 
-    static  Stage managerstage = new Stage();
+    static  Stage   managerstage = new Stage();
 
 
 
@@ -104,7 +104,6 @@ public class LoginController extends Application {
         try {
             Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
 
-            Stage managerstage = new Stage();
 
             Scene scene = new Scene(root, 1305, 782);
 
