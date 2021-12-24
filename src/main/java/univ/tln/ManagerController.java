@@ -3,8 +3,6 @@ package univ.tln;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,19 +16,23 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundFill;                                  
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import univ.tln.daos.CreneauxDAO;
-//import univ.tln.daos.DaoajoutCreneau;
-import univ.tln.daos.EtudiantDAO;
-//import univ.tln.entities.utilisateurs.Etudiant;
+import univ.tln.daos.*;
+import univ.tln.daos.exceptions.DataAccessException;
+import univ.tln.entities.filieres.Filiere;
+
+import univ.tln.entities.utilisateurs.Enseignant;
+import univ.tln.entities.utilisateurs.Etudiant;
+import univ.tln.entities.utilisateurs.Utilisateur;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -40,7 +42,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.google.common.hash.Hashing.sha256;
 
 //import static univ.tln.LoginController.getUsernametxt;
 
@@ -175,6 +178,39 @@ public class ManagerController implements Initializable {
     @FXML
     private ImageView backarrow;
 
+
+    @FXML
+    private TextField prenomId;
+    @FXML
+    private TextField nomId;
+    @FXML
+    private TextField emailId;
+    @FXML
+    private TextField passwordId;
+    @FXML
+    private TextField loginId;
+    @FXML
+    private Button confirmAjoutEnseignantId;
+
+    @FXML
+    private TextField prenomEtdId;
+    @FXML
+    private TextField nomEtdId;
+    @FXML
+    private TextField emailEtdId;
+    @FXML
+    private TextField passwordEtdId;
+    @FXML
+    private TextField loginEtdId;
+    @FXML
+    private Button confirmAjoutEtudiantId;
+    @FXML
+    private ComboBox idNiveau;
+    @FXML
+    private ComboBox idFiliere;
+    @FXML
+    private TextField idPromo;
+
     private int r=-7;
     private int w = 7;
     List<Label> l = new ArrayList<>();
@@ -183,8 +219,6 @@ public class ManagerController implements Initializable {
 
     @Override
     @FXML
-
-
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //DaoajoutCreneau c = new DaoajoutCreneau();
         //c.connect();
@@ -199,6 +233,26 @@ public class ManagerController implements Initializable {
         initens();
         setPickfomation();
 
+        idNiveau.getItems().addAll(
+                "licence 1",
+                "licence 2",
+                "licence 3",
+                "master 1",
+                "master 2"
+        );
+        FiliereDAO filiereDAO = new FiliereDAO();
+        List<Filiere> filieres = new ArrayList<>();
+        try {
+            filieres = filiereDAO.findAll();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        System.out.println("***filieres**** -- > " + filieres);
+        List<String> nomFilieres = new ArrayList<>();
+        for(Filiere f : filieres)
+            nomFilieres.add(f.getNomDuFiliere());
+        idFiliere.getItems().addAll(nomFilieres);
+
         try {
             md_h_d.setValueFactory(valuehoure);
             md_m_d.setValueFactory(valueminute);
@@ -209,6 +263,31 @@ public class ManagerController implements Initializable {
         arrowinputback();
         arrowinputfront();
         setcalendar(0);
+    }
+
+    @FXML
+    public void ConfirmAction (ActionEvent e) throws SQLException, DataAccessException {
+        UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+        EnseignantDAO enseignantDAO = new EnseignantDAO();
+        utilisateurDAO.persist(new Utilisateur(loginId.getText(), sha256()
+                .hashString(passwordId.getText(), StandardCharsets.UTF_8)
+                .toString(), nomId.getText() , prenomId.getText(), emailId.getText()));
+        enseignantDAO.persist(new Enseignant(loginId.getText(), sha256()
+                .hashString(passwordId.getText(), StandardCharsets.UTF_8)
+                .toString(), nomId.getText(), prenomId.getText(), emailId.getText()));
+    }
+
+    @FXML
+    public void ConfirmEtudAction (ActionEvent e) throws SQLException, DataAccessException {
+        UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+        EtudiantDAO etudiantDAO = new EtudiantDAO();
+        FiliereDAO filiereDAO = new FiliereDAO();
+        utilisateurDAO.persist(new Utilisateur(loginEtdId.getText(), sha256()
+                .hashString(passwordEtdId.getText(), StandardCharsets.UTF_8)
+                .toString(), nomEtdId.getText(), prenomEtdId.getText(), emailEtdId.getText()));
+        etudiantDAO.persist(new Etudiant(loginEtdId.getText(), sha256()
+                .hashString(passwordEtdId.getText(), StandardCharsets.UTF_8)
+                .toString(), nomEtdId.getText(), prenomEtdId.getText(), emailEtdId.getText(), idNiveau.getValue().toString(), idPromo.getText(), filiereDAO.find(idFiliere.getValue().toString()).getId()));
     }
 
 
@@ -529,9 +608,6 @@ public class ManagerController implements Initializable {
         }
 
     }
-
-
-
 
 /*
     public Map<String, String> afficherEtudiants() {

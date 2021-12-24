@@ -4,8 +4,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import univ.tln.DatabaseConnection;
+import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.creneaux.Creneau;
-import univ.tln.exceptions.DataAccessException;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -38,17 +38,17 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
     }
 
     @Override
-    public Creneau persist(Creneau creneau) throws DataAccessException {
+    public void persist(Creneau creneau) throws DataAccessException {
         try {
             persistPS.setDate(1, (java.sql.Date) creneau.getDateDebut());
             persistPS.setDate(2, (java.sql.Date) creneau.getDateFin());
             persistPS.setInt(3,creneau.getIdSalle());
             persistPS.setInt(4,creneau.getIdGroupe());
             persistPS.setInt(5,creneau.getIdCours());
+            persistPS.executeUpdate();
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
         }
-        return super.persist();
     }
 
     public void getCreneaux(String[][] creneau) {

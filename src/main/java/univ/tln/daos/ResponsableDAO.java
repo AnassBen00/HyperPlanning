@@ -1,18 +1,18 @@
 package univ.tln.daos;
 
 import univ.tln.DatabaseConnection;
-import univ.tln.entities.utilisateurs.Enseignant;
+import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Responsable;
 import univ.tln.entities.utilisateurs.Utilisateur;
-import univ.tln.exceptions.DataAccessException;
 
 import java.sql.*;
+import java.util.Optional;
 
 public class ResponsableDAO extends AbstractDAO<Responsable>{
     public ResponsableDAO() {
-        super("INSERT INTO UTILISATEUR(LOGIN, NOM, PRENOM, PASSWORD, EMAIL) VALUES (?,?,?,?,?)",
+        super("INSERT INTO UTILISATEUR(LOGIN, NOM, PRENOM, PASSWORD, EMAIL) VALUES (?,?,?,?,?);",
                 "UPDATE UTILISATEUR SET LOGIN=?, NOM=?, PRENOM=?, PASSWORD=?, EMAIL=? WHERE LOGIN=?",
-                "SELECT * from RESPONSABLE joint UTILISATEUR ON ENSEIGNANT.login = UTILISATEUR.login  ");
+                "SELECT * from RESPONSABLE join UTILISATEUR ON RESPONSABLE.login = UTILISATEUR.login  ");
     }
 
     @Override
@@ -85,19 +85,46 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
             e.printStackTrace();
         }
     }
+    public Optional<Responsable> find(String login) throws SQLException {
+        Responsable responsable = null;
+
+        PreparedStatement findPS = connection.prepareStatement("SELECT * from RESPONSABLE join UTILISATEUR ON RESPONSABLE.login = ?");
+        findPS.setString(1, login);
+
+        ResultSet rs = findPS.executeQuery();
+        while (rs.next())
+            responsable = fromResultSet(rs);
+
+        return Optional.ofNullable(responsable);
+    }
+
+
+/*    public Responsable persist() throws DataAccessException, SQLException {
+        String login = null;
+        try {
+            ResultSet rs = persistPS.getGeneratedKeys();
+            if (rs.next()) {
+                login = rs.getString(1);
+
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getLocalizedMessage());
+        }
+        return find(login).orElseThrow(NotFoundException::new);
+    }*/
 
     @Override
-    public Responsable persist(Responsable responsable) throws DataAccessException {
+    public void persist(Responsable responsable) throws DataAccessException, SQLException {
         try {
             persistPS.setString(1, responsable.getLogin());
             persistPS.setString(2, responsable.getNom());
             persistPS.setString(3,responsable.getPrenom());
             persistPS.setString(4,responsable.getPassword());
             persistPS.setString(5,responsable.getEmail());
+            persistPS.executeUpdate();
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
         }
-        return super.persist();
     }
 
     @Override

@@ -20,6 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.TextField?>
 <AnchorPane fx:id="stack" prefHeight="782.0" prefWidth="1305.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.ManagerController">
    <children>
       <Group layoutX="91.0" layoutY="47.0" />
@@ -92,30 +93,50 @@
                                  </children></AnchorPane>
                         </content>
                       </Tab>
-                      <Tab text="Etudiant">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <Label layoutX="370.0" layoutY="228.0" prefHeight="126.0" prefWidth="269.0" text="Coming Soon....." textFill="#0d1a36">
-                                       <font>
-                                          <Font size="27.0" />
-                                       </font>
-                                    </Label>
-                                 </children></AnchorPane>
-                        </content>
-                      </Tab>
-                        <Tab text="Enseignant">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="169.0" prefWidth="106.0">
-                                 <children>
-                                    <Label layoutX="340.0" layoutY="223.0" prefHeight="126.0" prefWidth="269.0" text="Coming Soon....." textFill="#9a3636">
-                                       <font>
-                                          <Font size="27.0" />
-                                       </font>
-                                    </Label>
-                                 </children></AnchorPane>
-                           </content>
-                        </Tab>
+                       <Tab text="Etudiant">
+                          <content>
+                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="605.0" prefWidth="1011.0">
+                                <children>
+                                   <Label layoutX="29.0" layoutY="130.0" text="Login" />
+                                   <Label layoutX="29.0" layoutY="202.0" text="Prenom" />
+                                   <Label layoutX="29.0" layoutY="271.0" text="Nom" />
+                                   <Label layoutX="352.0" layoutY="130.0" text="Email" />
+                                   <Label layoutX="342.0" layoutY="202.0" text="Password" />
+                                   <TextField fx:id="loginEtdId" layoutX="111.0" layoutY="126.0" />
+                                   <TextField fx:id="prenomEtdId" layoutX="111.0" layoutY="198.0" />
+                                   <TextField fx:id="nomEtdId" layoutX="111.0" layoutY="267.0" />
+                                   <TextField fx:id="emailEtdId" layoutX="441.0" layoutY="126.0" />
+                                   <TextField fx:id="passwordEtdId" layoutX="441.0" layoutY="198.0" />
+                                   <Button fx:id="confirmAjoutEtudiantId" layoutX="399.0" layoutY="515.0" mnemonicParsing="false" onAction="#ConfirmEtudAction" prefHeight="24.0" prefWidth="260.0" style="-fx-background-color: Green;" text="Confirm" textFill="WHITE" />
+                                   <Label layoutX="515.0" layoutY="282.0" />
+                                   <Label layoutX="681.0" layoutY="200.0" prefHeight="17.0" prefWidth="40.0" text="Promo" />
+                                   <Label layoutX="679.0" layoutY="271.0" prefHeight="23.0" prefWidth="43.0" text="Filiere" />
+                                   <Label layoutX="515.0" layoutY="300.0" />
+                                   <Label layoutX="682.0" layoutY="130.0" text="Niveau" />
+                                   <ComboBox fx:id="idNiveau" layoutX="762.0" layoutY="125.0" prefWidth="150.0" />
+                                   <ComboBox fx:id="idFiliere" layoutX="763.0" layoutY="269.0" prefWidth="150.0" />
+                                   <TextField fx:id="idPromo" layoutX="763.0" layoutY="198.0" />
+                                </children></AnchorPane>
+                          </content>
+                       </Tab>
+                       <Tab text="Enseignant">
+                          <content>
+                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="615.0" prefWidth="1012.0">
+                                <children>
+                                   <Label layoutX="91.0" layoutY="128.0" text="Login" />
+                                   <Label layoutX="91.0" layoutY="200.0" text="First Name" />
+                                   <Label layoutX="91.0" layoutY="269.0" text="Last Name" />
+                                   <Label layoutX="514.0" layoutY="128.0" text="Email" />
+                                   <Label layoutX="504.0" layoutY="200.0" text="Password" />
+                                   <TextField fx:id="loginId" layoutX="173.0" layoutY="124.0" />
+                                   <TextField fx:id="prenomId" layoutX="173.0" layoutY="196.0" />
+                                   <TextField fx:id="nomId" layoutX="173.0" layoutY="257.0" />
+                                   <TextField fx:id="emailId" layoutX="603.0" layoutY="124.0" />
+                                   <TextField fx:id="passwordId" layoutX="603.0" layoutY="196.0" />
+                                   <Button fx:id="confirmAjoutEnseignantId" layoutX="396.0" layoutY="446.0" mnemonicParsing="false" onAction="#ConfirmAction" prefHeight="24.0" prefWidth="260.0" style="-fx-background-color: Green;" text="Confirm" textFill="WHITE" />
+                                </children></AnchorPane>
+                          </content>
+                       </Tab>
                     </tabs>
                   </TabPane>
                </children>
