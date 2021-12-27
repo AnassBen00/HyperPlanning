@@ -1,36 +1,36 @@
 package univ.tln.entities.creneaux;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 
+@Builder
 public class Creneau {
 
     @Getter
-    private String id;
-    @Getter
     @Setter
     private Date dateDebut;
+
     @Getter
     @Setter
     private Date dateFin;
 
     @Getter
     @Setter
-    private String idGroupe;
+    private int idGroupe;
 
     @Getter
     @Setter
-    private String idCours;
+    private int idCours;
 
     @Getter
     @Setter
-    private String idSalle;
+    private int idSalle;
 
 
-    public Creneau(String id, Date dateDebut, Date dateFin, String idGroupe, String idCours, String idSalle) {
-        this.id = id;
+    public Creneau(Date dateDebut, Date dateFin, int idGroupe, int idCours, int idSalle) {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.idGroupe = idGroupe;

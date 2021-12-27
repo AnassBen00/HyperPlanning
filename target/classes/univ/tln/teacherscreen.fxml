@@ -50,22 +50,6 @@
                   </TableView>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="scene2" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0">
-               <children>
-                  <ImageView fitHeight="645.0" fitWidth="1007.0">
-                     <image>
-                        <Image url="@planning.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="idlundi1" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="28.0" text="06/12/2021" />
-                  <Label fx:id="idmardi1" alignment="CENTER" contentDisplay="CENTER" layoutX="276.0" layoutY="28.0" text="06/12/2021" />
-                  <Label fx:id="idmercredi1" alignment="CENTER" contentDisplay="CENTER" layoutX="403.0" layoutY="28.0" text="06/12/2021" />
-                  <Label fx:id="idjeudi1" alignment="CENTER" contentDisplay="CENTER" layoutX="531.0" layoutY="28.0" text="06/12/2021" />
-                  <Label fx:id="idvendredi1" alignment="CENTER" contentDisplay="CENTER" layoutX="653.0" layoutY="28.0" text="06/12/2021" />
-                  <Label fx:id="idsamedi1" alignment="CENTER" contentDisplay="CENTER" layoutX="777.0" layoutY="28.0" text="06/12/2021" />
-                  <Label fx:id="iddimanche1" alignment="CENTER" contentDisplay="CENTER" layoutX="903.0" layoutY="28.0" text="06/12/2021" />
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="scene1" prefHeight="645.0" prefWidth="1007.0">
                <children>
                   <ImageView fitHeight="645.0" fitWidth="1007.0">
@@ -80,6 +64,22 @@
                   <Label fx:id="idvendredi" alignment="CENTER" contentDisplay="CENTER" layoutX="653.0" layoutY="28.0" text="06/12/2021" />
                   <Label fx:id="idsamedi" alignment="CENTER" contentDisplay="CENTER" layoutX="777.0" layoutY="28.0" text="06/12/2021" />
                   <Label fx:id="iddimanche" alignment="CENTER" contentDisplay="CENTER" layoutX="903.0" layoutY="28.0" text="06/12/2021" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="scene2" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0">
+               <children>
+                  <ImageView fitHeight="645.0" fitWidth="1007.0">
+                     <image>
+                        <Image url="@planning.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="idlundi1" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idmardi1" alignment="CENTER" contentDisplay="CENTER" layoutX="276.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idmercredi1" alignment="CENTER" contentDisplay="CENTER" layoutX="403.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idjeudi1" alignment="CENTER" contentDisplay="CENTER" layoutX="531.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idvendredi1" alignment="CENTER" contentDisplay="CENTER" layoutX="653.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idsamedi1" alignment="CENTER" contentDisplay="CENTER" layoutX="777.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="iddimanche1" alignment="CENTER" contentDisplay="CENTER" layoutX="903.0" layoutY="28.0" text="06/12/2021" />
                </children>
             </AnchorPane>
          </children>
@@ -114,7 +114,7 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnmodify" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Modify" textFill="WHITE">
+            <Button fx:id="btnmodify" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Ajouter" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -138,7 +138,7 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnabsences" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Abcenses" textFill="WHITE">
+            <Button fx:id="btnabsences" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Absences" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -158,25 +158,89 @@
             </Pane>
          </children>
       </VBox>
-      <Pane layoutX="267.0" layoutY="21.0" prefHeight="97.0" prefWidth="1007.0" style="-fx-background-color: #7156DD;">
+      <StackPane layoutX="267.0" layoutY="6.0" prefHeight="113.0" prefWidth="1020.0">
          <children>
-            <Label fx:id="lblstatus" layoutX="41.0" layoutY="29.0" text="Planning" textFill="WHITE">
-               <font>
-                  <Font size="33.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblstatusmini" layoutX="51.0" layoutY="14.0" text="/home/planning" textFill="WHITE" />
-            <Label fx:id="name" layoutX="845.0" layoutY="16.0" prefHeight="67.0" prefWidth="142.0" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="messageinstruction" layoutX="236.0" layoutY="34.0" prefHeight="29.0" prefWidth="596.0" textFill="WHITE">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
+            <Pane fx:id="scenecmt" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="591.0" style="-fx-background-color: #7156DD;">
+               <children>
+                  <Label fx:id="lblstatus1" layoutX="41.0" layoutY="29.0" text="Account" textFill="WHITE">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblstatusmini1" layoutX="51.0" layoutY="14.0" text="/home/account" textFill="WHITE" />
+               </children>
+            </Pane>
+            <Pane fx:id="sceneset" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="591.0" style="-fx-background-color: #7156DD;">
+               <children>
+                  <Label fx:id="lblstatus11" layoutX="41.0" layoutY="29.0" text="Settings" textFill="WHITE">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblstatusmini11" layoutX="51.0" layoutY="14.0" text="/home/settings" textFill="WHITE" />
+               </children>
+            </Pane>
+            <Pane fx:id="sceneabs" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="591.0" style="-fx-background-color: #7156DD;">
+               <children>
+                  <Label fx:id="lblstatus13" layoutX="41.0" layoutY="29.0" text="Absences" textFill="WHITE">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblstatusmini13" layoutX="51.0" layoutY="14.0" text="/home/absences" textFill="WHITE" />
+               </children>
+            </Pane>
+            <Pane fx:id="scenepln" prefHeight="150.0" prefWidth="591.0" style="-fx-background-color: #7156DD;">
+               <children>
+                  <Label fx:id="lblstatus2" layoutX="41.0" layoutY="29.0" text="Planning" textFill="WHITE">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblstatusmini2" layoutX="51.0" layoutY="14.0" text="/home/planning" textFill="WHITE" />
+                  <ImageView fx:id="frontarrow" fitHeight="35.0" fitWidth="36.0" layoutX="979.0" layoutY="76.0">
+                     <image>
+                        <Image url="@right.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="backarrow" fitHeight="35.0" fitWidth="36.0" layoutX="3.0" layoutY="77.0">
+                     <image>
+                        <Image url="@left.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="sceneajout" layoutX="10.0" layoutY="10.0" prefHeight="113.0" prefWidth="1038.0" style="-fx-background-color: #7156DD;">
+               <children>
+                  <Label fx:id="lblstatus12" layoutX="41.0" layoutY="29.0" text="Ajouter" textFill="WHITE">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblstatusmini12" layoutX="51.0" layoutY="14.0" text="/home/Ajouter" textFill="WHITE" />
+                  <Label fx:id="messageinstruction" alignment="CENTER" contentDisplay="CENTER" layoutX="212.0" layoutY="35.0" prefHeight="29.0" prefWidth="596.0" text="Selectionner ce que vous voulez modifier" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="backarrow2" fitHeight="35.0" fitWidth="36.0" layoutX="3.0" layoutY="77.0">
+                     <image>
+                        <Image url="@left.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="frontarrow2" fitHeight="35.0" fitWidth="36.0" layoutX="979.0" layoutY="76.0">
+                     <image>
+                        <Image url="@right.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
-      </Pane>
+      </StackPane>
+      <Label fx:id="name" layoutX="1150.0" layoutY="26.0" prefHeight="67.0" prefWidth="142.0" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

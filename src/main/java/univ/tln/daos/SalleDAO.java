@@ -11,21 +11,18 @@ import java.util.Locale;
 
 public class SalleDAO {
 
-
-
-    /*
-    public Salle getSalleByNom(String nom) {
+    /*public Salle getSalleByNom(String nom) {
         DatabaseConnection connection = new DatabaseConnection();
         Connection connection1 = connection.connectDB();
         try {
             PreparedStatement statement = connection1.prepareStatement("select * from salle where nom = ?");
             statement.setString(1,nom);
             ResultSet resultSet = statement.executeQuery();
-            Salle salle = new Salle();
+            //Salle salle = new Salle();
             while (resultSet.next()) {
-                salle.setNomDuSalle(resultSet.getString("id"));
-                salle.setNomDuSalle(resultSet.getString("nom"));
-                salle.setNomDuSalle(resultSet.getString("video_p"));
+                salle.setNomSalle(resultSet.getString("id"));
+                salle.setNomSalle(resultSet.getString("nom"));
+                salle.setNomSalle(resultSet.getString("video_p"));
                 }
             return salle;
             } catch (SQLException e) {
@@ -33,9 +30,6 @@ public class SalleDAO {
                 return null;
             }
     }
-
-
-
 
 
     public void removeSalle(String id) {
@@ -60,28 +54,28 @@ public class SalleDAO {
         try {
 
 
-            if (salle.getId() != null ) {
+            if (salle.getId() != 0 ) {
                 PreparedStatement statement = connection1.prepareStatement("update salle set num = ?, video_p = ? where id_s = ? ");
-                statement.setString(1,salle.getId());
-                statement.setString(2,salle.getNomDuSalle());
+                statement.setInt(1,salle.getId());
+                statement.setString(2,salle.getNomSalle());
                 statement.setBoolean(3,salle.isVideoProjecteur());
                 statement.executeQuery();
             } else {
                 PreparedStatement statement = connection1.prepareStatement("insert into salle (id_s , num , video-p) values (?,?,?) ");
-                statement.setString(1,salle.getId());
-                statement.setString(2,salle.getNomDuSalle());
+                statement.setInt(1,salle.getId());
+                statement.setString(2,salle.getNomSalle());
                 statement.setBoolean(3,salle.isVideoProjecteur());
                 statement.executeQuery();
             }
 
-            System.out.println(salle.getId() + salle.getNomDuSalle() + salle.isVideoProjecteur() + "saved into database");
+            System.out.println(salle.getId() + salle.getNomSalle() + salle.isVideoProjecteur() + "saved into database");
 
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("unable to save salle");
         }
     }
-
 */
+
 
 }

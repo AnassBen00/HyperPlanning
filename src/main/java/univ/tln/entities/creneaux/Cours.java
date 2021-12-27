@@ -1,19 +1,14 @@
 package univ.tln.entities.creneaux;
 
-import lombok.Getter;
 import lombok.Setter;
 
 public class Cours {
 
-    @Getter
     private String id;
-    @Getter
     @Setter
     private int duree;
-    @Getter
     @Setter
     private String nature;
-    @Getter
     @Setter
     private String nomduCours;
 
@@ -22,5 +17,21 @@ public class Cours {
         this.duree = duree;
         this.nature = nature;
         this.nomduCours = nomduCours;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public int getDuree() {
+        return this.duree;
+    }
+
+    public String getNature() {
+        return this.nature;
+    }
+
+    public String getNomduCours() {
+        return this.nomduCours;
     }
 }

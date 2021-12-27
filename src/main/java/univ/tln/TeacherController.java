@@ -15,17 +15,15 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import univ.tln.daos.EtudiantDAO;
-import univ.tln.entities.utilisateurs.Etudiant;
+//import univ.tln.entities.utilisateurs.Etudiant;
 
 import java.io.IOException;
 import java.net.URL;
@@ -127,6 +125,36 @@ public class TeacherController implements Initializable {
 
     @FXML
     private Button supbtn;
+    @FXML
+    private Pane sceneabs;
+
+    @FXML
+    private Pane sceneajout;
+
+    @FXML
+    private Pane scenecmt;
+
+    @FXML
+    private Pane scenepln;
+
+    @FXML
+    private Pane sceneset;
+
+    @FXML
+    private ImageView frontarrow;
+    @FXML
+    private ImageView backarrow;
+
+    @FXML
+    private ImageView frontarrow2;
+    @FXML
+    private ImageView backarrow2;
+
+    private int r=-7;
+    private int w = 7;
+
+    private int z=-7;
+    private int y = 7;
 
     List<Label> l = new ArrayList<>();
     List<Label> l2 = new ArrayList<>();
@@ -137,51 +165,144 @@ public class TeacherController implements Initializable {
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
-        castdatetime();
+        castdatetime(0);
         try {
             drawrect(); //on dessine l'emploie du temps
             drawrect2();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        setcalendar();
-        setcalendar2();
+        arrowinputback();
+        arrowinputfront();
+        arrowinputback2();
+        arrowinputfront2();
+        setcalendar(0);
+        setcalendar2(0);
     }
+    public void arrowinputback(){ // pour voir la semaine precedente
+
+        backarrow.setOnMouseClicked((mouseEvent) -> {
+            getmonday(r);
+            getsunday(r);
+
+            for (Label g : l) {
+                scene1.getChildren().remove(g);
+            }
+            castdatetime(r);
+
+            try {
+                drawrect();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            setcalendar(r);
+            System.out.println("loool");
+
+            r=r-7;
+            w=w-7;
+        });
+
+    }
+
+    public void arrowinputfront(){ //pour voir la semaine suivante
+
+        frontarrow.setOnMouseClicked((mouseEvent) -> {
+            getmonday(w);
+            getsunday(w);
+
+            for (Label g : l) {
+                scene1.getChildren().remove(g);
+            }
+            castdatetime(w);
+
+            try {
+                drawrect();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            setcalendar(w);
+            System.out.println("loool");
+
+            w=w+7;
+            r=r+7;
+        });
+
+    }
+
+    public void arrowinputback2(){ // pour voir la semaine precedente
+
+        backarrow2.setOnMouseClicked((mouseEvent) -> {
+            getmonday(z);
+            getsunday(z);
+
+            for (Label g : l2) {
+                scene2.getChildren().remove(g);
+            }
+            castdatetime(z);
+
+            try {
+                drawrect2();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            setcalendar2(z);
+            System.out.println("loool");
+
+            z=z-7;
+            y=y-7;
+        });
+
+    }
+
+    public void arrowinputfront2(){ //pour voir la semaine suivante
+
+        frontarrow2.setOnMouseClicked((mouseEvent) -> {
+            getmonday(y);
+            getsunday(y);
+
+            for (Label g : l2) {
+                scene2.getChildren().remove(g);
+            }
+            castdatetime(y);
+
+            try {
+                drawrect2();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            setcalendar2(y);
+            System.out.println("loool");
+
+            y=y+7;
+            z=z+7;
+        });
+
+    }
+
+
 
     public void handleclicks(ActionEvent e) throws ParseException { //pour changer l'ecran
 
         if (e.getSource() == btnaccount) {
-            lblstatus.setText("Account");
-            lblstatusmini.setText("/home/account");
-            messageinstruction.setText("");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             scene3.toFront();
+            scenecmt.toFront();
         } else if (e.getSource() == btnmodify) {
-            lblstatus.setText("Modify");
-            lblstatusmini.setText("/home/modify");
-            messageinstruction.setText("Cliquer sur le creneaux que vous voulez modifier ");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             scene2.toFront();
+            sceneajout.toFront();
         } else if (e.getSource() == btnplanning) {
-            lblstatus.setText("Planning");
-            lblstatusmini.setText("/home/planning");
-            messageinstruction.setText("");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             scene1.toFront();
+            scenepln.toFront();
         } else if (e.getSource() == btnsettings) {
-            lblstatus.setText("Settings");
-            lblstatusmini.setText("/home/settings");
-            messageinstruction.setText("");
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             scene4.toFront();
-            updatewindow();
+            sceneset.toFront();
         } else if (e.getSource() == btnabsences) {
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             scene5.toFront();
-            lblstatus.setText("Absences");
-            messageinstruction.setText("");
-            lblstatusmini.setText("/home/absences");
+            sceneabs.toFront();
 
             TableColumn<Map.Entry<String, String>, String> column1 = new TableColumn<>("Fist name");
             column1.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
@@ -203,22 +324,22 @@ public class TeacherController implements Initializable {
                 }
             });
 
-            ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
-            listEtudiantId.setItems(items);
-            listEtudiantId.getColumns().setAll(column1, column2);
+            //ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
+            //listEtudiantId.setItems(items);
+            //listEtudiantId.getColumns().setAll(column1, column2);
         }
     }
-
+/*
     public Map<String, String> afficherEtudiants() {
         Map<String, String> etudiants = new TreeMap<>() {
         };
         EtudiantDAO etudiantDAO = new EtudiantDAO();
-        for (Etudiant etudiant : etudiantDAO.findall()) {
+        for (Etudiant etudiant : etudiantDAO.findAll()) {
             etudiants.put(etudiant.getNom(), etudiant.getPrenom());
         }
         return etudiants;
     }
-
+*/
     @FXML
     Group group = new Group();
 
@@ -230,20 +351,22 @@ public class TeacherController implements Initializable {
         return (a - 2) * 126 + 125;
     } // fonction qui retourne le pixel exact de la date
 
-    public Calendar getmonday() { //retoune le lundi de cette semaine
+    public Calendar getmonday(int i ){ //retoune le lundi de cette semaine
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY  );
+        c.add(Calendar.DATE, i);
+        System.out.println(c.getTime());
         return c;
     }
-
-    public Calendar getsunday() { // retourne le dimache
+    public Calendar getsunday(int i ){ // retourne le dimache
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY );
         c.add(Calendar.DATE, 7);
+        c.add(Calendar.DATE, i);
         return c;
     }
 
-    public void setcalendar() {
+    public void setcalendar(int a) {
         //pour afficher les dates sous les jours
         Label Tlabel[] = new Label[7];
         Tlabel[0] = idlundi;
@@ -255,6 +378,7 @@ public class TeacherController implements Initializable {
         Tlabel[6] = iddimanche;
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        c.add(Calendar.DATE, a);
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (int i = 0; i < 7; i++) {
             Tlabel[i].setText(df.format(c.getTime()));
@@ -264,7 +388,7 @@ public class TeacherController implements Initializable {
         }
     }
 
-    public void setcalendar2() { //pour afficher les dates sous les jours
+    public void setcalendar2(int a) { //pour afficher les dates sous les jours
         Label Tlabel[] = new Label[7];
         Tlabel[0] = idlundi1;
         Tlabel[1] = idmardi1;
@@ -275,6 +399,7 @@ public class TeacherController implements Initializable {
         Tlabel[6] = iddimanche1;
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        c.add(Calendar.DATE, a);
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         for (int i = 0; i < 7; i++) {
             Tlabel[i].setText(df.format(c.getTime()));
@@ -284,7 +409,7 @@ public class TeacherController implements Initializable {
         }
     }
 
-    public void castdatetime() { //fonction qui remplie une liste des creneaux d'une semaine
+    public void castdatetime(int m) { //fonction qui remplie une liste des creneaux d'une semaine
         i = 0;
         DatabaseConnection connection = new DatabaseConnection();
         Connection connection1 = connection.connectDB();
@@ -301,9 +426,9 @@ public class TeacherController implements Initializable {
             //role.setText("Name : " + LoginController.name1);
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday().getTime())));
+            pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(m).getTime())));
             //System.out.println(df.format(getmonday().getTime()));
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday().getTime())));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(m).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {
@@ -489,7 +614,7 @@ public class TeacherController implements Initializable {
 
         }
 
-        castdatetime();
+        castdatetime(0);
         try {
             drawrect(); //on dessine l'emploie du temps
             drawrect2();
@@ -497,8 +622,8 @@ public class TeacherController implements Initializable {
             e.printStackTrace();
         }
 
-        setcalendar();
-        setcalendar2();
+        setcalendar(0);
+        setcalendar2(0);
 
         //System.out.println("updated");
     }

@@ -1,4 +1,3 @@
-univ/tln/entities/creneaux/Creneau.class
-univ/tln/entities/utilisateurs/Etudiant.class
 univ/tln/entities/utilisateurs/Utilisateur.class
+univ/tln/entities/creneaux/Creneau.class
 module-info.class

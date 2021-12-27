@@ -55,5 +55,45 @@ public class PopupControler {
 
     }
 
+
+    public void cancelbtnOnAction2(ActionEvent e) throws ParseException, IOException {
+        Stage stage = (Stage) supbtn.getScene().getWindow();
+        try {
+            // Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("managerscreen.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 1305, 782);
+
+            LoginController.managerstage.setScene(scene);
+            LoginController.managerstage.show();
+
+            CreneauxDAO d = new CreneauxDAO();
+            System.out.println(ManagerController.d2);
+
+            d.RemoveCreneauByDated(ManagerController.d2);
+            ManagerController T = new ManagerController();
+            ManagerController managerController = loader.getController();
+            managerController.validatebuttononaction(e);
+
+            //System.out.println("yupi");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        stage.close();
+
+    }
+
+    @FXML
+    public  void validateupdate (ActionEvent e) throws IOException, ParseException {
+        //TODO : ahmed update un crneaux (salle heure debut heure fin) les id sont modifhd , modifhf , modifsalle , le bouton valider execute deja cette fonction t'a qu'a ecrire le code :)
+
+        System.out.println("i work");
+    }
+
+
 }
 

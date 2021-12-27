@@ -13,14 +13,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import univ.tln.daos.EnseignantDAO;
 import univ.tln.daos.EtudiantDAO;
-import univ.tln.daos.ResponsableDao;
+import univ.tln.daos.ResponsableDAO;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class LoginController extends Application {
@@ -40,7 +36,7 @@ public class LoginController extends Application {
     private PasswordField passwrdtxt;
 
 
-    static  Stage managerstage = new Stage();
+    static  Stage   managerstage = new Stage();
 
 
 
@@ -68,7 +64,7 @@ public class LoginController extends Application {
 
       EnseignantDAO enseignantDAO = new EnseignantDAO();
       EtudiantDAO etudiantDAO = new EtudiantDAO();
-      ResponsableDao responsableDao = new ResponsableDao();
+      ResponsableDAO responsableDao = new ResponsableDAO();
 
       if(enseignantDAO.checkEnseignant(usernametxt.getText() , passwrdtxt.getText())) {
           //System.out.println("je suis enseignant");
@@ -108,7 +104,6 @@ public class LoginController extends Application {
         try {
             Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
 
-            Stage managerstage = new Stage();
 
             Scene scene = new Scene(root, 1305, 782);
 

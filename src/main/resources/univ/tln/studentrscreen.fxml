@@ -4,7 +4,6 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="stack" prefHeight="782.0" prefWidth="1305.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.StudentController">
+<AnchorPane fx:id="stack" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.StudentController">
    <children>
       <Group layoutX="91.0" layoutY="47.0" />
       <StackPane layoutX="267.0" layoutY="126.0">
@@ -37,31 +36,9 @@
                      </font></Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="scene2" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
+            <AnchorPane fx:id="scene1" prefHeight="${stack.height*0.8}" prefWidth="${stack.width*0.9}">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="168.0" prefHeight="248.0" prefWidth="596.0" style="-fx-background-color: #fff;" text="Modify" textFill="#ab1c1c">
-                     <font>
-                        <Font size="76.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="scene5" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="168.0" prefHeight="248.0" prefWidth="596.0" style="-fx-background-color: #fff;" text="Abcenses" textFill="#ab1c1c">
-                     <font>
-                        <Font size="76.0" />
-                     </font>
-                  </Label>
-                  <TableView fx:id="listEtudiantId" prefHeight="647.0" prefWidth="1007.0">
-                    <columns>
-                    </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="scene1" prefHeight="645.0" prefWidth="1007.0">
-               <children>
-                  <ImageView fitHeight="645.0" fitWidth="1007.0">
+                  <ImageView fitHeight="${stack.height*0.8}" fitWidth="${stack.width*0.9}">
                      <image>
                         <Image url="@planning.png" />
                      </image>
@@ -77,56 +54,49 @@
             </AnchorPane>
          </children>
       </StackPane>
-      <VBox prefHeight="783.0" prefWidth="246.0" style="-fx-background-color: #3F2B63;">
+      <VBox prefHeight="${stack.height}" prefWidth="${stack.width*0.20}" style="-fx-background-color: #3F2B63;">
          <children>
-            <Pane prefHeight="197.0" prefWidth="246.0">
+            <Pane fx:id="sidepane" prefHeight="${stack.height}" prefWidth="${stack.width*0.20}">
                <children>
-                  <ImageView fitHeight="58.0" fitWidth="59.0" layoutX="22.0" layoutY="26.0">
+                  <ImageView fitHeight="${sidepane.height*0.10}" fitWidth="${sidepane.width*0.3}" layoutX="${sidepane.width*0.06}" layoutY="${sidepane.height*0.03}">
                      <image>
                         <Image url="@H.jpeg" />
                      </image>
                   </ImageView>
-                  <Text fill="WHITE" layoutX="87.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ypper">
+                  <Text fill="WHITE" layoutX="${sidepane.width*0.36}" layoutY="${sidepane.height*0.1}" strokeType="OUTSIDE"  text="ypper" >
                      <font>
-                        <Font size="35.0" />
+                        <Font size="22.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="44.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Planning">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
+                  <Text fill="WHITE" layoutX="${sidepane.width*0.05}" layoutY="${sidepane.height*0.15}" strokeType="OUTSIDE"  text="Planning">
                   </Text>
-                  <Line endX="100.0" layoutX="123.0" layoutY="176.0" startX="-100.0" stroke="#110e0e" />
-               </children>
-            </Pane>
-            <Button fx:id="btnplanning" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Planning" textFill="WHITE">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnaccount" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Account" textAlignment="CENTER" textFill="WHITE">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnsettings" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Settings" textFill="WHITE">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Button>
-            <Pane prefHeight="378.0" prefWidth="246.0">
-               <children>
-                  <Label layoutX="13.0" layoutY="334.0" text="Copyright (c). All Rights Reserved" textFill="WHITE" />
-                  <ImageView fitHeight="79.0" fitWidth="200.0" layoutX="21.0" layoutY="197.0">
+                  <Line endX="${sidepane.width*0.8}" layoutX="${sidepane.width*0.06}" layoutY="${sidepane.height*0.18}" startX="${sidepane.width*0.02}" stroke="#110e0e" />
+                  <Button fx:id="btnplanning" alignment="BASELINE_LEFT" layoutX="6.0" layoutY="265.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Planning" textFill="WHITE">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnaccount" alignment="BASELINE_LEFT" layoutX="9.0" layoutY="317.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Account" textAlignment="CENTER" textFill="WHITE">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnsettings" alignment="BASELINE_LEFT" layoutX="9.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Settings" textFill="WHITE">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="19.0" layoutY="764.0" text="Copyright (c). All Rights Reserved" textFill="WHITE" />
+                  <ImageView fitHeight="79.0" fitWidth="200.0" layoutX="29.0" layoutY="664.0">
                      <image>
                         <Image url="@test.jpg" />
                      </image>
@@ -135,20 +105,54 @@
             </Pane>
          </children>
       </VBox>
-      <Pane layoutX="267.0" layoutY="21.0" prefHeight="97.0" prefWidth="1007.0" style="-fx-background-color: #7156DD;">
+      <StackPane id="toppane" layoutX="267.0" layoutY="6.0" prefHeight="113.0" prefWidth="1020.0">
          <children>
-            <Label fx:id="lblstatus" layoutX="41.0" layoutY="29.0" text="Planning" textFill="WHITE">
-               <font>
-                  <Font size="33.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblstatusmini" layoutX="51.0" layoutY="14.0" text="/home/planning" textFill="WHITE" />
-            <Label fx:id="name" layoutX="845.0" layoutY="16.0" prefHeight="68.0" prefWidth="142.0" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
+            <Pane fx:id="scenecmt" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="591.0" style="-fx-background-color: #7156DD;">
+               <children>
+                  <Label fx:id="lblstatus1" layoutX="41.0" layoutY="29.0" text="Account" textFill="WHITE">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblstatusmini1" layoutX="51.0" layoutY="14.0" text="/home/account" textFill="WHITE" />
+               </children>
+            </Pane>
+            <Pane fx:id="sceneset" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="591.0" style="-fx-background-color: #7156DD;">
+               <children>
+                  <Label fx:id="lblstatus11" layoutX="41.0" layoutY="29.0" text="Settings" textFill="WHITE">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblstatusmini11" layoutX="51.0" layoutY="14.0" text="/home/settings" textFill="WHITE" />
+               </children>
+            </Pane>
+            <Pane fx:id="scenepln" prefHeight="150.0" prefWidth="591.0" style="-fx-background-color: #7156DD;">
+               <children>
+                  <Label fx:id="lblstatus" layoutX="41.0" layoutY="29.0" text="Planning" textFill="WHITE">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblstatusmini" layoutX="51.0" layoutY="14.0" text="/home/planning" textFill="WHITE" />
+                  <ImageView fx:id="frontarrow" fitHeight="35.0" fitWidth="36.0" layoutX="979.0" layoutY="76.0">
+                     <image>
+                        <Image url="@right.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="backarrow" fitHeight="35.0" fitWidth="36.0" layoutX="3.0" layoutY="77.0">
+                     <image>
+                        <Image url="@left.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
-      </Pane>
+      </StackPane>
+      <Label fx:id="name" layoutX="1168.0" layoutY="14.0" prefHeight="68.0" prefWidth="111.0" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

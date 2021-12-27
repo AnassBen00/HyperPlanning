@@ -1,112 +1,44 @@
 package univ.tln.daos;
 
-import univ.tln.DatabaseConnection;
+import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Etudiant;
-import univ.tln.entities.utilisateurs.Utilisateur;
-
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class EtudiantDAO {
-    public String getEtudiantNameByFiliereName(String nom) {
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection connection1 = connection.connectDB();
-
-        try {
-            PreparedStatement statement = connection1.prepareStatement("select utilisateur.nom from etudiant join utilisateur on etudiant.login = utilisateur.login join filiere on etudiant.filiere = filiere.id where filiere.nom = ? ");
-            statement.setString(1, nom);
-            ResultSet resultSet = statement.executeQuery();
-            Utilisateur utilisateur = new Utilisateur();
-            while (resultSet.next()) {
-                utilisateur.setNom(resultSet.getString("nom"));
-            }
-            return utilisateur.getNom();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-
-        }
-
+public class EtudiantDAO extends AbstractDAO<Etudiant> {
+    public EtudiantDAO() {
+        super("INSERT INTO ETUDIANT(LOGIN, NVX_ETUDE, PROMO, ID_F) VALUES (?,?,?,?)",
+                "UPDATE UTILISATEUR SET LOGIN=?, NOM=?, PRENOM=?, PASSWORD=?, EMAIL=? WHERE LOGIN=?",
+                "SELECT * from ETUDIANT join UTILISATEUR ON ETUDIANT.login = UTILISATEUR.login  ");
     }
 
-    public List<Etudiant> findall() {
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection connection1 = connection.connectDB();
-        List<Etudiant> etudiants = new ArrayList<Etudiant>();
-        try {
-            String queryString = "SELECT * from ETUDIANT join UTILISATEUR  ON ETUDIANT.login = UTILISATEUR.login ";
-            PreparedStatement statement = connection1.prepareStatement(queryString);
-            ResultSet resultset = statement.executeQuery();
-
-
-            List<ResultSet> resultsetList = new ArrayList<ResultSet>();
-            while(resultset.next()) {
-                //System.out.println("id" + resultset.getString("id") + ",Nom" + resultset.getString("nom") +
-                // ",Prenom" + resultset.getString("prenom") + ",Email" + resultset.getString("prenom"));
-
-                System.out.println(resultset.getString("NOM"));
-                System.out.println(resultset.getString("PRENOM"));
-                Etudiant etudiant = new Etudiant("", "", resultset.getString("NOM"), resultset.getString("PRENOM"),"", "");
-                etudiants.add(etudiant);
-
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return etudiants;
+    @Override
+    public String getTableName() {
+        return "ETUDIANT";
     }
 
-    public void removeEtudiant(String id) {
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection connection1 = connection.connectDB();
-        try {
-            String queryString = "delete from etudiant where id = ? ";
-            PreparedStatement statement = connection1.prepareStatement(queryString);
-            statement.setString(1, id);
-            statement.executeUpdate();
-            System.out.println("Data deleted Successfully");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+    @Override
+    protected Etudiant fromResultSet(ResultSet resultSet) throws SQLException {
+        return new Etudiant(resultSet.getString("login"), resultSet.getString("password"), resultSet.getString("nom"),
+                resultSet.getString("prenom"), resultSet.getString("email"),
+                resultSet.getString("nvx_etude"), resultSet.getString("promo"), resultSet.getInt("id_f"));
     }
-    public boolean checkEtudiant(String username, String password){
 
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection connection1 = connection.connectDB();
-
-        /*String prof ="PROF";
-        String etud="ETU";
-        String res="RES";*/
-
-        String verifylogin=  "SELECT  count(1) from UTILISATEUR join ETUDIANT on (UTILISATEUR.LOGIN = ETUDIANT.LOGIN) where ETUDIANT.LOGIN= '"+username+"' AND PASSWORD = HASH('SHA256','"+password+"',1000)";
-
-        //LoginController.user1= String.valueOf(usernametxt.getText());*
-        //System.out.println(getUsernametxt()+"wtffffffffff");
-
+    public boolean checkEtudiant(String username, String password) {
         try {
-            Statement statement = connection1.createStatement();
-            Statement statement2 = connection1.createStatement();
-            ResultSet queryResult = statement.executeQuery(verifylogin);
-            //ResultSet roleresult = statement2.executeQuery(getrole);
-            //roleresult.next();
-            //String R = roleresult.getString("ROLE");
-
-            while ((queryResult.next())){
-                if( queryResult.getInt(1)==1){
-
-                    /*if(R.trim().equals(prof)) loginmessage.setText("welcome profesor");
-                    if(R.trim().equals(etud)) loginmessage.setText("welcome student");
-                    if(R.trim().equals(res)) loginmessage.setText("welcome manager");*/
+            Statement statement = connection.createStatement();
+            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join ETUDIANT on (UTILISATEUR.LOGIN = ETUDIANT.LOGIN) where ETUDIANT.LOGIN= '" + username + "' AND PASSWORD = HASH('SHA256','" + password + "',1000)");
+            while ((queryResult.next())) {
+                if (queryResult.getInt(1) == 1) {
                     return true;
-
-                }else return false;//loginmessage.setText("invalid try again");
+                } else return false;
             }
-        }
-        catch (
+        } catch (
                 SQLException e) {
             e.printStackTrace();
         }
@@ -115,23 +47,97 @@ public class EtudiantDAO {
 
     public String getEtudiantNameBylogin(String l) {
         String m = null;
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection connection1 = connection.connectDB();
-
         try {
-
-            String queryString = "select nom from UTILISATEUR where login = ?";
-            PreparedStatement statement = connection1.prepareStatement(queryString);
+            PreparedStatement statement = connection.prepareStatement("select nom from UTILISATEUR where login = ?");
             statement.setString(1, l);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 m = resultSet.getString("NOM");
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
         return m;
+    }
+
+    public List<Etudiant> findAll() {
+        List<Etudiant> etudiants = new ArrayList<Etudiant>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * from ETUDIANT join UTILISATEUR  ON ETUDIANT.login = UTILISATEUR.login ");
+            ResultSet resultset = statement.executeQuery();
+            while (resultset.next()) {
+
+                System.out.println(resultset.getString("NOM"));
+                System.out.println(resultset.getString("PRENOM"));
+                Etudiant etudiant = new Etudiant(resultset.getString("login"), resultset.getString("password"), resultset.getString("nom"),
+                        resultset.getString("prenom"), resultset.getString("email"),
+                        resultset.getString("nvx_etude"), resultset.getString("promo"), resultset.getInt("id_f"));
+                etudiants.add(etudiant);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return etudiants;
+    }
+
+    public Optional<Etudiant> find(String login) throws SQLException {
+        Etudiant etudiant = null;
+
+        PreparedStatement findPS = connection.prepareStatement("SELECT * from ETUDIANT join UTILISATEUR ON ETUDIANT.login = ?");
+        findPS.setString(1, login);
+
+        ResultSet rs = findPS.executeQuery();
+        while (rs.next())
+            etudiant = fromResultSet(rs);
+
+        return Optional.ofNullable(etudiant);
+    }
+
+    /*public Etudiant persist() throws DataAccessException, SQLException {
+        String login = null;
+        try {
+            persistPS.executeUpdate();
+            ResultSet rs = persistPS.executeQuery("");
+            if (rs.next()) {
+                //
+                login = rs.getString(1);
+
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getLocalizedMessage());
+        }
+        return find(login).orElseThrow(NotFoundException::new);
+    }*/
+
+
+    // LOGIN, NVX_ETUDE, PROMO, ID_F
+
+    @Override
+    public void persist(Etudiant etudiant) throws DataAccessException, SQLException {
+        try {
+            persistPS.setString(1, etudiant.getLogin());
+            persistPS.setString(2, etudiant.getNvxEtude());
+            persistPS.setString(3, etudiant.getPromo());
+            persistPS.setInt(4, etudiant.getIdFiliere());
+            persistPS.executeUpdate();
+        } catch (SQLException throwables) {
+            throw new DataAccessException(throwables.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void remove(Object etudiant) throws DataAccessException {
+        try {
+            connection.createStatement().execute("DELETE FROM " + getTableName() + " WHERE LOGIN=" + ((Etudiant) etudiant).getLogin());
+        } catch (SQLException throwables) {
+            throw new DataAccessException(throwables.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void update(Etudiant etudiant) throws DataAccessException {
+        return;
     }
 }
