@@ -4,7 +4,6 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -35,19 +34,6 @@
                      <font>
                         <Font size="76.0" />
                      </font></Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="scene5" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="168.0" prefHeight="248.0" prefWidth="596.0" style="-fx-background-color: #fff;" text="Abcenses" textFill="#ab1c1c">
-                     <font>
-                        <Font size="76.0" />
-                     </font>
-                  </Label>
-                  <TableView fx:id="listEtudiantId" prefHeight="647.0" prefWidth="1007.0">
-                    <columns>
-                    </columns>
-                  </TableView>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="scene2" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0">
@@ -138,14 +124,6 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnabsences" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Absences" textFill="WHITE">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Button>
             <Pane prefHeight="378.0" prefWidth="246.0">
                <children>
                   <Label layoutX="13.0" layoutY="334.0" text="Copyright (c). All Rights Reserved" textFill="WHITE" />
@@ -178,16 +156,6 @@
                      </font>
                   </Label>
                   <Label fx:id="lblstatusmini11" layoutX="51.0" layoutY="14.0" text="/home/settings" textFill="WHITE" />
-               </children>
-            </Pane>
-            <Pane fx:id="sceneabs" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="591.0" style="-fx-background-color: #7156DD;">
-               <children>
-                  <Label fx:id="lblstatus13" layoutX="41.0" layoutY="29.0" text="Absences" textFill="WHITE">
-                     <font>
-                        <Font size="33.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblstatusmini13" layoutX="51.0" layoutY="14.0" text="/home/absences" textFill="WHITE" />
                </children>
             </Pane>
             <Pane fx:id="sceneajout" layoutX="10.0" layoutY="10.0" prefHeight="113.0" prefWidth="1038.0" style="-fx-background-color: #7156DD;">

@@ -7,6 +7,7 @@ module univ.tln {
     requires commons.dbcp2;
     requires java.management;
     requires guava;
+    // requires guava;
 
     opens univ.tln to javafx.fxml;
     exports univ.tln;

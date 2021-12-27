@@ -302,7 +302,14 @@ public class ManagerController implements Initializable {
             for (Label g : l) {
                 scene1.getChildren().remove(g);
             }
-            castdatetimebyteacherlogin(r,pickteacher.getValue());
+            if(pickfomation.getItems().isEmpty() == true && pickteacher.getItems().isEmpty() == false ){
+                System.out.println("iwork");
+                castdatetimebyteacherlogin(w,pickteacher.getValue());
+            }
+            else if (pickfomation.getItems().isEmpty() == false && pickteacher.getItems().isEmpty() == true){
+                System.out.println("do i work ?");
+                castdatetimebyformation(w,pickfomation.getValue());
+            }
             try {
                 drawrect();
             } catch (ParseException e) {
@@ -326,7 +333,14 @@ public class ManagerController implements Initializable {
             for (Label g : l) {
                 scene1.getChildren().remove(g);
             }
-            castdatetimebyteacherlogin(w,pickteacher.getValue());
+            if(pickfomation.getItems().isEmpty() == true && pickteacher.getItems().isEmpty() == false ){
+                System.out.println("iwork");
+                castdatetimebyteacherlogin(w,pickteacher.getValue());
+            }
+            else if (pickfomation.getItems().isEmpty() == false && pickteacher.getItems().isEmpty() == true){
+                System.out.println("do i work ?");
+                castdatetimebyformation(w,pickfomation.getValue());
+            }
             try {
                 drawrect();
             } catch (ParseException e) {
@@ -602,6 +616,13 @@ public class ManagerController implements Initializable {
         }
         else if (pickfomation.getItems().isEmpty() == false && pickteacher.getItems().isEmpty() == true){
             System.out.println("it works!!");
+            for (Label g : l) {
+                scene1.getChildren().remove(g);
+                System.out.println("it wooorks");
+            }
+            //castdatetimebyformation(0, pickfomation.getValue());
+            //drawrect();
+            setcalendar(0);
         }
         else if (pickfomation.getItems().isEmpty() == true && pickteacher.getItems().isEmpty() == true){
             System.out.println("nothiing");
@@ -740,7 +761,43 @@ public class ManagerController implements Initializable {
             e.printStackTrace();
         }
     }
+    public void castdatetimebyformation(int w,String formation) { //fonction qui remplie une liste des creneaux d'une semaine
+        i = 0;
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connection1 = connection.connectDB();
 
+        try {
+            Statement statement = connection1.createStatement();
+            //TODO pour abderezak : pstmt a changer pour filtrer le planning par formation "formation dans le parametre
+            PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            //System.out.println(LoginController.user1);
+            pstmt.setString(1,formation);
+            name.setText("Name: " + LoginController.user1 );
+            name.setTextFill(Color.rgb(255, 255, 255));
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(w).getTime())));
+            //System.out.println(df.format(getmonday().getTime()));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(w).getTime())));
+            ResultSet queryResult = pstmt.executeQuery();
+            //System.out.println(queryResult.getInt(1));
+            while ((queryResult.next())) {
+                creneau[i][0] = String.valueOf(queryResult.getTimestamp("DATE_D"));
+                creneau[i][1] = String.valueOf(queryResult.getTimestamp("DATE_F"));
+                creneau[i][2] = queryResult.getString("BATIMENT");
+                creneau[i][3] = String.valueOf(queryResult.getInt("NUM"));
+                creneau[i][4] = String.valueOf(queryResult.getBoolean("VIDEO_P"));
+                creneau[i][5] = queryResult.getString("NOM");
+                creneau[i][6] = queryResult.getString("NATURE");
+                i++;
+            }
+
+
+            //System.out.println(Arrays.deepToString(creneau));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     public  void addcreneau (ActionEvent e) throws IOException, SQLException {
         c.insertcreneau(md_date,md_h_d,md_m_d,md_h_f,md_m_f,md_bat,md_s,md_f,md_c,md_n,md_ens);
