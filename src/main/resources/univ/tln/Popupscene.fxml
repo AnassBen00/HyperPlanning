@@ -6,6 +6,8 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
@@ -73,6 +75,22 @@
          <children>
             <StackPane>
                <children>
+                  <AnchorPane fx:id="abscence" layoutX="10.0" layoutY="10.0" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
+                     <children>
+                        <Button layoutX="310.0" layoutY="565.0" mnemonicParsing="false" text="Valider" textFill="WHITE" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="234.0" layoutY="14.0" prefHeight="31.0" prefWidth="169.0" text="Absence" textFill="#601d8d">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="listEtudiantId" layoutX="91.0" layoutY="143.0" prefHeight="373.0" prefWidth="489.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
                   <AnchorPane fx:id="update" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;">
                      <children>
                         <Label alignment="CENTER" layoutX="24.0" layoutY="78.0" prefHeight="0.0" prefWidth="227.0" text="Modification du cours " textFill="#1a0b43">
@@ -138,16 +156,6 @@
                            </effect>
                         </Label>
                         <ComboBox fx:id="md_bat" layoutX="108.0" layoutY="214.0" prefWidth="150.0" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="abscence" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;">
-                     <children>
-                        <Label layoutX="252.0" layoutY="394.0" prefHeight="16.0" prefWidth="166.0" text="haha" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="abscence1" layoutX="10.0" layoutY="10.0" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;">
-                     <children>
-                        <Label layoutX="252.0" layoutY="394.0" prefHeight="16.0" prefWidth="166.0" text="haha" />
                      </children>
                   </AnchorPane>
                </children>

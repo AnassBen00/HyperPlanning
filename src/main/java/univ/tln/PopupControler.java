@@ -1,5 +1,9 @@
 package univ.tln;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,6 +19,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 import univ.tln.daos.CreneauxDAO;
 
 
@@ -23,7 +28,12 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
 import javafx.fxml.Initializable;
+import univ.tln.daos.EtudiantDAO;
+import univ.tln.entities.utilisateurs.Etudiant;
+
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 
 public class PopupControler implements Initializable{
@@ -67,6 +77,8 @@ public class PopupControler implements Initializable{
 
     @FXML
     private Button btnupdate;
+    @FXML
+    private TableView listEtudiantId;
 
 
 
@@ -264,10 +276,44 @@ public class PopupControler implements Initializable{
         if (e.getSource() == btnabs) {
             System.out.println("hihi");
             abscence.toFront();
+
+            TableColumn<Map.Entry<String, String>, String> column1 = new TableColumn<>("Fist name");
+            column1.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
+
+                @Override
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
+                    // for first column
+                    return new SimpleStringProperty(p.getValue().getKey());
+                }
+            });
+
+            TableColumn<Map.Entry<String, String>, String> column2 = new TableColumn<>("Last name");
+            column2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
+
+                @Override
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
+                    // for second column
+                    return new SimpleStringProperty(p.getValue().getValue());
+                }
+            });
+
+            ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
+            listEtudiantId.setItems(items);
+            listEtudiantId.getColumns().setAll(column1, column2);
         }
     }
 
 
+
+    public Map<String, String> afficherEtudiants() {
+        Map<String, String> etudiants = new TreeMap<>() {
+        };
+        EtudiantDAO etudiantDAO = new EtudiantDAO();
+        for (Etudiant etudiant : etudiantDAO.findAll()) {
+            etudiants.put(etudiant.getNom(), etudiant.getPrenom());
+        }
+        return etudiants;
+    }
 
 
 

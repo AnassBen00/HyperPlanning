@@ -3,6 +3,8 @@ package univ.tln;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -594,9 +596,9 @@ public class ManagerController implements Initializable {
                 }
             });
 
-           // ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
-           // listEtudiantId.setItems(items);
-           // listEtudiantId.getColumns().setAll(column1, column2);
+           ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
+           listEtudiantId.setItems(items);
+           listEtudiantId.getColumns().setAll(column1, column2);
         }
     }
     @FXML
@@ -630,17 +632,17 @@ public class ManagerController implements Initializable {
 
     }
 
-/*
+
     public Map<String, String> afficherEtudiants() {
         Map<String, String> etudiants = new TreeMap<>() {
         };
         EtudiantDAO etudiantDAO = new EtudiantDAO();
-        for (Etudiant etudiant : etudiantDAO.findall()) {
+        for (Etudiant etudiant : etudiantDAO.findAll()) {
             etudiants.put(etudiant.getNom(), etudiant.getPrenom());
         }
         return etudiants;
     }
-*/
+
     @FXML
     Group group = new Group();
 
