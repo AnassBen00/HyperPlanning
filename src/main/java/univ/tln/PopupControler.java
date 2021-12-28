@@ -146,6 +146,41 @@ public class PopupControler implements Initializable{
     public  void validateupdate (ActionEvent e) throws IOException, ParseException {
         //TODO : ahmed a ecrire le code ici avant
 
+        Stage stage = (Stage) btnupdate.getScene().getWindow();
+        try {
+            // Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("teacherscreen.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 1305, 782);
+
+            LoginController.managerstage.setScene(scene);
+            LoginController.managerstage.show();
+
+            CreneauxDAO d = new CreneauxDAO();
+            System.out.println(TeacherController.d1);
+
+            d.updateCreneaux(md_date,md_h_d,md_m_d,md_h_f,md_m_f,md_bat,md_s,TeacherController.d1);
+            TeacherController T = new TeacherController();
+            TeacherController teacherController = loader.getController();
+            teacherController.updatewindow();
+
+            //System.out.println("yupi");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        stage.close();
+
+
+
+
+
+
         System.out.println("i work");
     }
     public void setspinner(){

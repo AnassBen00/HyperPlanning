@@ -460,4 +460,8 @@ UPDATE UTILISATEUR SET PASSWORD = HASH('SHA256', PASSWORD, 1000);
 //Select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,C2.NOM,C2.NATURE,G.nom from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C join COURS C2 on GC.ID_C = C2.ID_C join GROUPS G on GC.ID_G = G.ID_G where C2.LOGIN ='1jJQ0' AND DATE_D;
 
 select LOGIN from ENSEIGNANT ;
+
 insert into creneaux values( '2021-12-20 16:00:00','2021-12-20 16:00:00',(select id_s from salle where num='001' and batiment='U'),(select id_g from groups where nom='DID master1' ),(select id_c from cours where nom='JAVA' and nature ='TP' and login in(select login from utilisateur where CONCAT(nom, ' ', prenom)='Bradshaw Jade')));
+
+
+//update creneaux set DATE_D = '2021-12-23 08:00:00' , DATE_F = '2021-12-23 11:00:00' , ID_S = (select ID_S from SALLE where NUM = '001' and BATIMENT = 'F') where DATE_D = '2021-12-17 08:00:00'
