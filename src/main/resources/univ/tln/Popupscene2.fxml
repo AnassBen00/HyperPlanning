@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -45,55 +51,116 @@
                   <Image url="@H.jpeg" />
                </image>
             </ImageView>
+            <Button fx:id="btnupdate" alignment="BASELINE_LEFT" layoutX="2.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Update" textFill="WHITE">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnabs" alignment="BASELINE_LEFT" layoutX="3.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Absences" textFill="WHITE">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </left>
    <right>
-      <AnchorPane prefHeight="667.0" prefWidth="690.0" BorderPane.alignment="CENTER">
+      <StackPane BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="24.0" layoutY="78.0" prefHeight="0.0" prefWidth="227.0" text="Modification du cours " textFill="#1a0b43">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-               <effect>
-                  <InnerShadow />
-               </effect>
-            </Label>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="144.0" prefHeight="18.0" prefWidth="81.0" text="Heure d" textFill="#575757">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <effect>
-                  <InnerShadow />
-               </effect>
-            </Label>
-            <Button fx:id="supbtn" layoutX="348.0" layoutY="509.0" mnemonicParsing="false" onAction="#cancelbtnOnAction2" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: red;" text="supprimer le cours" textFill="WHITE" />
-            <ImageView fitHeight="31.0" fitWidth="134.0" layoutX="9.0" layoutY="14.0">
-               <image>
-                  <Image url="@univ.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="loginmessage" alignment="CENTER" layoutX="6.0" layoutY="107.0" prefHeight="18.0" prefWidth="255.0" textFill="#ff0909" />
-            <Label alignment="CENTER" layoutX="14.0" layoutY="202.0" prefHeight="18.0" prefWidth="82.0" text="Salle" textFill="#575757">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <effect>
-                  <InnerShadow />
-               </effect>
-            </Label>
-            <Label alignment="CENTER" layoutX="308.0" layoutY="144.0" prefHeight="18.0" prefWidth="81.0" text="Heure f" textFill="#575757">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <effect>
-                  <InnerShadow />
-               </effect>
-            </Label>
-            <Button fx:id="validatechange" layoutX="89.0" layoutY="509.0" mnemonicParsing="false" onAction="#validateupdate" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: green;" text="Valider" textFill="WHITE" />
-            <TextField fx:id="modifhf" layoutX="423.0" layoutY="141.0" />
-            <TextField fx:id="modifhd" layoutX="120.0" layoutY="141.0" />
-            <TextField fx:id="modifsalle" layoutX="120.0" layoutY="199.0" />
-         </children></AnchorPane>
+            <StackPane>
+               <children>
+                  <AnchorPane fx:id="abscence" layoutX="10.0" layoutY="10.0" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
+                     <children>
+                        <Button layoutX="310.0" layoutY="565.0" mnemonicParsing="false" text="Valider" textFill="WHITE" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="234.0" layoutY="14.0" prefHeight="31.0" prefWidth="169.0" text="Absence" textFill="#601d8d">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="listEtudiantId" layoutX="91.0" layoutY="143.0" prefHeight="373.0" prefWidth="489.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="update" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
+                     <children>
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="78.0" prefHeight="0.0" prefWidth="227.0" text="Modification du cours " textFill="#1a0b43">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="7.0" layoutY="147.0" prefHeight="18.0" prefWidth="82.0" text="Date" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="360.0" layoutY="149.0" prefHeight="18.0" prefWidth="100.0" text="Heure depart" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Button fx:id="supbtn" layoutX="348.0" layoutY="509.0" mnemonicParsing="false" onAction="#cancelbtnOnAction2" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: red;" text="supprimer le cours" textFill="WHITE" />
+                        <ImageView fitHeight="31.0" fitWidth="134.0" layoutX="9.0" layoutY="14.0">
+                           <image>
+                              <Image url="@univ.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="loginmessage" alignment="CENTER" layoutX="6.0" layoutY="107.0" prefHeight="18.0" prefWidth="255.0" textFill="#ff0909" />
+                        <Label alignment="CENTER" layoutX="17.0" layoutY="281.0" prefHeight="18.0" prefWidth="82.0" text="Salle" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="360.0" layoutY="208.0" prefHeight="18.0" prefWidth="81.0" text="Heure fin" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Button layoutX="89.0" layoutY="509.0" mnemonicParsing="false" onAction="#validateupdate2" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: green;" text="Valider" textFill="WHITE" />
+                        <DatePicker fx:id="md_date" layoutX="100.0" layoutY="146.0" />
+                        <Spinner fx:id="md_h_d" layoutX="473.0" layoutY="144.0" prefHeight="24.0" prefWidth="66.0" />
+                        <Spinner fx:id="md_m_d" layoutX="538.0" layoutY="144.0" prefHeight="24.0" prefWidth="64.0" />
+                        <Spinner fx:id="md_h_f" layoutX="475.0" layoutY="205.0" prefHeight="24.0" prefWidth="68.0" />
+                        <Spinner fx:id="md_m_f" layoutX="540.0" layoutY="205.0" prefHeight="24.0" prefWidth="62.0" />
+                        <ComboBox fx:id="md_s" layoutX="108.0" layoutY="287.0" prefWidth="150.0" />
+                        <Label alignment="CENTER" layoutX="7.0" layoutY="220.0" prefHeight="18.0" prefWidth="82.0" text="Batiment" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <ComboBox fx:id="md_bat" layoutX="108.0" layoutY="214.0" prefWidth="150.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </StackPane>
+         </children>
+      </StackPane>
    </right>
 </BorderPane>

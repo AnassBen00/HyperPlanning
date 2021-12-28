@@ -91,7 +91,7 @@
                         </TableView>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="update" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;">
+                  <AnchorPane fx:id="update" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
                      <children>
                         <Label alignment="CENTER" layoutX="24.0" layoutY="78.0" prefHeight="0.0" prefWidth="227.0" text="Modification du cours " textFill="#1a0b43">
                            <font>
