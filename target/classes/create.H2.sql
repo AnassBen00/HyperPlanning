@@ -152,6 +152,15 @@ create table if not exists CRENEAUX
         foreign key (ID_S) references SALLE(ID_S)
 );
 
+create table if not exists abscence(
+    abs bool,
+    date_d datetime,
+    login char(15),
+    constraint abs_pk primary key (login,date_d),
+    constraint fk foreign key (date_d)references CRENEAUX(date_d),
+    constraint fk_1 foreign key (login) references ETUDIANT(login)
+);
+
 
 
 

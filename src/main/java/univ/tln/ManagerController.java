@@ -299,18 +299,24 @@ public class ManagerController implements Initializable {
 
         backarrow.setOnMouseClicked((mouseEvent) -> {
             getmonday(r);
-            getsunday(r);
 
             for (Label g : l) {
                 scene1.getChildren().remove(g);
             }
-            if(pickfomation.getItems().isEmpty() == true && pickteacher.getItems().isEmpty() == false ){
+            if(pickfomation.getValue() == null && pickteacher.getValue() != null ){
+                for (Label g : l) {
+                    scene1.getChildren().remove(g);
+                }
                 System.out.println("iwork");
-                castdatetimebyteacherlogin(w,pickteacher.getValue());
+                System.out.println("this is te problem "+w);
+                castdatetimebyteacherlogin(r,pickteacher.getValue());
             }
-            else if (pickfomation.getItems().isEmpty() == false && pickteacher.getItems().isEmpty() == true){
+            else if (pickfomation.getValue() != null && pickteacher.getValue() == null ){
+                for (Label g : l) {
+                    scene1.getChildren().remove(g);
+                }
                 System.out.println("do i work ?");
-                castdatetimebyformation(w,pickfomation.getValue());
+                castdatetimebyformation(r,pickfomation.getValue());
             }
             try {
                 drawrect();
@@ -318,8 +324,6 @@ public class ManagerController implements Initializable {
                 e.printStackTrace();
             }
             setcalendar(r);
-            System.out.println("loool");
-
             r=r-7;
             w=w-7;
         });
@@ -330,16 +334,16 @@ public class ManagerController implements Initializable {
 
         frontarrow.setOnMouseClicked((mouseEvent) -> {
             getmonday(w);
-            getsunday(w);
+            getmonday(w+7);
 
             for (Label g : l) {
                 scene1.getChildren().remove(g);
             }
-            if(pickfomation.getItems().isEmpty() == true && pickteacher.getItems().isEmpty() == false ){
+            if(pickfomation.getValue() == null && pickteacher.getValue() != null ){
                 System.out.println("iwork");
                 castdatetimebyteacherlogin(w,pickteacher.getValue());
             }
-            else if (pickfomation.getItems().isEmpty() == false && pickteacher.getItems().isEmpty() == true){
+            else if (pickfomation.getValue() != null && pickteacher.getValue() == null ){
                 System.out.println("do i work ?");
                 castdatetimebyformation(w,pickfomation.getValue());
             }
@@ -604,9 +608,9 @@ public class ManagerController implements Initializable {
     @FXML
     public  void validatebuttononaction (ActionEvent e) throws IOException, ParseException {
         r=-7;
-        w = 7;
-
-        if(pickfomation.getItems().isEmpty() == true && pickteacher.getItems().isEmpty() == false ) {
+        w =7;
+        System.out.println(pickfomation.getValue()+ "hhhhhhhh"+ pickteacher.getValue());
+        if(pickfomation.getValue() == null && pickteacher.getValue() != null ) {
             System.out.println("lol");
             for (Label g : l) {
                 scene1.getChildren().remove(g);
@@ -616,17 +620,17 @@ public class ManagerController implements Initializable {
             drawrect();
             setcalendar(0);
         }
-        else if (pickfomation.getItems().isEmpty() == false && pickteacher.getItems().isEmpty() == true){
+        else if (pickfomation.getValue() != null && pickteacher.getValue() == null ){
             System.out.println("it works!!");
             for (Label g : l) {
                 scene1.getChildren().remove(g);
                 System.out.println("it wooorks");
             }
-            //castdatetimebyformation(0, pickfomation.getValue());
-            //drawrect();
+            castdatetimebyformation(0, pickfomation.getValue());
+            drawrect();
             setcalendar(0);
         }
-        else if (pickfomation.getItems().isEmpty() == true && pickteacher.getItems().isEmpty() == true){
+        else if (pickfomation.getValue() == null && pickteacher.getValue() == null ){
             System.out.println("nothiing");
         }
 
@@ -657,14 +661,6 @@ public class ManagerController implements Initializable {
     public Calendar getmonday(int i) { //retoune le lundi de cette semaine
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        c.add(Calendar.DATE, i);
-        return c;
-    }
-
-    public Calendar getsunday(int i) { // retourne le dimache
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        c.add(Calendar.DATE, 7);
         c.add(Calendar.DATE, i);
         return c;
     }
@@ -705,8 +701,8 @@ public class ManagerController implements Initializable {
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(w).getTime())));
-            //System.out.println(df.format(getmonday().getTime()));
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(w).getTime())));
+            //System.out.println(df.format("teeeeeeest"+getmonday(w).getTime()));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getmonday(w+7).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {
@@ -742,8 +738,8 @@ public class ManagerController implements Initializable {
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(w).getTime())));
-            //System.out.println(df.format(getmonday().getTime()));
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(w).getTime())));
+            System.out.println("lteeeeeest"+df.format(getmonday(w).getTime()));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getmonday(w+7).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {
@@ -771,8 +767,7 @@ public class ManagerController implements Initializable {
         try {
             Statement statement = connection1.createStatement();
             //TODO pour abderezak : pstmt a changer pour filtrer le planning par formation "formation dans le parametre
-            PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
-            //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,cours.NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPS on GROUPS.ID_G=GROUP_COURS.ID_G where GROUPS.NOM=? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");            //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             //System.out.println(LoginController.user1);
             pstmt.setString(1,formation);
             name.setText("Name: " + LoginController.user1 );
@@ -780,7 +775,7 @@ public class ManagerController implements Initializable {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(w).getTime())));
             //System.out.println(df.format(getmonday().getTime()));
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(w).getTime())));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getmonday(w+7).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {

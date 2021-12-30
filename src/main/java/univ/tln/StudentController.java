@@ -145,7 +145,7 @@ public void arrowinputback(){ // pour voir la semaine precedente
 
     backarrow.setOnMouseClicked((mouseEvent) -> {
         getmonday(r);
-        getsunday(r);
+        getmonday(r+7);
 
         for (Label g : l) {
             scene1.getChildren().remove(g);
@@ -170,7 +170,7 @@ public void arrowinputback(){ // pour voir la semaine precedente
 
         frontarrow.setOnMouseClicked((mouseEvent) -> {
             getmonday(w);
-            getsunday(w);
+            getmonday(w+7);
 
             for (Label g : l) {
                 scene1.getChildren().remove(g);
@@ -207,13 +207,7 @@ public void arrowinputback(){ // pour voir la semaine precedente
         System.out.println(c.getTime());
         return c;
     }
-    public Calendar getsunday(int i ){ // retourne le dimache
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY );
-        c.add(Calendar.DATE, 7);
-        c.add(Calendar.DATE, i);
-        return c;
-    }
+
 
 
 
@@ -258,7 +252,7 @@ public void arrowinputback(){ // pour voir la semaine precedente
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(z).getTime())));
             //System.out.println(df.format(getmonday().getTime()));
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(z).getTime())));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getmonday(z+7).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {
