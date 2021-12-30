@@ -2,6 +2,8 @@ drop table if exists RESPONSABLE;
 
 drop table if exists GROUP_ETUDIANT;
 
+drop table if exists ABSCENCE;
+
 drop table if exists ETUDIANT;
 
 drop table if exists CRENEAUX;
