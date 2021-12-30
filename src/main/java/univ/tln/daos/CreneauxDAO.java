@@ -430,4 +430,21 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         }
     }
 
-}
+    public void updateCreneaux(DatePicker md_date,Spinner<Integer>heureD,Spinner<Integer>minuteD,Spinner<Integer>heureF,Spinner<Integer>minuteF,ComboBox<String>md_bat,ComboBox<String>nums,String datecondition) throws SQLException {
+        String date1 = md_date.getValue().toString() + " " + heureD.getValue().toString() + ":" + minuteD.getValue().toString() + ":00";
+        String date2 = md_date.getValue().toString() + " " + heureF.getValue().toString() + ":" + minuteF.getValue().toString() + ":00";
+        PreparedStatement pstmt = connection.prepareStatement("update creneaux set DATE_D = ? , DATE_F = ? , ID_S = (select ID_S from SALLE where NUM = ? and BATIMENT = ?) where DATE_D = ?");
+        pstmt.setString(1, date1);
+        pstmt.setString(2, date2);
+        pstmt.setString(3, nums.getValue());
+        pstmt.setString(4, md_bat.getValue());
+        pstmt.setString(5,datecondition);
+        pstmt.executeUpdate();
+        System.out.println("updated succefully");
+
+    }
+
+
+
+
+    }

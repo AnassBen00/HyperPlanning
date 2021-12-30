@@ -183,7 +183,7 @@ public class TeacherController implements Initializable {
 
         backarrow.setOnMouseClicked((mouseEvent) -> {
             getmonday(r);
-            getsunday(r);
+            getmonday(r+7);
 
             for (Label g : l) {
                 scene1.getChildren().remove(g);
@@ -208,7 +208,7 @@ public class TeacherController implements Initializable {
 
         frontarrow.setOnMouseClicked((mouseEvent) -> {
             getmonday(w);
-            getsunday(w);
+            getmonday(w+7);
 
             for (Label g : l) {
                 scene1.getChildren().remove(g);
@@ -233,7 +233,7 @@ public class TeacherController implements Initializable {
 
         backarrow2.setOnMouseClicked((mouseEvent) -> {
             getmonday(z);
-            getsunday(z);
+            getmonday(z+7);
 
             for (Label g : l2) {
                 scene2.getChildren().remove(g);
@@ -258,7 +258,7 @@ public class TeacherController implements Initializable {
 
         frontarrow2.setOnMouseClicked((mouseEvent) -> {
             getmonday(y);
-            getsunday(y);
+            getmonday(y+7);
 
             for (Label g : l2) {
                 scene2.getChildren().remove(g);
@@ -358,13 +358,7 @@ public class TeacherController implements Initializable {
         System.out.println(c.getTime());
         return c;
     }
-    public Calendar getsunday(int i ){ // retourne le dimache
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY );
-        c.add(Calendar.DATE, 7);
-        c.add(Calendar.DATE, i);
-        return c;
-    }
+
 
     public void setcalendar(int a) {
         //pour afficher les dates sous les jours
@@ -427,8 +421,9 @@ public class TeacherController implements Initializable {
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(m).getTime())));
+            System.out.println("younes" + java.sql.Date.valueOf(df.format(getmonday(m).getTime())) );
             //System.out.println(df.format(getmonday().getTime()));
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(m).getTime())));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getmonday(m+7).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {
@@ -469,7 +464,7 @@ public class TeacherController implements Initializable {
 
             Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][0]);
 
-            System.out.println(creneau[r][0]);
+            System.out.println("this is it" + creneau[r][0]);
 
             Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);
             x.setTime(date1);
