@@ -610,6 +610,10 @@ public class ManagerController implements Initializable {
     public  void validatebuttononaction (ActionEvent e) throws IOException, ParseException {
         r=-7;
         w =7;
+        for (Label g : l) {
+            scene1.getChildren().remove(g);
+            System.out.println("yeeees");
+        }
         System.out.println(pickfomation.getValue()+ "hhhhhhhh"+ pickteacher.getValue());
         if(pickfomation.getValue() == null && pickteacher.getValue() != null ) {
             System.out.println("lol");
