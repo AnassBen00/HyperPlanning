@@ -622,8 +622,8 @@ public class ManagerController implements Initializable {
                 scene1.getChildren().remove(g);
                 System.out.println("it wooorks");
             }
-            //castdatetimebyformation(0, pickfomation.getValue());
-            //drawrect();
+            castdatetimebyformation(0, pickfomation.getValue());
+            drawrect();
             setcalendar(0);
         }
         else if (pickfomation.getItems().isEmpty() == true && pickteacher.getItems().isEmpty() == true){
@@ -664,7 +664,6 @@ public class ManagerController implements Initializable {
     public Calendar getsunday(int i) { // retourne le dimache
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        c.add(Calendar.DATE, 7);
         c.add(Calendar.DATE, i);
         return c;
     }
@@ -771,7 +770,7 @@ public class ManagerController implements Initializable {
         try {
             Statement statement = connection1.createStatement();
             //TODO pour abderezak : pstmt a changer pour filtrer le planning par formation "formation dans le parametre
-            PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,cours.NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPS on GROUPS.ID_G=GROUP_COURS.ID_G where GROUPS.NOM=? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             //System.out.println(LoginController.user1);
             pstmt.setString(1,formation);

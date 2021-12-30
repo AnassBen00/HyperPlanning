@@ -166,18 +166,19 @@ public class TeacherController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
         castdatetime(0);
-        try {
-            drawrect(); //on dessine l'emploie du temps
-            drawrect2();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         arrowinputback();
         arrowinputfront();
         arrowinputback2();
         arrowinputfront2();
         setcalendar(0);
         setcalendar2(0);
+        try {
+            drawrect(); //on dessine l'emploie du temps
+            drawrect2();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
     public void arrowinputback(){ // pour voir la semaine precedente
 
@@ -209,7 +210,7 @@ public class TeacherController implements Initializable {
         frontarrow.setOnMouseClicked((mouseEvent) -> {
             getmonday(w);
             getsunday(w);
-
+            System.out.println(r);
             for (Label g : l) {
                 scene1.getChildren().remove(g);
             }
@@ -361,7 +362,6 @@ public class TeacherController implements Initializable {
     public Calendar getsunday(int i ){ // retourne le dimache
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY );
-        c.add(Calendar.DATE, 7);
         c.add(Calendar.DATE, i);
         return c;
     }
@@ -430,6 +430,7 @@ public class TeacherController implements Initializable {
             System.out.println("younes" + java.sql.Date.valueOf(df.format(getmonday(m).getTime())) );
             //System.out.println(df.format(getmonday().getTime()));
             pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(m).getTime())));
+            System.out.println("younesS" + java.sql.Date.valueOf(df.format(getsunday(m).getTime())) );
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {
