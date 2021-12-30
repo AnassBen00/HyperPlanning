@@ -511,6 +511,8 @@ public class ManagerController implements Initializable {
     public void setPickfomation(){
         pickfomation.setOnMouseClicked(mouseEvent -> {
             try {
+                pickteacher.valueProperty().set(null);
+                System.out.println("correction erreur ");
                 c.initialize_pickformation(pickfomation);
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -523,6 +525,7 @@ public class ManagerController implements Initializable {
         });
         pickteacher.setOnMouseClicked(mouseEvent -> {
             try {
+                pickfomation.valueProperty().set(null);
                 c.initialize_pickenseignant(pickteacher);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -768,7 +771,7 @@ public class ManagerController implements Initializable {
         i = 0;
         DatabaseConnection connection = new DatabaseConnection();
         Connection connection1 = connection.connectDB();
-
+        System.out.println("&&&");
         try {
             Statement statement = connection1.createStatement();
             //TODO pour abderezak : pstmt a changer pour filtrer le planning par formation "formation dans le parametre
