@@ -185,7 +185,7 @@ public class TeacherController implements Initializable {
             getmonday(r);
             getmonday(r+7);
 
-            for (Label g : l2) {
+            for (Label g : l) {
                 scene1.getChildren().remove(g);
             }
             castdatetime(r);

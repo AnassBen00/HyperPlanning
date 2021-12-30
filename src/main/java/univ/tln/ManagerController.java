@@ -299,8 +299,6 @@ public class ManagerController implements Initializable {
 
         backarrow.setOnMouseClicked((mouseEvent) -> {
             getmonday(r);
-            getsunday(r);
-
             for (Label g : l) {
                 scene1.getChildren().remove(g);
             }
