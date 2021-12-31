@@ -213,6 +213,25 @@ public class ManagerController implements Initializable {
     @FXML
     private TextField idPromo;
 
+    @FXML
+    private TextField nameField;
+
+    @FXML
+    private TextField lastnameField;
+
+    @FXML
+    private TextField passwordField;
+
+    @FXML
+    private TextField emailField;
+
+    @FXML
+    private TextField loginField;
+
+    @FXML
+    private Button saveButton;
+
+
     private int r=-7;
     private int w = 7;
     List<Label> l = new ArrayList<>();
@@ -902,4 +921,10 @@ public class ManagerController implements Initializable {
     @FXML
     private PasswordField passwrdtxt;
 
+
+
+    @FXML
+    void SaveOnAction(ActionEvent event) {
+
+    }
 }

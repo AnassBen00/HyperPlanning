@@ -119,7 +119,11 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
         }
-        super.update();
+        try {
+            super.update();
+        } catch (univ.tln.daos.exceptions.DataAccessException e) {
+            e.printStackTrace();
+        }
 
     }
 

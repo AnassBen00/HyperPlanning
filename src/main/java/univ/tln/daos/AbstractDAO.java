@@ -2,15 +2,12 @@ package univ.tln.daos;
 
 import lombok.extern.java.Log;
 import univ.tln.DatabaseConnection;
-import univ.tln.datasource.DBCPDataSource;
-import univ.tln.exceptions.DataAccessException;
-import univ.tln.exceptions.NotFoundException;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.daos.exceptions.NotFoundException;
+
+import java.sql.*;
+
+
 
 import java.sql.*;
 import java.util.Optional;
