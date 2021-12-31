@@ -32,7 +32,7 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
     public boolean checkEtudiant(String username, String password) {
         try {
             Statement statement = connection.createStatement();
-            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join ETUDIANT on (UTILISATEUR.LOGIN = ETUDIANT.LOGIN) where ETUDIANT.LOGIN= '" + username + "' AND PASSWORD = HASH('SHA256','" + password + "',1000)");
+            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join ETUDIANT on (UTILISATEUR.LOGIN = ETUDIANT.LOGIN) where ETUDIANT.LOGIN= '" + username + "' AND PASSWORD = HASH('SHA256','" + password + "')");
             while ((queryResult.next())) {
                 if (queryResult.getInt(1) == 1) {
                     return true;

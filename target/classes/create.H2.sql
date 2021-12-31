@@ -154,15 +154,6 @@ create table if not exists CRENEAUX
         foreign key (ID_S) references SALLE(ID_S)
 );
 
-create table if not exists abscence(
-    abs bool,
-    date_d datetime,
-    login char(15),
-    constraint abs_pk primary key (login,date_d),
-    constraint fk foreign key (date_d)references CRENEAUX(date_d),
-    constraint fk_1 foreign key (login) references ETUDIANT(login)
-);
-
 
 
 
@@ -458,7 +449,7 @@ INSERT INTO CRENEAUX(DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ( '2021-12-17 08:0
 INSERT INTO CRENEAUX(DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ( '2021-12-18 16:00:00','2021-12-18 18:30:00',9,3,9);
 
 
-UPDATE UTILISATEUR SET PASSWORD = HASH('SHA256', PASSWORD, 1000);
+UPDATE UTILISATEUR SET PASSWORD = HASH('SHA256', PASSWORD);
 
 //select distinct batiment from salle where ID_S not in ( select ID_S FROM CRENEAUX WHERE(DATE_D <= ? and date_f >= ?)and ((date_d between ? and ?)or (date_f between ? and ?)))
 
