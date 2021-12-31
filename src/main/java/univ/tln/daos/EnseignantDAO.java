@@ -28,7 +28,7 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
 
     public boolean checkEnseignant(String username, String password) {
         try {
-            ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(1) from UTILISATEUR join ENSEIGNANT on (UTILISATEUR.LOGIN = ENSEIGNANT.LOGIN) where ENSEIGNANT.LOGIN= '" + username + "' AND PASSWORD = HASH('SHA256','" + password + "',1000)");
+            ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(1) from UTILISATEUR join ENSEIGNANT on (UTILISATEUR.LOGIN = ENSEIGNANT.LOGIN) where ENSEIGNANT.LOGIN= '" + username + "' AND PASSWORD = HASH('SHA256','" + password + "')");
             while ((resultSet.next())) {
                 if (resultSet.getInt(1) == 1) {
                     return true;

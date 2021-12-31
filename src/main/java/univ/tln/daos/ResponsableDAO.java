@@ -34,7 +34,7 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
     public boolean checkResponsable(String username, String password){
         try {
             Statement statement = connection.createStatement();
-            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join RESPONSABLE on (UTILISATEUR.LOGIN = RESPONSABLE.LOGIN) where RESPONSABLE.LOGIN= '"+username+"' AND PASSWORD = HASH('SHA256','"+password+"',1000)");
+            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join RESPONSABLE on (UTILISATEUR.LOGIN = RESPONSABLE.LOGIN) where RESPONSABLE.LOGIN= '"+username+"' AND PASSWORD = HASH('SHA256','"+password+"')");
 
             while ((queryResult.next())){
                 if( queryResult.getInt(1)==1){
