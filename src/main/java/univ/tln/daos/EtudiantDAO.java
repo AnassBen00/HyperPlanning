@@ -2,6 +2,8 @@ package univ.tln.daos;
 
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Etudiant;
+import univ.tln.entities.utilisateurs.Utilisateur;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +34,7 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
     public boolean checkEtudiant(String username, String password) {
         try {
             Statement statement = connection.createStatement();
-            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join ETUDIANT on (UTILISATEUR.LOGIN = ETUDIANT.LOGIN) where ETUDIANT.LOGIN= '" + username + "' AND PASSWORD = HASH('SHA256','" + password + "',1000)");
+            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join ETUDIANT on (UTILISATEUR.LOGIN = ETUDIANT.LOGIN) where ETUDIANT.LOGIN= '" + username + "' AND PASSWORD = HASH('SHA256','" + password + "')");
             while ((queryResult.next())) {
                 if (queryResult.getInt(1) == 1) {
                     return true;
@@ -139,5 +141,23 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
     @Override
     public void update(Etudiant etudiant) throws DataAccessException {
         return;
+    }
+
+    public boolean checkEtudiantPass(String passwrd) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join ETUDIANT on (UTILISATEUR.LOGIN = ETUDIANT.LOGIN) where PASSWORD = HASH('SHA256','"+passwrd+"')");
+
+            while ((queryResult.next())){
+                if( queryResult.getInt(1)==1){
+                    return true;
+                }else return false;
+            }
+        }
+        catch (
+                SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

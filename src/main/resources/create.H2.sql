@@ -2,6 +2,8 @@ drop table if exists RESPONSABLE;
 
 drop table if exists GROUP_ETUDIANT;
 
+drop table if exists ABSCENCE;
+
 drop table if exists ETUDIANT;
 
 drop table if exists CRENEAUX;
@@ -105,7 +107,7 @@ CREATE TABLE if not exists COURS (
 
 CREATE TABLE IF NOT EXISTS GROUPS(
     ID_G INT NOT NULL AUTO_INCREMENT,
-    NOM CHAR(30) NOT NULL
+    NOM CHAR(30) NOT NULL unique
 );
 
 CREATE TABLE if not exists GROUP_ETUDIANT (
@@ -447,7 +449,7 @@ INSERT INTO CRENEAUX(DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ( '2021-12-17 08:0
 INSERT INTO CRENEAUX(DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ( '2021-12-18 16:00:00','2021-12-18 18:30:00',9,3,9);
 
 
-UPDATE UTILISATEUR SET PASSWORD = HASH('SHA256', PASSWORD, 1000);
+UPDATE UTILISATEUR SET PASSWORD = HASH('SHA256', PASSWORD);
 
 //select distinct batiment from salle where ID_S not in ( select ID_S FROM CRENEAUX WHERE(DATE_D <= ? and date_f >= ?)and ((date_d between ? and ?)or (date_f between ? and ?)))
 
@@ -464,4 +466,6 @@ select LOGIN from ENSEIGNANT ;
 insert into creneaux values( '2021-12-20 16:00:00','2021-12-20 16:00:00',(select id_s from salle where num='001' and batiment='U'),(select id_g from groups where nom='DID master1' ),(select id_c from cours where nom='JAVA' and nature ='TP' and login in(select login from utilisateur where CONCAT(nom, ' ', prenom)='Bradshaw Jade')));
 
 
+
+select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,cours.NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPS on GROUPS.ID_G=GROUP_COURS.ID_G where GROUPS.NOM='anglais L1';
 //update creneaux set DATE_D = '2021-12-23 08:00:00' , DATE_F = '2021-12-23 11:00:00' , ID_S = (select ID_S from SALLE where NUM = '001' and BATIMENT = 'F') where DATE_D = '2021-12-17 08:00:00'

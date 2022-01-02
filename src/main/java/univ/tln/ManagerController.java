@@ -30,6 +30,7 @@ import univ.tln.entities.filieres.Filiere;
 
 import univ.tln.entities.utilisateurs.Enseignant;
 import univ.tln.entities.utilisateurs.Etudiant;
+import univ.tln.entities.utilisateurs.Responsable;
 import univ.tln.entities.utilisateurs.Utilisateur;
 
 import java.io.IOException;
@@ -53,6 +54,8 @@ public class ManagerController implements Initializable {
     public int i;
     int max_cours = 60;
     CreneauxDAO c = new CreneauxDAO();
+
+    ResponsableDAO responsableDAO = new ResponsableDAO();
 
     private String[][] creneau = new String[max_cours][7];
 
@@ -213,6 +216,25 @@ public class ManagerController implements Initializable {
     @FXML
     private TextField idPromo;
 
+    @FXML
+    private TextField nameField;
+
+    @FXML
+    private TextField lastnameField;
+
+    @FXML
+    private TextField passwordField;
+
+    @FXML
+    private TextField emailField;
+
+    @FXML
+    private TextField loginField;
+
+    @FXML
+    private Button saveButton;
+
+
     private int r=-7;
     private int w = 7;
     List<Label> l = new ArrayList<>();
@@ -234,6 +256,11 @@ public class ManagerController implements Initializable {
         initnature();
         initens();
         setPickfomation();
+        try {
+            AffichageInfo();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         idNiveau.getItems().addAll(
                 "licence 1",
@@ -299,18 +326,23 @@ public class ManagerController implements Initializable {
 
         backarrow.setOnMouseClicked((mouseEvent) -> {
             getmonday(r);
-            getsunday(r);
-
             for (Label g : l) {
                 scene1.getChildren().remove(g);
             }
-            if(pickfomation.getItems().isEmpty() == true && pickteacher.getItems().isEmpty() == false ){
+            if(pickfomation.getValue() == null && pickteacher.getValue() != null ){
+                for (Label g : l) {
+                    scene1.getChildren().remove(g);
+                }
                 System.out.println("iwork");
-                castdatetimebyteacherlogin(w,pickteacher.getValue());
+                System.out.println("this is te problem "+w);
+                castdatetimebyteacherlogin(r,pickteacher.getValue());
             }
-            else if (pickfomation.getItems().isEmpty() == false && pickteacher.getItems().isEmpty() == true){
+            else if (pickfomation.getValue() != null && pickteacher.getValue() == null ){
+                for (Label g : l) {
+                    scene1.getChildren().remove(g);
+                }
                 System.out.println("do i work ?");
-                castdatetimebyformation(w,pickfomation.getValue());
+                castdatetimebyformation(r,pickfomation.getValue());
             }
             try {
                 drawrect();
@@ -330,16 +362,16 @@ public class ManagerController implements Initializable {
 
         frontarrow.setOnMouseClicked((mouseEvent) -> {
             getmonday(w);
-            getsunday(w);
+            getmonday(w+7);
 
             for (Label g : l) {
                 scene1.getChildren().remove(g);
             }
-            if(pickfomation.getItems().isEmpty() == true && pickteacher.getItems().isEmpty() == false ){
+            if(pickfomation.getValue() == null && pickteacher.getValue() != null ){
                 System.out.println("iwork");
                 castdatetimebyteacherlogin(w,pickteacher.getValue());
             }
-            else if (pickfomation.getItems().isEmpty() == false && pickteacher.getItems().isEmpty() == true){
+            else if (pickfomation.getValue() != null && pickteacher.getValue() == null ){
                 System.out.println("do i work ?");
                 castdatetimebyformation(w,pickfomation.getValue());
             }
@@ -506,6 +538,8 @@ public class ManagerController implements Initializable {
     public void setPickfomation(){
         pickfomation.setOnMouseClicked(mouseEvent -> {
             try {
+                pickteacher.valueProperty().set(null);
+                System.out.println("correction erreur ");
                 c.initialize_pickformation(pickfomation);
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -518,6 +552,7 @@ public class ManagerController implements Initializable {
         });
         pickteacher.setOnMouseClicked(mouseEvent -> {
             try {
+                pickfomation.valueProperty().set(null);
                 c.initialize_pickenseignant(pickteacher);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -604,9 +639,13 @@ public class ManagerController implements Initializable {
     @FXML
     public  void validatebuttononaction (ActionEvent e) throws IOException, ParseException {
         r=-7;
-        w = 7;
-
-        if(pickfomation.getItems().isEmpty() == true && pickteacher.getItems().isEmpty() == false ) {
+        w =7;
+        for (Label g : l) {
+            scene1.getChildren().remove(g);
+            System.out.println("yeeees");
+        }
+        System.out.println(pickfomation.getValue()+ "hhhhhhhh"+ pickteacher.getValue());
+        if(pickfomation.getValue() == null && pickteacher.getValue() != null ) {
             System.out.println("lol");
             for (Label g : l) {
                 scene1.getChildren().remove(g);
@@ -616,17 +655,17 @@ public class ManagerController implements Initializable {
             drawrect();
             setcalendar(0);
         }
-        else if (pickfomation.getItems().isEmpty() == false && pickteacher.getItems().isEmpty() == true){
+        else if (pickfomation.getValue() != null && pickteacher.getValue() == null ){
             System.out.println("it works!!");
             for (Label g : l) {
                 scene1.getChildren().remove(g);
                 System.out.println("it wooorks");
             }
-            //castdatetimebyformation(0, pickfomation.getValue());
-            //drawrect();
+            castdatetimebyformation(0, pickfomation.getValue());
+            drawrect();
             setcalendar(0);
         }
-        else if (pickfomation.getItems().isEmpty() == true && pickteacher.getItems().isEmpty() == true){
+        else if (pickfomation.getValue() == null && pickteacher.getValue() == null ){
             System.out.println("nothiing");
         }
 
@@ -657,14 +696,6 @@ public class ManagerController implements Initializable {
     public Calendar getmonday(int i) { //retoune le lundi de cette semaine
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        c.add(Calendar.DATE, i);
-        return c;
-    }
-
-    public Calendar getsunday(int i) { // retourne le dimache
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        c.add(Calendar.DATE, 7);
         c.add(Calendar.DATE, i);
         return c;
     }
@@ -705,8 +736,8 @@ public class ManagerController implements Initializable {
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(w).getTime())));
-            //System.out.println(df.format(getmonday().getTime()));
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(w).getTime())));
+            //System.out.println(df.format("teeeeeeest"+getmonday(w).getTime()));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getmonday(w+7).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {
@@ -742,8 +773,8 @@ public class ManagerController implements Initializable {
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(w).getTime())));
-            //System.out.println(df.format(getmonday().getTime()));
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(w).getTime())));
+            System.out.println("lteeeeeest"+df.format(getmonday(w).getTime()));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getmonday(w+7).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {
@@ -767,12 +798,11 @@ public class ManagerController implements Initializable {
         i = 0;
         DatabaseConnection connection = new DatabaseConnection();
         Connection connection1 = connection.connectDB();
-
+        System.out.println("&&&");
         try {
             Statement statement = connection1.createStatement();
             //TODO pour abderezak : pstmt a changer pour filtrer le planning par formation "formation dans le parametre
-            PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
-            //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,cours.NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPS on GROUPS.ID_G=GROUP_COURS.ID_G where GROUPS.NOM=? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");            //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             //System.out.println(LoginController.user1);
             pstmt.setString(1,formation);
             name.setText("Name: " + LoginController.user1 );
@@ -780,7 +810,7 @@ public class ManagerController implements Initializable {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(w).getTime())));
             //System.out.println(df.format(getmonday().getTime()));
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getsunday(w).getTime())));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getmonday(w+7).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
             //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {
@@ -888,6 +918,24 @@ public class ManagerController implements Initializable {
         }
     }
 
+    public void swithtoPasseditscene() {
+        try {
+            Parent root = FXMLLoader.load(App.class.getResource("PassEditpopup.fxml"));
+
+            Stage managerstage = new Stage();
+
+           Scene scene = new Scene(root);
+
+
+            managerstage.setScene(scene);
+            managerstage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
     @FXML
     private Label welcomeText;
 
@@ -899,4 +947,27 @@ public class ManagerController implements Initializable {
     @FXML
     private PasswordField passwrdtxt;
 
+
+    public void AffichageInfo() throws SQLException {
+        nameField.setText(responsableDAO.findbyLogin(LoginController.user1).getPrenom());
+        lastnameField.setText(responsableDAO.findbyLogin(LoginController.user1).getNom());
+        emailField.setText(responsableDAO.findbyLogin(LoginController.user1).getEmail());
+        passwordField.setText(LoginController.psswrd);
+        loginField.setText(LoginController.user1);
+
+
+
+
+    }
+
+    @FXML
+    void SaveOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void editPass(ActionEvent event) {
+        swithtoPasseditscene();
+
+    }
 }

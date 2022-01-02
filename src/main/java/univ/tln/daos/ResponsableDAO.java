@@ -1,6 +1,7 @@
 package univ.tln.daos;
 
 import univ.tln.DatabaseConnection;
+
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Responsable;
 import univ.tln.entities.utilisateurs.Utilisateur;
@@ -22,7 +23,7 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
 
     @Override
     protected Responsable fromResultSet(ResultSet resultSet) throws SQLException {
-        return (Responsable) Utilisateur.builder()
+        return  (Responsable) Utilisateur.builder()
                 .login(resultSet.getString("LOGIN"))
                 .nom(resultSet.getString("NOM"))
                 .prenom(resultSet.getString("PRENOM"))
@@ -34,7 +35,7 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
     public boolean checkResponsable(String username, String password){
         try {
             Statement statement = connection.createStatement();
-            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join RESPONSABLE on (UTILISATEUR.LOGIN = RESPONSABLE.LOGIN) where RESPONSABLE.LOGIN= '"+username+"' AND PASSWORD = HASH('SHA256','"+password+"',1000)");
+            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join RESPONSABLE on (UTILISATEUR.LOGIN = RESPONSABLE.LOGIN) where RESPONSABLE.LOGIN= '"+username+"' AND PASSWORD = HASH('SHA256','"+password+"')");
 
             while ((queryResult.next())){
                 if( queryResult.getInt(1)==1){
@@ -150,4 +151,40 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
         super.update();
 
     }
+
+    public Responsable findbyLogin(String login) throws SQLException {
+        Responsable responsable = new Responsable();
+        PreparedStatement pstmt = connection.prepareStatement("select * from RESPONSABLE join UTILISATEUR on RESPONSABLE.login = ?");
+        pstmt.setString(1,login);
+        ResultSet resultSet = pstmt.executeQuery();
+        while(resultSet.next()) {
+            responsable.setLogin(resultSet.getString("LOGIN"));
+            responsable.setEmail(resultSet.getString("EMAIL"));
+            responsable.setNom(resultSet.getString("NOM"));
+            responsable.setPrenom(resultSet.getString("PRENOM"));
+            responsable.setPassword(resultSet.getString("PASSWORD"));
+        }
+        return responsable;
+    }
+
+    public boolean checkResPass(String passwrd) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join RESPONSABLE on (UTILISATEUR.LOGIN = RESPONSABLE.LOGIN) where PASSWORD = HASH('SHA256','"+passwrd+"')");
+
+            while ((queryResult.next())){
+                if( queryResult.getInt(1)==1){
+                    return true;
+                }else return false;
+            }
+        }
+        catch (
+                SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 }
+

@@ -4,8 +4,11 @@ import lombok.extern.java.Log;
 import univ.tln.DatabaseConnection;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.daos.exceptions.NotFoundException;
+import univ.tln.entities.utilisateurs.Utilisateur;
 
 import java.sql.*;
+
+
 import java.util.Optional;
 import java.util.logging.Level;
 

@@ -3,17 +3,18 @@ package univ.tln.daos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
+import lombok.extern.java.Log;
 import univ.tln.DatabaseConnection;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.creneaux.Creneau;
+import univ.tln.entities.utilisateurs.Utilisateur;
 
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
+@Log
 public class CreneauxDAO extends AbstractDAO<Creneau>{
     public CreneauxDAO() {
         super("INSERT INTO CRENEAUX(DATE_D,DATE_F,ID_S,ID_G,ID_C) VALUES (?,?,?,?,?)",
@@ -110,7 +111,11 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
         }
-        super.update();
+        try {
+            super.update();
+        } catch (univ.tln.daos.exceptions.DataAccessException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -134,7 +139,7 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
     public void initialize_batiment(Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner md_h_f, Spinner<Integer> md_h_d, ComboBox<String> md_bat, DatePicker md_date) throws SQLException, ParseException {
 
         String[] Salle_libre = new String[13];
-        PreparedStatement pstmt = connection.prepareStatement(" select distinct batiment from salle where ID_S not in ( select ID_S FROM CRENEAUX WHERE(DATE_D <= ? and date_f >= ?)and ((date_d between ? and ?)or (date_f between ? and ?)))");
+        PreparedStatement pstmt = connection.prepareStatement(" select distinct batiment from salle where ID_S not in ( select ID_S FROM CRENEAUX WHERE(DATE_D <= ? and date_f >= ?)or ((date_d between ? and ?)or (date_f between ? and ?)))");
 
         if (((int) md_m_f.getValue() > (int) md_m_d.getValue() && (int) md_h_f.getValue() == (int) md_h_d.getValue()) || ((int) md_h_f.getValue() > (int) md_h_d.getValue())) {
             int i = 0;
@@ -176,7 +181,7 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
     public void initialize_salle(Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner md_h_f, Spinner<Integer> md_h_d, ComboBox<String> md_bat, DatePicker md_date,ComboBox<String> md_s) throws SQLException, ParseException {
 
         String[] Salle_libre = new String[13];
-        PreparedStatement pstmt = connection.prepareStatement(" select distinct num from salle where batiment =? and ID_S not in ( select ID_S FROM CRENEAUX WHERE (DATE_D <= ? and date_f >= ?)and ((date_d between ? and ?)or (date_f between ? and ?)))");
+        PreparedStatement pstmt = connection.prepareStatement(" select distinct num from salle where batiment =? and ID_S not in ( select ID_S FROM CRENEAUX WHERE (DATE_D <= ? and date_f >= ?)or ((date_d between ? and ?)or (date_f between ? and ?)))");
 
         if (((int) md_m_f.getValue() > (int) md_m_d.getValue() && (int) md_h_f.getValue() == (int) md_h_d.getValue()) || ((int) md_h_f.getValue() > (int) md_h_d.getValue())) {
             int i = 0;
@@ -445,6 +450,5 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
     }
 
 
-
-
     }
+

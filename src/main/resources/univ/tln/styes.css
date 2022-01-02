@@ -52,7 +52,11 @@
 }
 
 .spinner {
-    -fx-border-color: #a064d9
+    -fx-border-color: #a064d9;
+}
+
+.text-field {
+    -fx-border-color: #a064d9;
 }
 
 

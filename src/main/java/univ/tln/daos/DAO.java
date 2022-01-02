@@ -43,7 +43,7 @@ public interface DAO<E extends Object> extends AutoCloseable {
      * @param e The entity to be updated. The id is used and cannot be updated.
      * @throws DataAccessException If there is a data access error (see message).
      */
-    void update(E e) throws DataAccessException;
+    void update(E e) throws DataAccessException, univ.tln.daos.exceptions.DataAccessException;
 
     /**
      * Removes the entity with the given id from the database.
@@ -51,7 +51,7 @@ public interface DAO<E extends Object> extends AutoCloseable {
      * @param id the id of the entity to remove
      * @throws DataAccessException If there is a data access error (see message).
      */
-    void remove(long id) throws DataAccessException;
+    void remove(long id) throws DataAccessException, univ.tln.daos.exceptions.DataAccessException;
 
     /**
      * Removes the given entity from the database using its ID.
@@ -68,11 +68,11 @@ public interface DAO<E extends Object> extends AutoCloseable {
      *
      * @throws DataAccessException If there is a data access error (see message).
      */
-    void clean() throws DataAccessException;
+    void clean() throws DataAccessException, univ.tln.daos.exceptions.DataAccessException;
 
     /**
      * Release the connection to the connection pool
      */
-    void close() throws DataAccessException;
+    void close() throws DataAccessException, univ.tln.daos.exceptions.DataAccessException;
 
 }
