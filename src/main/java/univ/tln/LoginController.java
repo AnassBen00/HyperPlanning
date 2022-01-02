@@ -44,6 +44,7 @@ public class LoginController extends Application {
 
     public static String user1;
     public static String name1;
+    public static String psswrd;
 
     public String getUsernametxt() {
         return LoginController.user1;
@@ -70,16 +71,19 @@ public class LoginController extends Application {
           //System.out.println("je suis enseignant");
           user1=usernametxt.getText();
           name1=enseignantDAO.getEnseignantNameBylogin(usernametxt.getText()) +"\n ENSEIGNANT";
+          psswrd = passwrdtxt.getText();
           switchtoteacherscene();
       } else if (etudiantDAO.checkEtudiant(usernametxt.getText() , passwrdtxt.getText())){
           //System.out.println("je suis etudiant");
           user1=usernametxt.getText();
           name1 = etudiantDAO.getEtudiantNameBylogin(usernametxt.getText()) + "\n ETUDIANT";
+          psswrd = passwrdtxt.getText();
           switchtostudentscene();
       } else if (responsableDao.checkResponsable(usernametxt.getText() , passwrdtxt.getText())) {
           //System.out.println("je suis responsable");
           user1=usernametxt.getText();
-          user1 = responsableDao.getResponsableNameBylogin(usernametxt.getText()) + "\n RESPONSABLE";
+          name1 = responsableDao.getResponsableNameBylogin(usernametxt.getText()) + "\n RESPONSABLE";
+          psswrd = passwrdtxt.getText();
           switchtomanagerscene();
       } else {
           loginmessage.setText("invalid try again");

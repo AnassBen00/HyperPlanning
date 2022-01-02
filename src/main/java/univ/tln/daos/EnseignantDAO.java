@@ -2,11 +2,13 @@ package univ.tln.daos;
 
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Enseignant;
+import univ.tln.entities.utilisateurs.Utilisateur;
 
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 
 public class EnseignantDAO extends AbstractDAO<Enseignant> {
@@ -130,5 +132,23 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
         }
         super.update();
 
+    }
+
+    public boolean checkEnseignantPass(String passwrd) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join ENSEIGNANT on (UTILISATEUR.LOGIN = ENSEIGNANT.LOGIN) where PASSWORD = HASH('SHA256','"+passwrd+"')");
+
+            while ((queryResult.next())){
+                if( queryResult.getInt(1)==1){
+                    return true;
+                }else return false;
+            }
+        }
+        catch (
+                SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

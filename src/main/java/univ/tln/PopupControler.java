@@ -80,6 +80,21 @@ public class PopupControler implements Initializable{
     @FXML
     private TableView listEtudiantId;
 
+    @FXML
+    private Button Applybtn;
+
+    @FXML
+    private Button clbtn;
+
+    @FXML
+    private PasswordField newPassField;
+
+    @FXML
+    private PasswordField oldPassField;
+
+
+
+
 
 
     @Override

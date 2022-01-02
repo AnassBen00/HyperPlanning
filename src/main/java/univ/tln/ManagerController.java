@@ -30,6 +30,7 @@ import univ.tln.entities.filieres.Filiere;
 
 import univ.tln.entities.utilisateurs.Enseignant;
 import univ.tln.entities.utilisateurs.Etudiant;
+import univ.tln.entities.utilisateurs.Responsable;
 import univ.tln.entities.utilisateurs.Utilisateur;
 
 import java.io.IOException;
@@ -53,6 +54,8 @@ public class ManagerController implements Initializable {
     public int i;
     int max_cours = 60;
     CreneauxDAO c = new CreneauxDAO();
+
+    ResponsableDAO responsableDAO = new ResponsableDAO();
 
     private String[][] creneau = new String[max_cours][7];
 
@@ -253,6 +256,11 @@ public class ManagerController implements Initializable {
         initnature();
         initens();
         setPickfomation();
+        try {
+            AffichageInfo();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         idNiveau.getItems().addAll(
                 "licence 1",
@@ -910,6 +918,24 @@ public class ManagerController implements Initializable {
         }
     }
 
+    public void swithtoPasseditscene() {
+        try {
+            Parent root = FXMLLoader.load(App.class.getResource("PassEditpopup.fxml"));
+
+            Stage managerstage = new Stage();
+
+           Scene scene = new Scene(root);
+
+
+            managerstage.setScene(scene);
+            managerstage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
     @FXML
     private Label welcomeText;
 
@@ -922,9 +948,26 @@ public class ManagerController implements Initializable {
     private PasswordField passwrdtxt;
 
 
+    public void AffichageInfo() throws SQLException {
+        nameField.setText(responsableDAO.findbyLogin(LoginController.user1).getPrenom());
+        lastnameField.setText(responsableDAO.findbyLogin(LoginController.user1).getNom());
+        emailField.setText(responsableDAO.findbyLogin(LoginController.user1).getEmail());
+        passwordField.setText(LoginController.psswrd);
+        loginField.setText(LoginController.user1);
+
+
+
+
+    }
 
     @FXML
     void SaveOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void editPass(ActionEvent event) {
+        swithtoPasseditscene();
 
     }
 }
