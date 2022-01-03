@@ -369,11 +369,12 @@ public class ManagerController implements Initializable {
             }
             if(pickfomation.getValue() == null && pickteacher.getValue() != null ){
                 System.out.println("iwork");
-                castdatetimebyteacherlogin(w,pickteacher.getValue());
+                System.out.println("this is te problem "+w);
+                castdatetimebyteacherlogin(r,pickteacher.getValue());
             }
             else if (pickfomation.getValue() != null && pickteacher.getValue() == null ){
                 System.out.println("do i work ?");
-                castdatetimebyformation(w,pickfomation.getValue());
+                castdatetimebyformation(r,pickfomation.getValue());
             }
             try {
                 drawrect();

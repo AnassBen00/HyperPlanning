@@ -1,8 +1,6 @@
 package univ.tln;
 
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,14 +13,17 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import univ.tln.daos.EtudiantDAO;
+import univ.tln.entities.utilisateurs.Etudiant;
 //import univ.tln.entities.utilisateurs.Etudiant;
 
 import java.io.IOException;
@@ -304,42 +305,87 @@ public class TeacherController implements Initializable {
             scene5.toFront();
             sceneabs.toFront();
 
-            TableColumn<Map.Entry<String, String>, String> column1 = new TableColumn<>("Fist name");
-            column1.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
+            TableView<Etudiant> table = new TableView<Etudiant>();
 
+            // Editable
+            table.setEditable(true);
+
+            TableColumn<Etudiant, String> nomCol//
+                    = new TableColumn<Etudiant, String>("Nom");
+
+            TableColumn<Etudiant, String> prenomCol//
+                    = new TableColumn<Etudiant, String>("Prenom");
+
+            TableColumn<Etudiant, Boolean> absenceCol//
+                    = new TableColumn<Etudiant, Boolean>("Absence");
+
+            //nom
+
+            nomCol.setCellValueFactory(new PropertyValueFactory<>("Nom"));
+
+            nomCol.setCellFactory(TextFieldTableCell.<Etudiant>forTableColumn());
+
+            nomCol.setMinWidth(200);
+
+            // prenom
+
+            prenomCol.setCellValueFactory(new PropertyValueFactory<>("Prenom"));
+
+            prenomCol.setCellFactory(TextFieldTableCell.<Etudiant>forTableColumn());
+
+            prenomCol.setMinWidth(200);
+
+
+            // ==== absence (CHECH BOX) ===
+            /*absenceCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Etudiant, Boolean>, Void>() {
+
+             *//*@Override
+                public Void call(TreeTableColumn.CellDataFeatures<Etudiant, Boolean> param) {
+                   *//**//* Etudiant etudiant = param.getValue();
+
+                    SimpleBooleanProperty booleanProp = new SimpleBooleanProperty(person.isSingle());
+
+                    // Note: singleCol.setOnEditCommit(): Not work for
+                    // CheckBoxTableCell.
+
+                    // When "Single?" column change.
+                    booleanProp.addListener(new ChangeListener<Boolean>() {
+
+                        @Override
+                        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                                            Boolean newValue) {
+                            person.setSingle(newValue);
+                        }
+                    });
+                    return booleanProp;*//**//*
+
+                }*//*
+            });
+*/
+            absenceCol.setCellFactory(new Callback<TableColumn<Etudiant, Boolean>, //
+                    TableCell<Etudiant, Boolean>>() {
                 @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
-                    // for first column
-                    return new SimpleStringProperty(p.getValue().getKey());
+                public TableCell<Etudiant, Boolean> call(TableColumn<Etudiant, Boolean> p) {
+                    CheckBoxTableCell<Etudiant, Boolean> cell = new CheckBoxTableCell<Etudiant, Boolean>();
+                    cell.setAlignment(Pos.CENTER);
+                    return cell;
                 }
             });
 
-            TableColumn<Map.Entry<String, String>, String> column2 = new TableColumn<>("Last name");
-            column2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
+            ObservableList<Etudiant> list = afficherEtudiants();
+            table.setItems(list);
 
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
-                    // for second column
-                    return new SimpleStringProperty(p.getValue().getValue());
-                }
-            });
+            table.getColumns().addAll(nomCol, prenomCol, absenceCol);
 
-            //ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
-            //listEtudiantId.setItems(items);
-            //listEtudiantId.getColumns().setAll(column1, column2);
         }
     }
-/*
-    public Map<String, String> afficherEtudiants() {
-        Map<String, String> etudiants = new TreeMap<>() {
-        };
+
+    public ObservableList<Etudiant> afficherEtudiants() {
         EtudiantDAO etudiantDAO = new EtudiantDAO();
-        for (Etudiant etudiant : etudiantDAO.findAll()) {
-            etudiants.put(etudiant.getNom(), etudiant.getPrenom());
-        }
+        ObservableList<Etudiant> etudiants = FXCollections.observableArrayList(etudiantDAO.findAll());
         return etudiants;
     }
-*/
+
     @FXML
     Group group = new Group();
 
