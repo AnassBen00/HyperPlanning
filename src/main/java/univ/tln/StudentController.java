@@ -320,7 +320,7 @@ public void arrowinputback(){ // pour voir la semaine precedente
         //cours.setFont(new Font("Serif", 14));
         if (creneau[r][4].equals("true")) m = "Oui";
         else m = "Non";
-        cours.setText("Salle: " + creneau[r][2] + " " + creneau[r][3] + "\n" + creneau[r][5] + " " + creneau[r][6] + "\nprojecteur: " + m +"\n prof :");
+        cours.setText("Salle: " + creneau[r][2] + " " + creneau[r][3] + "\n" + creneau[r][5] + " " + creneau[r][6] + "\n"+creneau[r][8]+ "\n"+creneau[9]+ "\nprojecteur: " + m );
 
         cours.setTextFill(Color.rgb(255, 255, 255));
         cours.setTextAlignment(TextAlignment.CENTER);
