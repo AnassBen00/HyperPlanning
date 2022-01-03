@@ -9,6 +9,7 @@ module univ.tln {
     requires guava;
     // requires guava;
 
-    opens univ.tln to javafx.fxml;
+    opens univ.tln to javafx.fxml, javafx.base;
+    opens univ.tln.entities.utilisateurs to javafx.base;
     exports univ.tln;
 }

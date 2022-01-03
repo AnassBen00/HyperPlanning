@@ -143,12 +143,10 @@
                            </font>
                         </Label>
                         <TableView fx:id="listEtudiantsId" layoutX="14.0" layoutY="78.0" prefHeight="469.0" prefWidth="641.0">
-                          <columns>
-                             <TableColumn fx:id="checkBoxTableColumn" maxWidth="34.0" minWidth="26.0" prefWidth="34.0" resizable="false" sortable="false">
-                                <cellValueFactory><PropertyValueFactory property="checked" /></cellValueFactory>
-                                <cellFactory><CheckBoxCellFactory /></cellFactory>
-                             </TableColumn>
-                          </columns>
+                           <columns>
+                              <TableColumn fx:id="checkBoxTableColumn" maxWidth="34.0" minWidth="26.0" prefWidth="34.0" resizable="false" sortable="false">
+                              </TableColumn>
+                           </columns>
                         </TableView>
                      </children>
                   </AnchorPane>

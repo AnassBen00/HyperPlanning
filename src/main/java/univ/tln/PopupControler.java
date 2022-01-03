@@ -1,5 +1,6 @@
 package univ.tln;
 
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -8,10 +9,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -30,6 +35,7 @@ import java.text.ParseException;
 import javafx.fxml.Initializable;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.entities.utilisateurs.Etudiant;
+import univ.tln.entities.utilisateurs.Utilisateur;
 
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -91,11 +97,6 @@ public class PopupControler implements Initializable{
 
     @FXML
     private PasswordField oldPassField;
-
-
-
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -202,12 +203,6 @@ public class PopupControler implements Initializable{
         }
 
         stage.close();
-
-
-
-
-
-
         System.out.println("i work");
     }
 
@@ -243,12 +238,6 @@ public class PopupControler implements Initializable{
         }
 
         stage.close();
-
-
-
-
-
-
         System.out.println("i work");
     }
 
@@ -302,11 +291,6 @@ public class PopupControler implements Initializable{
                 });
             });
         });
-
-
-
-
-
     }
 
     public void initSalle(){
@@ -326,61 +310,93 @@ public class PopupControler implements Initializable{
     public void handleclicks(ActionEvent e) { //pour changer l'ecran
 
         if (e.getSource() == btnupdate) {
-            System.out.println("haha");
             btnupdate.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             update.toFront();
 
         }
         if (e.getSource() == btnabs) {
-            System.out.println("hihi");
             abscence.toFront();
 
-            TableColumn<Map.Entry<String, String>, String> column1 = new TableColumn<>("Fist name");
-            column1.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
+            // Editable
+            listEtudiantId.setEditable(true);
 
+            TableColumn<Utilisateur, String> nomCol//
+                    = new TableColumn<Utilisateur, String>("nom");
+
+            TableColumn<Utilisateur, String> prenomCol//
+                    = new TableColumn<Utilisateur, String>("prenom");
+
+            TableColumn<Utilisateur, Boolean> absenceCol//
+                    = new TableColumn<Utilisateur, Boolean>("absence");
+
+            //nom
+
+            nomCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
+
+            nomCol.setCellFactory(TextFieldTableCell.<Utilisateur>forTableColumn());
+
+            nomCol.setMinWidth(200);
+
+            // prenom
+
+            prenomCol.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+
+            prenomCol.setCellFactory(TextFieldTableCell.<Utilisateur>forTableColumn());
+
+            prenomCol.setMinWidth(200);
+
+
+            // ==== absence (CHECH BOX) ===
+            /*absenceCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Etudiant, Boolean>, Void>() {
+
+             *//*@Override
+                public Void call(TreeTableColumn.CellDataFeatures<Etudiant, Boolean> param) {
+                   *//**//* Etudiant etudiant = param.getValue();
+
+                    SimpleBooleanProperty booleanProp = new SimpleBooleanProperty(person.isSingle());
+
+                    // Note: singleCol.setOnEditCommit(): Not work for
+                    // CheckBoxTableCell.
+
+                    // When "Single?" column change.
+                    booleanProp.addListener(new ChangeListener<Boolean>() {
+
+                        @Override
+                        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                                            Boolean newValue) {
+                            person.setSingle(newValue);
+                        }
+                    });
+                    return booleanProp;*//**//*
+
+                }*//*
+            });
+*/
+            absenceCol.setCellFactory(new Callback<TableColumn<Utilisateur, Boolean>, //
+                    TableCell<Utilisateur, Boolean>>() {
                 @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
-                    // for first column
-                    return new SimpleStringProperty(p.getValue().getKey());
+                public TableCell<Utilisateur, Boolean> call(TableColumn<Utilisateur, Boolean> p) {
+                    CheckBoxTableCell<Utilisateur, Boolean> cell = new CheckBoxTableCell<Utilisateur, Boolean>();
+                    cell.setAlignment(Pos.CENTER);
+                    return cell;
                 }
             });
 
-            TableColumn<Map.Entry<String, String>, String> column2 = new TableColumn<>("Last name");
-            column2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
+            ObservableList<Utilisateur> list = afficherEtudiants();
 
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
-                    // for second column
-                    return new SimpleStringProperty(p.getValue().getValue());
-                }
-            });
-
-            ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
-            listEtudiantId.setItems(items);
-            listEtudiantId.getColumns().setAll(column1, column2);
+            listEtudiantId.setItems(list);
+            listEtudiantId.getColumns().addAll(nomCol, prenomCol, absenceCol);
         }
     }
 
-
-
-    public Map<String, String> afficherEtudiants() {
-        Map<String, String> etudiants = new TreeMap<>() {
-        };
+    public ObservableList<Utilisateur> afficherEtudiants() {
         EtudiantDAO etudiantDAO = new EtudiantDAO();
-        for (Etudiant etudiant : etudiantDAO.findAll()) {
-            etudiants.put(etudiant.getNom(), etudiant.getPrenom());
-        }
+        ObservableList<Utilisateur> etudiants = FXCollections.observableArrayList(etudiantDAO.findAll());
         return etudiants;
     }
 
-
-
-
-
     SpinnerValueFactory<Integer> valuehoure = new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 19, 1);
     SpinnerValueFactory<Integer> valueminute = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 1);
-
-
 
 }
 
