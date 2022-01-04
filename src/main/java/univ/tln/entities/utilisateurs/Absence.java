@@ -12,9 +12,21 @@ public class Absence {
     @Getter
     @Setter
     String date_d;
+    @Getter
+    @Setter
+    String nomGroupe;
+    @Getter
+    @Setter
+    String nomBatiment;
+    @Getter
+    @Setter
+    String nomSalle;
 
-    public Absence(String login, String date_d) {
+    public Absence(String date_d, String nomBatiment, String nomSalle ,String nomGroupe,String login) {
         this.login = login;
         this.date_d = date_d;
+        this.nomGroupe = nomGroupe;
+        this.nomBatiment = nomBatiment;
+        this.nomSalle = nomSalle;
     }
 }

@@ -375,7 +375,7 @@ public class PopupControler implements Initializable {
                                         Boolean newValue) {
                         // appel de la methode qui permet ajout absence en fonction de login et date creneau
 
-                        Absence absence = new Absence(login, TeacherController.d1);
+                        Absence absence = new Absence(TeacherController.d1,teacherController.b1,teacherController.s1 ,teacherController.g1,login);
                         if (newValue == true)
                             absenceDAO.persist(absence);
                         if (newValue == false)

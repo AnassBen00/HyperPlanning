@@ -16,7 +16,7 @@ import java.util.Optional;
 public class AbsenceDAO extends AbstractDAO<Absence>{
 
     public AbsenceDAO() {
-        super("insert into absence values(?,?)",
+        super("insert into absence values(?,select id_s from salle where batiment =? and num=?,select id_g from groups where nom=?,?)",
                 "",
                 "SELECT * FROM absence WHERE login=?");
     }
@@ -45,7 +45,10 @@ public class AbsenceDAO extends AbstractDAO<Absence>{
     public void persist(Absence absence) throws DataAccessException, SQLException {
         try {
             persistPS.setString(1, absence.getDate_d());
-            persistPS.setString(2, absence.getLogin());
+            persistPS.setString(2, absence.getNomBatiment());
+            persistPS.setString(3, absence.getNomSalle());
+            persistPS.setString(4, absence.getNomGroupe());
+            persistPS.setString(5, absence.getLogin());
             persistPS.executeUpdate();
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
