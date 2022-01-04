@@ -114,6 +114,10 @@ public class StudentController implements Initializable {
 
     @FXML
     private ImageView frontarrow;
+
+    @FXML
+    private TableView<?> absenceetud;
+
     private int r=-7;
     private int w = 7;
 

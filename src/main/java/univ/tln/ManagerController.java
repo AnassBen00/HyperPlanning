@@ -16,9 +16,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;                                  
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
@@ -326,6 +327,7 @@ public class ManagerController implements Initializable {
 
 
 
+
     public void arrowinputback(){ // pour voir la semaine precedente
 
         backarrow.setOnMouseClicked((mouseEvent) -> {
@@ -373,12 +375,11 @@ public class ManagerController implements Initializable {
             }
             if(pickfomation.getValue() == null && pickteacher.getValue() != null ){
                 System.out.println("iwork");
-                System.out.println("this is te problem "+w);
-                castdatetimebyteacherlogin(r,pickteacher.getValue());
+                castdatetimebyteacherlogin(w,pickteacher.getValue());
             }
             else if (pickfomation.getValue() != null && pickteacher.getValue() == null ){
                 System.out.println("do i work ?");
-                castdatetimebyformation(r,pickfomation.getValue());
+                castdatetimebyformation(w,pickfomation.getValue());
             }
             try {
                 drawrect();
@@ -393,6 +394,7 @@ public class ManagerController implements Initializable {
         });
 
     }
+
 
 
     public void disabledate() {
@@ -646,8 +648,27 @@ public class ManagerController implements Initializable {
            ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
            listEtudiantId.setItems(items);
            listEtudiantId.getColumns().setAll(column1, column2);
+            listEtudiantId.setRowFactory(tv -> {
+                TableRow<String> row = new TableRow<>();
+                row.setOnMouseClicked(event -> {
+                    if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
+                            && event.getClickCount() == 2) {
+
+                        System.out.println(row.getIndex());
+                        String person = String.valueOf(listEtudiantId.getSelectionModel().getSelectedItem());
+                        String driveLetter = person.split("=")[0];
+                        System.out.println(driveLetter);
+
+                        System.out.println("light w8");
+                    }
+                });
+                return row ;
+            });
         }
     }
+
+
+
     @FXML
     public  void validatebuttononaction (ActionEvent e) throws IOException, ParseException {
         r=-7;
