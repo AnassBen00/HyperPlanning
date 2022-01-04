@@ -2,6 +2,7 @@ package univ.tln.daos;
 
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Enseignant;
+import univ.tln.entities.utilisateurs.Responsable;
 import univ.tln.entities.utilisateurs.Utilisateur;
 
 
@@ -25,7 +26,7 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
 
     @Override
     protected Enseignant fromResultSet(ResultSet resultSet) throws SQLException {
-        return new Enseignant(resultSet.getString("LOGIN"),resultSet.getString("NOM"),resultSet.getString("PRENOM"),resultSet.getString("PASSWORD"),resultSet.getString("EMAIL"));
+        return new Enseignant(resultSet.getString("LOGIN"), resultSet.getString("NOM"), resultSet.getString("PRENOM"), resultSet.getString("PASSWORD"), resultSet.getString("EMAIL"));
     }
 
     public boolean checkEnseignant(String username, String password) {
@@ -137,18 +138,32 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
     public boolean checkEnseignantPass(String passwrd) {
         try {
             Statement statement = connection.createStatement();
-            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join ENSEIGNANT on (UTILISATEUR.LOGIN = ENSEIGNANT.LOGIN) where PASSWORD = HASH('SHA256','"+passwrd+"')");
+            ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join ENSEIGNANT on (UTILISATEUR.LOGIN = ENSEIGNANT.LOGIN) where PASSWORD = HASH('SHA256','" + passwrd + "')");
 
-            while ((queryResult.next())){
-                if( queryResult.getInt(1)==1){
+            while ((queryResult.next())) {
+                if (queryResult.getInt(1) == 1) {
                     return true;
-                }else return false;
+                } else return false;
             }
-        }
-        catch (
+        } catch (
                 SQLException e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public Enseignant findbyLogin(String login) throws SQLException {
+        Enseignant enseignant = new Enseignant();
+        PreparedStatement pstmt = connection.prepareStatement("select * from ENSEIGNANT join UTILISATEUR on ENSEIGNANT.login = UTILISATEUR.login where ENSEIGNANT.login = ?");
+        pstmt.setString(1, login);
+        ResultSet resultSet = pstmt.executeQuery();
+        while (resultSet.next()) {
+            enseignant.setLogin(resultSet.getString("LOGIN"));
+            enseignant.setEmail(resultSet.getString("EMAIL"));
+            enseignant.setNom(resultSet.getString("NOM"));
+            enseignant.setPrenom(resultSet.getString("PRENOM"));
+            enseignant.setPassword(resultSet.getString("PASSWORD"));
+        }
+        return enseignant;
     }
 }

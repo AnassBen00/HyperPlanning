@@ -1,8 +1,10 @@
 package univ.tln.entities.utilisateurs;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
 public class Etudiant extends Utilisateur{
 
     @Getter

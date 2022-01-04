@@ -22,6 +22,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import lombok.SneakyThrows;
+import univ.tln.daos.EnseignantDAO;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.entities.utilisateurs.Etudiant;
 //import univ.tln.entities.utilisateurs.Etudiant;
@@ -43,6 +45,8 @@ public class TeacherController implements Initializable {
     public int i;
     int max_cours = 60;
     public String[][] creneau = new String[max_cours][8];
+
+    EnseignantDAO enseignantDAO = new EnseignantDAO();
     @FXML
     private AnchorPane scene1; //le planning
     @FXML
@@ -151,6 +155,20 @@ public class TeacherController implements Initializable {
     @FXML
     private ImageView backarrow2;
 
+    @FXML
+    private TextField nameField;
+    @FXML
+    private TextField lastnameField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private TextField loginField;
+    @FXML
+    private TextField emailField;
+
+    @FXML
+    private Button saveButton;
+
     private int r=-7;
     private int w = 7;
 
@@ -162,6 +180,7 @@ public class TeacherController implements Initializable {
 
     public static String d1;
 
+    @SneakyThrows
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -179,6 +198,11 @@ public class TeacherController implements Initializable {
         arrowinputfront2();
         setcalendar(0);
         setcalendar2(0);
+        try{
+            AffichageInfo();
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
     public void arrowinputback(){ // pour voir la semaine precedente
 
@@ -687,5 +711,43 @@ public class TeacherController implements Initializable {
     private TextField usernametxt;
     @FXML
     private PasswordField passwrdtxt;
+
+    public void AffichageInfo() throws SQLException {
+        nameField.setText(enseignantDAO.findbyLogin(LoginController.user1).getPrenom());
+        lastnameField.setText(enseignantDAO.findbyLogin(LoginController.user1).getNom());
+        emailField.setText(enseignantDAO.findbyLogin(LoginController.user1).getEmail());
+        passwordField.setText(LoginController.psswrd);
+        loginField.setText(LoginController.user1);
+    }
+
+    public void swithtoPasseditscene() {
+        try {
+            Parent root = FXMLLoader.load(App.class.getResource("PassEditpopup.fxml"));
+
+            Stage managerstage = new Stage();
+
+            Scene scene = new Scene(root);
+
+
+            managerstage.setScene(scene);
+            managerstage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+
+    @FXML
+    void SaveOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void editPass(ActionEvent event) {
+        swithtoPasseditscene();
+    }
+
 
 }

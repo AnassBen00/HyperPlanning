@@ -13,11 +13,14 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import univ.tln.daos.EtudiantDAO;
 //import univ.tln.entities.utilisateurs.Etudiant;
@@ -38,6 +41,8 @@ import java.util.*;
 public class StudentController implements Initializable {
     public int i ;
     int max_cours = 60;
+    EtudiantDAO etudiantDAO = new EtudiantDAO();
+
     private String[][] creneau= new String[max_cours][10];
     @FXML
     private AnchorPane scene1 ; //le planning
@@ -94,6 +99,17 @@ public class StudentController implements Initializable {
     private Label name;
 
     @FXML
+    private TextField nameField;
+    @FXML
+    private TextField lastnameField;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private TextField loginField;
+    @FXML
+    private PasswordField passwordField;
+
+    @FXML
     private ImageView backarrow;
 
     @FXML
@@ -119,6 +135,11 @@ public class StudentController implements Initializable {
         arrowinputback();
         arrowinputfront();
         setcalendar(0);
+        try {
+            AffichageInfo();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 public void handleclicks (ActionEvent e){ //pour changer l'ecran
@@ -348,5 +369,44 @@ public void arrowinputback(){ // pour voir la semaine precedente
     private TextField usernametxt;
     @FXML
     private  PasswordField passwrdtxt;
+
+    public void AffichageInfo() throws SQLException {
+        nameField.setText(etudiantDAO.findbyLogin(LoginController.user1).getPrenom());
+        lastnameField.setText(etudiantDAO.findbyLogin(LoginController.user1).getNom());
+        emailField.setText(etudiantDAO.findbyLogin(LoginController.user1).getEmail());
+        passwordField.setText(LoginController.psswrd);
+        loginField.setText(LoginController.user1);
+    }
+
+    public void swithtoPasseditscene() {
+        try {
+            Parent root = FXMLLoader.load(App.class.getResource("PassEditpopup.fxml"));
+
+            Stage managerstage = new Stage();
+
+            Scene scene = new Scene(root);
+
+
+            managerstage.setScene(scene);
+            managerstage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    @FXML
+    void SaveOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void editPass(ActionEvent event) {
+        swithtoPasseditscene();
+
+    }
+
+
 
 }

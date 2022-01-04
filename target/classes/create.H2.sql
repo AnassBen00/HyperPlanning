@@ -2,7 +2,7 @@ drop table if exists RESPONSABLE;
 
 drop table if exists GROUP_ETUDIANT;
 
-drop table if exists ABSCENCE;
+drop table if exists ABSENCE;
 
 drop table if exists ETUDIANT;
 
@@ -154,7 +154,13 @@ create table if not exists CRENEAUX
         foreign key (ID_S) references SALLE(ID_S)
 );
 
-
+create table if not exists absence(
+                                       date_d datetime,
+                                       login char(15),
+                                       constraint abs_pk primary key (login,date_d),
+                                       constraint fk foreign key (date_d)references CRENEAUX(date_d),
+                                       constraint fk_1 foreign key (login) references ETUDIANT(login)
+);
 
 
 INSERT INTO UTILISATEUR (NOM, PRENOM, PASSWORD, LOGIN,EMAIL) VALUES('Tailor','Anthony','bZe','eTNwi','Anthony_Tailor6705@tonsy.org');
@@ -469,3 +475,4 @@ insert into creneaux values( '2021-12-20 16:00:00','2021-12-20 16:00:00',(select
 
 select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,cours.NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPS on GROUPS.ID_G=GROUP_COURS.ID_G where GROUPS.NOM='anglais L1';
 //update creneaux set DATE_D = '2021-12-23 08:00:00' , DATE_F = '2021-12-23 11:00:00' , ID_S = (select ID_S from SALLE where NUM = '001' and BATIMENT = 'F') where DATE_D = '2021-12-17 08:00:00'
+

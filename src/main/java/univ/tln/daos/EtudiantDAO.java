@@ -2,6 +2,7 @@ package univ.tln.daos;
 
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Etudiant;
+import univ.tln.entities.utilisateurs.Responsable;
 import univ.tln.entities.utilisateurs.Utilisateur;
 
 import java.sql.PreparedStatement;
@@ -159,5 +160,20 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public Etudiant findbyLogin(String login) throws SQLException {
+        Etudiant etudiant = new Etudiant();
+        PreparedStatement pstmt = connection.prepareStatement("select * from ETUDIANT join UTILISATEUR on ETUDIANT.login = UTILISATEUR.login where ETUDIANT.login = ?");
+        pstmt.setString(1,login);
+        ResultSet resultSet = pstmt.executeQuery();
+        while(resultSet.next()) {
+            etudiant.setLogin(resultSet.getString("LOGIN"));
+            etudiant.setEmail(resultSet.getString("EMAIL"));
+            etudiant.setNom(resultSet.getString("NOM"));
+            etudiant.setPrenom(resultSet.getString("PRENOM"));
+            etudiant.setPassword(resultSet.getString("PASSWORD"));
+        }
+        return etudiant;
     }
 }

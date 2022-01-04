@@ -955,10 +955,6 @@ public class ManagerController implements Initializable {
         emailField.setText(responsableDAO.findbyLogin(LoginController.user1).getEmail());
         passwordField.setText(LoginController.psswrd);
         loginField.setText(LoginController.user1);
-
-
-
-
     }
 
     @FXML
