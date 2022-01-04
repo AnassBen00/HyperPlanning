@@ -360,7 +360,7 @@ public class PopupControler implements Initializable {
                 String login = etudiant.getLogin();
                 // verifier si etudiant by login est dans la table absence si oui return true else false
 
-                if (absenceDAO.find(login)) {
+                if (absenceDAO.find(login,teacherController.d1)) {
                     booleanProp.set(true);
                 } else {
 
