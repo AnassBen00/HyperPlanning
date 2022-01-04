@@ -27,19 +27,6 @@
       <Group layoutX="91.0" layoutY="47.0" />
       <StackPane layoutX="267.0" layoutY="126.0">
          <children>
-            <AnchorPane fx:id="scene5" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="168.0" prefHeight="248.0" prefWidth="596.0" style="-fx-background-color: #fff;" text="Abcenses" textFill="#ab1c1c">
-                     <font>
-                        <Font size="76.0" />
-                     </font>
-                  </Label>
-                  <TableView fx:id="listEtudiantId" prefHeight="647.0" prefWidth="1007.0">
-                    <columns>
-                    </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="scene4" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="180.0" prefHeight="190.0" prefWidth="522.0" style="-fx-background-color: #fff;" text="Settings" textFill="#ab1c1c">
@@ -165,6 +152,21 @@
                   </ImageView>
                   <PasswordField fx:id="passwordField" layoutX="242.0" layoutY="272.0" onMouseClicked="#editPass" />
                   <Button layoutX="402.0" layoutY="273.0" mnemonicParsing="false" onAction="#editPass" text="Edit" textFill="#f8f5f5" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="scene5" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
+               <children>
+                  <TableView fx:id="listEtudiantId" layoutX="107.0" layoutY="126.0" prefHeight="447.0" prefWidth="839.0">
+                    <columns>
+                    </columns>
+                  </TableView>
+                  <ComboBox fx:id="filiereidd" layoutX="429.0" layoutY="78.0" prefWidth="150.0" />
+                  <Label layoutX="382.0" layoutY="20.0" text="Filtrer par filiere " textFill="#902790">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="504.0" layoutY="590.0" mnemonicParsing="false" text="Modifier" textFill="WHITE" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="scene1" prefHeight="645.0" prefWidth="1007.0">

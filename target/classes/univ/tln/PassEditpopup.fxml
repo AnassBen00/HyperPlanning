@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.passEditController">
    <children>
       <Label layoutX="66.0" layoutY="89.0" text="Old Password" textFill="#575757" />
@@ -16,7 +15,7 @@
       <PasswordField fx:id="oldPassField" layoutX="160.0" layoutY="85.0" />
       <PasswordField fx:id="newPassField" layoutX="160.0" layoutY="134.0" />
       <Button fx:id="Applybtn" layoutX="224.0" layoutY="200.0" mnemonicParsing="false" onAction="#ApplybtnOnAction" style="-fx-background-color: green;" text="Apply changes" textFill="#fcf7f7" />
-      <Button fx:id="clbtn" layoutX="423.0" layoutY="200.0" mnemonicParsing="false" style="-fx-background-color: red;" stylesheets="@styes.css" text="Cancel" textFill="#f2eded" />
+      <Button fx:id="clbtn" layoutX="423.0" layoutY="200.0" mnemonicParsing="false" onAction="#clbtnOnAction" style="-fx-background-color: red;" stylesheets="@styes.css" text="Cancel" textFill="#f2eded" />
       <Label layoutX="304.0" layoutY="22.0" text="Edit Password" textFill="#1a0b43">
          <font>
             <Font name="System Bold" size="16.0" />
