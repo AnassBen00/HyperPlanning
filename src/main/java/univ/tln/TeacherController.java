@@ -1,6 +1,8 @@
 package univ.tln;
 
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +21,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -183,7 +186,7 @@ public class TeacherController implements Initializable {
     public static String b1;
     public static String g1;
 
-    @SneakyThrows
+
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {

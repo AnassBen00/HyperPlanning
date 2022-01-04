@@ -27,6 +27,19 @@
       <Group layoutX="91.0" layoutY="47.0" />
       <StackPane layoutX="267.0" layoutY="126.0">
          <children>
+            <AnchorPane fx:id="scene5" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="168.0" prefHeight="248.0" prefWidth="596.0" style="-fx-background-color: #fff;" text="Abcenses" textFill="#ab1c1c">
+                     <font>
+                        <Font size="76.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="listEtudiantId" prefHeight="647.0" prefWidth="1007.0">
+                    <columns>
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
             <AnchorPane fx:id="scene4" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="180.0" prefHeight="190.0" prefWidth="522.0" style="-fx-background-color: #fff;" text="Settings" textFill="#ab1c1c">

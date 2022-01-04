@@ -414,4 +414,3 @@ public class PopupControler implements Initializable {
     SpinnerValueFactory<Integer> valueminute = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 1);
 
 }
-

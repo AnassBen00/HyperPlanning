@@ -19,7 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundFill;                                  
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
@@ -327,7 +327,6 @@ public class ManagerController implements Initializable {
 
 
 
-
     public void arrowinputback(){ // pour voir la semaine precedente
 
         backarrow.setOnMouseClicked((mouseEvent) -> {
@@ -394,7 +393,6 @@ public class ManagerController implements Initializable {
         });
 
     }
-
 
 
     public void disabledate() {
@@ -653,7 +651,7 @@ public class ManagerController implements Initializable {
                 row.setOnMouseClicked(event -> {
                     if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
                             && event.getClickCount() == 2) {
-
+                        switchtopopupscene();
                         System.out.println(row.getIndex());
                         String person = String.valueOf(listEtudiantId.getSelectionModel().getSelectedItem());
                         String driveLetter = person.split("=")[0];
@@ -666,9 +664,6 @@ public class ManagerController implements Initializable {
             });
         }
     }
-
-
-
     @FXML
     public  void validatebuttononaction (ActionEvent e) throws IOException, ParseException {
         r=-7;
@@ -987,6 +982,10 @@ public class ManagerController implements Initializable {
         emailField.setText(responsableDAO.findbyLogin(LoginController.user1).getEmail());
         passwordField.setText(LoginController.psswrd);
         loginField.setText(LoginController.user1);
+
+
+
+
     }
 
     @FXML

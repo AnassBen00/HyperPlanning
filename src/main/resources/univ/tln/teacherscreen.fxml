@@ -95,6 +95,22 @@
                   <Label fx:id="iddimanche1" alignment="CENTER" contentDisplay="CENTER" layoutX="903.0" layoutY="28.0" text="06/12/2021" />
                </children>
             </AnchorPane>
+            <AnchorPane fx:id="scene1" prefHeight="645.0" prefWidth="1007.0">
+               <children>
+                  <ImageView fitHeight="645.0" fitWidth="1007.0">
+                     <image>
+                        <Image url="@planning.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="idlundi" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idmardi" alignment="CENTER" contentDisplay="CENTER" layoutX="276.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idmercredi" alignment="CENTER" contentDisplay="CENTER" layoutX="403.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idjeudi" alignment="CENTER" contentDisplay="CENTER" layoutX="531.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idvendredi" alignment="CENTER" contentDisplay="CENTER" layoutX="653.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idsamedi" alignment="CENTER" contentDisplay="CENTER" layoutX="777.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="iddimanche" alignment="CENTER" contentDisplay="CENTER" layoutX="903.0" layoutY="28.0" text="06/12/2021" />
+               </children>
+            </AnchorPane>
          </children>
       </StackPane>
       <VBox prefHeight="783.0" prefWidth="246.0" style="-fx-background-color: #3F2B63;">
