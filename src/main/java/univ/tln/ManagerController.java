@@ -235,6 +235,10 @@ public class ManagerController implements Initializable {
     private Button saveButton;
 
 
+    @FXML
+    private ComboBox<String> filiereidd;
+
+
     private int r=-7;
     private int w = 7;
     List<Label> l = new ArrayList<>();
@@ -537,6 +541,13 @@ public class ManagerController implements Initializable {
 
 
     public void setPickfomation(){
+        try {
+            c.initialize_pickformation(filiereidd);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         pickfomation.setOnMouseClicked(mouseEvent -> {
             try {
                 pickteacher.valueProperty().set(null);
@@ -955,10 +966,6 @@ public class ManagerController implements Initializable {
         emailField.setText(responsableDAO.findbyLogin(LoginController.user1).getEmail());
         passwordField.setText(LoginController.psswrd);
         loginField.setText(LoginController.user1);
-
-
-
-
     }
 
     @FXML

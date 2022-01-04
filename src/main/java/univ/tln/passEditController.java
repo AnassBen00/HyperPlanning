@@ -64,5 +64,11 @@ public class passEditController {
 
     }
 
+    @FXML
+    void clbtnOnAction(ActionEvent event) {
+        Stage stage = (Stage) clbtn.getScene().getWindow();
+        stage.close();
+    }
+
 
 }

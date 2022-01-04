@@ -154,7 +154,7 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
 
     public Responsable findbyLogin(String login) throws SQLException {
         Responsable responsable = new Responsable();
-        PreparedStatement pstmt = connection.prepareStatement("select * from RESPONSABLE join UTILISATEUR on RESPONSABLE.login = ?");
+        PreparedStatement pstmt = connection.prepareStatement("select * from RESPONSABLE join UTILISATEUR on RESPONSABLE.login = RESPONSABLE.login where RESPONSABLE.login = ?");
         pstmt.setString(1,login);
         ResultSet resultSet = pstmt.executeQuery();
         while(resultSet.next()) {
