@@ -155,11 +155,13 @@ create table if not exists CRENEAUX
 );
 
 create table if not exists absence(
-                                       date_d datetime,
-                                       login char(15),
-                                       constraint abs_pk primary key (login,date_d),
-                                       constraint fk foreign key (date_d)references CRENEAUX(date_d),
-                                       constraint fk_1 foreign key (login) references ETUDIANT(login)
+                                      date_d datetime,
+                                      ID_S   int not null,
+                                      ID_G INT      not null,
+                                      login char(15),
+                                      constraint abs_pk primary key (login,date_d),
+                                      constraint fk foreign key (date_d ,ID_S ,ID_G)references CRENEAUX(date_d ,ID_S ,ID_G),
+                                      constraint fk_1 foreign key (login) references ETUDIANT(login)
 );
 
 
@@ -475,4 +477,5 @@ insert into creneaux values( '2021-12-20 16:00:00','2021-12-20 16:00:00',(select
 
 select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,cours.NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPS on GROUPS.ID_G=GROUP_COURS.ID_G where GROUPS.NOM='anglais L1';
 //update creneaux set DATE_D = '2021-12-23 08:00:00' , DATE_F = '2021-12-23 11:00:00' , ID_S = (select ID_S from SALLE where NUM = '001' and BATIMENT = 'F') where DATE_D = '2021-12-17 08:00:00'
-
+select * from absence;
+//select cr.date_d ,nom ,nature from absence a join CRENEAUX cr on a.date_d=cr.DATE_D and a.id_s=cr.ID_S and a.ID_G=cr.ID_G join cours c on c.ID_C=cr.ID_C where login=? ;

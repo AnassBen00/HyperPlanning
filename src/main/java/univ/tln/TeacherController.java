@@ -179,6 +179,9 @@ public class TeacherController implements Initializable {
     List<Label> l2 = new ArrayList<>();
 
     public static String d1;
+    public static String s1;
+    public static String b1;
+    public static String g1;
 
     @SneakyThrows
     @Override
@@ -500,7 +503,7 @@ public class TeacherController implements Initializable {
                 creneau[i][0] = String.valueOf(queryResult.getTimestamp("DATE_D"));
                 creneau[i][1] = String.valueOf(queryResult.getTimestamp("DATE_F"));
                 creneau[i][2] = queryResult.getString("BATIMENT");
-                creneau[i][3] = String.valueOf(queryResult.getInt("NUM"));
+                creneau[i][3] = queryResult.getString("NUM");
                 creneau[i][4] = String.valueOf(queryResult.getBoolean("VIDEO_P"));
                 creneau[i][5] = queryResult.getString("NOM");
                 creneau[i][6] = queryResult.getString("NATURE");
@@ -639,6 +642,9 @@ public class TeacherController implements Initializable {
             cours.setOnMouseClicked((mouseEvent) -> {
                 System.out.println(creneau[finalR][0]);
                 d1 = creneau[finalR][0];
+                s1 = creneau[finalR][3];
+                b1 = creneau[finalR][2];
+                g1 = creneau[finalR][7];
                 switchtopopupscene();
             });
             scene2.getChildren().add(cours);
