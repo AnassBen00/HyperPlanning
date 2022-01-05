@@ -243,6 +243,7 @@ public class ManagerController implements Initializable {
     List<Label> l = new ArrayList<>();
     public static String d2;
     public static String d;
+    public static String m;
 
 
 
@@ -674,12 +675,12 @@ public class ManagerController implements Initializable {
                 row.setOnMouseClicked(event -> {
                     if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
                             && event.getClickCount() == 2) {
-                        switchtodetailabs();
                         System.out.println(row.getIndex());
-                        String person = String.valueOf(listEtudiantId.getSelectionModel().getSelectedItem());
-                        String driveLetter = person;
-                        d = driveLetter;
-                        System.out.println(driveLetter);
+                        Etudiant person = (Etudiant) listEtudiantId.getSelectionModel().getSelectedItem();
+                        d = person.getNom();
+                        m = person.getLogin();
+                        switchtodetailabs();
+                        System.out.println(d);
                         System.out.println("light w8");
                     }
                 });

@@ -19,13 +19,15 @@ public class AbsdetailController implements Initializable  {
 
 
 
-    public void initmanagertitle(){
-       managerabstitle.setText("liste d'absence pour l'etudiant : "+ManagerController.d);
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initmanagertitle();
+    }
+
+
+    public void initmanagertitle(){
+        managerabstitle.setText("liste d'absence pour l'etudiant : "+ManagerController.d);
+        System.out.println(ManagerController.m);// m cest le login de l'etudiant selectioner
     }
 }
