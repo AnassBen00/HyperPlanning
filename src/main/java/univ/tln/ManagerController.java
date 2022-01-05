@@ -1,8 +1,6 @@
 package univ.tln;
 
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +13,8 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
@@ -24,14 +24,12 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import univ.tln.daos.*;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.filieres.Filiere;
 
 import univ.tln.entities.utilisateurs.Enseignant;
 import univ.tln.entities.utilisateurs.Etudiant;
-import univ.tln.entities.utilisateurs.Responsable;
 import univ.tln.entities.utilisateurs.Utilisateur;
 
 import java.io.IOException;
@@ -260,6 +258,7 @@ public class ManagerController implements Initializable {
         initcours();
         initnature();
         initens();
+        inittableAbsence();
         setPickfomation();
         try {
             AffichageInfo();
@@ -623,47 +622,67 @@ public class ManagerController implements Initializable {
             scene5.toFront();
             sceneabs.toFront();
 
-            TableColumn<Map.Entry<String, String>, String> column1 = new TableColumn<>("Fist name");
-            column1.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
 
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
-                    // for first column
-                    return new SimpleStringProperty(p.getValue().getKey());
-                }
-            });
-
-            TableColumn<Map.Entry<String, String>, String> column2 = new TableColumn<>("Last name");
-            column2.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<String, String>, String>, ObservableValue<String>>() {
-
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<String, String>, String> p) {
-                    // for second column
-                    return new SimpleStringProperty(p.getValue().getValue());
-                }
-            });
-
-           ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(afficherEtudiants().entrySet());
-           listEtudiantId.setItems(items);
-           listEtudiantId.getColumns().setAll(column1, column2);
-            listEtudiantId.setRowFactory(tv -> {
-                TableRow<String> row = new TableRow<>();
-                row.setOnMouseClicked(event -> {
-                    if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
-                            && event.getClickCount() == 2) {
-                        switchtopopupscene();
-                        System.out.println(row.getIndex());
-                        String person = String.valueOf(listEtudiantId.getSelectionModel().getSelectedItem());
-                        String driveLetter = person.split("=")[0];
-                        System.out.println(driveLetter);
-
-                        System.out.println("light w8");
-                    }
-                });
-                return row ;
-            });
         }
     }
+
+    public void inittableAbsence(){
+        listEtudiantId.setEditable(true);
+
+        TableColumn<Etudiant, String> nomCol//
+                = new TableColumn<Etudiant, String>("nom");
+
+        TableColumn<Etudiant, String> prenomCol//
+                = new TableColumn<Etudiant, String>("prenom");
+
+        TableColumn<Etudiant, String> nbabs//
+                = new TableColumn<>("nbabs");
+        filiereidd.valueProperty().addListener((options, oldValue, newValue) ->{
+
+
+            //nom
+
+            nomCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
+
+            nomCol.setCellFactory(TextFieldTableCell.<Etudiant>forTableColumn());
+
+            nomCol.setMinWidth(200);
+
+            // prenom
+
+            prenomCol.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+
+            prenomCol.setCellFactory(TextFieldTableCell.<Etudiant>forTableColumn());
+
+            prenomCol.setMinWidth(200);
+
+            // nbabs
+
+            nbabs.setCellValueFactory(new PropertyValueFactory<>("nbabs"));
+
+            nbabs.setCellFactory(TextFieldTableCell.<Etudiant>forTableColumn());
+
+            nbabs.setMinWidth(200);
+
+            ObservableList<Etudiant> list = afficherEtudiants();
+            listEtudiantId.setItems(list);
+
+
+
+        });
+
+        listEtudiantId.getColumns().addAll(nomCol, prenomCol, nbabs);
+    }
+
+
+    public ObservableList<Etudiant> afficherEtudiants() {
+        EtudiantDAO etudiantDAO = new EtudiantDAO();
+        ObservableList<Etudiant> etudiants = FXCollections.observableArrayList(etudiantDAO.findbygrp(filiereidd.getValue()));
+        System.out.println(filiereidd.getValue());
+        return etudiants;
+    }
+
+
     @FXML
     public  void validatebuttononaction (ActionEvent e) throws IOException, ParseException {
         r=-7;
@@ -700,15 +719,6 @@ public class ManagerController implements Initializable {
     }
 
 
-    public Map<String, String> afficherEtudiants() {
-        Map<String, String> etudiants = new TreeMap<>() {
-        };
-        EtudiantDAO etudiantDAO = new EtudiantDAO();
-        for (Etudiant etudiant : etudiantDAO.findAll()) {
-            etudiants.put(etudiant.getNom(), etudiant.getPrenom());
-        }
-        return etudiants;
-    }
 
     @FXML
     Group group = new Group();

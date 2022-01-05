@@ -34,7 +34,7 @@
                         <Font size="76.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="listEtudiantId" prefHeight="647.0" prefWidth="1007.0">
+                  <TableView fx:id="listEtudiantId2" prefHeight="647.0" prefWidth="1007.0">
                     <columns>
                     </columns>
                   </TableView>

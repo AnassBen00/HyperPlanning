@@ -13,6 +13,10 @@ public class Etudiant extends Utilisateur{
 
     @Getter
     @Setter
+    private String nbabs;
+
+    @Getter
+    @Setter
     private String promo;
 
     @Getter
@@ -24,5 +28,10 @@ public class Etudiant extends Utilisateur{
         this.nvxEtude = nvxEtude;
         this.promo = promo;
         this.idFiliere = idFiliere;
+    }
+
+    public Etudiant(String login, String nom, String prenom, String nbabs) {
+        super(login,nom,prenom);
+        this.nbabs=nbabs;
     }
 }

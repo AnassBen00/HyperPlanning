@@ -29,4 +29,10 @@ public class Utilisateur {
         this.prenom = prenom;
         this.email = email;
     }
+
+    public Utilisateur(String login, String nom, String prenom) {
+        this.login = login;
+        this.nom = nom;
+        this.prenom = prenom;
+    }
 }
