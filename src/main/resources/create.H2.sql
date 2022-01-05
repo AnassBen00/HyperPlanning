@@ -479,6 +479,6 @@ select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,cours.NOM,NATURE from SALLE join CRE
 //update creneaux set DATE_D = '2021-12-23 08:00:00' , DATE_F = '2021-12-23 11:00:00' , ID_S = (select ID_S from SALLE where NUM = '001' and BATIMENT = 'F') where DATE_D = '2021-12-17 08:00:00'
 select * from absence;
 //select cr.date_d ,nom ,nature from absence a join CRENEAUX cr on a.date_d=cr.DATE_D and a.id_s=cr.ID_S and a.ID_G=cr.ID_G join cours c on c.ID_C=cr.ID_C where login=? ;
-select distinct u.login,u.nom,u.prenom,nbabs, from UTILISATEUR u join (SELECT abs.login,count(abs.login) as nbabs from absence abs join groups g on abs.id_g=g.ID_G where nom=? group by abs.login)  absn on u.LOGIN=absn.login ;
+//select distinct u.login,u.nom,u.prenom,nbabs, from UTILISATEUR u join (SELECT abs.login,count(abs.login) as nbabs from absence abs join groups g on abs.id_g=g.ID_G where nom=? group by abs.login)  absn on u.LOGIN=absn.login ;
 
 select abs.login from absence abs join GROUPs g on abs.ID_G=g.ID_G;

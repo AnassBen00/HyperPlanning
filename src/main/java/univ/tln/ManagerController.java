@@ -242,6 +242,8 @@ public class ManagerController implements Initializable {
     private int w = 7;
     List<Label> l = new ArrayList<>();
     public static String d2;
+    public static String d;
+
 
 
     @Override
@@ -627,7 +629,7 @@ public class ManagerController implements Initializable {
     }
 
     public void inittableAbsence(){
-        listEtudiantId.setEditable(true);
+        //listEtudiantId.setEditable(true);
 
         TableColumn<Etudiant, String> nomCol//
                 = new TableColumn<Etudiant, String>("nom");
@@ -667,7 +669,22 @@ public class ManagerController implements Initializable {
             ObservableList<Etudiant> list = afficherEtudiants();
             listEtudiantId.setItems(list);
 
-
+            listEtudiantId.setRowFactory(tv -> {
+                TableRow<String> row = new TableRow<>();
+                row.setOnMouseClicked(event -> {
+                    if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
+                            && event.getClickCount() == 2) {
+                        switchtodetailabs();
+                        System.out.println(row.getIndex());
+                        String person = String.valueOf(listEtudiantId.getSelectionModel().getSelectedItem());
+                        String driveLetter = person;
+                        d = driveLetter;
+                        System.out.println(driveLetter);
+                        System.out.println("light w8");
+                    }
+                });
+                return row ;
+            });
 
         });
 
@@ -941,6 +958,25 @@ public class ManagerController implements Initializable {
 
         try {
             Parent root = FXMLLoader.load(App.class.getResource("Popupscene2.fxml"));
+
+            Stage managerstage = new Stage();
+
+            Scene scene = new Scene(root, 919, 667);
+
+
+            managerstage.setScene(scene);
+            managerstage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    public void switchtodetailabs() { // on change l'ecran si c'est bon
+
+        try {
+            Parent root = FXMLLoader.load(App.class.getResource("Popupscene3.fxml"));
 
             Stage managerstage = new Stage();
 
