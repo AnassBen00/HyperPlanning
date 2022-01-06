@@ -11,6 +11,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class AbsenceDAO extends AbstractDAO<Absence>{
@@ -53,6 +55,24 @@ public class AbsenceDAO extends AbstractDAO<Absence>{
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
         }
+    }
+
+    public List<Absence> findAllabs(String login) {
+        List<Absence> absences = new ArrayList<Absence>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("select cr.date_d ,nom ,nature,a.id_s,a.id_g,a.login from absence a join CRENEAUX cr on a.date_d=cr.DATE_D and a.id_s=cr.ID_S and a.ID_G=cr.ID_G join cours c on c.ID_C=cr.ID_C where a.login=?");
+            statement.setString(1, login);
+            ResultSet resultset = statement.executeQuery();
+            while (resultset.next()) {
+
+                Absence absence = new Absence(resultset.getString("date_d"), resultset.getString("nom"), resultset.getString("nature"), resultset.getString("id_s"), resultset.getString("id_g"),resultset.getString("login"));
+                absences.add(absence);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return absences;
     }
 
     public void remove(Absence absence) throws DataAccessException {

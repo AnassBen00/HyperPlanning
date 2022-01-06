@@ -1,17 +1,33 @@
 package univ.tln;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.fxml.Initializable;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.Callback;
+import univ.tln.daos.AbsenceDAO;
+import univ.tln.daos.EtudiantDAO;
+import univ.tln.entities.utilisateurs.Absence;
+import univ.tln.entities.utilisateurs.Etudiant;
 
+import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ResourceBundle;
 
 public class AbsdetailController implements Initializable  {
     @FXML
-    private TableView<?> absdetails;
+    private TableView<Absence> absdetails;
 
     @FXML
     private Label managerabstitle;
@@ -22,12 +38,84 @@ public class AbsdetailController implements Initializable  {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         initmanagertitle();
+        initabsdetail();
+        Absence a =absdetails.getSelectionModel().getSelectedItem();
+        System.out.println(a);
     }
 
 
     public void initmanagertitle(){
         managerabstitle.setText("liste d'absence pour l'etudiant : "+ManagerController.d);
         System.out.println(ManagerController.m);// m cest le login de l'etudiant selectioner
+    }
+    public void initabsdetail(){
+        absdetails.setEditable(true);
+
+        TableColumn<Absence, String> date_debut//
+                = new TableColumn<Absence, String>("date debut cours");
+        date_debut.setEditable(false);
+        TableColumn<Absence, String> nomcr//
+                = new TableColumn<Absence, String>("nom matiere");
+        nomcr.setEditable(false);
+        TableColumn<Absence, String> nature//
+                = new TableColumn<Absence, String>("nature ");
+        nature.setEditable(false);
+        TableColumn<Absence, Boolean> absenceCol//
+                = new TableColumn<Absence, Boolean>("Absence");
+        absenceCol.setEditable(true);
+    
+        //nom
+
+        date_debut.setCellValueFactory(new PropertyValueFactory<>("date_d"));
+
+        date_debut.setCellFactory(TextFieldTableCell.<Absence>forTableColumn());
+
+        date_debut.setMinWidth(200);
+
+        // prenom
+
+        nomcr.setCellValueFactory(new PropertyValueFactory<>("nom"));
+
+        nomcr.setCellFactory(TextFieldTableCell.<Absence>forTableColumn());
+
+        nomcr.setMinWidth(200);
+
+        nature.setCellValueFactory(new PropertyValueFactory<>("nature"));
+
+        nature.setCellFactory(TextFieldTableCell.<Absence>forTableColumn());
+
+        nature.setMinWidth(200);
+
+
+
+        absenceCol.setCellFactory(new Callback<TableColumn<Absence, Boolean>, //
+                TableCell<Absence, Boolean>>() {
+            @Override
+            public TableCell<Absence, Boolean> call(TableColumn<Absence, Boolean> p) {
+                CheckBoxTableCell<Absence, Boolean> cell = new CheckBoxTableCell<Absence, Boolean>();
+                cell.setAlignment(Pos.CENTER);
+                return cell;
+            }
+        });
+
+
+        ObservableList<Absence> list = afficherAbsences();
+        absdetails.setItems(list);
+
+        absdetails.getColumns().addAll(date_debut,nomcr, nature, absenceCol);
+
+    }
+    public ObservableList<Absence> afficherAbsences() {
+        AbsenceDAO absenceDAO = new AbsenceDAO();
+        ObservableList<Absence> absences = FXCollections.observableArrayList(absenceDAO.findAllabs(ManagerController.m));
+        return absences;
+        }
+
+
+    public void delete_abs(ActionEvent e) throws IOException, ParseException {
+        Absence a =absdetails.getSelectionModel().getSelectedItem();
+        System.out.println(a);
     }
 }

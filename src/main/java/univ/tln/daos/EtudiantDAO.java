@@ -84,6 +84,8 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
         return etudiants;
     }
 
+
+
     public List<Etudiant> findbygrp(String grp) {
         List<Etudiant> etudiants = new ArrayList<Etudiant>();
         try {
