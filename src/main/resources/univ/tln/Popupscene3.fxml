@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="667.0" prefWidth="919.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.AbsdetailController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="667.0" prefWidth="919.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.Controller.AbsdetailController">
    <left>
       <AnchorPane prefHeight="407.0" prefWidth="228.0" style="-fx-background-color: #3F2B63;" BorderPane.alignment="CENTER">
          <children>
@@ -31,7 +31,7 @@
                </effect>
             </Label>
             <Line endX="100.0" layoutX="114.0" layoutY="147.0" startX="-100.0" stroke="#391616" />
-            <Label alignment="CENTER" layoutX="15.0" layoutY="363.0" prefHeight="0.0" prefWidth="227.0" text="Copyright (c). All Rights Reserved" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="8.0" layoutY="626.0" prefHeight="0.0" prefWidth="227.0" text="Copyright (c). All Rights Reserved" textFill="WHITE">
                <font>
                   <Font name="Rasa" size="12.0" />
                </font>
@@ -42,6 +42,11 @@
             <ImageView fitHeight="48.0" fitWidth="52.0" layoutX="15.0" layoutY="14.0">
                <image>
                   <Image url="@H.jpeg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="79.0" fitWidth="200.0" layoutX="18.0" layoutY="513.0">
+               <image>
+                  <Image url="@test.jpg" />
                </image>
             </ImageView>
          </children>

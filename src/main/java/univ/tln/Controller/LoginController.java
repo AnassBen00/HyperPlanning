@@ -1,4 +1,4 @@
-package univ.tln;
+package univ.tln.Controller;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import univ.tln.App;
 import univ.tln.daos.EnseignantDAO;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.daos.ResponsableDAO;
@@ -68,21 +69,20 @@ public class LoginController extends Application {
       ResponsableDAO responsableDao = new ResponsableDAO();
 
       if(enseignantDAO.checkEnseignant(usernametxt.getText() , passwrdtxt.getText())) {
-          //System.out.println("je suis enseignant");
           user1=usernametxt.getText();
-          name1=enseignantDAO.getEnseignantNameBylogin(usernametxt.getText()) +"\n ENSEIGNANT";
+          name1=enseignantDAO.getEnseignantNameBylogin(usernametxt.getText()) +"\nENSEIGNANT";
           psswrd = passwrdtxt.getText();
           switchtoteacherscene();
       } else if (etudiantDAO.checkEtudiant(usernametxt.getText() , passwrdtxt.getText())){
-          //System.out.println("je suis etudiant");
+
           user1=usernametxt.getText();
-          name1 = etudiantDAO.getEtudiantNameBylogin(usernametxt.getText()) + "\n ETUDIANT";
+          name1 = etudiantDAO.getEtudiantNameBylogin(usernametxt.getText()) + "\nETUDIANT";
           psswrd = passwrdtxt.getText();
           switchtostudentscene();
       } else if (responsableDao.checkResponsable(usernametxt.getText() , passwrdtxt.getText())) {
-          //System.out.println("je suis responsable");
+
           user1=usernametxt.getText();
-          name1 = responsableDao.getResponsableNameBylogin(usernametxt.getText()) + "\n RESPONSABLE";
+          name1 = responsableDao.getResponsableNameBylogin(usernametxt.getText()) + "\nRESPONSABLE";
           psswrd = passwrdtxt.getText();
           switchtomanagerscene();
       } else {

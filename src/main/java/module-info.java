@@ -12,4 +12,6 @@ module univ.tln {
     opens univ.tln to javafx.fxml, javafx.base;
     opens univ.tln.entities.utilisateurs to javafx.base;
     exports univ.tln;
+    exports univ.tln.Controller;
+    opens univ.tln.Controller to javafx.base, javafx.fxml;
 }

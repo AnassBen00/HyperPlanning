@@ -1,9 +1,7 @@
-package univ.tln;
+package univ.tln.Controller;
 
 
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,7 +14,6 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
@@ -25,7 +22,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 import javafx.stage.Stage;
-import javafx.util.Callback;
+import univ.tln.App;
+import univ.tln.DatabaseConnection;
 import univ.tln.daos.AbsenceDAO;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.entities.utilisateurs.Absence;
@@ -42,7 +40,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.*;
 
-//import static univ.tln.LoginController.getUsernametxt;
+//import static univ.tln.Controller.LoginController.getUsernametxt;
 
 public class StudentController implements Initializable {
     public int i ;
@@ -238,7 +236,6 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
             e.printStackTrace();
         }
         setcalendar(r);
-        System.out.println("loool");
 
         r=r-7;
         w=w-7;
@@ -263,7 +260,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
                 e.printStackTrace();
             }
             setcalendar(w);
-            System.out.println("loool");
+
 
             w=w+7;
             r=r+7;
@@ -284,7 +281,6 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY  );
         c.add(Calendar.DATE, i);
-        System.out.println(c.getTime());
         return c;
     }
 
@@ -324,17 +320,13 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
             Statement statement = connection1.createStatement();
             PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,U.NOM,U.PRENOM,U.EMAIL,C2.NOM as profnom,C2.NATURE from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C JOIN GROUP_ETUDIANT GE on GC.ID_G=GE.ID_G JOIN COURS C2 on GC.ID_C = C2.ID_C JOIN UTILISATEUR U on C2.LOGIN = U.LOGIN WHERE GE.LOGIN=? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
-            //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
-            //System.out.println(LoginController.user1);
             pstmt.setString(1,LoginController.user1);
             name.setText("Login: " + LoginController.user1 + "\n" +LoginController.name1);
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(z).getTime())));
-            //System.out.println(df.format(getmonday().getTime()));
             pstmt.setDate(3, java.sql.Date.valueOf(df.format(getmonday(z+7).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
-            //System.out.println(queryResult.getInt(1));
             while ((queryResult.next())) {
                 creneau[i][0] = String.valueOf(queryResult.getTimestamp("DATE_D"));
                 creneau[i][1]= String.valueOf(queryResult.getTimestamp("DATE_F"));
@@ -350,7 +342,6 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
             }
 
 
-            System.out.println(Arrays.deepToString(creneau));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -364,7 +355,6 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
 
     for (int r = 0;r<=i-1;r++) {
-        //System.out.println(i);
         String m ;
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -382,9 +372,8 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         double y = houretopxl(hourofday);
         x.setTime(date2);
         double hourofday2 = x.get(x.HOUR_OF_DAY) + (float) x.get(x.MINUTE) / 60;
-        //System.out.println(hourofday2);
         double w = houretopxl(hourofday2) - y;
-        //System.out.println(w);
+
 
         cours.setTranslateX(z);
         cours.setTranslateY(y);
@@ -395,13 +384,11 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         //cours.setFont(new Font("Serif", 14));
         if (creneau[r][4].equals("true")) m = "Oui";
         else m = "Non";
-        System.out.println("hhhhhhhh"+creneau[r][9]);
         cours.setText("Salle: " + creneau[r][2] + " " + creneau[r][3] + "\n" + creneau[r][5] + " " + creneau[r][6] + "\n"+creneau[r][8]+ "\n"+creneau[r][9]+ "\nprojecteur: " + m );
 
         cours.setTextFill(Color.rgb(255, 255, 255));
         cours.setTextAlignment(TextAlignment.CENTER);
         cours.setAlignment(Pos.CENTER);
-        //System.out.println(creneau[r][6]);
 
         if(creneau[r][9].trim().equals("TP"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
         else if(creneau[r][9].trim().equals("TD"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(5, 52, 14), CornerRadii.EMPTY, Insets.EMPTY)));

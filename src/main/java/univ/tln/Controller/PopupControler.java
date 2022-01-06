@@ -1,4 +1,4 @@
-package univ.tln;
+package univ.tln.Controller;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -105,7 +105,7 @@ public class PopupControler implements Initializable {
         setspinner();
         initSalle();
         initAbsence();
-        System.out.println("date creneau: ----" + ManagerController.d2);
+
 
     }
 
@@ -121,14 +121,14 @@ public class PopupControler implements Initializable {
             LoginController.managerstage.show();
 
             CreneauxDAO d = new CreneauxDAO();
-            System.out.println(TeacherController.d1);
+
 
             d.RemoveCreneauByDated(TeacherController.d1);
             TeacherController T = new TeacherController();
             TeacherController teacherController = loader.getController();
             teacherController.updatewindow();
 
-            //System.out.println("yupi");
+
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -153,14 +153,14 @@ public class PopupControler implements Initializable {
             LoginController.managerstage.show();
 
             CreneauxDAO d = new CreneauxDAO();
-            System.out.println("en creneau" + ManagerController.d2);
+
 
             d.RemoveCreneauByDated(ManagerController.d2);
             ManagerController T = new ManagerController();
             ManagerController managerController = loader.getController();
             managerController.validatebuttononaction(e);
 
-            //System.out.println("yupi");
+
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -187,14 +187,14 @@ public class PopupControler implements Initializable {
             LoginController.managerstage.show();
 
             CreneauxDAO d = new CreneauxDAO();
-            System.out.println(TeacherController.d1);
+
 
             d.updateCreneaux(md_date, md_h_d, md_m_d, md_h_f, md_m_f, md_bat, md_s, TeacherController.d1);
             TeacherController T = new TeacherController();
             TeacherController teacherController = loader.getController();
             teacherController.updatewindow();
 
-            //System.out.println("yupi");
+
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -205,7 +205,7 @@ public class PopupControler implements Initializable {
         }
 
         stage.close();
-        System.out.println("i work");
+
     }
 
 
@@ -224,14 +224,14 @@ public class PopupControler implements Initializable {
             LoginController.managerstage.show();
 
             CreneauxDAO d = new CreneauxDAO();
-            System.out.println(TeacherController.d1);
+
 
             d.updateCreneaux(md_date, md_h_d, md_m_d, md_h_f, md_m_f, md_bat, md_s, ManagerController.d2);
             ManagerController T = new ManagerController();
             ManagerController managerController = loader.getController();
             managerController.validatebuttononaction(e);
 
-            //System.out.println("yupi");
+
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -240,7 +240,7 @@ public class PopupControler implements Initializable {
         }
 
         stage.close();
-        System.out.println("i work");
+
     }
 
 
@@ -270,14 +270,7 @@ public class PopupControler implements Initializable {
                         e.printStackTrace();
                     }
                     if (md_m_f.getValue() != null && md_h_f.getValue() != null) {
-                            /*
-                            System.out.println(md_m_f.getValue());
-                            System.out.println(md_m_d.getValue());
-                            System.out.println(md_h_f.getValue());
-                            System.out.println(md_h_d.getValue());
-                            System.out.println(md_bat.getValue());
-                            System.out.println(md_date.getValue());
-*/
+
 
                         try {
                             c.initialize_batiment(md_m_f, md_m_d, md_h_f, md_h_d, md_bat, md_date);

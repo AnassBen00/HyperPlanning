@@ -1,8 +1,14 @@
 package univ.tln.daos;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import lombok.extern.java.Log;
 import univ.tln.DatabaseConnection;
 import univ.tln.daos.exceptions.DataAccessException;
@@ -406,7 +412,7 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
 
     }
 
-    public void insertcreneau(DatePicker md_date,Spinner<Integer>md_h_d,Spinner<Integer>md_m_d,Spinner<Integer>md_h_f,Spinner<Integer>md_m_f,ComboBox<String>md_bat,ComboBox<String>md_s,ComboBox<String>md_f,ComboBox<String>md_c,ComboBox<String>md_n,ComboBox<String>md_ens) throws SQLException {
+    public void insertcreneau(DatePicker md_date, Spinner<Integer>md_h_d, Spinner<Integer>md_m_d, Spinner<Integer>md_h_f, Spinner<Integer>md_m_f, ComboBox<String>md_bat, ComboBox<String>md_s, ComboBox<String>md_f, ComboBox<String>md_c, ComboBox<String>md_n, ComboBox<String>md_ens, Label ajoutermessage) throws SQLException {
         SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         String date1 = md_date.getValue().toString() + " " + md_h_d.getValue().toString() + ":" + md_m_d.getValue().toString() + ":00";
         String date2 = md_date.getValue().toString() + " " + md_h_f.getValue().toString() + ":" + md_m_f.getValue().toString() + ":00";
@@ -422,10 +428,13 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
             pstmt.setString(8, md_ens.getValue());
 
         }else{
-            System.out.println("you must provide all values");
+            ajoutermessage.setTextFill(Color.color(1, 0, 0));
+            ajoutermessage.setText("veuillez remplir tout le formulaire");
         }
         try {
             int row = pstmt.executeUpdate();
+            ajoutermessage.setTextFill(Color.color(0, 1, 0));
+            ajoutermessage.setText("le créneau a bien été ajouté");
             System.out.println("test:"+row);
 
         }catch (SQLException e) {

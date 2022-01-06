@@ -1,19 +1,14 @@
 package univ.tln.daos;
 
-import univ.tln.TeacherController;
+import univ.tln.Controller.TeacherController;
 import univ.tln.daos.exceptions.DataAccessException;
-import univ.tln.entities.filieres.Filiere;
 import univ.tln.entities.utilisateurs.Absence;
-import univ.tln.entities.utilisateurs.Enseignant;
-import univ.tln.entities.utilisateurs.Etudiant;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class AbsenceDAO extends AbstractDAO<Absence>{
 

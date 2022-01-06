@@ -6,32 +6,49 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.passEditController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="668.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.Controller.passEditController">
    <children>
-      <Label layoutX="66.0" layoutY="89.0" text="Old Password" textFill="#575757" />
-      <Label layoutX="64.0" layoutY="138.0" text="New Password" textFill="#575757" />
-      <PasswordField fx:id="oldPassField" layoutX="160.0" layoutY="85.0" />
-      <PasswordField fx:id="newPassField" layoutX="160.0" layoutY="134.0" />
-      <Button fx:id="Applybtn" layoutX="224.0" layoutY="200.0" mnemonicParsing="false" onAction="#ApplybtnOnAction" style="-fx-background-color: green;" text="Apply changes" textFill="#fcf7f7" />
-      <Button fx:id="clbtn" layoutX="423.0" layoutY="200.0" mnemonicParsing="false" onAction="#clbtnOnAction" style="-fx-background-color: red;" stylesheets="@styes.css" text="Cancel" textFill="#f2eded" />
-      <Label layoutX="304.0" layoutY="22.0" text="Edit Password" textFill="#1a0b43">
+      <Label layoutX="234.0" layoutY="90.0" text="Ancien mot de passe" textFill="#575757" />
+      <Label layoutX="227.0" layoutY="139.0" text="Nouveau mot de passe" textFill="#575757" />
+      <PasswordField fx:id="oldPassField" layoutX="418.0" layoutY="86.0" />
+      <PasswordField fx:id="newPassField" layoutX="418.0" layoutY="135.0" />
+      <Button fx:id="Applybtn" layoutX="327.0" layoutY="190.0" mnemonicParsing="false" onAction="#ApplybtnOnAction" style="-fx-background-color: green;" text="Apply changes" textFill="#fcf7f7" />
+      <Button fx:id="clbtn" layoutX="472.0" layoutY="190.0" mnemonicParsing="false" onAction="#clbtnOnAction" style="-fx-background-color: red;" stylesheets="@styes.css" text="Cancel" textFill="#f2eded" />
+      <Label layoutX="328.0" layoutY="24.0" text="Modifier le mot de passe" textFill="#1a0b43">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <ImageView fitHeight="51.0" fitWidth="188.0" layoutX="503.0" layoutY="9.0">
-         <image>
-            <Image url="@univ.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="51.0" fitWidth="51.0" layoutX="629.0" layoutY="181.0">
-         <image>
-            <Image url="@H.jpeg" />
-         </image>
-      </ImageView>
       <Label fx:id="errormsg" layoutX="342.0" layoutY="110.0" prefHeight="17.0" prefWidth="260.0" textFill="#f80505" />
+      <Line endX="100.0" layoutX="440.0" layoutY="54.0" startX="-100.0" />
+      <Pane layoutX="-1.0" prefHeight="255.0" prefWidth="209.0" style="-fx-background-color: #3F2B63;">
+         <children>
+            <ImageView fitHeight="42.0" fitWidth="52.0" layoutX="14.0" layoutY="14.0">
+               <image>
+                  <Image url="@H.jpeg" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" layoutX="72.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ypper">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Text>
+            <Line endX="85.0" layoutX="110.0" layoutY="113.0" startX="-84.0" stroke="#110e0e" />
+            <Text fill="WHITE" layoutX="26.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Planning" wrappingWidth="126.021484375">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="64.0" fitWidth="146.0" layoutX="32.0" layoutY="142.0">
+               <image>
+                  <Image url="@test.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </Pane>

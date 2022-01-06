@@ -1,4 +1,4 @@
-package univ.tln;
+package univ.tln.Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

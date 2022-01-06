@@ -8,27 +8,14 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="stack" prefHeight="782.0" prefWidth="1305.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.ManagerController">
+<AnchorPane fx:id="stack" prefHeight="782.0" prefWidth="1305.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.Controller.ManagerController">
    <children>
       <Group layoutX="91.0" layoutY="47.0" />
       <StackPane layoutX="267.0" layoutY="126.0">
          <children>
-            <AnchorPane fx:id="scene5" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="168.0" prefHeight="248.0" prefWidth="596.0" style="-fx-background-color: #fff;" text="Abcenses" textFill="#ab1c1c">
-                     <font>
-                        <Font size="76.0" />
-                     </font>
-                  </Label>
-                  <TableView fx:id="listEtudiantId2" prefHeight="647.0" prefWidth="1007.0">
-                    <columns>
-                    </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="scene4" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="180.0" prefHeight="190.0" prefWidth="522.0" style="-fx-background-color: #fff;" text="Settings" textFill="#ab1c1c">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="180.0" prefHeight="190.0" prefWidth="522.0" style="-fx-background-color: #fff;" text="Informations" textFill="#ab1c1c">
                      <font>
                         <Font size="76.0" />
                      </font></Label>
@@ -36,7 +23,7 @@
             </AnchorPane>
             <AnchorPane fx:id="scene3" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
                <children>
-                  <Label layoutX="358.0" layoutY="14.0" prefHeight="95.0" prefWidth="291.0" text="Profile Information" textFill="#500f75">
+                  <Label layoutX="321.0" layoutY="14.0" prefHeight="95.0" prefWidth="366.0" text="Données personnelles" textFill="#500f75">
                      <padding>
                         <Insets bottom="30.0" left="50.0" right="30.0" top="30.0" />
                      </padding>
@@ -44,11 +31,11 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="632.0" layoutY="134.0" text="Name :" />
-                  <Label layoutX="623.0" layoutY="207.0" text="Lastname :" />
+                  <Label layoutX="632.0" layoutY="134.0" text="Nom :" />
+                  <Label layoutX="619.0" layoutY="207.0" text="Prénom :" />
                   <Label layoutX="182.0" layoutY="134.0" stylesheets="@styes.css" text="Login :" />
                   <Label layoutX="183.0" layoutY="207.0" text="Email :" />
-                  <Label layoutX="162.0" layoutY="277.0" text="Password :" />
+                  <Label layoutX="135.0" layoutY="277.0" text="Mot de passe :" />
                   <TextField fx:id="loginField" editable="false" layoutX="242.0" layoutY="129.0" stylesheets="@styes.css" />
                   <TextField fx:id="nameField" editable="false" layoutX="697.0" layoutY="129.0" />
                   <TextField fx:id="lastnameField" editable="false" layoutX="705.0" layoutY="202.0" />
@@ -65,7 +52,21 @@
                      </image>
                   </ImageView>
                   <PasswordField fx:id="passwordField" layoutX="242.0" layoutY="272.0" onMouseClicked="#editPass" />
-                  <Button layoutX="402.0" layoutY="273.0" mnemonicParsing="false" onAction="#editPass" text="Edit" textFill="#f8f5f5" />
+                  <Button layoutX="424.0" layoutY="273.0" mnemonicParsing="false" onAction="#editPass" text="Edit" textFill="#f8f5f5" />
+                  <Line endX="129.0" layoutX="504.0" layoutY="88.0" startX="-132.0" stroke="#3c1672" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="scene5" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="220.0" layoutY="168.0" prefHeight="248.0" prefWidth="596.0" style="-fx-background-color: #fff;" text="Absences" textFill="#ab1c1c">
+                     <font>
+                        <Font size="76.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="listEtudiantId2" prefHeight="647.0" prefWidth="1007.0">
+                    <columns>
+                    </columns>
+                  </TableView>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="scene5" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
@@ -75,7 +76,7 @@
                     </columns>
                   </TableView>
                   <ComboBox fx:id="filiereidd" layoutX="429.0" layoutY="78.0" prefWidth="150.0" />
-                  <Label layoutX="382.0" layoutY="20.0" text="Filtrer par filiere " textFill="#902790">
+                  <Label layoutX="382.0" layoutY="20.0" text="Filtrer par filière " textFill="#902790">
                      <font>
                         <Font size="29.0" />
                      </font>
@@ -89,23 +90,23 @@
                     <tabs>
                       <Tab text="Creneaux">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="169.0" prefWidth="106.0">
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="169.0" prefWidth="106.0" stylesheets="@styes.css">
                                  <children>
-                                    <ComboBox fx:id="md_bat" layoutX="468.0" layoutY="113.0" prefWidth="150.0" />
                                     <ComboBox fx:id="md_c" layoutX="845.0" layoutY="113.0" prefWidth="150.0" />
-                                    <ComboBox fx:id="md_f" layoutX="468.0" layoutY="255.0" prefWidth="150.0" />
+                                    <ComboBox fx:id="md_f" layoutX="468.0" layoutY="269.0" prefWidth="150.0" />
+                                    <ComboBox fx:id="md_bat" layoutX="468.0" layoutY="114.0" prefWidth="150.0" />
                                     <DatePicker fx:id="md_date" layoutX="100.0" layoutY="113.0" />
-                                    <Label layoutX="19.0" layoutY="117.0" text="Date cours" />
+                                    <Label layoutX="14.0" layoutY="117.0" text="Date cours" />
                                     <Spinner fx:id="md_h_d" layoutX="109.0" layoutY="182.0" prefHeight="26.0" prefWidth="68.0" />
                                     <Spinner fx:id="md_m_d" layoutX="170.0" layoutY="182.0" prefHeight="26.0" prefWidth="65.0" />
                                     <Label layoutX="14.0" layoutY="186.0" text="Heure debut" />
-                                    <Label layoutX="17.0" layoutY="260.0" text="Heure Fin" />
-                                    <Spinner fx:id="md_h_f" layoutX="110.0" layoutY="254.0" prefHeight="26.0" prefWidth="67.0" />
-                                    <Spinner fx:id="md_m_f" layoutX="177.0" layoutY="254.0" prefHeight="26.0" prefWidth="65.0" />
+                                    <Label layoutX="14.0" layoutY="261.0" text="Heure Fin" />
+                                    <Spinner fx:id="md_h_f" layoutX="109.0" layoutY="257.0" prefHeight="26.0" prefWidth="67.0" />
+                                    <Spinner fx:id="md_m_f" layoutX="171.0" layoutY="257.0" prefHeight="26.0" prefWidth="65.0" />
                                     <Label layoutX="364.0" layoutY="117.0" text="Batiment" />
                                     <Label layoutX="364.0" layoutY="186.0" text="Salle N°" />
                                     <Label layoutX="752.0" layoutY="117.0" text="Cours" />
-                                    <Label layoutX="358.0" layoutY="260.0" text="Formation" />
+                                    <Label layoutX="357.0" layoutY="273.0" text="Formation" />
                                     <Button layoutX="396.0" layoutY="446.0" mnemonicParsing="false" onAction="#addcreneau" prefHeight="24.0" prefWidth="260.0" style="-fx-background-color: Green;" text="Button" textFill="WHITE" />
                                     <ComboBox fx:id="md_s" layoutX="468.0" layoutY="182.0" prefWidth="150.0" />
                                     <ComboBox fx:id="md_n" layoutX="845.0" layoutY="182.0" prefWidth="150.0" />
@@ -115,8 +116,10 @@
                                           <Image url="@corner.png" />
                                        </image>
                                     </ImageView>
-                                    <ComboBox fx:id="md_ens" layoutX="838.0" layoutY="255.0" prefWidth="150.0" />
-                                    <Label layoutX="723.0" layoutY="260.0" text="enseignant" />
+                                    <ComboBox fx:id="md_ens" layoutX="845.0" layoutY="268.0" prefWidth="150.0" />
+                                    <Label layoutX="735.0" layoutY="275.0" text="enseignant" />
+                                    <Label fx:id="ajoutermessage" alignment="CENTER" contentDisplay="CENTER" layoutX="386.0" layoutY="399.0" prefHeight="24.0" prefWidth="288.0" textFill="#05ff71" />
+
                                  </children></AnchorPane>
                         </content>
                       </Tab>
@@ -136,13 +139,13 @@
                                    <TextField fx:id="passwordEtdId" layoutX="441.0" layoutY="198.0" />
                                    <Button fx:id="confirmAjoutEtudiantId" layoutX="399.0" layoutY="515.0" mnemonicParsing="false" onAction="#ConfirmEtudAction" prefHeight="24.0" prefWidth="260.0" style="-fx-background-color: Green;" text="Confirm" textFill="WHITE" />
                                    <Label layoutX="515.0" layoutY="282.0" />
-                                   <Label layoutX="681.0" layoutY="200.0" prefHeight="17.0" prefWidth="40.0" text="Promo" />
+                                   <Label layoutX="676.0" layoutY="200.0" prefHeight="17.0" prefWidth="45.0" text="Promo" />
                                    <Label layoutX="679.0" layoutY="271.0" prefHeight="23.0" prefWidth="43.0" text="Filiere" />
                                    <Label layoutX="515.0" layoutY="300.0" />
                                    <Label layoutX="682.0" layoutY="130.0" text="Niveau" />
                                    <ComboBox fx:id="idNiveau" layoutX="762.0" layoutY="125.0" prefWidth="150.0" />
                                    <ComboBox fx:id="idFiliere" layoutX="763.0" layoutY="269.0" prefWidth="150.0" />
-                                   <TextField fx:id="idPromo" layoutX="763.0" layoutY="198.0" />
+                                   <TextField fx:id="idPromo" editable="false" layoutX="763.0" layoutY="198.0" text="2021/2022" />
                                     <Label layoutX="681.0" layoutY="339.0" text="Groupe" />
                                     <ComboBox fx:id="idGroupe" layoutX="764.0" layoutY="335.0" prefWidth="150.0" />
                                 </children></AnchorPane>
@@ -218,7 +221,7 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnmodify" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Modify" textFill="WHITE">
+            <Button fx:id="btnmodify" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Ajouter" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -226,7 +229,7 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnaccount" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Account" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="btnaccount" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Mon compte" textAlignment="CENTER" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -234,7 +237,7 @@
                   <Font size="22.0" />
                </font>
             </Button>
-            <Button fx:id="btnsettings" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Settings" textFill="WHITE">
+            <Button fx:id="btnsettings" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Informations" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -268,12 +271,12 @@
                <children>
                   <Pane prefHeight="110.0" prefWidth="1007.0" style="-fx-background-color: #7156DD;">
                      <children>
-                        <Label fx:id="lblstatus12" layoutX="41.0" layoutY="29.0" text="Account" textFill="WHITE">
+                        <Label fx:id="lblstatus12" layoutX="41.0" layoutY="29.0" text="Mon compte" textFill="WHITE">
                            <font>
                               <Font size="33.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblstatusmini12" layoutX="51.0" layoutY="14.0" text="/home/account" textFill="WHITE" />
+                        <Label fx:id="lblstatusmini12" layoutX="51.0" layoutY="14.0" text="/home/mon compte" textFill="WHITE" />
                         <Label fx:id="infomessage12" layoutX="280.0" layoutY="13.0" prefHeight="35.0" prefWidth="419.0" />
                      </children>
                   </Pane>
@@ -297,12 +300,12 @@
                <children>
                   <Pane prefHeight="110.0" prefWidth="1007.0" style="-fx-background-color: #7156DD;">
                      <children>
-                        <Label fx:id="lblstatus11" layoutX="41.0" layoutY="29.0" text="Settings" textFill="WHITE">
+                        <Label fx:id="lblstatus11" layoutX="41.0" layoutY="29.0" text="Informations" textFill="WHITE">
                            <font>
                               <Font size="33.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblstatusmini11" layoutX="51.0" layoutY="14.0" text="/home/settings" textFill="WHITE" />
+                        <Label fx:id="lblstatusmini11" layoutX="51.0" layoutY="14.0" text="/home/Informations" textFill="WHITE" />
                         <Label fx:id="infomessage11" layoutX="280.0" layoutY="13.0" prefHeight="35.0" prefWidth="419.0" />
                      </children>
                   </Pane>
@@ -312,13 +315,16 @@
                <children>
                   <Pane prefHeight="110.0" prefWidth="1007.0" style="-fx-background-color: #7156DD;">
                      <children>
-                        <Label fx:id="lblstatus121" layoutX="41.0" layoutY="29.0" text="Modify" textFill="WHITE">
+                        <Label fx:id="lblstatus121" layoutX="41.0" layoutY="29.0" text="Ajouter" textFill="WHITE">
                            <font>
                               <Font size="33.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblstatusmini121" layoutX="51.0" layoutY="14.0" text="/home/modify" textFill="WHITE" />
-                        <Label fx:id="infomessage121" layoutX="280.0" layoutY="13.0" prefHeight="35.0" prefWidth="419.0" text="Slectionner ce que vous voulez modifier&quot;" />
+                        <Label fx:id="lblstatusmini121" layoutX="51.0" layoutY="14.0" text="/home/Ajouter" textFill="WHITE" />
+                        <Label fx:id="infomessage121" alignment="CENTER" layoutX="268.0" layoutY="34.0" prefHeight="35.0" prefWidth="475.0" text="Selectionner ce que vous voulez modifier" textFill="WHITE">
+                           <font>
+                              <Font size="22.0" />
+                           </font></Label>
                      </children>
                   </Pane>
                </children>
@@ -336,7 +342,7 @@
                         <Label fx:id="infomessage" alignment="CENTER" contentDisplay="CENTER" layoutX="294.0" layoutY="-3.0" prefHeight="35.0" prefWidth="419.0" text="Filtrer par :" textFill="WHITE" />
                         <ComboBox fx:id="pickfomation" layoutX="372.0" layoutY="36.0" prefHeight="24.0" prefWidth="87.0" stylesheets="@styes.css" />
                         <ComboBox fx:id="pickteacher" layoutX="544.0" layoutY="36.0" prefHeight="24.0" prefWidth="87.0" stylesheets="@styes.css" />
-                        <Button fx:id="btnvaliderfiltre" layoutX="473.0" layoutY="69.0" mnemonicParsing="false" onAction="#validatebuttononaction" style="-fx-background-color: GREEN;" text="Valider" />
+                        <Button fx:id="btnvaliderfiltre" layoutX="473.0" layoutY="69.0" mnemonicParsing="false" onAction="#validatebuttononaction" style="-fx-background-color: GREEN;" text="Valider" textFill="WHITE" />
                         <Label layoutX="295.0" layoutY="41.0" text="Formation" textFill="WHITE" />
                         <Label layoutX="646.0" layoutY="41.0" text="Enseignant" textFill="WHITE" />
                         <ImageView fitHeight="24.0" fitWidth="20.0" layoutX="494.0" layoutY="38.0">
@@ -360,7 +366,7 @@
             </AnchorPane>
          </children>
       </StackPane>
-      <Label fx:id="name" layoutX="1118.0" layoutY="26.0" prefHeight="68.0" prefWidth="134.0" textFill="WHITE">
+      <Label fx:id="name" layoutX="1067.0" layoutY="15.0" prefHeight="79.0" prefWidth="200.0" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>

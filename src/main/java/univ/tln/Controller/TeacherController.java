@@ -1,8 +1,6 @@
-package univ.tln;
+package univ.tln.Controller;
 
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,11 +19,11 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import lombok.SneakyThrows;
+import univ.tln.App;
+import univ.tln.DatabaseConnection;
 import univ.tln.daos.EnseignantDAO;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.entities.utilisateurs.Etudiant;
@@ -42,7 +40,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.*;
 
-//import static univ.tln.LoginController.getUsernametxt;
+//import static univ.tln.Controller.LoginController.getUsernametxt;
 
 public class TeacherController implements Initializable {
     public int i;
@@ -227,7 +225,6 @@ public class TeacherController implements Initializable {
                 e.printStackTrace();
             }
             setcalendar(r);
-            System.out.println("loool");
 
             r=r-7;
             w=w-7;
@@ -252,7 +249,7 @@ public class TeacherController implements Initializable {
                 e.printStackTrace();
             }
             setcalendar(w);
-            System.out.println("loool");
+
 
             w=w+7;
             r=r+7;
@@ -277,7 +274,6 @@ public class TeacherController implements Initializable {
                 e.printStackTrace();
             }
             setcalendar2(z);
-            System.out.println("loool");
 
             z=z-7;
             y=y-7;
@@ -302,7 +298,7 @@ public class TeacherController implements Initializable {
                 e.printStackTrace();
             }
             setcalendar2(y);
-            System.out.println("loool");
+
 
             y=y+7;
             z=z+7;
@@ -431,7 +427,7 @@ public class TeacherController implements Initializable {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY  );
         c.add(Calendar.DATE, i);
-        System.out.println(c.getTime());
+
         return c;
     }
 
@@ -490,18 +486,18 @@ public class TeacherController implements Initializable {
             Statement statement = connection1.createStatement();
             PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,C2.NOM,C2.NATURE,G.nom as grpname from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C join COURS C2 on GC.ID_C = C2.ID_C join GROUPS G on GC.ID_G = G.ID_G where C2.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
-            System.out.println(LoginController.user1);
+
             pstmt.setString(1, LoginController.user1);
             name.setText("Login: " + LoginController.user1 + "\n" +LoginController.name1);
             //role.setText("Name : " + LoginController.name1);
             name.setTextFill(Color.rgb(255, 255, 255));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(m).getTime())));
-            System.out.println("younes" + java.sql.Date.valueOf(df.format(getmonday(m).getTime())) );
-            //System.out.println(df.format(getmonday().getTime()));
+
+
             pstmt.setDate(3, java.sql.Date.valueOf(df.format(getmonday(m+7).getTime())));
             ResultSet queryResult = pstmt.executeQuery();
-            //System.out.println(queryResult.getInt(1));
+
             while ((queryResult.next())) {
                 creneau[i][0] = String.valueOf(queryResult.getTimestamp("DATE_D"));
                 creneau[i][1] = String.valueOf(queryResult.getTimestamp("DATE_F"));
@@ -514,8 +510,6 @@ public class TeacherController implements Initializable {
                 i++;
             }
 
-
-            // System.out.println(Arrays.deepToString(creneau));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -524,13 +518,12 @@ public class TeacherController implements Initializable {
 
     @FXML
     public void drawrect() throws ParseException {
-        //fonction qui dessine l'emlpoie du temps
+
 
         Calendar x = Calendar.getInstance();
 
 
         for (int r = 0; r <= i - 1; r++) {
-            //System.out.println(i);
             String m;
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -540,7 +533,6 @@ public class TeacherController implements Initializable {
 
             Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][0]);
 
-            System.out.println("this is it" + creneau[r][0]);
 
             Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);
             x.setTime(date1);
@@ -552,9 +544,9 @@ public class TeacherController implements Initializable {
             double y = houretopxl(hourofday);
             x.setTime(date2);
             double hourofday2 = x.get(x.HOUR_OF_DAY) + (float) x.get(x.MINUTE) / 60;
-            //System.out.println(hourofday2);
+
             double w = houretopxl(hourofday2) - y;
-            //System.out.println(w);
+
 
             cours.setTranslateX(z);
             cours.setTranslateY(y);
@@ -571,7 +563,7 @@ public class TeacherController implements Initializable {
             cours.setTextAlignment(TextAlignment.CENTER);
 
             cours.setAlignment(Pos.CENTER);
-            //System.out.println(creneau[r][6]);
+
 
             if (creneau[r][6].trim().equals("TP"))
                 cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -593,7 +585,7 @@ public class TeacherController implements Initializable {
 
 
         for (int r = 0; r <= i - 1; r++) {
-            //System.out.println(i);
+
             String m;
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -614,9 +606,8 @@ public class TeacherController implements Initializable {
             double y = houretopxl(hourofday);
             x.setTime(date2);
             double hourofday2 = x.get(x.HOUR_OF_DAY) + (float) x.get(x.MINUTE) / 60;
-            //System.out.println(hourofday2);
             double w = houretopxl(hourofday2) - y;
-            //System.out.println(w);
+
 
 
             cours.setTranslateX(z);
@@ -633,7 +624,6 @@ public class TeacherController implements Initializable {
             cours.setTextFill(Color.rgb(255, 255, 255));
             cours.setTextAlignment(TextAlignment.CENTER);
             cours.setAlignment(Pos.CENTER);
-            //System.out.println(creneau[r][6]);
 
             if (creneau[r][6].trim().equals("TP"))
                 cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -643,7 +633,6 @@ public class TeacherController implements Initializable {
                 cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
             int finalR = r;
             cours.setOnMouseClicked((mouseEvent) -> {
-                System.out.println(creneau[finalR][0]);
                 d1 = creneau[finalR][0];
                 s1 = creneau[finalR][3];
                 b1 = creneau[finalR][2];
@@ -675,8 +664,6 @@ public class TeacherController implements Initializable {
     }
 
     public void updatewindow() throws ParseException {
-        //castdatetime();
-        //System.out.println(l);
 
 
         for (Label g : l) {
@@ -699,7 +686,7 @@ public class TeacherController implements Initializable {
         setcalendar(0);
         setcalendar2(0);
 
-        //System.out.println("updated");
+
     }
 
 

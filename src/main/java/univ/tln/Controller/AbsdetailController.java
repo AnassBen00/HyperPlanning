@@ -1,4 +1,4 @@
-package univ.tln;
+package univ.tln.Controller;
 
 
 import javafx.beans.property.SimpleBooleanProperty;
@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,9 +17,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import lombok.SneakyThrows;
 import univ.tln.daos.AbsenceDAO;
-import univ.tln.daos.EtudiantDAO;
 import univ.tln.entities.utilisateurs.Absence;
-import univ.tln.entities.utilisateurs.Etudiant;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +25,7 @@ import java.text.ParseException;
 import java.util.ResourceBundle;
 
 public class AbsdetailController implements Initializable  {
+
     @FXML
     private TableView<Absence> absdetails;
 
@@ -42,15 +38,15 @@ public class AbsdetailController implements Initializable  {
         initmanagertitle();
         initabsdetail();
         Absence a =absdetails.getSelectionModel().getSelectedItem();
-        System.out.println(a);
     }
 
 
     public void initmanagertitle(){
         managerabstitle.setText("liste d'absence pour l'etudiant : "+ManagerController.d);
-        System.out.println(ManagerController.m);// m cest le login de l'etudiant selectioner
+
     }
     public void initabsdetail(){
+
         absdetails.setEditable(true);
 
         TableColumn<Absence, String> date_debut//
@@ -93,17 +89,22 @@ public class AbsdetailController implements Initializable  {
             @SneakyThrows
             @Override
             public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Absence, Boolean> param) {
+                Absence abs = (Absence) absdetails.getSelectionModel().getSelectedItem();
 
                 SimpleBooleanProperty booleanProp = new SimpleBooleanProperty();
 
 
                 booleanProp.addListener(new ChangeListener<Boolean>() {
-
+                    AbsenceDAO a = new AbsenceDAO();
                     @SneakyThrows
                     @Override
                     public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
                                         Boolean newValue) {
-                        booleanProp.set(newValue);
+                        //booleanProp.set(newValue);
+                        if(newValue == true)
+                            a.persist(abs);
+                        if(newValue == false);
+                            a.remove(abs);
                     }
                 });
                 return booleanProp;
