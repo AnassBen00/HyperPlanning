@@ -1,6 +1,9 @@
 package univ.tln;
 
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +18,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
+import lombok.SneakyThrows;
 import univ.tln.daos.AbsenceDAO;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.entities.utilisateurs.Absence;
@@ -31,10 +35,6 @@ public class AbsdetailController implements Initializable  {
 
     @FXML
     private Label managerabstitle;
-
-
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -88,6 +88,27 @@ public class AbsdetailController implements Initializable  {
 
         nature.setMinWidth(200);
 
+        absenceCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Absence, Boolean>, ObservableValue<Boolean>>() {
+
+            @SneakyThrows
+            @Override
+            public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Absence, Boolean> param) {
+
+                SimpleBooleanProperty booleanProp = new SimpleBooleanProperty();
+
+
+                booleanProp.addListener(new ChangeListener<Boolean>() {
+
+                    @SneakyThrows
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                                        Boolean newValue) {
+                        booleanProp.set(newValue);
+                    }
+                });
+                return booleanProp;
+            }
+        });
 
 
         absenceCol.setCellFactory(new Callback<TableColumn<Absence, Boolean>, //
@@ -115,7 +136,8 @@ public class AbsdetailController implements Initializable  {
 
 
     public void delete_abs(ActionEvent e) throws IOException, ParseException {
-        Absence a =absdetails.getSelectionModel().getSelectedItem();
-        System.out.println(a);
+        for (Absence a :absdetails.getItems()){
+            System.out.println(absdetails.getColumns().get(3).getCellObservableValue(a).getValue());
+        }
     }
 }
