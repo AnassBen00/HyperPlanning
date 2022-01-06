@@ -17,7 +17,7 @@ public abstract class AbstractDAO<E extends Object> implements DAO<E> {
     protected final Connection connection;
     protected final PreparedStatement persistPS;
     protected final PreparedStatement updatePS;
-    private final PreparedStatement findPS;
+    protected final PreparedStatement findPS;
     private final PreparedStatement findAllPS;
 
     public AbstractDAO(String persistPS, String updatePS, String findPS) {

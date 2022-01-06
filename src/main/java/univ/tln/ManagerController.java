@@ -28,6 +28,8 @@ import univ.tln.daos.*;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.filieres.Filiere;
 
+import univ.tln.entities.groupes.Groupe;
+import univ.tln.entities.groupes.GroupeEtudiant;
 import univ.tln.entities.utilisateurs.Enseignant;
 import univ.tln.entities.utilisateurs.Etudiant;
 import univ.tln.entities.utilisateurs.Utilisateur;
@@ -233,9 +235,11 @@ public class ManagerController implements Initializable {
     @FXML
     private Button saveButton;
 
-
     @FXML
     private ComboBox<String> filiereidd;
+
+    @FXML
+    private ComboBox<String> idGroupe;
 
 
     private int r=-7;
@@ -276,6 +280,24 @@ public class ManagerController implements Initializable {
                 "master 1",
                 "master 2"
         );
+
+
+        GroupeDAO groupeDAO = new GroupeDAO();
+        List<Groupe> groupes = new ArrayList<>();
+        try {
+            groupes = groupeDAO.findAll();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        List<String> nomGroupes = new ArrayList<>();
+        for(Groupe g : groupes){
+            System.out.println(g.getNomDuGroupe());
+            nomGroupes.add(g.getNomDuGroupe());
+        }
+
+
+        idGroupe.getItems().addAll(nomGroupes);
+
         FiliereDAO filiereDAO = new FiliereDAO();
         List<Filiere> filieres = new ArrayList<>();
         try {
@@ -283,7 +305,6 @@ public class ManagerController implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println("***filieres**** -- > " + filieres);
         List<String> nomFilieres = new ArrayList<>();
         for(Filiere f : filieres)
             nomFilieres.add(f.getNomDuFiliere());
@@ -318,12 +339,15 @@ public class ManagerController implements Initializable {
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
         EtudiantDAO etudiantDAO = new EtudiantDAO();
         FiliereDAO filiereDAO = new FiliereDAO();
+        GroupeEtudiantDAO groupeEtudiantDAO = new GroupeEtudiantDAO();
+        GroupeDAO groupeDAO = new GroupeDAO();
         utilisateurDAO.persist(new Utilisateur(loginEtdId.getText(), sha256()
                 .hashString(passwordEtdId.getText(), StandardCharsets.UTF_8)
                 .toString(), nomEtdId.getText(), prenomEtdId.getText(), emailEtdId.getText()));
         etudiantDAO.persist(new Etudiant(loginEtdId.getText(), sha256()
                 .hashString(passwordEtdId.getText(), StandardCharsets.UTF_8)
                 .toString(), nomEtdId.getText(), prenomEtdId.getText(), emailEtdId.getText(), idNiveau.getValue().toString(), idPromo.getText(), filiereDAO.find(idFiliere.getValue().toString()).getId()));
+        groupeEtudiantDAO.persist(new GroupeEtudiant(groupeDAO.find(idGroupe.getValue()).getId(),loginEtdId.getText()));
     }
 
 

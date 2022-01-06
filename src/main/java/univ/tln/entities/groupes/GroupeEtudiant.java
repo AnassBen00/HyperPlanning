@@ -8,8 +8,9 @@ public class GroupeEtudiant extends Groupe{
     @Setter
     private String login;
 
-    public GroupeEtudiant(int id, String nomDuGroupe, String login) {
-        super(id, nomDuGroupe);
+
+    public GroupeEtudiant(int id,String login) {
+        super(id);
         this.login = login;
     }
 }

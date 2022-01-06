@@ -13,6 +13,10 @@ public class Groupe {
     @Setter
     private String nomDuGroupe;
 
+    public Groupe(int id) {
+        this.id = id;
+    }
+
     public Groupe(int id, String nomDuGroupe) {
         this.id = id;
         this.nomDuGroupe = nomDuGroupe;
