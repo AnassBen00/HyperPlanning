@@ -16,6 +16,9 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -23,7 +26,9 @@ import javafx.scene.text.TextAlignment;
 
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import univ.tln.daos.AbsenceDAO;
 import univ.tln.daos.EtudiantDAO;
+import univ.tln.entities.utilisateurs.Absence;
 //import univ.tln.entities.utilisateurs.Etudiant;
 
 import java.io.IOException;
@@ -67,7 +72,7 @@ public class StudentController implements Initializable {
     @FXML
     private Button btnplanning;
     @FXML
-    private Button btnsettings;
+    private Button btnabsence;
     @FXML
     private Label lblstatus;
     @FXML
@@ -94,7 +99,7 @@ public class StudentController implements Initializable {
     private Label idvendredi;
 
     @FXML
-    private TableView listEtudiantId;
+    private TableView absenceetud;
 
     @FXML
     private Label name;
@@ -116,8 +121,6 @@ public class StudentController implements Initializable {
     @FXML
     private ImageView frontarrow;
 
-    @FXML
-    private TableView<?> absenceetud;
 
     private int r=-7;
     private int w = 7;
@@ -145,6 +148,7 @@ public class StudentController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        initabsdetail();
     }
 
 public void handleclicks (ActionEvent e){ //pour changer l'ecran
@@ -159,7 +163,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         scene1.toFront();
         scenepln.toFront();
     }
-    else if(e.getSource()==btnsettings){
+    else if(e.getSource()==btnabsence){
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene4.toFront();
         sceneset.toFront();
@@ -167,7 +171,57 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
 }
 
-public void arrowinputback(){ // pour voir la semaine precedente
+    public void initabsdetail(){
+        absenceetud.setEditable(true);
+
+        TableColumn<Absence, String> date_debut//
+                = new TableColumn<Absence, String>("date debut cours");
+        date_debut.setEditable(false);
+        TableColumn<Absence, String> nomcr//
+                = new TableColumn<Absence, String>("nom matiere");
+        nomcr.setEditable(false);
+        TableColumn<Absence, String> nature//
+                = new TableColumn<Absence, String>("nature ");
+        nature.setEditable(false);
+
+
+        //nom
+
+        date_debut.setCellValueFactory(new PropertyValueFactory<>("date_d"));
+
+        date_debut.setCellFactory(TextFieldTableCell.<Absence>forTableColumn());
+
+        date_debut.setMinWidth(200);
+
+        // prenom
+
+        nomcr.setCellValueFactory(new PropertyValueFactory<>("nom"));
+
+        nomcr.setCellFactory(TextFieldTableCell.<Absence>forTableColumn());
+
+        nomcr.setMinWidth(200);
+
+        nature.setCellValueFactory(new PropertyValueFactory<>("nature"));
+
+        nature.setCellFactory(TextFieldTableCell.<Absence>forTableColumn());
+
+        nature.setMinWidth(200);
+
+
+        ObservableList<Absence> list = afficherAbsences();
+        absenceetud.setItems(list);
+
+        absenceetud.getColumns().addAll(date_debut,nomcr, nature);
+
+    }
+    public ObservableList<Absence> afficherAbsences() {
+        AbsenceDAO absenceDAO = new AbsenceDAO();
+        ObservableList<Absence> absences = FXCollections.observableArrayList(absenceDAO.findAllabs(LoginController.user1));
+        return absences;
+    }
+
+
+    public void arrowinputback(){ // pour voir la semaine precedente
 
     backarrow.setOnMouseClicked((mouseEvent) -> {
         getmonday(r);
@@ -306,11 +360,6 @@ public void arrowinputback(){ // pour voir la semaine precedente
 
         @FXML
     public void drawrect() throws ParseException { //fonction qui dessine l'emlpoie du temps
-
-
-
-
-
     Calendar x = Calendar.getInstance();
 
 
