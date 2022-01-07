@@ -1,6 +1,6 @@
 package univ.tln.daos;
 
-import univ.tln.Controller.TeacherController;
+import univ.tln.controller.TeacherController;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Absence;
 

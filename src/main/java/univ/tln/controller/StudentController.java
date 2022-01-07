@@ -1,4 +1,4 @@
-package univ.tln.Controller;
+package univ.tln.controller;
 
 
 
@@ -40,7 +40,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.*;
 
-//import static univ.tln.Controller.LoginController.getUsernametxt;
+//import static univ.tln.controller.LoginController.getUsernametxt;
 
 public class StudentController implements Initializable {
     public int i ;
@@ -119,6 +119,15 @@ public class StudentController implements Initializable {
     @FXML
     private ImageView frontarrow;
 
+    @FXML
+    private AnchorPane scene5;
+
+    @FXML
+    private Button btninfo;
+
+    @FXML
+    private Pane sceneinfo;
+
 
     private int r=-7;
     private int w = 7;
@@ -165,6 +174,11 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
         scene4.toFront();
         sceneset.toFront();
+    }
+    else if(e.getSource()==btninfo){
+        btninfo.setBackground(new Background(new BackgroundFill(Color.rgb(63,43,99),CornerRadii.EMPTY, Insets.EMPTY)));
+        scene5.toFront();
+        sceneinfo.toFront();
     }
 
 }

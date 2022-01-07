@@ -1,4 +1,4 @@
-package univ.tln.Controller;
+package univ.tln.controller;
 
 
 import javafx.beans.property.SimpleBooleanProperty;

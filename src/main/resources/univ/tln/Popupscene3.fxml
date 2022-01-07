@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="667.0" prefWidth="919.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.Controller.AbsdetailController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="667.0" prefWidth="919.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.controller.AbsdetailController">
    <left>
       <AnchorPane prefHeight="407.0" prefWidth="228.0" style="-fx-background-color: #3F2B63;" BorderPane.alignment="CENTER">
          <children>
@@ -61,7 +61,7 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <TableView fx:id="absdetails" layoutX="91.0" layoutY="143.0" prefHeight="373.0" prefWidth="489.0" />
+            <TableView fx:id="absdetails" layoutX="5.0" layoutY="143.0" prefHeight="373.0" prefWidth="667.0" />
          </children>
       </AnchorPane>
    </right>

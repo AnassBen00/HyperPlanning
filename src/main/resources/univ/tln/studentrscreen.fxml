@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="stack" prefHeight="782.0" prefWidth="1305.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.Controller.StudentController">
+<AnchorPane fx:id="stack" prefHeight="782.0" prefWidth="1305.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.controller.StudentController">
    <children>
       <Group layoutX="91.0" layoutY="47.0" />
       <StackPane layoutX="267.0" layoutY="126.0">
@@ -67,6 +68,17 @@
                         <Font size="22.0" />
                      </font>
                   </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="scene5" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fff;">
+               <children>
+                  <Label layoutX="32.0" layoutY="60.0" prefHeight="79.0" prefWidth="167.0" text="Vacances" textFill="#9334a8">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <Line endX="67.0" layoutX="117.0" layoutY="120.0" startX="-84.0" stroke="#821cb2" />
+                  <TextArea editable="false" layoutX="47.0" layoutY="185.0" prefHeight="350.0" prefWidth="876.0" text="Vacances de la Toussaint 2021 :    Fin des cours : samedi 17 octobre 2021 Jour de reprise : lundi 2 novembre 2021 &#10;&#10;Vacances de Noël 2021              :  Fin des cours : samedi 19 décembre 2021 Jour de reprise : lundi 4 janvier 2022&#10;&#10;Vacances d'hiver 2022                :  Fin des cours samedi 20 février 2022 Jour de reprise &#10;&#10;Vacances de printemps 2021      : Fin des cours : samedi 10 avril 2022 Jour de reprise : lundi 26 avril 2022&#10;" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="scene1" prefHeight="645.0" prefWidth="1007.0">
@@ -141,6 +153,14 @@
                         <Image url="@test.jpg" />
                      </image>
                   </ImageView>
+                  <Button fx:id="btninfo" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Informations" textFill="WHITE">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Button>
                </children>
             </Pane>
          </children>
@@ -165,6 +185,16 @@
                      </font>
                   </Label>
                   <Label fx:id="lblstatusmini11" layoutX="51.0" layoutY="14.0" text="/home/Absences" textFill="WHITE" />
+               </children>
+            </Pane>
+            <Pane fx:id="sceneinfo" layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="591.0" style="-fx-background-color: #7156DD;">
+               <children>
+                  <Label fx:id="lblstatus111" layoutX="41.0" layoutY="29.0" text="Infomations" textFill="WHITE">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblstatusmini111" layoutX="51.0" layoutY="14.0" text="/home/Infomations" textFill="WHITE" />
                </children>
             </Pane>
             <Pane fx:id="scenepln" prefHeight="150.0" prefWidth="591.0" style="-fx-background-color: #7156DD;">

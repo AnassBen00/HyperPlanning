@@ -1,4 +1,4 @@
-package univ.tln.Controller;
+package univ.tln.controller;
 
 
 import javafx.collections.FXCollections;
@@ -51,7 +51,7 @@ import java.util.*;
 
 import static com.google.common.hash.Hashing.sha256;
 
-//import static univ.tln.Controller.LoginController.getUsernametxt;
+//import static univ.tln.controller.LoginController.getUsernametxt;
 
 public class ManagerController implements Initializable {
     public int i;

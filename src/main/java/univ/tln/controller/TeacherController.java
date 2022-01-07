@@ -1,4 +1,4 @@
-package univ.tln.Controller;
+package univ.tln.controller;
 
 
 import javafx.collections.FXCollections;
@@ -40,7 +40,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.*;
 
-//import static univ.tln.Controller.LoginController.getUsernametxt;
+//import static univ.tln.controller.LoginController.getUsernametxt;
 
 public class TeacherController implements Initializable {
     public int i;
