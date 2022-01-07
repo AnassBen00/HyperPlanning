@@ -373,24 +373,25 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         }
 
     }
-    public void initialize_enseignant( DatePicker md_date,Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner md_h_f, Spinner<Integer> md_h_d,ComboBox<String> md_ens,ComboBox<String> md_c,ComboBox<String> md_n) throws SQLException, ParseException {
+    public void initialize_enseignant( DatePicker md_date,Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner md_h_f, Spinner<Integer> md_h_d,ComboBox<String> md_ens,ComboBox<String> md_c,ComboBox<String> md_n,ComboBox<String> md_f) throws SQLException, ParseException {
 
         String[] ens_libre = new String[20];
-        PreparedStatement pstmt = connection.prepareStatement(" select distinct U.nom,U.prenom from utilisateur U join cours C on C.login=U.login where C.nom=? and C.nature=? and U.login not in(select login from creneaux CR join cours C1 on CR.id_c=C1.id_c and ((DATE_D <= ? and date_f >= ?)and ((date_d between ? and ?)or (date_f between ? and ?))))");
+        PreparedStatement pstmt = connection.prepareStatement(" select distinct U.nom,U.prenom from utilisateur U join cours C on C.login=U.login join group_cours gc on C.id_c=gc.id_c join groups g on g.id_g=gc.id_g where C.nom=? and g.nom=? and C.nature=? and U.login not in(select login from creneaux CR join cours C1 on CR.id_c=C1.id_c and ((DATE_D <= ? and date_f >= ?)and ((date_d between ? and ?)or (date_f between ? and ?))))");
         int i = 0;
         try {
 
             pstmt.setString(1, md_c.getValue());
-            pstmt.setString(2, md_n.getValue());
+            pstmt.setString(2,md_f.getValue());
+            pstmt.setString(3, md_n.getValue());
             SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
             String date1 = md_date.getValue().toString() + " " + md_h_d.getValue().toString() + ":" + md_m_d.getValue().toString() + ":00";
             String date2 = md_date.getValue().toString() + " " + md_h_f.getValue().toString() + ":" + md_m_f.getValue().toString() + ":00";
-            pstmt.setString(3, date1);
-            pstmt.setString(7, date1);
-            pstmt.setString(5, date1);
-            pstmt.setString(8, date2);
-            pstmt.setString(4, date2);
-            pstmt.setString(6, date2);
+            pstmt.setString(4, date1);
+            pstmt.setString(8, date1);
+            pstmt.setString(6, date1);
+            pstmt.setString(9, date2);
+            pstmt.setString(5, date2);
+            pstmt.setString(7, date2);
 
 
             ResultSet queryResult = pstmt.executeQuery();

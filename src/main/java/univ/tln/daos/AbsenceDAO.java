@@ -10,7 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbsenceDAO extends AbstractDAO<Absence>{
+public class
+AbsenceDAO extends AbstractDAO<Absence>{
 
     public AbsenceDAO() {
         super("insert into absence values(?,select id_s from salle where batiment =? and num=?,select id_g from groups where nom=?,?)",

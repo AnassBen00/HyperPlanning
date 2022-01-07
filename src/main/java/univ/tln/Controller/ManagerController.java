@@ -433,7 +433,7 @@ public class ManagerController implements Initializable {
 
         md_n.valueProperty().addListener((options, oldValue, newValue) ->{
             try {
-                c.initialize_enseignant(md_date,md_m_f,md_m_d,md_h_f,md_h_d, md_ens,md_c,md_n);
+                c.initialize_enseignant(md_date,md_m_f,md_m_d,md_h_f,md_h_d, md_ens,md_c,md_n,md_f);
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ParseException e) {

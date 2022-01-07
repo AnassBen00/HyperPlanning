@@ -24,7 +24,8 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.ResourceBundle;
 
-public class AbsdetailController implements Initializable  {
+public class
+AbsdetailController implements Initializable  {
 
     @FXML
     private TableView<Absence> absdetails;
@@ -89,22 +90,21 @@ public class AbsdetailController implements Initializable  {
             @SneakyThrows
             @Override
             public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Absence, Boolean> param) {
-                Absence abs = (Absence) absdetails.getSelectionModel().getSelectedItem();
-
+                Absence abs=param.getValue();
+                AbsenceDAO a = new AbsenceDAO();
                 SimpleBooleanProperty booleanProp = new SimpleBooleanProperty();
 
 
                 booleanProp.addListener(new ChangeListener<Boolean>() {
-                    AbsenceDAO a = new AbsenceDAO();
+
                     @SneakyThrows
                     @Override
                     public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
                                         Boolean newValue) {
-                        //booleanProp.set(newValue);
                         if(newValue == true)
-                            a.persist(abs);
-                        if(newValue == false);
                             a.remove(abs);
+                        if(newValue == false);
+                            a.persist(abs);
                     }
                 });
                 return booleanProp;
