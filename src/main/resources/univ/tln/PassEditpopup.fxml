@@ -16,8 +16,8 @@
       <Label layoutX="227.0" layoutY="139.0" text="Nouveau mot de passe" textFill="#575757" />
       <PasswordField fx:id="oldPassField" layoutX="418.0" layoutY="86.0" />
       <PasswordField fx:id="newPassField" layoutX="418.0" layoutY="135.0" />
-      <Button fx:id="Applybtn" layoutX="327.0" layoutY="190.0" mnemonicParsing="false" onAction="#ApplybtnOnAction" style="-fx-background-color: green;" text="Apply changes" textFill="#fcf7f7" />
-      <Button fx:id="clbtn" layoutX="472.0" layoutY="190.0" mnemonicParsing="false" onAction="#clbtnOnAction" style="-fx-background-color: red;" stylesheets="@styes.css" text="Cancel" textFill="#f2eded" />
+      <Button fx:id="Applybtn" layoutX="327.0" layoutY="190.0" mnemonicParsing="false" onAction="#ApplybtnOnAction" style="-fx-background-color: green;" text="modifier" textFill="#fcf7f7" />
+      <Button fx:id="clbtn" layoutX="472.0" layoutY="190.0" mnemonicParsing="false" onAction="#clbtnOnAction" style="-fx-background-color: red;" stylesheets="@styes.css" text="annuler" textFill="#f2eded" />
       <Label layoutX="328.0" layoutY="24.0" text="Modifier le mot de passe" textFill="#1a0b43">
          <font>
             <Font name="System Bold" size="16.0" />

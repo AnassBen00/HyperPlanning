@@ -50,7 +50,7 @@
                   <Image url="@H.jpeg" />
                </image>
             </ImageView>
-            <Button fx:id="btnupdate" alignment="BASELINE_LEFT" layoutX="2.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Update" textFill="WHITE">
+            <Button fx:id="btnupdate" alignment="CENTER" contentDisplay="TEXT_ONLY" layoutX="2.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="modifier creneau" textFill="WHITE" wrapText="true">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -88,7 +88,7 @@
                   </AnchorPane>
                   <AnchorPane fx:id="update" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
                      <children>
-                        <Label alignment="CENTER" layoutX="24.0" layoutY="78.0" prefHeight="0.0" prefWidth="227.0" text="Modification du cours " textFill="#1a0b43">
+                        <Label alignment="CENTER" layoutX="85.0" layoutY="76.0" prefHeight="0.0" prefWidth="227.0" text="ancien creneau " textFill="#1a0b43">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -96,7 +96,7 @@
                               <InnerShadow />
                            </effect>
                         </Label>
-                        <Label alignment="CENTER" layoutX="7.0" layoutY="147.0" prefHeight="18.0" prefWidth="82.0" text="Date" textFill="#575757">
+                        <Label alignment="CENTER" layoutX="7.0" layoutY="339.0" prefHeight="18.0" prefWidth="82.0" text="Date" textFill="#575757">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -104,7 +104,7 @@
                               <InnerShadow />
                            </effect>
                         </Label>
-                        <Label alignment="CENTER" layoutX="360.0" layoutY="149.0" prefHeight="18.0" prefWidth="100.0" text="Heure depart" textFill="#575757">
+                        <Label alignment="CENTER" layoutX="360.0" layoutY="340.0" prefHeight="18.0" prefWidth="100.0" text="Heure depart" textFill="#575757">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -119,7 +119,7 @@
                            </image>
                         </ImageView>
                         <Label fx:id="loginmessage" alignment="CENTER" layoutX="6.0" layoutY="107.0" prefHeight="18.0" prefWidth="255.0" textFill="#ff0909" />
-                        <Label alignment="CENTER" layoutX="17.0" layoutY="281.0" prefHeight="18.0" prefWidth="82.0" text="Salle" textFill="#575757">
+                        <Label alignment="CENTER" layoutX="7.0" layoutY="456.0" prefHeight="18.0" prefWidth="82.0" text="Salle" textFill="#575757">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -127,7 +127,7 @@
                               <InnerShadow />
                            </effect>
                         </Label>
-                        <Label alignment="CENTER" layoutX="360.0" layoutY="208.0" prefHeight="18.0" prefWidth="81.0" text="Heure fin" textFill="#575757">
+                        <Label alignment="CENTER" layoutX="360.0" layoutY="399.0" prefHeight="18.0" prefWidth="81.0" text="Heure fin" textFill="#575757">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -135,14 +135,14 @@
                               <InnerShadow />
                            </effect>
                         </Label>
-                        <Button layoutX="89.0" layoutY="509.0" mnemonicParsing="false" onAction="#validateupdate" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: green;" text="Valider" textFill="WHITE" />
-                        <DatePicker fx:id="md_date" layoutX="100.0" layoutY="146.0" />
-                        <Spinner fx:id="md_h_d" layoutX="473.0" layoutY="144.0" prefHeight="24.0" prefWidth="66.0" />
-                        <Spinner fx:id="md_m_d" layoutX="538.0" layoutY="144.0" prefHeight="24.0" prefWidth="64.0" />
-                        <Spinner fx:id="md_h_f" layoutX="475.0" layoutY="205.0" prefHeight="24.0" prefWidth="68.0" />
-                        <Spinner fx:id="md_m_f" layoutX="540.0" layoutY="205.0" prefHeight="24.0" prefWidth="62.0" />
-                        <ComboBox fx:id="md_s" layoutX="108.0" layoutY="287.0" prefWidth="150.0" />
-                        <Label alignment="CENTER" layoutX="7.0" layoutY="220.0" prefHeight="18.0" prefWidth="82.0" text="Batiment" textFill="#575757">
+                        <Button layoutX="89.0" layoutY="509.0" mnemonicParsing="false" onAction="#validateupdate" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: green;" text="modifier" textFill="WHITE" />
+                        <DatePicker fx:id="md_date" layoutX="100.0" layoutY="334.0" />
+                        <Spinner fx:id="md_h_d" layoutX="473.0" layoutY="335.0" prefHeight="24.0" prefWidth="66.0" />
+                        <Spinner fx:id="md_m_d" layoutX="538.0" layoutY="335.0" prefHeight="24.0" prefWidth="64.0" />
+                        <Spinner fx:id="md_h_f" layoutX="475.0" layoutY="396.0" prefHeight="24.0" prefWidth="68.0" />
+                        <Spinner fx:id="md_m_f" layoutX="540.0" layoutY="396.0" prefHeight="24.0" prefWidth="62.0" />
+                        <ComboBox fx:id="md_s" layoutX="100.0" layoutY="452.0" prefWidth="150.0" />
+                        <Label alignment="CENTER" layoutX="7.0" layoutY="404.0" prefHeight="18.0" prefWidth="82.0" text="Batiment" textFill="#575757">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -150,7 +150,62 @@
                               <InnerShadow />
                            </effect>
                         </Label>
-                        <ComboBox fx:id="md_bat" layoutX="108.0" layoutY="214.0" prefWidth="150.0" />
+                        <ComboBox fx:id="md_bat" layoutX="100.0" layoutY="400.0" prefWidth="150.0" />
+                        <Label alignment="CENTER" layoutX="40.0" layoutY="285.0" prefHeight="0.0" prefWidth="227.0" text="nouveau creneau" textFill="#1a0b43">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="30.0" layoutY="137.0" prefHeight="18.0" prefWidth="82.0" text="Date" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="383.0" layoutY="138.0" prefHeight="18.0" prefWidth="100.0" text="Heure depart" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="30.0" layoutY="254.0" prefHeight="18.0" prefWidth="82.0" text="Salle" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="383.0" layoutY="197.0" prefHeight="18.0" prefWidth="81.0" text="Heure fin" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <DatePicker fx:id="md_date1" layoutX="123.0" layoutY="132.0" />
+                        <Spinner fx:id="md_h_d1" layoutX="496.0" layoutY="133.0" prefHeight="24.0" prefWidth="66.0" />
+                        <Spinner fx:id="md_m_d1" layoutX="561.0" layoutY="133.0" prefHeight="24.0" prefWidth="64.0" />
+                        <Spinner fx:id="md_h_f1" layoutX="498.0" layoutY="194.0" prefHeight="24.0" prefWidth="68.0" />
+                        <Spinner fx:id="md_m_f1" layoutX="563.0" layoutY="194.0" prefHeight="24.0" prefWidth="62.0" />
+                        <ComboBox fx:id="md_s1" layoutX="123.0" layoutY="250.0" prefWidth="150.0" />
+                        <Label alignment="CENTER" layoutX="30.0" layoutY="202.0" prefHeight="18.0" prefWidth="82.0" text="Batiment" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <ComboBox fx:id="md_bat1" layoutX="123.0" layoutY="198.0" prefWidth="150.0" />
                      </children>
                   </AnchorPane>
                </children>

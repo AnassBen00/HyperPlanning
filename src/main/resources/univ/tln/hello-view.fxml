@@ -52,15 +52,7 @@
    <right>
       <AnchorPane prefHeight="400.0" prefWidth="332.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="24.0" layoutY="78.0" prefHeight="0.0" prefWidth="227.0" text="Secure Login" textFill="#1a0b43">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-               <effect>
-                  <InnerShadow />
-               </effect>
-            </Label>
-            <Label alignment="CENTER" layoutX="7.0" layoutY="147.0" prefHeight="18.0" prefWidth="82.0" text="Username" textFill="#575757">
+            <Label alignment="CENTER" layoutX="7.0" layoutY="147.0" prefHeight="18.0" prefWidth="82.0" text="identifiant" textFill="#575757">
                <font>
                   <Font size="14.0" />
                </font>
@@ -68,7 +60,7 @@
                   <InnerShadow />
                </effect>
             </Label>
-            <Label alignment="CENTER" layoutX="8.0" layoutY="202.0" prefHeight="18.0" prefWidth="81.0" text="Password" textFill="#575757">
+            <Label alignment="CENTER" layoutX="1.0" layoutY="202.0" prefHeight="18.0" prefWidth="98.0" text="mot de passe" textFill="#575757">
                <font>
                   <Font size="14.0" />
                </font>
