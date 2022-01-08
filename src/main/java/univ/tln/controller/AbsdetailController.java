@@ -17,12 +17,11 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import lombok.SneakyThrows;
 import univ.tln.daos.AbsenceDAO;
-import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Absence;
+import univ.tln.entities.utilisateurs.Etudiant;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ResourceBundle;
 
@@ -39,11 +38,7 @@ AbsdetailController implements Initializable  {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         initmanagertitle();
-        try {
-            initabsdetail();
-        } catch (DataAccessException | SQLException e) {
-            e.printStackTrace();
-        }
+        initabsdetail();
     }
 
 
@@ -51,7 +46,7 @@ AbsdetailController implements Initializable  {
         managerabstitle.setText("liste d'absence pour l'etudiant : "+ManagerController.d);
 
     }
-    public void initabsdetail() throws DataAccessException, SQLException {
+    public void initabsdetail(){
 
         absdetails.setEditable(true);
 
@@ -113,11 +108,14 @@ AbsdetailController implements Initializable  {
         });
 
         absenceCol.setEditable(true);
-        //
-        absenceCol.setCellFactory(p -> {
-            CheckBoxTableCell<Absence, Boolean> cell = new CheckBoxTableCell<Absence, Boolean>();
-            cell.setAlignment(Pos.CENTER);
-            return cell;
+        absenceCol.setCellFactory(new Callback<TableColumn<Absence, Boolean>, //
+                TableCell<Absence, Boolean>>() {
+            @Override
+            public TableCell<Absence, Boolean> call(TableColumn<Absence, Boolean> p) {
+                CheckBoxTableCell<Absence, Boolean> cell = new CheckBoxTableCell<Absence, Boolean>();
+                cell.setAlignment(Pos.CENTER);
+                return cell;
+            }
         });
 
 
@@ -127,10 +125,9 @@ AbsdetailController implements Initializable  {
         absdetails.getColumns().addAll(date_debut,nomcr, nature, absenceCol);
 
     }
-    public ObservableList<Absence> afficherAbsences() throws SQLException, DataAccessException {
+    public ObservableList<Absence> afficherAbsences() {
         AbsenceDAO absenceDAO = new AbsenceDAO();
         ObservableList<Absence> absences = FXCollections.observableArrayList(absenceDAO.findAllabs(ManagerController.m));
-        absenceDAO.close();
         return absences;
         }
 
