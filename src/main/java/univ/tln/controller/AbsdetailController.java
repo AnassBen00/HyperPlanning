@@ -18,6 +18,7 @@ import javafx.util.Callback;
 import lombok.SneakyThrows;
 import univ.tln.daos.AbsenceDAO;
 import univ.tln.entities.utilisateurs.Absence;
+import univ.tln.entities.utilisateurs.Etudiant;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,7 +39,6 @@ AbsdetailController implements Initializable  {
 
         initmanagertitle();
         initabsdetail();
-        Absence a =absdetails.getSelectionModel().getSelectedItem();
     }
 
 
@@ -90,28 +90,24 @@ AbsdetailController implements Initializable  {
             @SneakyThrows
             @Override
             public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Absence, Boolean> param) {
-                Absence abs=param.getValue();
-                AbsenceDAO a = new AbsenceDAO();
+                Absence absence = param.getValue();
+                AbsenceDAO absenceDAO = new AbsenceDAO();
                 SimpleBooleanProperty booleanProp = new SimpleBooleanProperty();
-
-
+                booleanProp.set(absence.isJustified());
                 booleanProp.addListener(new ChangeListener<Boolean>() {
 
                     @SneakyThrows
                     @Override
                     public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
                                         Boolean newValue) {
-                        if(newValue == true)
-                            a.remove(abs);
-                        if(newValue == false);
-                            a.persist(abs);
+                        absenceDAO.update(absence.getLogin(),absence.getDate_d(),newValue);
                     }
                 });
                 return booleanProp;
             }
         });
 
-
+        absenceCol.setEditable(true);
         absenceCol.setCellFactory(new Callback<TableColumn<Absence, Boolean>, //
                 TableCell<Absence, Boolean>>() {
             @Override

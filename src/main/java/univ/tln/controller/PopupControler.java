@@ -348,18 +348,9 @@ public class PopupControler implements Initializable {
             public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Etudiant, Boolean> param) {
                 Etudiant etudiant = param.getValue();
                 AbsenceDAO absenceDAO = new AbsenceDAO();
-
                 SimpleBooleanProperty booleanProp = new SimpleBooleanProperty();
                 String login = etudiant.getLogin();
-                // verifier si etudiant by login est dans la table absence si oui return true else false
-
-                if (absenceDAO.find(login,teacherController.d1)) {
-                    booleanProp.set(true);
-                } else {
-
-                    booleanProp.set(false);
-                }
-
+                booleanProp.set(absenceDAO.find(login,teacherController.d1));
                 booleanProp.addListener(new ChangeListener<Boolean>() {
 
                     @SneakyThrows

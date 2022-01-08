@@ -228,7 +228,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
     }
     public ObservableList<Absence> afficherAbsences() {
         AbsenceDAO absenceDAO = new AbsenceDAO();
-        ObservableList<Absence> absences = FXCollections.observableArrayList(absenceDAO.findAllabs(LoginController.user1));
+        ObservableList<Absence> absences = FXCollections.observableArrayList(absenceDAO.findAllabsN(LoginController.user1));
         return absences;
     }
 

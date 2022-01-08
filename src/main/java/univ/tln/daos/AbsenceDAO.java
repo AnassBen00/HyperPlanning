@@ -14,7 +14,7 @@ public class
 AbsenceDAO extends AbstractDAO<Absence>{
 
     public AbsenceDAO() {
-        super("insert into absence values(?,select id_s from salle where batiment =? and num=?,select id_g from groups where nom=?,?)",
+        super("insert into absence values(?,select id_s from salle where batiment =? and num=?,select id_g from groups where nom=?,?,false)",
                 "",
                 "SELECT * FROM absence WHERE login=?");
     }
@@ -56,12 +56,30 @@ AbsenceDAO extends AbstractDAO<Absence>{
     public List<Absence> findAllabs(String login) {
         List<Absence> absences = new ArrayList<Absence>();
         try {
-            PreparedStatement statement = connection.prepareStatement("select cr.date_d ,nom ,nature,a.id_s,a.id_g,a.login from absence a join CRENEAUX cr on a.date_d=cr.DATE_D and a.id_s=cr.ID_S and a.ID_G=cr.ID_G join cours c on c.ID_C=cr.ID_C where a.login=?");
+            PreparedStatement statement = connection.prepareStatement("select cr.date_d ,nom ,nature,a.id_s,a.id_g,a.login,justified from absence a join CRENEAUX cr on a.date_d=cr.DATE_D and a.id_s=cr.ID_S and a.ID_G=cr.ID_G join cours c on c.ID_C=cr.ID_C where a.login=?");
             statement.setString(1, login);
             ResultSet resultset = statement.executeQuery();
             while (resultset.next()) {
 
-                Absence absence = new Absence(resultset.getString("date_d"), resultset.getString("nom"), resultset.getString("nature"), resultset.getString("id_s"), resultset.getString("id_g"),resultset.getString("login"));
+                Absence absence = new Absence(resultset.getString("date_d"), resultset.getString("nom"), resultset.getString("nature"), resultset.getString("id_s"), resultset.getString("id_g"),resultset.getString("login"),resultset.getBoolean("justified"));
+                absences.add(absence);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return absences;
+    }
+
+    public List<Absence> findAllabsN(String login) {
+        List<Absence> absences = new ArrayList<Absence>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("select cr.date_d ,nom ,nature,a.id_s,a.id_g,a.login,justified from absence a join CRENEAUX cr on a.date_d=cr.DATE_D and a.id_s=cr.ID_S and a.ID_G=cr.ID_G join cours c on c.ID_C=cr.ID_C where a.login=? and justified=false");
+            statement.setString(1, login);
+            ResultSet resultset = statement.executeQuery();
+            while (resultset.next()) {
+
+                Absence absence = new Absence(resultset.getString("date_d"), resultset.getString("nom"), resultset.getString("nature"), resultset.getString("id_s"), resultset.getString("id_g"),resultset.getString("login"),resultset.getBoolean("justified"));
                 absences.add(absence);
             }
         } catch (SQLException e) {
@@ -74,6 +92,17 @@ AbsenceDAO extends AbstractDAO<Absence>{
     public void remove(Absence absence) throws DataAccessException {
         try {
             connection.createStatement().execute("DELETE FROM " + getTableName() + " WHERE LOGIN='" + absence.getLogin()+"' and date_d = '"+ TeacherController.d1 +"'");
+        } catch (SQLException throwables) {
+            throw new DataAccessException(throwables.getLocalizedMessage());
+        }
+    }
+    public void update(String login,String date_d,boolean justified) throws DataAccessException {
+        try {
+            PreparedStatement statement =connection.prepareStatement("update absence set justified =? WHERE LOGIN=? and date_d = ?");
+            statement.setBoolean(1, justified);
+            statement.setString(2, login);
+            statement.setString(3, date_d);
+            statement.executeUpdate();
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
         }
