@@ -122,7 +122,7 @@
                               <InnerShadow />
                            </effect>
                         </Label>
-                        <Button fx:id="supbtn" layoutX="358.0" layoutY="519.0" mnemonicParsing="false" onAction="#cancelbtnOnAction" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: red;" text="supprimer le cours" textFill="WHITE" />
+                        <Button fx:id="supbtn" layoutX="358.0" layoutY="519.0" mnemonicParsing="false" onAction="#cancelbtnOnAction2" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: red;" text="supprimer le cours" textFill="WHITE" />
                         <Label fx:id="loginmessage" alignment="CENTER" layoutX="16.0" layoutY="117.0" prefHeight="18.0" prefWidth="255.0" textFill="#ff0909" />
                         <Label alignment="CENTER" layoutX="17.0" layoutY="466.0" prefHeight="18.0" prefWidth="82.0" text="Salle" textFill="#575757">
                            <font>
@@ -140,7 +140,7 @@
                               <InnerShadow />
                            </effect>
                         </Label>
-                        <Button layoutX="99.0" layoutY="519.0" mnemonicParsing="false" onAction="#validateupdate" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: green;" text="modifier" textFill="WHITE" />
+                        <Button layoutX="99.0" layoutY="519.0" mnemonicParsing="false" onAction="#validateupdate2" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: green;" text="modifier" textFill="WHITE" />
                         <DatePicker fx:id="md_date" layoutX="110.0" layoutY="344.0" />
                         <Spinner fx:id="md_h_d" layoutX="483.0" layoutY="345.0" prefHeight="24.0" prefWidth="66.0" />
                         <Spinner fx:id="md_m_d" layoutX="548.0" layoutY="345.0" prefHeight="24.0" prefWidth="64.0" />
