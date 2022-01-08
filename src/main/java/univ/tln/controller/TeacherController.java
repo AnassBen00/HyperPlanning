@@ -22,14 +22,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import lombok.Setter;
 import univ.tln.App;
-import univ.tln.DatabaseConnection;
+import univ.tln.daos.CreneauxDAO;
 import univ.tln.daos.EnseignantDAO;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Etudiant;
-//import univ.tln.entities.utilisateurs.Etudiant;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -41,12 +40,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.*;
 
-//import static univ.tln.controller.LoginController.getUsernametxt;
+
 
 public class TeacherController implements Initializable {
-    public int i;
-    int max_cours = 60;
-    public String[][] creneau = new String[max_cours][8];
+    @Setter
+    public static int i;
+    int maxcours = 60;
+    private String[][] creneau = new String[maxcours][8];
 
     EnseignantDAO enseignantDAO = new EnseignantDAO();
     @FXML
@@ -171,40 +171,33 @@ public class TeacherController implements Initializable {
     @FXML
     private Button saveButton;
 
-    private int r=-7;
-    private int w = 7;
-
     private int z=-7;
     private int y = 7;
 
     List<Label> l = new ArrayList<>();
     List<Label> l2 = new ArrayList<>();
-
+    @Setter
     public static String d1;
+    @Setter
     public static String s1;
+    @Setter
     public static String b1;
+    @Setter
     public static String g1;
-
-    public TeacherController() throws DataAccessException, SQLException {
-    }
 
 
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
-        castdatetime(0);
+        initname();
+        castdatetime(0,creneau);
         try {
-            drawrect(); //on dessine l'emploie du temps
             drawrect2();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        arrowinputback();
-        arrowinputfront();
         arrowinputback2();
         arrowinputfront2();
-        setcalendar(0);
         setcalendar2(0);
         try{
             AffichageInfo();
@@ -212,65 +205,17 @@ public class TeacherController implements Initializable {
             e.printStackTrace();
         }
     }
-    public void arrowinputback(){ // pour voir la semaine precedente
-
-        backarrow.setOnMouseClicked((mouseEvent) -> {
-            getmonday(r);
-            getmonday(r+7);
-
-            for (Label g : l) {
-                scene1.getChildren().remove(g);
-            }
-            castdatetime(r);
-
-            try {
-                drawrect();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            setcalendar(r);
-
-            r=r-7;
-            w=w-7;
-        });
-
-    }
-
-    public void arrowinputfront(){ //pour voir la semaine suivante
-
-        frontarrow.setOnMouseClicked((mouseEvent) -> {
-            getmonday(w);
-            getmonday(w+7);
-
-            for (Label g : l) {
-                scene1.getChildren().remove(g);
-            }
-            castdatetime(w);
-
-            try {
-                drawrect();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            setcalendar(w);
-
-
-            w=w+7;
-            r=r+7;
-        });
-
-    }
 
     public void arrowinputback2(){ // pour voir la semaine precedente
 
-        backarrow2.setOnMouseClicked((mouseEvent) -> {
+        backarrow2.setOnMouseClicked(mouseEvent -> {
             getmonday(z);
             getmonday(z+7);
 
             for (Label g : l2) {
                 scene2.getChildren().remove(g);
             }
-            castdatetime(z);
+            castdatetime(z,creneau);
 
             try {
                 drawrect2();
@@ -287,14 +232,14 @@ public class TeacherController implements Initializable {
 
     public void arrowinputfront2(){ //pour voir la semaine suivante
 
-        frontarrow2.setOnMouseClicked((mouseEvent) -> {
+        frontarrow2.setOnMouseClicked(mouseEvent -> {
             getmonday(y);
             getmonday(y+7);
 
             for (Label g : l2) {
                 scene2.getChildren().remove(g);
             }
-            castdatetime(y);
+            castdatetime(y,creneau);
 
             try {
                 drawrect2();
@@ -312,7 +257,7 @@ public class TeacherController implements Initializable {
 
 
 
-    public void handleclicks(ActionEvent e) throws ParseException, DataAccessException, SQLException { //pour changer l'ecran
+    public void handleclicks(ActionEvent e) { //pour changer l'ecran
 
         if (e.getSource() == btnaccount) {
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -322,97 +267,24 @@ public class TeacherController implements Initializable {
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             scene2.toFront();
             sceneajout.toFront();
-        } else if (e.getSource() == btnplanning) {
-            btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
-            scene1.toFront();
-            scenepln.toFront();
+
         } else if (e.getSource() == btnsettings) {
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
             scene4.toFront();
             sceneset.toFront();
-        } else if (e.getSource() == btnabsences) {
-            btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
-            scene5.toFront();
-            sceneabs.toFront();
-
-            TableView<Etudiant> table = new TableView<Etudiant>();
-
-            // Editable
-            table.setEditable(true);
-
-            TableColumn<Etudiant, String> nomCol//
-                    = new TableColumn<Etudiant, String>("Nom");
-
-            TableColumn<Etudiant, String> prenomCol//
-                    = new TableColumn<Etudiant, String>("Prenom");
-
-            TableColumn<Etudiant, Boolean> absenceCol//
-                    = new TableColumn<Etudiant, Boolean>("Absence");
-
-            //nom
-
-            nomCol.setCellValueFactory(new PropertyValueFactory<>("Nom"));
-
-            nomCol.setCellFactory(TextFieldTableCell.<Etudiant>forTableColumn());
-
-            nomCol.setMinWidth(200);
-
-            // prenom
-
-            prenomCol.setCellValueFactory(new PropertyValueFactory<>("Prenom"));
-
-            prenomCol.setCellFactory(TextFieldTableCell.<Etudiant>forTableColumn());
-
-            prenomCol.setMinWidth(200);
-
-
-            // ==== absence (CHECH BOX) ===
-            /*absenceCol.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Etudiant, Boolean>, Void>() {
-
-             *//*@Override
-                public Void call(TreeTableColumn.CellDataFeatures<Etudiant, Boolean> param) {
-                   *//**//* Etudiant etudiant = param.getValue();
-
-                    SimpleBooleanProperty booleanProp = new SimpleBooleanProperty(person.isSingle());
-
-                    // Note: singleCol.setOnEditCommit(): Not work for
-                    // CheckBoxTableCell.
-
-                    // When "Single?" column change.
-                    booleanProp.addListener(new ChangeListener<Boolean>() {
-
-                        @Override
-                        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-                                            Boolean newValue) {
-                            person.setSingle(newValue);
-                        }
-                    });
-                    return booleanProp;*//**//*
-
-                }*//*
-            });
-*/
-            absenceCol.setCellFactory(new Callback<TableColumn<Etudiant, Boolean>, //
-                    TableCell<Etudiant, Boolean>>() {
-                @Override
-                public TableCell<Etudiant, Boolean> call(TableColumn<Etudiant, Boolean> p) {
-                    CheckBoxTableCell<Etudiant, Boolean> cell = new CheckBoxTableCell<Etudiant, Boolean>();
-                    cell.setAlignment(Pos.CENTER);
-                    return cell;
-                }
-            });
-
-            ObservableList<Etudiant> list = afficherEtudiants();
-            table.setItems(list);
-
-            table.getColumns().addAll(nomCol, prenomCol, absenceCol);
-
         }
     }
 
-    public ObservableList<Etudiant> afficherEtudiants() throws DataAccessException, SQLException {
-        EtudiantDAO etudiantDAO = new EtudiantDAO();
-        ObservableList<Etudiant> etudiants = FXCollections.observableArrayList(etudiantDAO.findAll());
+    public ObservableList<Etudiant> afficherEtudiants() {
+
+        ObservableList<Etudiant> etudiants = null;
+        try (EtudiantDAO etudiantDAO = new EtudiantDAO();) {
+
+
+            etudiants = FXCollections.observableArrayList(etudiantDAO.findAll());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return etudiants;
     }
 
@@ -436,30 +308,8 @@ public class TeacherController implements Initializable {
     }
 
 
-    public void setcalendar(int a) {
-        //pour afficher les dates sous les jours
-        Label Tlabel[] = new Label[7];
-        Tlabel[0] = idlundi;
-        Tlabel[1] = idmardi;
-        Tlabel[2] = idmercredi;
-        Tlabel[3] = idjeudi;
-        Tlabel[4] = idvendredi;
-        Tlabel[5] = idsamedi;
-        Tlabel[6] = iddimanche;
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        c.add(Calendar.DATE, a);
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        for (int i = 0; i < 7; i++) {
-            Tlabel[i].setText(df.format(c.getTime()));
-            Tlabel[i].setTextAlignment(TextAlignment.CENTER);
-            Tlabel[i].setTextFill(Color.rgb(255, 255, 255));
-            c.add(Calendar.DATE, 1);
-        }
-    }
-
     public void setcalendar2(int a) { //pour afficher les dates sous les jours
-        Label Tlabel[] = new Label[7];
+        Label [] Tlabel = new Label[7];
         Tlabel[0] = idlundi1;
         Tlabel[1] = idmardi1;
         Tlabel[2] = idmercredi1;
@@ -471,117 +321,30 @@ public class TeacherController implements Initializable {
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         c.add(Calendar.DATE, a);
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        for (int i = 0; i < 7; i++) {
-            Tlabel[i].setText(df.format(c.getTime()));
-            Tlabel[i].setTextAlignment(TextAlignment.CENTER);
-            Tlabel[i].setTextFill(Color.rgb(255, 255, 255));
+        for (int k = 0; k < 7; k++) {
+            Tlabel[k].setText(df.format(c.getTime()));
+            Tlabel[k].setTextAlignment(TextAlignment.CENTER);
+            Tlabel[k].setTextFill(Color.rgb(255, 255, 255));
             c.add(Calendar.DATE, 1);
         }
     }
 
-    public void castdatetime(int m) { //fonction qui remplie une liste des creneaux d'une semaine
-        i = 0;
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection connection1 = connection.connectDB();
+    void initname(){
+        name.setText("Login: " + LoginController.user1 + "\n" +LoginController.name1);
+        name.setTextFill(Color.rgb(255, 255, 255));
+    }
 
-
-        try {
-
-            Statement statement = connection1.createStatement();
-            PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,C2.NOM,C2.NATURE,G.nom as grpname from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C join COURS C2 on GC.ID_C = C2.ID_C join GROUPS G on GC.ID_G = G.ID_G where C2.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
-            //PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPE on (CRENEAUX.ID_G = GROUPE.ID_G) where GROUPE.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
-
-            pstmt.setString(1, LoginController.user1);
-            name.setText("Login: " + LoginController.user1 + "\n" +LoginController.name1);
-            //role.setText("Name : " + LoginController.name1);
-            name.setTextFill(Color.rgb(255, 255, 255));
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(m).getTime())));
-
-
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getmonday(m+7).getTime())));
-            ResultSet queryResult = pstmt.executeQuery();
-
-            while ((queryResult.next())) {
-                creneau[i][0] = String.valueOf(queryResult.getTimestamp("DATE_D"));
-                creneau[i][1] = String.valueOf(queryResult.getTimestamp("DATE_F"));
-                creneau[i][2] = queryResult.getString("BATIMENT");
-                creneau[i][3] = queryResult.getString("NUM");
-                creneau[i][4] = String.valueOf(queryResult.getBoolean("VIDEO_P"));
-                creneau[i][5] = queryResult.getString("NOM");
-                creneau[i][6] = queryResult.getString("NATURE");
-                creneau[i][7] = queryResult.getString("grpname");
-                i++;
-            }
-
-        } catch (SQLException e) {
+    public void castdatetime(int w, String[][] cren) { //fonction qui remplie une liste des creneaux d'une semaine
+        setI(0);
+        try (CreneauxDAO c2 = new CreneauxDAO();){
+            setI( c2.castdatetime2(getmonday(w), getmonday(w + 7), cren ,i));
+        } catch (DataAccessException e) {
             e.printStackTrace();
         }
     }
 
 
-    @FXML
-    public void drawrect() throws ParseException {
 
-
-        Calendar x = Calendar.getInstance();
-
-
-        for (int r = 0; r <= i - 1; r++) {
-            String m;
-
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
-            Label cours = new Label();
-            l.add(cours);
-
-            Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][0]);
-
-
-            Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);
-            x.setTime(date1);
-            int dayOfWeek = x.get(x.DAY_OF_WEEK);
-            datetopxl(dayOfWeek);
-            double hourofday = x.get(x.HOUR_OF_DAY) + (float) x.get(x.MINUTE) / 60;
-
-            int z = datetopxl(dayOfWeek);
-            double y = houretopxl(hourofday);
-            x.setTime(date2);
-            double hourofday2 = x.get(x.HOUR_OF_DAY) + (float) x.get(x.MINUTE) / 60;
-
-            double w = houretopxl(hourofday2) - y;
-
-
-            cours.setTranslateX(z);
-            cours.setTranslateY(y);
-            cours.setMinWidth(126);
-            cours.setMaxWidth(126);
-            cours.setMaxHeight(w);
-            cours.setMinHeight(w);
-            //cours.setFont(new Font("Serif", 14));
-            if (creneau[r][4].equals("true")) m = "Oui";
-            else m = "Non";
-            cours.setText("Salle: " + creneau[r][2] + " " + creneau[r][3] + "\n"+creneau[r][6] + " "+creneau[r][7]+"\n" + creneau[r][5]  + "\nprojecteur: " + m );
-
-            cours.setTextFill(Color.rgb(255, 255, 255));
-            cours.setTextAlignment(TextAlignment.CENTER);
-
-            cours.setAlignment(Pos.CENTER);
-
-
-            if (creneau[r][6].trim().equals("TP"))
-                cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
-            else if (creneau[r][6].trim().equals("TD"))
-                cours.setBackground(new Background(new BackgroundFill(Color.rgb(5, 52, 14), CornerRadii.EMPTY, Insets.EMPTY)));
-            else if (creneau[r][6].trim().equals("CM"))
-                cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
-
-            scene1.getChildren().add(cours);
-
-        }
-
-
-    }
 
     @FXML
     public void drawrect2() throws ParseException { //fonction qui dessine l'emlpoie du temps
@@ -591,9 +354,6 @@ public class TeacherController implements Initializable {
         for (int r = 0; r <= i - 1; r++) {
 
             String m;
-
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
             Label cours = new Label();
             l2.add(cours);
 
@@ -602,25 +362,24 @@ public class TeacherController implements Initializable {
             Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);
 
             x.setTime(date1);
-            int dayOfWeek = x.get(x.DAY_OF_WEEK);
+            int dayOfWeek = x.get(Calendar.DAY_OF_WEEK);
             datetopxl(dayOfWeek);
-            double hourofday = x.get(x.HOUR_OF_DAY) + (float) x.get(x.MINUTE) / 60;
+            double hourofday = x.get(Calendar.HOUR_OF_DAY) + (float) x.get(Calendar.MINUTE) / 60;
 
-            int z = datetopxl(dayOfWeek);
-            double y = houretopxl(hourofday);
+            int z1 = datetopxl(dayOfWeek);
+            double y1 = houretopxl(hourofday);
             x.setTime(date2);
-            double hourofday2 = x.get(x.HOUR_OF_DAY) + (float) x.get(x.MINUTE) / 60;
-            double w = houretopxl(hourofday2) - y;
+            double hourofday2 = x.get(Calendar.HOUR_OF_DAY) + (float) x.get(Calendar.MINUTE) / 60;
+            double w = houretopxl(hourofday2) - y1;
 
 
 
-            cours.setTranslateX(z);
-            cours.setTranslateY(y);
+            cours.setTranslateX(z1);
+            cours.setTranslateY(y1);
             cours.setMinWidth(126);
             cours.setMaxWidth(126);
             cours.setMaxHeight(w);
             cours.setMinHeight(w);
-            //cours.setFont(new Font("Serif", 14));
             if (creneau[r][4].equals("true")) m = "Oui";
             else m = "Non";
             cours.setText("Salle: " + creneau[r][2] + " " + creneau[r][3] + "\n" + creneau[r][5] + " " + creneau[r][6] + "\nprojecteur: " + m +"\n prof :");
@@ -636,11 +395,12 @@ public class TeacherController implements Initializable {
             else if (creneau[r][6].trim().equals("CM"))
                 cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
             int finalR = r;
-            cours.setOnMouseClicked((mouseEvent) -> {
-                d1 = creneau[finalR][0];
-                s1 = creneau[finalR][3];
-                b1 = creneau[finalR][2];
-                g1 = creneau[finalR][7];
+            cours.setOnMouseClicked(mouseEvent -> {
+                setD1(creneau[finalR][0]);
+
+               setS1(creneau[finalR][3]);
+                setB1(creneau[finalR][2]);
+                setG1(creneau[finalR][7]);
                 switchtopopupscene();
             });
             scene2.getChildren().add(cours);
@@ -651,7 +411,7 @@ public class TeacherController implements Initializable {
     public void switchtopopupscene() { // on change l'ecran si c'est bon
 
         try {
-            Parent root = FXMLLoader.load(App.class.getResource("Popupscene.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("Popupscene.fxml")));
 
             Stage managerstage = new Stage();
 
@@ -679,22 +439,20 @@ public class TeacherController implements Initializable {
 
         }
 
-        castdatetime(0);
+        castdatetime(0,creneau);
         try {
-            drawrect(); //on dessine l'emploie du temps
             drawrect2();
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        setcalendar(0);
         setcalendar2(0);
 
 
     }
 
 
-    public void cancelbtnOnAction(ActionEvent e) {
+    public void cancelbtnOnAction() {
         Stage stage = (Stage) supbtn.getScene().getWindow();
         stage.close();
 
@@ -738,11 +496,6 @@ public class TeacherController implements Initializable {
         }
     }
 
-
-    @FXML
-    void SaveOnAction(ActionEvent event) {
-
-    }
 
     @FXML
     void editPass(ActionEvent event) {

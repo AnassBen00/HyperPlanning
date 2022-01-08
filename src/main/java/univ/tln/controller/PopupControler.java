@@ -23,7 +23,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import lombok.SneakyThrows;
 import univ.tln.daos.AbsenceDAO;
 import univ.tln.daos.CreneauxDAO;
@@ -35,7 +34,6 @@ import univ.tln.entities.utilisateurs.Utilisateur;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ResourceBundle;
@@ -44,7 +42,6 @@ import java.util.ResourceBundle;
 public class PopupControler implements Initializable {
     CreneauxDAO c = new CreneauxDAO();
 
-    private TeacherController teacherController;
 
     @FXML
     private Button supbtn;
@@ -97,12 +94,7 @@ public class PopupControler implements Initializable {
     @FXML
     private PasswordField oldPassField;
 
-    private Date date_creneau;
 
-    public PopupControler() throws DataAccessException, SQLException {
-    }
-
-    @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         md_h_d.setValueFactory(valuehoure);
@@ -114,35 +106,26 @@ public class PopupControler implements Initializable {
 
     }
 
-    public void cancelbtnOnAction(ActionEvent e) throws ParseException, IOException {
+    public void cancelbtnOnAction() {
         Stage stage = (Stage) supbtn.getScene().getWindow();
-        try {
-            // Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("teacherscreen.fxml"));
+
+        try(CreneauxDAO d = new CreneauxDAO();) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/univ/tln/teacherscreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 1305, 782);
 
             LoginController.managerstage.setScene(scene);
             LoginController.managerstage.show();
 
-            CreneauxDAO d = new CreneauxDAO();
 
 
             d.RemoveCreneauByDated(TeacherController.d1);
-            TeacherController T = new TeacherController();
-            TeacherController teacherController = loader.getController();
-            teacherController.updatewindow();
+            TeacherController teachercontroller = loader.getController();
+            teachercontroller.updatewindow();
 
 
-
-        } catch (IOException ex) {
+        } catch (IOException | ParseException | DataAccessException ex) {
             ex.printStackTrace();
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        } catch (DataAccessException dataAccessException) {
-            dataAccessException.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
 
         stage.close();
@@ -150,35 +133,24 @@ public class PopupControler implements Initializable {
     }
 
 
-    public void cancelbtnOnAction2(ActionEvent e) throws ParseException, IOException {
+    public void cancelbtnOnAction2(ActionEvent e) {
         Stage stage = (Stage) supbtn.getScene().getWindow();
-        try {
-            // Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("managerscreen.fxml"));
+
+        try( CreneauxDAO d = new CreneauxDAO();) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/univ/tln/managerscreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 1305, 782);
 
             LoginController.managerstage.setScene(scene);
             LoginController.managerstage.show();
 
-            CreneauxDAO d = new CreneauxDAO();
-
-
             d.RemoveCreneauByDated(ManagerController.d2);
-            ManagerController T = new ManagerController();
             ManagerController managerController = loader.getController();
             managerController.validatebuttononaction(e);
 
 
-
-        } catch (IOException ex) {
+        } catch (DataAccessException | IOException ex) {
             ex.printStackTrace();
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        } catch (DataAccessException dataAccessException) {
-            dataAccessException.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
 
         stage.close();
@@ -187,36 +159,28 @@ public class PopupControler implements Initializable {
 
     @FXML
     public void validateupdate(ActionEvent e) throws IOException, ParseException {
-        //TODO : ahmed a ecrire le code ici avant
+
 
         Stage stage = (Stage) btnupdate.getScene().getWindow();
-        try {
-            // Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("teacherscreen.fxml"));
+        try(CreneauxDAO d = new CreneauxDAO();) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/univ/tln/teacherscreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 1305, 782);
 
             LoginController.managerstage.setScene(scene);
             LoginController.managerstage.show();
 
-            CreneauxDAO d = new CreneauxDAO();
+
 
 
             d.updateCreneaux(md_date, md_h_d, md_m_d, md_h_f, md_m_f, md_bat, md_s, TeacherController.d1);
-            TeacherController T = new TeacherController();
-            TeacherController teacherController = loader.getController();
-            teacherController.updatewindow();
+            TeacherController t =  loader.getController();
+            t.updatewindow();
 
 
 
-        } catch (IOException ex) {
+        } catch (IOException | DataAccessException | SQLException ex) {
             ex.printStackTrace();
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (DataAccessException dataAccessException) {
-            dataAccessException.printStackTrace();
         }
 
         stage.close();
@@ -225,35 +189,30 @@ public class PopupControler implements Initializable {
 
 
     @FXML
-    public void validateupdate2(ActionEvent e) throws IOException, ParseException {
-        //TODO : ahmed a ecrire le code ici avant
+    public void validateupdate2(ActionEvent e) {
+
 
         Stage stage = (Stage) btnupdate.getScene().getWindow();
-        try {
-            // Parent root = FXMLLoader.load(App.class.getResource("managerscreen.fxml"));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("managerscreen.fxml"));
+        try (CreneauxDAO d = new CreneauxDAO();) {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/univ/tln/managerscreen.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root, 1305, 782);
 
             LoginController.managerstage.setScene(scene);
             LoginController.managerstage.show();
 
-            CreneauxDAO d = new CreneauxDAO();
+
 
 
             d.updateCreneaux(md_date, md_h_d, md_m_d, md_h_f, md_m_f, md_bat, md_s, ManagerController.d2);
-            ManagerController T = new ManagerController();
             ManagerController managerController = loader.getController();
             managerController.validatebuttononaction(e);
 
 
 
-        } catch (IOException ex) {
+        } catch (IOException | SQLException | DataAccessException ex) {
             ex.printStackTrace();
-        } catch (ParseException | SQLException ex) {
-            ex.printStackTrace();
-        } catch (DataAccessException dataAccessException) {
-            dataAccessException.printStackTrace();
         }
 
         stage.close();
@@ -275,31 +234,25 @@ public class PopupControler implements Initializable {
 
 
         });
-        md_date.valueProperty().addListener((ov, oldValue, newValue) -> {
-            md_h_f.valueProperty().addListener((obs, oldValue3, newValue3) -> {
-                md_m_f.valueProperty().addListener((obs2, oldValue2, newValue2) -> {
+        md_date.valueProperty().addListener((ov, oldValue, newValue) -> md_h_f.valueProperty().addListener((obs, oldValue3, newValue3) ->
+            md_m_f.valueProperty().addListener((obs2, oldValue2, newValue2) -> {
+                try {
+
+                    c.initialize_batiment(md_m_f, md_m_d, md_h_f, md_h_d, md_bat, md_date);
+                } catch (SQLException | ParseException e) {
+                    e.printStackTrace();
+                }
+                if (md_m_f.getValue() != null && md_h_f.getValue() != null) {
+
+
                     try {
-
                         c.initialize_batiment(md_m_f, md_m_d, md_h_f, md_h_d, md_bat, md_date);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    } catch (ParseException e) {
+                    } catch (SQLException | ParseException e) {
                         e.printStackTrace();
                     }
-                    if (md_m_f.getValue() != null && md_h_f.getValue() != null) {
-
-
-                        try {
-                            c.initialize_batiment(md_m_f, md_m_d, md_h_f, md_h_d, md_bat, md_date);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            });
-        });
+                }
+            })
+        ));
     }
 
     public void initSalle() {
@@ -307,9 +260,7 @@ public class PopupControler implements Initializable {
         md_bat.valueProperty().addListener((options, oldValue, newValue) -> {
             try {
                 c.initialize_salle(md_m_f, md_m_d, md_h_f, md_h_d, md_bat, md_date, md_s);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
+            } catch (SQLException | ParseException e) {
                 e.printStackTrace();
             }
 
@@ -328,17 +279,17 @@ public class PopupControler implements Initializable {
         }
     }
 
-    public void initAbsence() throws DataAccessException, SQLException {
+    public void initAbsence()  {
 
         listEtudiantId.setEditable(true);
         TableColumn<Utilisateur, String> nomCol//
-                = new TableColumn<Utilisateur, String>("nom");
+                = new TableColumn<>("nom");
 
         TableColumn<Utilisateur, String> prenomCol//
-                = new TableColumn<Utilisateur, String>("prenom");
+                = new TableColumn<>("prenom");
 
         TableColumn<Etudiant, Boolean> absenceCol//
-                = new TableColumn<Etudiant, Boolean>("absence");
+                = new TableColumn<>("absence");
 
         //nom
 
@@ -358,58 +309,71 @@ public class PopupControler implements Initializable {
 
 
         // ==== absence (CHECH BOX) ===
-        absenceCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Etudiant, Boolean>, ObservableValue<Boolean>>() {
+        absenceCol.setCellValueFactory(param -> {
+            Etudiant etudiant = param.getValue();
+            AbsenceDAO absenceDAO = new AbsenceDAO();
 
-            @SneakyThrows
-            @Override
-            public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Etudiant, Boolean> param) {
-                Etudiant etudiant = param.getValue();
-                AbsenceDAO absenceDAO = new AbsenceDAO();
-                SimpleBooleanProperty booleanProp = new SimpleBooleanProperty();
-                String login = etudiant.getLogin();
-                booleanProp.set(absenceDAO.find(login,teacherController.d1));
-                booleanProp.addListener(new ChangeListener<Boolean>() {
+            SimpleBooleanProperty booleanProp = new SimpleBooleanProperty();
+            String login = etudiant.getLogin();
+            // verifier si etudiant by login est dans la table absence si oui return true else false
 
-                    @SneakyThrows
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-                                        Boolean newValue) {
-                        // appel de la methode qui permet ajout absence en fonction de login et date creneau
-
-                        Absence absence = new Absence(TeacherController.d1,teacherController.b1,teacherController.s1 ,teacherController.g1,login);
-                        if (newValue == true)
-                            absenceDAO.persist(absence);
-                        if (newValue == false)
-                            absenceDAO.remove(absence);
-                    }
-                });
-                return booleanProp;
+            try {
+                booleanProp.set(absenceDAO.find(login, TeacherController.d1));
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+            finally {
+                try {
+                    absenceDAO.close();
+                } catch (DataAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            booleanProp.addListener(new ChangeListener<Boolean>() {
+
+                @SneakyThrows
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                                    Boolean newValue) {
+                    // appel de la methode qui permet ajout absence en fonction de login et date creneau
+
+                    Absence absence = new Absence(TeacherController.d1, TeacherController.b1, TeacherController.s1, TeacherController.g1, login);
+                    if (Boolean.TRUE.equals(newValue))
+                        absenceDAO.persist(absence);
+                    if (Boolean.FALSE.equals(newValue))
+                        absenceDAO.remove(absence);
+                }
+            });
+            return booleanProp;
         });
 
         absenceCol.setEditable(true);
-        absenceCol.setCellFactory(new Callback<TableColumn<Etudiant, Boolean>, //
-                TableCell<Etudiant, Boolean>>() {
-            @Override
-            public TableCell<Etudiant, Boolean> call(TableColumn<Etudiant, Boolean> p) {
-                CheckBoxTableCell<Etudiant, Boolean> cell = new CheckBoxTableCell<Etudiant, Boolean>();
-                cell.setAlignment(Pos.CENTER);
-                return cell;
-            }
+        absenceCol.setCellFactory(p -> {
+            CheckBoxTableCell<Etudiant, Boolean> cell = new CheckBoxTableCell<>();
+            cell.setAlignment(Pos.CENTER);
+            return cell;
         });
 
-        ObservableList<Utilisateur> list = afficherEtudiants();
+        ObservableList<Utilisateur> list = null;
+        try {
+            list = afficherEtudiants();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
 
         listEtudiantId.setItems(list);
         listEtudiantId.getColumns().addAll(nomCol, prenomCol, absenceCol);
     }
 
 
-    @SneakyThrows
-    public ObservableList<Utilisateur> afficherEtudiants() throws DataAccessException, SQLException {
-        EtudiantDAO etudiantDAO = new EtudiantDAO();
-        ObservableList<Utilisateur> etudiants = FXCollections.observableArrayList(etudiantDAO.findAll());
-        return etudiants;
+    public ObservableList<Utilisateur> afficherEtudiants() throws DataAccessException {
+
+        try( EtudiantDAO etudiantDAO = new EtudiantDAO();) {
+
+
+            return FXCollections.observableArrayList(etudiantDAO.findAll());
+        }
     }
 
     SpinnerValueFactory<Integer> valuehoure = new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 19, 1);

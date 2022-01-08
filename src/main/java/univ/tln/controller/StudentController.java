@@ -22,14 +22,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 import javafx.stage.Stage;
+import lombok.Setter;
 import univ.tln.App;
 import univ.tln.DatabaseConnection;
 import univ.tln.daos.AbsenceDAO;
+import univ.tln.daos.CreneauxDAO;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Absence;
-//import univ.tln.entities.utilisateurs.Etudiant;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -41,14 +41,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.*;
 
-//import static univ.tln.controller.LoginController.getUsernametxt;
 
 public class StudentController implements Initializable {
-    public int i ;
+    @Setter
+    public static int i ;
     int max_cours = 60;
     EtudiantDAO etudiantDAO = new EtudiantDAO();
 
-    private String[][] creneau= new String[max_cours][10];
+    private static String[][] creneau= new String[60][10];
     @FXML
     private AnchorPane scene1 ; //le planning
     @FXML
@@ -136,15 +136,12 @@ public class StudentController implements Initializable {
     List<Label> l = new ArrayList<>();
     List<Label> l2 = new ArrayList<>();
 
-    public StudentController() throws DataAccessException, SQLException {
-    }
-
 
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        FXMLLoader loader =new FXMLLoader(App.class.getResource("hello-view.fxml"));
-        castdatetime(0);
+        castdatetime(0,creneau);
+        inistudentname();
 
         try {
             drawrect(); //on dessine l'emploie du temps
@@ -159,13 +156,7 @@ public class StudentController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            initabsdetail();
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        initabsdetail();
     }
 
 public void handleclicks (ActionEvent e){ //pour changer l'ecran
@@ -193,17 +184,17 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
 }
 
-    public void initabsdetail() throws DataAccessException, SQLException {
+    public void initabsdetail(){
         absenceetud.setEditable(true);
 
         TableColumn<Absence, String> date_debut//
-                = new TableColumn<Absence, String>("date debut cours");
+                = new TableColumn<>("date debut cours");
         date_debut.setEditable(false);
         TableColumn<Absence, String> nomcr//
-                = new TableColumn<Absence, String>("nom matiere");
+                = new TableColumn<>("nom matiere");
         nomcr.setEditable(false);
         TableColumn<Absence, String> nature//
-                = new TableColumn<Absence, String>("nature ");
+                = new TableColumn<>("nature ");
         nature.setEditable(false);
 
 
@@ -236,23 +227,31 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         absenceetud.getColumns().addAll(date_debut,nomcr, nature);
 
     }
-    public ObservableList<Absence> afficherAbsences() throws DataAccessException, SQLException {
-        AbsenceDAO absenceDAO = new AbsenceDAO();
-        ObservableList<Absence> absences = FXCollections.observableArrayList(absenceDAO.findAllabsN(LoginController.user1));
+    public ObservableList<Absence> afficherAbsences() {
+
+        ObservableList<Absence> absences = null;
+        try (AbsenceDAO absenceDAO = new AbsenceDAO();) {
+
+
+            absences = FXCollections.observableArrayList(absenceDAO.findAllabs(LoginController.user1));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return absences;
     }
 
 
     public void arrowinputback(){ // pour voir la semaine precedente
 
-    backarrow.setOnMouseClicked((mouseEvent) -> {
+    backarrow.setOnMouseClicked(mouseEvent -> {
         getmonday(r);
         getmonday(r+7);
 
         for (Label g : l) {
             scene1.getChildren().remove(g);
         }
-        castdatetime(r);
+        castdatetime(r,creneau);
 
         try {
             drawrect();
@@ -269,14 +268,14 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
     public void arrowinputfront(){ //pour voir la semaine suivante
 
-        frontarrow.setOnMouseClicked((mouseEvent) -> {
+        frontarrow.setOnMouseClicked( mouseEvent -> {
             getmonday(w);
             getmonday(w+7);
 
             for (Label g : l) {
                 scene1.getChildren().remove(g);
             }
-            castdatetime(w);
+            castdatetime(w,creneau);
 
             try {
                 drawrect();
@@ -312,7 +311,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
 
     public void setcalendar(int a){ //pour afficher les dates sous les jours
-        Label Tlabel[]=new Label[7];
+        Label [] Tlabel=new Label[7];
         Tlabel[0]= idlundi;
         Tlabel[1]=idmardi;
         Tlabel[2]=idmercredi;
@@ -324,52 +323,31 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         c.add(Calendar.DATE, a);
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        for (int i = 0; i < 7; i++) {
-            Tlabel[i].setText(df.format(c.getTime()));
-            Tlabel[i].setTextAlignment(TextAlignment.CENTER);
-            Tlabel[i].setTextFill(Color.rgb(255, 255, 255));
+        for (int m = 0; m < 7; m++) {
+            Tlabel[m].setText(df.format(c.getTime()));
+            Tlabel[m].setTextAlignment(TextAlignment.CENTER);
+            Tlabel[m].setTextFill(Color.rgb(255, 255, 255));
             c.add(Calendar.DATE, 1);
         }
 
 
     }
 
-    public void castdatetime(int z) { //fonction qui remplie une liste des creneaux d'une semaine
-         i = 0;
-        DatabaseConnection connection = new DatabaseConnection();
-        Connection connection1 = connection.connectDB();
+    public void inistudentname(){
+        name.setText("Login: " + LoginController.user1 + "\n" +LoginController.name1);
+        name.setTextFill(Color.rgb(255, 255, 255));
+    }
 
-
-        try {
-
-            Statement statement = connection1.createStatement();
-            PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,U.NOM,U.PRENOM,U.EMAIL,C2.NOM as profnom,C2.NATURE from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C JOIN GROUP_ETUDIANT GE on GC.ID_G=GE.ID_G JOIN COURS C2 on GC.ID_C = C2.ID_C JOIN UTILISATEUR U on C2.LOGIN = U.LOGIN WHERE GE.LOGIN=? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
-            pstmt.setString(1,LoginController.user1);
-            name.setText("Login: " + LoginController.user1 + "\n" +LoginController.name1);
-            name.setTextFill(Color.rgb(255, 255, 255));
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            pstmt.setDate(2, java.sql.Date.valueOf(df.format(getmonday(z).getTime())));
-            pstmt.setDate(3, java.sql.Date.valueOf(df.format(getmonday(z+7).getTime())));
-            ResultSet queryResult = pstmt.executeQuery();
-            while ((queryResult.next())) {
-                creneau[i][0] = String.valueOf(queryResult.getTimestamp("DATE_D"));
-                creneau[i][1]= String.valueOf(queryResult.getTimestamp("DATE_F"));
-                creneau[i][2] = queryResult.getString("BATIMENT");
-                creneau[i][3] = String.valueOf(queryResult.getInt("NUM"));
-                creneau[i][4] = String.valueOf(queryResult.getBoolean("VIDEO_P"));
-                creneau[i][5] = queryResult.getString("NOM");
-                creneau[i][6] = queryResult.getString("PRENOM");
-                creneau[i][7] = queryResult.getString("EMAIL");
-                creneau[i][8] = queryResult.getString("profnom");
-                creneau[i][9] = queryResult.getString("NATURE");
-                i++;
-            }
-
-
-        } catch (SQLException e) {
+    public void castdatetime(int Z,String[][] cren) { //fonction qui remplie une liste des creneaux d'une semaine
+        try (CreneauxDAO c2 = new CreneauxDAO();){
+            setI(c2.castdatetime(getmonday(Z), getmonday(Z + 7), cren ,i));
+        } catch (DataAccessException e) {
             e.printStackTrace();
         }
+
     }
+
+
 
 
 
@@ -378,45 +356,41 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
     Calendar x = Calendar.getInstance();
 
 
-    for (int r = 0;r<=i-1;r++) {
+    for (int g = 0;g<=i-1;g++) {
         String m ;
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
         Label cours = new Label();
         l.add(cours);
-        Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][0]);
-        Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[r][1]);
+        Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[g][0]);
+        Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[g][1]);
         x.setTime(date1);
-        int dayOfWeek = x.get(x.DAY_OF_WEEK);
+        int dayOfWeek = x.get(Calendar.DAY_OF_WEEK);
         datetopxl(dayOfWeek);
-        double hourofday = x.get(x.HOUR_OF_DAY) + (float) x.get(x.MINUTE) / 60;
+        double hourofday = x.get(Calendar.HOUR_OF_DAY) + (float) x.get(Calendar.MINUTE) / 60;
 
         int z = datetopxl(dayOfWeek);
         double y = houretopxl(hourofday);
         x.setTime(date2);
-        double hourofday2 = x.get(x.HOUR_OF_DAY) + (float) x.get(x.MINUTE) / 60;
-        double w = houretopxl(hourofday2) - y;
+        double hourofday2 = x.get(Calendar.HOUR_OF_DAY) + (float) x.get(Calendar.MINUTE) / 60;
+        double h = houretopxl(hourofday2) - y;
 
 
         cours.setTranslateX(z);
         cours.setTranslateY(y);
         cours.setMinWidth(126);
         cours.setMaxWidth(126);
-        cours.setMaxHeight(w);
-        cours.setMinHeight(w);
-        //cours.setFont(new Font("Serif", 14));
-        if (creneau[r][4].equals("true")) m = "Oui";
+        cours.setMaxHeight(h);
+        cours.setMinHeight(h);
+        if (creneau[g][4].equals("true")) m = "Oui";
         else m = "Non";
-        cours.setText("Salle: " + creneau[r][2] + " " + creneau[r][3] + "\n" + creneau[r][5] + " " + creneau[r][6] + "\n"+creneau[r][8]+ "\n"+creneau[r][9]+ "\nprojecteur: " + m );
+        cours.setText("Salle: " + creneau[g][2] + " " + creneau[g][3] + "\n" + creneau[g][5] + " " + creneau[g][6] + "\n"+creneau[g][8]+ "\n"+creneau[g][9]+ "\nprojecteur: " + m );
 
         cours.setTextFill(Color.rgb(255, 255, 255));
         cours.setTextAlignment(TextAlignment.CENTER);
         cours.setAlignment(Pos.CENTER);
 
-        if(creneau[r][9].trim().equals("TP"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
-        else if(creneau[r][9].trim().equals("TD"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(5, 52, 14), CornerRadii.EMPTY, Insets.EMPTY)));
-        else if(creneau[r][9].trim().equals("CM"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
+        if(creneau[g][9].trim().equals("TP"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
+        else if(creneau[g][9].trim().equals("TD"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(5, 52, 14), CornerRadii.EMPTY, Insets.EMPTY)));
+        else if(creneau[g][9].trim().equals("CM"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
 
         scene1.getChildren().add(cours);
     }
@@ -461,10 +435,6 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         }
     }
 
-    @FXML
-    void SaveOnAction(ActionEvent event) {
-
-    }
 
     @FXML
     void editPass(ActionEvent event) {

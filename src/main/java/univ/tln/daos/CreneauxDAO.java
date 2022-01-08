@@ -9,22 +9,23 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 import univ.tln.DatabaseConnection;
+import univ.tln.controller.LoginController;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.creneaux.Creneau;
 import univ.tln.entities.utilisateurs.Utilisateur;
 
 import java.sql.*;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 
 @Log
 public class CreneauxDAO extends AbstractDAO<Creneau>{
-    @SneakyThrows
-    public CreneauxDAO() throws DataAccessException, SQLException {
+    public CreneauxDAO() {
         super("INSERT INTO CRENEAUX(DATE_D,DATE_F,ID_S,ID_G,ID_C) VALUES (?,?,?,?,?)",
                 "UPDATE CRENEAUX SET DATE_D=?,DATE_F=? ID_S=?,ID_G=?,ID_C=? WHERE DATE_D=?,ID_G=?,ID_C=?",
                 "SELECT * FROM CRENEAUX WHERE DATE_D=?,ID_G=?,ID_C=?");
@@ -459,6 +460,134 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         pstmt.executeUpdate();
         System.out.println("updated succefully");
 
+    }
+
+
+
+    public  int   castdatetimebyteacherlogin(String login, Calendar monday,Calendar sunday, String[][] creneau,int i) {//fonction qui remplie une liste des creneaux d'une semaine
+
+        try(PreparedStatement pstmt = connection.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+        ) {
+            pstmt.setString(1,login);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            pstmt.setDate(2, java.sql.Date.valueOf(df.format(monday.getTime())));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(sunday.getTime())));
+            ResultSet queryResult = pstmt.executeQuery();
+            while ((queryResult.next())) {
+                creneau[i][0] = String.valueOf(queryResult.getTimestamp("DATE_D"));
+                creneau[i][1] = String.valueOf(queryResult.getTimestamp("DATE_F"));
+                creneau[i][2] = queryResult.getString("BATIMENT");
+                creneau[i][3] = String.valueOf(queryResult.getInt("NUM"));
+                creneau[i][4] = String.valueOf(queryResult.getBoolean("VIDEO_P"));
+                creneau[i][5] = queryResult.getString("NOM");
+                creneau[i][6] = queryResult.getString("NATURE");
+                i++;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return i;
+    }
+
+    public int castdatetimebyformation(String formation, Calendar monday,Calendar sunday, String[][] creneau,int i) {//fonction qui remplie une liste des creneaux d'une semaine
+
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connection1 = connection.connectDB();
+
+        try (PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,cours.NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPS on GROUPS.ID_G=GROUP_COURS.ID_G where GROUPS.NOM=? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+        ) {
+            pstmt.setString(1,formation);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            pstmt.setDate(2, java.sql.Date.valueOf(df.format(monday.getTime())));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(sunday.getTime())));
+            ResultSet queryResult = pstmt.executeQuery();
+            while ((queryResult.next())) {
+                creneau[i][0] = String.valueOf(queryResult.getTimestamp("DATE_D"));
+                creneau[i][1] = String.valueOf(queryResult.getTimestamp("DATE_F"));
+                creneau[i][2] = queryResult.getString("BATIMENT");
+                creneau[i][3] = String.valueOf(queryResult.getInt("NUM"));
+                creneau[i][4] = String.valueOf(queryResult.getBoolean("VIDEO_P"));
+                creneau[i][5] = queryResult.getString("NOM");
+                creneau[i][6] = queryResult.getString("NATURE");
+                i++;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return i;
+    }
+
+    public int castdatetime(Calendar monday,Calendar sunday, String[][] creneau,int i ){ //fonction qui remplie une liste des creneaux d'une semaine
+        i = 0;
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connection1 = connection.connectDB();
+
+
+        try {
+
+            Statement statement = connection1.createStatement();
+            PreparedStatement pstmt =connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,U.NOM,U.PRENOM,U.EMAIL,C2.NOM as profnom,C2.NATURE from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C JOIN GROUP_ETUDIANT GE on GC.ID_G=GE.ID_G JOIN COURS C2 on GC.ID_C = C2.ID_C JOIN UTILISATEUR U on C2.LOGIN = U.LOGIN WHERE GE.LOGIN=? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            pstmt.setString(1,LoginController.user1);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            pstmt.setDate(2, java.sql.Date.valueOf(df.format(monday.getTime())));
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(sunday.getTime())));
+            ResultSet queryResult = pstmt.executeQuery();
+            while ((queryResult.next())) {
+                creneau[i][0] = String.valueOf(queryResult.getTimestamp("DATE_D"));
+                creneau[i][1]= String.valueOf(queryResult.getTimestamp("DATE_F"));
+                creneau[i][2] = queryResult.getString("BATIMENT");
+                creneau[i][3] = String.valueOf(queryResult.getInt("NUM"));
+                creneau[i][4] = String.valueOf(queryResult.getBoolean("VIDEO_P"));
+                creneau[i][5] = queryResult.getString("NOM");
+                creneau[i][6] = queryResult.getString("PRENOM");
+                creneau[i][7] = queryResult.getString("EMAIL");
+                creneau[i][8] = queryResult.getString("profnom");
+                creneau[i][9] = queryResult.getString("NATURE");
+                i++;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return i;
+    }
+
+    public int castdatetime2(Calendar monday,Calendar sunday, String[][] creneau,int i) {//fonction qui remplie une liste des creneaux d'une semaine
+        i=0;
+        DatabaseConnection connection = new DatabaseConnection();
+        Connection connection1 = connection.connectDB();
+
+        try {
+
+            Statement statement = connection1.createStatement();
+            PreparedStatement pstmt = connection1.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,C2.NOM,C2.NATURE,G.nom as grpname from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C join COURS C2 on GC.ID_C = C2.ID_C join GROUPS G on GC.ID_G = G.ID_G where C2.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            pstmt.setString(1, LoginController.user1);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            pstmt.setDate(2, java.sql.Date.valueOf(df.format(monday.getTime())));
+
+
+            pstmt.setDate(3, java.sql.Date.valueOf(df.format(sunday.getTime())));
+            ResultSet queryResult = pstmt.executeQuery();
+
+            while ((queryResult.next())) {
+                creneau[i][0] = String.valueOf(queryResult.getTimestamp("DATE_D"));
+                creneau[i][1] = String.valueOf(queryResult.getTimestamp("DATE_F"));
+                creneau[i][2] = queryResult.getString("BATIMENT");
+                creneau[i][3] = queryResult.getString("NUM");
+                creneau[i][4] = String.valueOf(queryResult.getBoolean("VIDEO_P"));
+                creneau[i][5] = queryResult.getString("NOM");
+                creneau[i][6] = queryResult.getString("NATURE");
+                creneau[i][7] = queryResult.getString("grpname");
+                i++;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return i;
     }
 
 
