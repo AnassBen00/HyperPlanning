@@ -24,20 +24,20 @@ public abstract class AbstractDAO<E extends Object> implements DAO<E> {
         Connection _connection = null;
         PreparedStatement _findPS = null, _persistPS = null, _updatePS = null;
         try {
-            DatabaseConnection connectionn = new DatabaseConnection();
-            Connection connection1 = connectionn.connectDB();
+            DatabaseConnection connection = new DatabaseConnection();
+            Connection connection1 = connection.connectDB();
             _connection = connection1;
             _findPS = _connection.prepareStatement(findPS);
             _persistPS = _connection.prepareStatement(persistPS, Statement.RETURN_GENERATED_KEYS);
             _updatePS = _connection.prepareStatement(updatePS);
         } catch (SQLException throwables) {
              new DataAccessException(throwables.getLocalizedMessage());
-        }finally {
-            this.connection = _connection;
-            this.findPS = _findPS;
-            this.persistPS = _persistPS;
-            this.updatePS = _updatePS;
         }
+        this.connection = _connection;
+        this.findPS = _findPS;
+        this.persistPS = _persistPS;
+        this.updatePS = _updatePS;
+
     }
 
     public abstract String getTableName();

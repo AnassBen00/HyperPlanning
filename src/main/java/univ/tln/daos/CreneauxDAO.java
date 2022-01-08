@@ -9,6 +9,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 import univ.tln.DatabaseConnection;
 import univ.tln.daos.exceptions.DataAccessException;
@@ -22,6 +23,7 @@ import java.util.Arrays;
 
 @Log
 public class CreneauxDAO extends AbstractDAO<Creneau>{
+    @SneakyThrows
     public CreneauxDAO() throws DataAccessException, SQLException {
         super("INSERT INTO CRENEAUX(DATE_D,DATE_F,ID_S,ID_G,ID_C) VALUES (?,?,?,?,?)",
                 "UPDATE CRENEAUX SET DATE_D=?,DATE_F=? ID_S=?,ID_G=?,ID_C=? WHERE DATE_D=?,ID_G=?,ID_C=?",
