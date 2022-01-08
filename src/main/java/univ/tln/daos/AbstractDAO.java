@@ -18,29 +18,26 @@ public abstract class AbstractDAO<E extends Object> implements DAO<E> {
     protected final PreparedStatement persistPS;
     protected final PreparedStatement updatePS;
     protected final PreparedStatement findPS;
-    private final PreparedStatement findAllPS;
+    protected Statement statement;
 
-    public AbstractDAO(String persistPS, String updatePS, String findPS) {
+    protected AbstractDAO(String persistPS, String updatePS, String findPS) {
         Connection _connection = null;
-        PreparedStatement _findPS = null, _findAllPS = null, _persistPS = null, _updatePS = null;
+        PreparedStatement _findPS = null, _persistPS = null, _updatePS = null;
         try {
             DatabaseConnection connection = new DatabaseConnection();
             Connection connection1 = connection.connectDB();
             _connection = connection1;
             _findPS = _connection.prepareStatement(findPS);
-            _findAllPS = _connection.prepareStatement("SELECT * FROM " + getTableName());
             _persistPS = _connection.prepareStatement(persistPS, Statement.RETURN_GENERATED_KEYS);
             _updatePS = _connection.prepareStatement(updatePS);
         } catch (SQLException throwables) {
-            log.log(Level.SEVERE, "Erreur de création de la DAO: "+throwables.getMessage());
-            new DataAccessException(throwables.getLocalizedMessage());
+             new DataAccessException(throwables.getLocalizedMessage());
         }
         this.connection = _connection;
         this.findPS = _findPS;
-        this.findAllPS = _findAllPS;
         this.persistPS = _persistPS;
         this.updatePS = _updatePS;
-        log.warning(getTableName() + " DAO Created.");
+
     }
 
     public abstract String getTableName();
@@ -52,7 +49,6 @@ public abstract class AbstractDAO<E extends Object> implements DAO<E> {
             ResultSet rs = persistPS.getGeneratedKeys();
             if (rs.next()) {
                 id = rs.getLong(1);
-                log.fine("Generated PK = " + id);
             }
         } catch (SQLException e) {
             throw new DataAccessException(e.getLocalizedMessage());
@@ -75,29 +71,31 @@ public abstract class AbstractDAO<E extends Object> implements DAO<E> {
 
     protected abstract E fromResultSet(ResultSet resultSet) throws SQLException;
 
-    public void remove(long id) throws DataAccessException {
+    public void remove(long id) throws DataAccessException, SQLException {
         try {
-            connection.createStatement().execute("DELETE FROM " + getTableName() + " WHERE ID=" + id);
+            statement = connection.createStatement();
+            statement.execute("DELETE FROM " + getTableName() + " WHERE ID=" + id);
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
+        }finally {
+            statement.close();
         }
     }
 
-    public void clean() throws DataAccessException {
+    public void clean() throws DataAccessException, SQLException {
         try {
-            connection.createStatement().execute("DELETE FROM " + getTableName());
+            statement = connection.createStatement();
+            statement.execute("DELETE FROM " + getTableName());
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
+        } finally {
+            statement.close();
         }
     }
 
     @Override
-    public void close() throws DataAccessException {
-        try {
+    public void close() throws SQLException {
             connection.close();
-        } catch (SQLException throwables) {
-            throw new DataAccessException(throwables.getLocalizedMessage());
-        }
     }
 
     public void update() throws DataAccessException {

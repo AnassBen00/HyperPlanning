@@ -26,6 +26,7 @@ import univ.tln.App;
 import univ.tln.DatabaseConnection;
 import univ.tln.daos.AbsenceDAO;
 import univ.tln.daos.EtudiantDAO;
+import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Absence;
 //import univ.tln.entities.utilisateurs.Etudiant;
 
@@ -135,6 +136,9 @@ public class StudentController implements Initializable {
     List<Label> l = new ArrayList<>();
     List<Label> l2 = new ArrayList<>();
 
+    public StudentController() throws DataAccessException, SQLException {
+    }
+
 
     @Override
     @FXML
@@ -155,7 +159,13 @@ public class StudentController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        initabsdetail();
+        try {
+            initabsdetail();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 public void handleclicks (ActionEvent e){ //pour changer l'ecran
@@ -183,7 +193,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
 }
 
-    public void initabsdetail(){
+    public void initabsdetail() throws DataAccessException, SQLException {
         absenceetud.setEditable(true);
 
         TableColumn<Absence, String> date_debut//
@@ -226,7 +236,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         absenceetud.getColumns().addAll(date_debut,nomcr, nature);
 
     }
-    public ObservableList<Absence> afficherAbsences() {
+    public ObservableList<Absence> afficherAbsences() throws DataAccessException, SQLException {
         AbsenceDAO absenceDAO = new AbsenceDAO();
         ObservableList<Absence> absences = FXCollections.observableArrayList(absenceDAO.findAllabsN(LoginController.user1));
         return absences;

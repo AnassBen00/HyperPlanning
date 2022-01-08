@@ -26,6 +26,7 @@ import univ.tln.App;
 import univ.tln.DatabaseConnection;
 import univ.tln.daos.EnseignantDAO;
 import univ.tln.daos.EtudiantDAO;
+import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Etudiant;
 //import univ.tln.entities.utilisateurs.Etudiant;
 
@@ -184,6 +185,9 @@ public class TeacherController implements Initializable {
     public static String b1;
     public static String g1;
 
+    public TeacherController() throws DataAccessException, SQLException {
+    }
+
 
     @Override
     @FXML
@@ -308,7 +312,7 @@ public class TeacherController implements Initializable {
 
 
 
-    public void handleclicks(ActionEvent e) throws ParseException { //pour changer l'ecran
+    public void handleclicks(ActionEvent e) throws ParseException, DataAccessException, SQLException { //pour changer l'ecran
 
         if (e.getSource() == btnaccount) {
             btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -406,7 +410,7 @@ public class TeacherController implements Initializable {
         }
     }
 
-    public ObservableList<Etudiant> afficherEtudiants() {
+    public ObservableList<Etudiant> afficherEtudiants() throws DataAccessException, SQLException {
         EtudiantDAO etudiantDAO = new EtudiantDAO();
         ObservableList<Etudiant> etudiants = FXCollections.observableArrayList(etudiantDAO.findAll());
         return etudiants;

@@ -1,12 +1,9 @@
 package univ.tln.daos;
 
-import org.w3c.dom.Entity;
-import univ.tln.daos.exceptions.DataAccessException;
 
+import univ.tln.daos.exceptions.DataAccessException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
 
 /**
  * This interface defines the generic method for DAO Objects.
@@ -31,11 +28,6 @@ public interface DAO<E extends Object> extends AutoCloseable {
      * @return The list of entities or clones if their id has been updated by the database.
      * @throws DataAccessException If there is a data access error (see message).
      */
-    /*default List<E> persist(List<E> list) throws DataAccessException, SQLException {
-        List<E> resultList = new ArrayList<>();
-        for (E e : list) resultList.add(persist(e));
-        return resultList;
-    }*/
 
     /**
      * Update the entity in the database with the parameter.
@@ -51,7 +43,7 @@ public interface DAO<E extends Object> extends AutoCloseable {
      * @param id the id of the entity to remove
      * @throws DataAccessException If there is a data access error (see message).
      */
-    void remove(long id) throws DataAccessException, univ.tln.daos.exceptions.DataAccessException;
+    void remove(long id) throws DataAccessException, univ.tln.daos.exceptions.DataAccessException, SQLException;
 
     /**
      * Removes the given entity from the database using its ID.
@@ -59,7 +51,7 @@ public interface DAO<E extends Object> extends AutoCloseable {
      * @param e the entity to be removed.
      * @throws DataAccessException If there is a data access error (see message).
      */
-    default void remove(Object e) throws DataAccessException {
+    default void remove(Object e) throws DataAccessException, SQLException {
         remove(e);
     }
 
@@ -68,11 +60,11 @@ public interface DAO<E extends Object> extends AutoCloseable {
      *
      * @throws DataAccessException If there is a data access error (see message).
      */
-    void clean() throws DataAccessException, univ.tln.daos.exceptions.DataAccessException;
+    void clean() throws DataAccessException, univ.tln.daos.exceptions.DataAccessException, SQLException;
 
     /**
      * Release the connection to the connection pool
      */
-    void close() throws DataAccessException, univ.tln.daos.exceptions.DataAccessException;
+    void close() throws DataAccessException, univ.tln.daos.exceptions.DataAccessException, SQLException;
 
 }

@@ -1,16 +1,19 @@
 package univ.tln.daos;
 
-
-
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Utilisateur;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 
 public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
-    public UtilisateurDAO() {
+
+    PreparedStatement preparedStatement;
+    Statement statement;
+
+    public UtilisateurDAO() throws DataAccessException, SQLException {
         super("INSERT INTO UTILISATEUR (LOGIN, NOM, PRENOM, PASSWORD, EMAIL) VALUES(?,?,?,?,?);",
                 "UPDATE UTILISATEUR SET NOM=?, PRENOM=?, PASSWORD=?, EMAIL=? WHERE LOGIN=?",
                 "SELECT * from ENSEIGNANT WHERE LOGIN = ?");
@@ -32,10 +35,10 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
                 .build();
     }
 
-    public void findAll() {
+    public void findAll() throws SQLException {
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * from ENSEIGNANT join UTILISATEUR ON ENSEIGNANT.login = UTILISATEUR.login ");
-            ResultSet resultset = statement.executeQuery();
+            preparedStatement = connection.prepareStatement("SELECT * from ENSEIGNANT join UTILISATEUR ON ENSEIGNANT.login = UTILISATEUR.login ");
+            ResultSet resultset = preparedStatement.executeQuery();
 
             while (resultset.next()) {
                 System.out.println("id" + resultset.getString("id") + ",Nom" + resultset.getString("nom") +
@@ -43,36 +46,24 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.getLocalizedMessage();
+        }finally {
+            preparedStatement.close();
         }
     }
 
     public Optional<Utilisateur> find(String login) throws SQLException {
         Utilisateur utilisateur = null;
 
-        PreparedStatement findPS = connection.prepareStatement("SELECT * from UTILISATEUR WHERE UTILISATEUR.login = ?");
-        findPS.setString(1, login);
+        preparedStatement = connection.prepareStatement("SELECT * from UTILISATEUR WHERE UTILISATEUR.login = ?");
+        preparedStatement.setString(1, login);
 
-        ResultSet rs = findPS.executeQuery();
+        ResultSet rs = preparedStatement.executeQuery();
         while (rs.next())
             utilisateur = fromResultSet(rs);
 
         return Optional.ofNullable(utilisateur);
     }
-
-    /*public Utilisateur persist() throws DataAccessException, SQLException {
-        String login = null;
-        try {
-
-            ResultSet rs = persistPS.executeQuery();
-            if (rs.next()) {
-                login = rs.getString(1);
-            }
-        } catch (SQLException e) {
-            throw new DataAccessException(e.getLocalizedMessage());
-        }
-        return find(login).orElseThrow(NotFoundException::new);
-    }*/
 
     @Override
     public void persist(Utilisateur utilisateur) throws DataAccessException, SQLException {
@@ -89,11 +80,14 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
     }
 
     @Override
-    public void remove(Object utilisateur) throws DataAccessException {
+    public void remove(Object utilisateur) throws DataAccessException, SQLException {
         try {
-            connection.createStatement().execute("DELETE FROM " + getTableName() + " WHERE LOGIN=" + ((Utilisateur) utilisateur).getLogin());
+            statement = connection.createStatement();
+            statement.execute("DELETE FROM " + getTableName() + " WHERE LOGIN=" + ((Utilisateur) utilisateur).getLogin());
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
+        }finally {
+            statement.close();
         }
     }
 

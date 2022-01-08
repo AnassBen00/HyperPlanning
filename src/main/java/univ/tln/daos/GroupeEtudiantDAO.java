@@ -1,18 +1,14 @@
 package univ.tln.daos;
 
 import univ.tln.daos.exceptions.DataAccessException;
-import univ.tln.entities.filieres.Filiere;
 import univ.tln.entities.groupes.GroupeEtudiant;
-
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class GroupeEtudiantDAO extends AbstractDAO<GroupeEtudiant>{
 
-    public GroupeEtudiantDAO() {
+    public GroupeEtudiantDAO() throws DataAccessException, SQLException {
         super("insert into GROUP_ETUDIANT values(?,?)",
                 "",
                 "SELECT * FROM GROUP_ETUDIANT");
@@ -24,12 +20,12 @@ public class GroupeEtudiantDAO extends AbstractDAO<GroupeEtudiant>{
     }
 
     @Override
-    protected GroupeEtudiant fromResultSet(ResultSet resultSet) throws SQLException {
+    protected GroupeEtudiant fromResultSet(ResultSet resultSet) {
         return null;
     }
 
     @Override
-    public void persist(GroupeEtudiant groupeEtudiant) throws DataAccessException, SQLException {
+    public void persist(GroupeEtudiant groupeEtudiant) throws DataAccessException{
         try {
             persistPS.setInt(1, groupeEtudiant.getId());
             persistPS.setString(2, groupeEtudiant.getLogin());
@@ -40,8 +36,8 @@ public class GroupeEtudiantDAO extends AbstractDAO<GroupeEtudiant>{
     }
 
     @Override
-    public void update(GroupeEtudiant groupeEtudiant) throws DataAccessException, DataAccessException {
-
+    public void update(GroupeEtudiant groupeEtudiant) {
+        //  methode n'est pas utilise pour l'instant
     }
 
 }

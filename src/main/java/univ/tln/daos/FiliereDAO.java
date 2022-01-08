@@ -2,8 +2,6 @@ package univ.tln.daos;
 
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.filieres.Filiere;
-import univ.tln.entities.utilisateurs.Utilisateur;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,19 +10,21 @@ import java.util.List;
 
 public class FiliereDAO extends AbstractDAO<Filiere>{
 
-    public FiliereDAO() {
+    PreparedStatement preparedStatement;
+
+    public FiliereDAO() throws DataAccessException, SQLException {
         super("", "", "");
     }
 
     public List<Filiere> findAll() throws SQLException {
         List<Filiere> entityList = new ArrayList<>();
 
-        PreparedStatement findAllPS = connection.prepareStatement("SELECT * FROM FILIERE");
+        preparedStatement = connection.prepareStatement("SELECT * FROM FILIERE");
 
-        ResultSet rs = findAllPS.executeQuery();
+        ResultSet rs = preparedStatement.executeQuery();
         while (rs.next())
             entityList.add(new Filiere(rs.getInt("ID_F"),rs.getString("NOM")));
-        System.out.println(entityList);
+        preparedStatement.close();
         return entityList;
     }
 
@@ -41,22 +41,24 @@ public class FiliereDAO extends AbstractDAO<Filiere>{
     public Filiere find(String nom) throws SQLException {
         Filiere filiere = null;
 
-        PreparedStatement findPS = connection.prepareStatement("SELECT * from FILIERE WHERE NOM = ?");
-        findPS.setString(1, nom);
+        preparedStatement = connection.prepareStatement("SELECT * from FILIERE WHERE NOM = ?");
+        preparedStatement.setString(1, nom);
 
-        ResultSet rs = findPS.executeQuery();
+        ResultSet rs = preparedStatement.executeQuery();
         while (rs.next())
             filiere = new Filiere(rs.getInt("ID_F"),rs.getString("NOM"));
+
+        preparedStatement.close();
         return filiere;
     }
 
     @Override
     public void persist(Filiere filiere) throws DataAccessException, SQLException {
-
+        // methode n'est pas utilise pour l'instant
     }
 
     @Override
     public void update(Filiere filiere) throws DataAccessException {
-
+        // methode n'est pas utilise pour l'instant
     }
 }

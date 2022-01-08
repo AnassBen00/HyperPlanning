@@ -13,7 +13,7 @@ import java.util.List;
 public class
 AbsenceDAO extends AbstractDAO<Absence>{
 
-    public AbsenceDAO() {
+    public AbsenceDAO() throws DataAccessException, SQLException {
         super("insert into absence values(?,select id_s from salle where batiment =? and num=?,select id_g from groups where nom=?,?,false)",
                 "",
                 "SELECT * FROM absence WHERE login=?");

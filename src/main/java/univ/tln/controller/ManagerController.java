@@ -24,6 +24,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import lombok.SneakyThrows;
 import univ.tln.App;
 import univ.tln.DatabaseConnection;
 import univ.tln.daos.*;
@@ -247,8 +248,11 @@ public class ManagerController implements Initializable {
     public static String d;
     public static String m;
 
+    public ManagerController() throws DataAccessException, SQLException {
+    }
 
 
+    @SneakyThrows
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -660,7 +664,14 @@ public class ManagerController implements Initializable {
 
             nbabs.setMinWidth(200);
 
-            ObservableList<Etudiant> list = afficherEtudiants();
+            ObservableList<Etudiant> list = null;
+            try {
+                list = afficherEtudiants();
+            } catch (DataAccessException e) {
+                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             listEtudiantId.setItems(list);
 
             listEtudiantId.setRowFactory(tv -> {
@@ -683,7 +694,7 @@ public class ManagerController implements Initializable {
     }
 
 
-    public ObservableList<Etudiant> afficherEtudiants() {
+    public ObservableList<Etudiant> afficherEtudiants() throws DataAccessException, SQLException {
         EtudiantDAO etudiantDAO = new EtudiantDAO();
         ObservableList<Etudiant> etudiants = FXCollections.observableArrayList(etudiantDAO.findbygrp(filiereidd.getValue()));
         return etudiants;
