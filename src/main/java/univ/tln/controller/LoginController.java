@@ -15,9 +15,11 @@ import univ.tln.App;
 import univ.tln.daos.EnseignantDAO;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.daos.ResponsableDAO;
+import univ.tln.daos.exceptions.DataAccessException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginController extends Application {
@@ -60,7 +62,7 @@ public class LoginController extends Application {
         stage.close();
     }
 
-  public void validatelogin(){ // on verifie le login
+  public void validatelogin() throws DataAccessException, SQLException { // on verifie le login
 
 
 
@@ -92,7 +94,7 @@ public class LoginController extends Application {
     }
 
     @FXML
-    public  void loginbuttononaction (ActionEvent e) throws IOException {
+    public  void loginbuttononaction (ActionEvent e) throws IOException, DataAccessException, SQLException {
 
         if (usernametxt.getText().isBlank() == false && passwrdtxt.getText().isBlank() == false){
             //loginmessage.setText("you try to login");

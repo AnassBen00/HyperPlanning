@@ -2,9 +2,6 @@ package univ.tln.daos;
 
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Enseignant;
-import univ.tln.entities.utilisateurs.Utilisateur;
-
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +9,12 @@ import java.sql.Statement;
 import java.util.Optional;
 
 public class EnseignantDAO extends AbstractDAO<Enseignant> {
-    public EnseignantDAO() {
+
+    private Statement statement;
+
+    private PreparedStatement preparedStatement;
+
+    public EnseignantDAO() throws DataAccessException, SQLException {
         super("INSERT INTO ENSEIGNANT(LOGIN) VALUES(?)",
                 "UPDATE UTILISATEUR SET NOM=?, PRENOM=?, PASSWORD=?, EMAIL=? WHERE LOGIN=?",
                 "SELECT * from ENSEIGNANT join UTILISATEUR ON ENSEIGNANT.login = UTILISATEUR.login");
@@ -28,77 +30,58 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
         return new Enseignant(resultSet.getString("LOGIN"),resultSet.getString("NOM"),resultSet.getString("PRENOM"),resultSet.getString("PASSWORD"),resultSet.getString("EMAIL"));
     }
 
-    public boolean checkEnseignant(String username, String password) {
+    public boolean checkEnseignant(String username, String password) throws SQLException {
         try {
-            ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(1) from UTILISATEUR join ENSEIGNANT on (UTILISATEUR.LOGIN = ENSEIGNANT.LOGIN) where ENSEIGNANT.LOGIN= '" + username + "' AND PASSWORD = HASH('SHA256','" + password + "')");
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT count(1) from UTILISATEUR join ENSEIGNANT on (UTILISATEUR.LOGIN = ENSEIGNANT.LOGIN) where ENSEIGNANT.LOGIN= '" + username + "' AND PASSWORD = HASH('SHA256','" + password + "')");
             while ((resultSet.next())) {
                 if (resultSet.getInt(1) == 1) {
                     return true;
-                } else return false;//loginmessage.setText("invalid try again");
+                } else return false;
             }
         } catch (
                 SQLException e) {
-            e.printStackTrace();
+            e.getLocalizedMessage();
+        }finally {
+            statement.close();
         }
         return false;
     }
 
-    public String getEnseignantNameBylogin(String l) {
+    public String getEnseignantNameBylogin(String l) throws SQLException {
         String m = null;
         try {
-            PreparedStatement statement = connection.prepareStatement("select nom from UTILISATEUR where login = ?");
-            statement.setString(1, l);
-            ResultSet resultSet = statement.executeQuery();
+            preparedStatement = connection.prepareStatement("select nom from UTILISATEUR where login = ?");
+            preparedStatement.setString(1, l);
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 m = resultSet.getString("NOM");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.getLocalizedMessage();
             return null;
+        }finally {
+            preparedStatement.close();
         }
         return m;
     }
 
-    public void findAll() {
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * from ENSEIGNANT join UTILISATEUR ON ENSEIGNANT.login = UTILISATEUR.login ");
-            ResultSet resultset = statement.executeQuery();
-
-            while (resultset.next()) {
-                System.out.println("id" + resultset.getString("id") + ",Nom" + resultset.getString("nom") +
-                        ",Prenom" + resultset.getString("prenom") + ",Email" + resultset.getString("prenom"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public Optional<Enseignant> find(String login) throws SQLException {
         Enseignant enseignant = null;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * from UTILISATEUR WHERE login = ?");
+            preparedStatement.setString(1, login);
 
-        PreparedStatement findPS = connection.prepareStatement("SELECT * from UTILISATEUR WHERE login = ?");
-        findPS.setString(1, login);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next())
+                enseignant = fromResultSet(rs);
 
-        ResultSet rs = findPS.executeQuery();
-        while (rs.next())
-            enseignant = fromResultSet(rs);
+        } finally {
+            findPS.close();
+        }
 
         return Optional.ofNullable(enseignant);
     }
-
-/*    public Enseignant persist() throws DataAccessException, SQLException {
-        String login = null;
-        try {
-            persistPS.executeUpdate();
-            ResultSet rs = persistPS.executeQuery();
-            if (rs.next()) {
-                login = rs.getString(1);
-            }
-        } catch (SQLException e) {
-            throw new DataAccessException(e.getLocalizedMessage());
-        }
-        return find(login).orElseThrow(NotFoundException::new);
-    }*/
 
     @Override
     public void persist(Enseignant enseignant) throws DataAccessException, SQLException {
@@ -111,11 +94,14 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
     }
 
     @Override
-    public void remove(Object enseignant) throws DataAccessException {
+    public void remove(Object enseignant) throws DataAccessException, SQLException {
         try {
-            connection.createStatement().execute("DELETE FROM " + getTableName() + " WHERE LOGIN=" + ((Enseignant) enseignant).getLogin());
+            statement = connection.createStatement();
+            statement.execute("DELETE FROM " + getTableName() + " WHERE LOGIN=" + ((Enseignant) enseignant).getLogin());
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
+        }finally {
+            statement.close();
         }
     }
 
@@ -134,9 +120,9 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
 
     }
 
-    public boolean checkEnseignantPass(String passwrd) {
+    public boolean checkEnseignantPass(String passwrd) throws SQLException {
         try {
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             ResultSet queryResult = statement.executeQuery("SELECT  count(1) from UTILISATEUR join ENSEIGNANT on (UTILISATEUR.LOGIN = ENSEIGNANT.LOGIN) where PASSWORD = HASH('SHA256','"+passwrd+"')");
 
             while ((queryResult.next())){
@@ -148,15 +134,18 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
         catch (
                 SQLException e) {
             e.printStackTrace();
+        }finally {
+            statement.close();
         }
         return false;
     }
 
     public Enseignant findbyLogin(String login) throws SQLException {
         Enseignant enseignant = new Enseignant();
-        PreparedStatement pstmt = connection.prepareStatement("select * from ENSEIGNANT join UTILISATEUR on ENSEIGNANT.login = UTILISATEUR.login where ENSEIGNANT.login = ?");
-        pstmt.setString(1, login);
-        ResultSet resultSet = pstmt.executeQuery();
+        preparedStatement = connection.prepareStatement("select * from ENSEIGNANT join UTILISATEUR on ENSEIGNANT.login = UTILISATEUR.login where ENSEIGNANT.login = ?");
+        preparedStatement.setString(1, login);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
         while (resultSet.next()) {
             enseignant.setLogin(resultSet.getString("LOGIN"));
             enseignant.setEmail(resultSet.getString("EMAIL"));
@@ -164,6 +153,7 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
             enseignant.setPrenom(resultSet.getString("PRENOM"));
             enseignant.setPassword(resultSet.getString("PASSWORD"));
         }
+        preparedStatement.close();
         return enseignant;
     }
 }

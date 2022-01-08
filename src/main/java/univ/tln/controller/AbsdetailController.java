@@ -17,10 +17,12 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import lombok.SneakyThrows;
 import univ.tln.daos.AbsenceDAO;
+import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Absence;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ResourceBundle;
 
@@ -37,8 +39,11 @@ AbsdetailController implements Initializable  {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         initmanagertitle();
-        initabsdetail();
-        Absence a =absdetails.getSelectionModel().getSelectedItem();
+        try {
+            initabsdetail();
+        } catch (DataAccessException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -46,7 +51,7 @@ AbsdetailController implements Initializable  {
         managerabstitle.setText("liste d'absence pour l'etudiant : "+ManagerController.d);
 
     }
-    public void initabsdetail(){
+    public void initabsdetail() throws DataAccessException, SQLException {
 
         absdetails.setEditable(true);
 
@@ -90,36 +95,29 @@ AbsdetailController implements Initializable  {
             @SneakyThrows
             @Override
             public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Absence, Boolean> param) {
-                Absence abs=param.getValue();
-                AbsenceDAO a = new AbsenceDAO();
+                Absence absence = param.getValue();
+                AbsenceDAO absenceDAO = new AbsenceDAO();
                 SimpleBooleanProperty booleanProp = new SimpleBooleanProperty();
-
-
+                booleanProp.set(absence.isJustified());
                 booleanProp.addListener(new ChangeListener<Boolean>() {
 
                     @SneakyThrows
                     @Override
                     public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
                                         Boolean newValue) {
-                        if(newValue == true)
-                            a.remove(abs);
-                        if(newValue == false);
-                            a.persist(abs);
+                        absenceDAO.update(absence.getLogin(),absence.getDate_d(),newValue);
                     }
                 });
                 return booleanProp;
             }
         });
 
-
-        absenceCol.setCellFactory(new Callback<TableColumn<Absence, Boolean>, //
-                TableCell<Absence, Boolean>>() {
-            @Override
-            public TableCell<Absence, Boolean> call(TableColumn<Absence, Boolean> p) {
-                CheckBoxTableCell<Absence, Boolean> cell = new CheckBoxTableCell<Absence, Boolean>();
-                cell.setAlignment(Pos.CENTER);
-                return cell;
-            }
+        absenceCol.setEditable(true);
+        //
+        absenceCol.setCellFactory(p -> {
+            CheckBoxTableCell<Absence, Boolean> cell = new CheckBoxTableCell<Absence, Boolean>();
+            cell.setAlignment(Pos.CENTER);
+            return cell;
         });
 
 
@@ -129,9 +127,10 @@ AbsdetailController implements Initializable  {
         absdetails.getColumns().addAll(date_debut,nomcr, nature, absenceCol);
 
     }
-    public ObservableList<Absence> afficherAbsences() {
+    public ObservableList<Absence> afficherAbsences() throws SQLException, DataAccessException {
         AbsenceDAO absenceDAO = new AbsenceDAO();
         ObservableList<Absence> absences = FXCollections.observableArrayList(absenceDAO.findAllabs(ManagerController.m));
+        absenceDAO.close();
         return absences;
         }
 

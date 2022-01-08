@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 @Log
 public class CreneauxDAO extends AbstractDAO<Creneau>{
-    public CreneauxDAO() {
+    public CreneauxDAO() throws DataAccessException, SQLException {
         super("INSERT INTO CRENEAUX(DATE_D,DATE_F,ID_S,ID_G,ID_C) VALUES (?,?,?,?,?)",
                 "UPDATE CRENEAUX SET DATE_D=?,DATE_F=? ID_S=?,ID_G=?,ID_C=? WHERE DATE_D=?,ID_G=?,ID_C=?",
                 "SELECT * FROM CRENEAUX WHERE DATE_D=?,ID_G=?,ID_C=?");

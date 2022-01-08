@@ -1,9 +1,6 @@
 package univ.tln.daos;
-
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.groupes.Groupe;
-import univ.tln.entities.groupes.GroupeEtudiant;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupeDAO extends AbstractDAO<Groupe>{
-    public GroupeDAO() {
+
+    PreparedStatement preparedStatement;
+
+    public GroupeDAO() throws DataAccessException, SQLException {
         super("insert into GROUPS values(?,?)",
                 "",
                 "SELECT * FROM GROUPS");
@@ -34,27 +34,29 @@ public class GroupeDAO extends AbstractDAO<Groupe>{
     public Groupe find(String nom) throws SQLException {
         Groupe groupe = null;
 
-        PreparedStatement findPS = connection.prepareStatement("SELECT * from GROUPS WHERE NOM = ?");
-        findPS.setString(1, nom);
+        preparedStatement = connection.prepareStatement("SELECT * from GROUPS WHERE NOM = ?");
+        preparedStatement.setString(1, nom);
 
-        ResultSet rs = findPS.executeQuery();
+        ResultSet rs = preparedStatement.executeQuery();
         while (rs.next())
             groupe = new Groupe(rs.getInt("ID_G"),rs.getString("NOM"));
+
+        preparedStatement.close();
         return groupe;
     }
 
     @Override
-    protected Groupe fromResultSet(ResultSet resultSet) throws SQLException {
+    protected Groupe fromResultSet(ResultSet resultSet){
         return null;
     }
 
     @Override
-    public void persist(Groupe groupe) throws DataAccessException, SQLException {
-
+    public void persist(Groupe groupe){
+        //  methode n'est pas utilise pour l'instant
     }
 
     @Override
-    public void update(Groupe groupe) throws DataAccessException, DataAccessException {
-
+    public void update(Groupe groupe){
+        //  methode n'est pas utilise pour l'instant
     }
 }

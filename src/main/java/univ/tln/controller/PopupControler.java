@@ -28,6 +28,7 @@ import lombok.SneakyThrows;
 import univ.tln.daos.AbsenceDAO;
 import univ.tln.daos.CreneauxDAO;
 import univ.tln.daos.EtudiantDAO;
+import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Absence;
 import univ.tln.entities.utilisateurs.Etudiant;
 import univ.tln.entities.utilisateurs.Utilisateur;
@@ -98,6 +99,10 @@ public class PopupControler implements Initializable {
 
     private Date date_creneau;
 
+    public PopupControler() throws DataAccessException, SQLException {
+    }
+
+    @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         md_h_d.setValueFactory(valuehoure);
@@ -134,6 +139,10 @@ public class PopupControler implements Initializable {
             ex.printStackTrace();
         } catch (ParseException ex) {
             ex.printStackTrace();
+        } catch (DataAccessException dataAccessException) {
+            dataAccessException.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
 
         stage.close();
@@ -166,6 +175,10 @@ public class PopupControler implements Initializable {
             ex.printStackTrace();
         } catch (ParseException ex) {
             ex.printStackTrace();
+        } catch (DataAccessException dataAccessException) {
+            dataAccessException.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
 
         stage.close();
@@ -202,6 +215,8 @@ public class PopupControler implements Initializable {
             ex.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (DataAccessException dataAccessException) {
+            dataAccessException.printStackTrace();
         }
 
         stage.close();
@@ -237,6 +252,8 @@ public class PopupControler implements Initializable {
             ex.printStackTrace();
         } catch (ParseException | SQLException ex) {
             ex.printStackTrace();
+        } catch (DataAccessException dataAccessException) {
+            dataAccessException.printStackTrace();
         }
 
         stage.close();
@@ -311,7 +328,7 @@ public class PopupControler implements Initializable {
         }
     }
 
-    public void initAbsence() {
+    public void initAbsence() throws DataAccessException, SQLException {
 
         listEtudiantId.setEditable(true);
         TableColumn<Utilisateur, String> nomCol//
@@ -348,17 +365,9 @@ public class PopupControler implements Initializable {
             public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Etudiant, Boolean> param) {
                 Etudiant etudiant = param.getValue();
                 AbsenceDAO absenceDAO = new AbsenceDAO();
-
                 SimpleBooleanProperty booleanProp = new SimpleBooleanProperty();
                 String login = etudiant.getLogin();
-                // verifier si etudiant by login est dans la table absence si oui return true else false
-
-                if (absenceDAO.find(login,teacherController.d1)) {
-                    booleanProp.set(true);
-                } else {
-
-                    booleanProp.set(false);
-                }
+                booleanProp.set(absenceDAO.find(login,teacherController.d1));
 
                 booleanProp.addListener(new ChangeListener<Boolean>() {
 
@@ -397,7 +406,7 @@ public class PopupControler implements Initializable {
     }
 
 
-    public ObservableList<Utilisateur> afficherEtudiants() {
+    public ObservableList<Utilisateur> afficherEtudiants() throws DataAccessException, SQLException {
         EtudiantDAO etudiantDAO = new EtudiantDAO();
         ObservableList<Utilisateur> etudiants = FXCollections.observableArrayList(etudiantDAO.findAll());
         return etudiants;

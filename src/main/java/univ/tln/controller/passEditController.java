@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 import univ.tln.daos.EnseignantDAO;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.daos.ResponsableDAO;
+import univ.tln.daos.exceptions.DataAccessException;
+
+import java.sql.SQLException;
 
 public class passEditController {
 
@@ -29,7 +32,7 @@ public class passEditController {
 
 
     @FXML
-    void ApplybtnOnAction(ActionEvent event) {
+    void ApplybtnOnAction(ActionEvent event) throws SQLException, DataAccessException {
         if(oldPassField.getText().isBlank() == false && newPassField.getText().isBlank() == false ) {
             validePassword();
 
@@ -41,7 +44,7 @@ public class passEditController {
 
     }
 
-    void validePassword() {
+    void validePassword() throws SQLException, DataAccessException {
         EnseignantDAO enseignantDAO = new EnseignantDAO();
         EtudiantDAO etudiantDAO = new EtudiantDAO();
         ResponsableDAO responsableDao = new ResponsableDAO();
@@ -61,7 +64,6 @@ public class passEditController {
         } else {
             errormsg.setText("Old password unvalid try again");
         }
-
     }
 
     @FXML

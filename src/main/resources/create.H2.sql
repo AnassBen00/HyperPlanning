@@ -159,6 +159,7 @@ create table if not exists absence(
                                       ID_S   int not null,
                                       ID_G INT      not null,
                                       login char(15),
+                                      justified bool default false,
                                       constraint abs_pk primary key (login,date_d),
                                       constraint fk foreign key (date_d ,ID_S ,ID_G)references CRENEAUX(date_d ,ID_S ,ID_G),
                                       constraint fk_1 foreign key (login) references ETUDIANT(login)

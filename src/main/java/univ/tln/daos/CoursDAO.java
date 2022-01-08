@@ -1,9 +1,5 @@
 package univ.tln.daos;
 
-
-
-//import univ.tln.entities.creneaux.Cours;
-
 import univ.tln.DatabaseConnection;
 import univ.tln.entities.creneaux.Cours;
 
@@ -17,46 +13,45 @@ public class CoursDAO {
         return null;
     }
 
-    public void removeCours(String id) {
-        DatabaseConnection connection = new DatabaseConnection();
+    DatabaseConnection connection = new DatabaseConnection();
+    PreparedStatement statement;
+
+    public void removeCours(String id) throws SQLException {
         Connection connection1 = connection.connectDB();
 
         try {
             String queryString = "delete from cours where id = ? ";
-            PreparedStatement statement = connection1.prepareStatement(queryString);
+            statement = connection1.prepareStatement(queryString);
             statement.setString(1, id);
             statement.executeUpdate();
-            System.out.println("Data deleted Successfully");
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.getLocalizedMessage();
+        }finally {
+            connection1.close();
         }
     }
 
-    public void insertCours(Cours cours) {
-        DatabaseConnection connection = new DatabaseConnection();
+    public void insertCours(Cours cours) throws SQLException {
         Connection connection1 = connection.connectDB();
         try {
-
-
             if (cours.getId() != null ) {
-                PreparedStatement statement = connection1.prepareStatement("update salle set nature = ?, nom = ? where id_c = ? ");
+                statement = connection1.prepareStatement("update salle set nature = ?, nom = ? where id_c = ? ");
                 statement.setString(1,cours.getId());
                 statement.setString(2,cours.getNature());
                 statement.setString(3,cours.getNomduCours());
                 statement.executeQuery();
             } else {
-                PreparedStatement statement = connection1.prepareStatement("insert into salle (id_c , nature , nom) values (?,?,?) ");
+                statement = connection1.prepareStatement("insert into salle (id_c , nature , nom) values (?,?,?) ");
                 statement.setString(1,cours.getId());
                 statement.setString(2,cours.getNature());
                 statement.setString(3,cours.getNomduCours());
                 statement.executeQuery();
+
             }
-
-            System.out.println(cours.getId() + cours.getNature() + cours.getNomduCours() + "saved into database");
-
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("unable to save salle");
+            e.getLocalizedMessage();
+        }finally {
+            statement.close();
         }
     }
 }
