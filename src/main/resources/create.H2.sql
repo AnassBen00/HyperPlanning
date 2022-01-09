@@ -483,3 +483,5 @@ select * from absence;
 //select distinct u.login,u.nom,u.prenom,nbabs, from UTILISATEUR u join (SELECT abs.login,count(abs.login) as nbabs from absence abs join groups g on abs.id_g=g.ID_G where nom=? group by abs.login)  absn on u.LOGIN=absn.login ;
 
 select abs.login from absence abs join GROUPs g on abs.ID_G=g.ID_G;
+
+select nom from UTILISATEUR where login = 'KBXO7'

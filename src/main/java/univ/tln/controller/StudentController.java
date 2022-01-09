@@ -343,7 +343,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
     public void castdatetime(int Z,String[][] cren) { //fonction qui remplie une liste des creneaux d'une semaine
         try (CreneauxDAO c2 = new CreneauxDAO();){
-            setI(c2.castdatetime(getmonday(Z), getmonday(Z + 7), cren ,i));
+            setI(c2.castdatetime(getmonday(Z), getmonday(Z + 6), cren ,i));
         } catch (SQLException e) {
             e.printStackTrace();
         }

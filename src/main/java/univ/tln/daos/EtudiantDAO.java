@@ -45,13 +45,11 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
         } catch (
                 SQLException e) {
             e.getLocalizedMessage();
-        }finally {
-            connection.close();
         }
         return false;
     }
 
-    public String getEtudiantNameBylogin(String l) {
+    public String getEtudiantNameBylogin(String l) throws SQLException {
         String m = null;
         try {
             preparedStatement = connection.prepareStatement("select nom from UTILISATEUR where login = ?");
@@ -62,6 +60,7 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
             }
         } catch (SQLException e) {
             e.getLocalizedMessage();
+            return null;
         }
         return m;
     }
@@ -173,7 +172,6 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
             etudiant.setPrenom(resultSet.getString("PRENOM"));
             etudiant.setPassword(resultSet.getString("PASSWORD"));
         }
-        preparedStatement.close();
         return etudiant;
     }
 }

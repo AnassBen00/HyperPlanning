@@ -348,7 +348,7 @@ public class TeacherController implements Initializable {
     public void castdatetime(int w, String[][] cren) { //fonction qui remplie une liste des creneaux d'une semaine
         setI(0);
         try (CreneauxDAO c2 = new CreneauxDAO();){
-            setI( c2.castdatetime2(getmonday(w), getmonday(w + 7), cren ,i));
+            setI( c2.castdatetime2(getmonday(w), getmonday(w + 6), cren ,i));
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -86,6 +86,7 @@ String c ;
 
              a =   usernametxt.getText();
               b =  etudiantDAO.getEtudiantNameBylogin(usernametxt.getText()) + "\nETUDIANT";
+              System.out.println(usernametxt.getText());
               c  = passwrdtxt.getText();
               setnom(a,b,c);
               switchtostudentscene();

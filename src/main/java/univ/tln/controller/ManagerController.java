@@ -823,7 +823,7 @@ public class ManagerController implements Initializable {
     public void castdatetimebyteacherlogin(int w, String login, String[][] cren) { //fonction qui remplie une liste des creneaux d'une semaine
         setI(0);
         try (CreneauxDAO c2 = new CreneauxDAO();){
-           setI( c2.castdatetimebyteacherlogin(login, getmonday(w), getmonday(w + 7), cren ,i));
+           setI( c2.castdatetimebyteacherlogin(login, getmonday(w), getmonday(w + 6), cren ,i));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -832,7 +832,7 @@ public class ManagerController implements Initializable {
     public void castdatetimebyformation(int w,String formation, String[][] cren) {//fonction qui remplie une liste des creneaux d'une semaine
         setI(0);
         try (CreneauxDAO c2 = new CreneauxDAO();){
-            setI( c2.castdatetimebyformation(formation, getmonday(w), getmonday(w + 7), cren ,i));
+            setI( c2.castdatetimebyformation(formation, getmonday(w), getmonday(w + 6), cren ,i));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -994,6 +994,9 @@ public class ManagerController implements Initializable {
     void SaveOnAction(ActionEvent event) {
 
     }
+    @FXML
+    void delete_abs(ActionEvent event) {
 
+    }
 
 }
