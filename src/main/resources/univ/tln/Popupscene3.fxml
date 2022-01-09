@@ -55,7 +55,7 @@
    <right>
       <AnchorPane fx:id="abscence" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
          <children>
-            <Button layoutX="310.0" layoutY="565.0" mnemonicParsing="false" onAction="#delete_abs" text="terminer" textFill="WHITE" />
+            <Button layoutX="310.0" layoutY="565.0" mnemonicParsing="false" text="terminer" textFill="WHITE" />
             <Label fx:id="managerabstitle" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="14.0" prefHeight="31.0" prefWidth="634.0" textFill="#601d8d">
                <font>
                   <Font size="17.0" />
