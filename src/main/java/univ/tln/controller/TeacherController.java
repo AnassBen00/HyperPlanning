@@ -502,5 +502,9 @@ public class TeacherController implements Initializable {
         swithtoPasseditscene();
     }
 
+    @FXML
+    void SaveOnAction(ActionEvent event) {
+
+    }
 
 }

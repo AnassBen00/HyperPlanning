@@ -441,6 +441,10 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         swithtoPasseditscene();
 
     }
+    @FXML
+    void SaveOnAction(ActionEvent event) {
+
+    }
 
 
 

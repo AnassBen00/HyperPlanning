@@ -574,15 +574,19 @@ public class ManagerController implements Initializable {
     public void setPickfomation(){
         try {
             c.initialize_pickformation(filiereidd);
-        } catch (SQLException | ParseException e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         pickfomation.setOnMouseClicked(mouseEvent -> {
+            pickteacher.valueProperty().set(null);
             try {
-                pickteacher.valueProperty().set(null);
                 c.initialize_pickformation(pickfomation);
-            } catch (SQLException | ParseException ex) {
-                ex.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
             boolean disable = !pickteacher.isDisabled();
             pickteacher.setDisable(disable);
@@ -965,6 +969,10 @@ public class ManagerController implements Initializable {
     @FXML
     void editPass(ActionEvent event) {
         swithtoPasseditscene();
+
+    }
+    @FXML
+    void SaveOnAction(ActionEvent event) {
 
     }
 
