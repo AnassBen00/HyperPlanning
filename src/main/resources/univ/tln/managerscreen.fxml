@@ -119,11 +119,9 @@
                                    <Button fx:id="confirmAjoutEtudiantId" layoutX="399.0" layoutY="515.0" mnemonicParsing="false" onAction="#ConfirmEtudAction" prefHeight="24.0" prefWidth="260.0" style="-fx-background-color: Green;" text="ajouter" textFill="WHITE" />
                                    <Label layoutX="515.0" layoutY="282.0" />
                                    <Label layoutX="676.0" layoutY="200.0" prefHeight="17.0" prefWidth="45.0" text="Promo" />
-                                   <Label layoutX="679.0" layoutY="271.0" prefHeight="23.0" prefWidth="43.0" text="Filiere" />
                                    <Label layoutX="515.0" layoutY="300.0" />
                                    <Label layoutX="682.0" layoutY="130.0" text="Niveau" />
                                    <ComboBox fx:id="idNiveau" layoutX="762.0" layoutY="125.0" prefWidth="150.0" />
-                                   <ComboBox fx:id="idFiliere" layoutX="763.0" layoutY="269.0" prefWidth="150.0" />
                                    <TextField fx:id="idPromo" editable="false" layoutX="763.0" layoutY="198.0" text="2021/2022" />
                                     <Label layoutX="681.0" layoutY="339.0" text="Groupe" />
                                     <ComboBox fx:id="idGroupe" layoutX="764.0" layoutY="335.0" prefWidth="150.0" />

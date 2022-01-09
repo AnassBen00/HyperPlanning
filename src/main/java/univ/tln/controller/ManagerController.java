@@ -205,8 +205,7 @@ public class ManagerController implements Initializable {
     private Button confirmAjoutEtudiantId;
     @FXML
     private ComboBox<String> idNiveau;
-    @FXML
-    private ComboBox<String> idFiliere;
+
     @FXML
     private TextField idPromo;
 
@@ -337,7 +336,6 @@ public class ManagerController implements Initializable {
         List<String> nomFilieres = new ArrayList<>();
         for(Filiere f : filieres)
             nomFilieres.add(f.getNomDuFiliere());
-        idFiliere.getItems().addAll(nomFilieres);
 
         try {
             md_h_d.setValueFactory(valuehoure);
@@ -389,7 +387,7 @@ public class ManagerController implements Initializable {
                     .toString(), nomEtdId.getText(), prenomEtdId.getText(), emailEtdId.getText()));
             etudiantDAO.persist(new Etudiant(loginEtdId.getText(), sha256()
                     .hashString(passwordEtdId.getText(), StandardCharsets.UTF_8)
-                    .toString(), nomEtdId.getText(), prenomEtdId.getText(), emailEtdId.getText(), idNiveau.getValue(), idPromo.getText(), filiereDAO.find(idFiliere.getValue()).getId()));
+                    .toString(), nomEtdId.getText(), prenomEtdId.getText(), emailEtdId.getText(), idNiveau.getValue(), idPromo.getText(), 1));
             groupeEtudiantDAO.persist(new GroupeEtudiant(groupeDAO.find(idGroupe.getValue()).getId(),loginEtdId.getText()));
             
         } catch (DataAccessException | SQLException ex) {

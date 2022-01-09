@@ -151,7 +151,8 @@ create table if not exists CRENEAUX
     constraint CRENAUX_GROUPE_ID_G_FK
         foreign key (ID_G,ID_C) references GROUP_COURS (ID_G,ID_C),
     constraint CRENAUX_SALLE_ID_FK
-        foreign key (ID_S) references SALLE(ID_S)
+        foreign key (ID_S) references SALLE(ID_S),
+    constraint unique_cr unique (date_d,id_g)
 );
 
 create table if not exists absence(
@@ -301,11 +302,14 @@ INSERT INTO UTILISATEUR (NOM, PRENOM, PASSWORD, LOGIN,EMAIL) VALUES('Reese','Gwe
 
 insert into RESPONSABLE (login)values ( 'eTNwi' ),('2PMba'),('iAMxk');
 insert into ENSEIGNANT(login)values('1jJQ0'),('xYQhW'),('LrKK4'),('XF4yo'),('RIyEn'),('NrsB7'),('LmaqA');
+insert into FILIERE(NOM) values ( 'NONE' );
+insert into FILIERE(NOM) values ( 'snone' );
 insert into FILIERE(NOM) values ( 'DID' );
 insert into FILIERE(NOM) values ( 'MIR' );
 insert into FILIERE(NOM) values ( 'INFO' );
 insert into FILIERE(NOM) values ( 'ECO' );
 insert into FILIERE(NOM) values ( 'MIAGE' );
+
 
 insert into ETUDIANT (nvx_etude, promo, login, ID_F) values ( 'licence 1',	'2021/2022',	'hV23S',	1);
 insert into ETUDIANT (nvx_etude, promo, login, ID_F) values ( 'licence 2',	'2021/2022',	'mZgjO',	2);
@@ -484,4 +488,4 @@ select * from absence;
 
 select abs.login from absence abs join GROUPs g on abs.ID_G=g.ID_G;
 
-select nom from UTILISATEUR where login = 'KBXO7'
+select nom from UTILISATEUR where login = 'zoom'
