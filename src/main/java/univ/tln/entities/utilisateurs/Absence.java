@@ -3,8 +3,6 @@ package univ.tln.entities.utilisateurs;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
-
 public class Absence {
     @Getter
     @Setter
@@ -33,6 +31,9 @@ public class Absence {
     @Getter
     @Setter
     String id_g;
+    @Getter
+    @Setter
+    public boolean justified;
 
     public Absence(String date_d, String nomBatiment, String nomSalle ,String nomGroupe,String login) {
         this.login = login;
@@ -42,12 +43,13 @@ public class Absence {
         this.nomSalle = nomSalle;
     }
 
-    public Absence(String date_d, String nom, String nature,String id_s,String id_g,String login) {
+    public Absence(String date_d, String nom, String nature,String id_s,String id_g,String login,boolean justified) {
         this.date_d=date_d;
         this.nom=nom;
         this.nature=nature;
         this.id_s=id_s;
         this.id_g=id_g;
         this.login=login;
+        this.justified = justified;
     }
 }

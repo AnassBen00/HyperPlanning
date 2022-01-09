@@ -124,7 +124,7 @@ public class PopupControler implements Initializable {
             teachercontroller.updatewindow();
 
 
-        } catch (IOException | ParseException | DataAccessException ex) {
+        } catch (IOException | ParseException | SQLException ex) {
             ex.printStackTrace();
         }
 
@@ -149,7 +149,7 @@ public class PopupControler implements Initializable {
             managerController.validatebuttononaction(e);
 
 
-        } catch (DataAccessException | IOException ex) {
+        } catch (IOException | SQLException ex) {
             ex.printStackTrace();
         }
 
@@ -179,7 +179,7 @@ public class PopupControler implements Initializable {
 
 
 
-        } catch (IOException | DataAccessException | SQLException ex) {
+        } catch (IOException | SQLException ex) {
             ex.printStackTrace();
         }
 
@@ -211,7 +211,7 @@ public class PopupControler implements Initializable {
 
 
 
-        } catch (IOException | SQLException | DataAccessException ex) {
+        } catch (IOException | SQLException ex) {
             ex.printStackTrace();
         }
 
@@ -311,40 +311,37 @@ public class PopupControler implements Initializable {
         // ==== absence (CHECH BOX) ===
         absenceCol.setCellValueFactory(param -> {
             Etudiant etudiant = param.getValue();
-            AbsenceDAO absenceDAO = new AbsenceDAO();
+
+
 
             SimpleBooleanProperty booleanProp = new SimpleBooleanProperty();
             String login = etudiant.getLogin();
             // verifier si etudiant by login est dans la table absence si oui return true else false
 
             try {
+                AbsenceDAO absenceDAO = new AbsenceDAO();
                 booleanProp.set(absenceDAO.find(login, TeacherController.d1));
-            } catch (SQLException e) {
+
+
+                booleanProp.addListener(new ChangeListener<Boolean>() {
+
+                    @SneakyThrows
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                                        Boolean newValue) {
+                        // appel de la methode qui permet ajout absence en fonction de login et date creneau
+
+                        Absence absence = new Absence(TeacherController.d1, TeacherController.b1, TeacherController.s1, TeacherController.g1, login);
+                        if (Boolean.TRUE.equals(newValue))
+                            absenceDAO.persist(absence);
+                        if (Boolean.FALSE.equals(newValue))
+                            absenceDAO.remove(absence);
+                    }
+                });
+            }
+            catch(SQLException | DataAccessException e){
                 e.printStackTrace();
             }
-            finally {
-                try {
-                    absenceDAO.close();
-                } catch (DataAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            booleanProp.addListener(new ChangeListener<Boolean>() {
-
-                @SneakyThrows
-                @Override
-                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-                                    Boolean newValue) {
-                    // appel de la methode qui permet ajout absence en fonction de login et date creneau
-
-                    Absence absence = new Absence(TeacherController.d1, TeacherController.b1, TeacherController.s1, TeacherController.g1, login);
-                    if (Boolean.TRUE.equals(newValue))
-                        absenceDAO.persist(absence);
-                    if (Boolean.FALSE.equals(newValue))
-                        absenceDAO.remove(absence);
-                }
-            });
             return booleanProp;
         });
 
@@ -358,7 +355,7 @@ public class PopupControler implements Initializable {
         ObservableList<Utilisateur> list = null;
         try {
             list = afficherEtudiants();
-        } catch (DataAccessException e) {
+        } catch (DataAccessException | SQLException e) {
             e.printStackTrace();
         }
 
@@ -367,7 +364,7 @@ public class PopupControler implements Initializable {
     }
 
 
-    public ObservableList<Utilisateur> afficherEtudiants() throws DataAccessException {
+    public ObservableList<Utilisateur> afficherEtudiants() throws DataAccessException, SQLException {
 
         try( EtudiantDAO etudiantDAO = new EtudiantDAO();) {
 

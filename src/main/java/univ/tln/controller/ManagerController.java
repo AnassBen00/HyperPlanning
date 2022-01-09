@@ -252,6 +252,9 @@ public class ManagerController implements Initializable {
     @Setter
     public  static   int i;
 
+    public ManagerController() throws SQLException, DataAccessException {
+    }
+
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -280,7 +283,14 @@ public class ManagerController implements Initializable {
         );
 
 
-        GroupeDAO groupeDAO = new GroupeDAO();
+        GroupeDAO groupeDAO = null;
+        try {
+            groupeDAO = new GroupeDAO();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         List<Groupe> groupes = new ArrayList<>();
         try {
             groupes = groupeDAO.findAll();
@@ -290,7 +300,7 @@ public class ManagerController implements Initializable {
         finally {
             try {
                 groupeDAO.close();
-            } catch (DataAccessException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -303,7 +313,14 @@ public class ManagerController implements Initializable {
 
         idGroupe.getItems().addAll(nomGroupes);
 
-        FiliereDAO filiereDAO = new FiliereDAO();
+        FiliereDAO filiereDAO = null;
+        try {
+            filiereDAO = new FiliereDAO();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         List<Filiere> filieres = new ArrayList<>();
         try {
             filieres = filiereDAO.findAll();
@@ -313,7 +330,7 @@ public class ManagerController implements Initializable {
         finally {
             try {
                 filiereDAO.close();
-            } catch (DataAccessException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -712,6 +729,8 @@ public class ManagerController implements Initializable {
 
         } catch (DataAccessException e) {
             e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return etudiants;
     }
@@ -805,7 +824,7 @@ public class ManagerController implements Initializable {
         setI(0);
         try (CreneauxDAO c2 = new CreneauxDAO();){
            setI( c2.castdatetimebyteacherlogin(login, getmonday(w), getmonday(w + 7), cren ,i));
-        } catch (DataAccessException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -814,7 +833,7 @@ public class ManagerController implements Initializable {
         setI(0);
         try (CreneauxDAO c2 = new CreneauxDAO();){
             setI( c2.castdatetimebyformation(formation, getmonday(w), getmonday(w + 7), cren ,i));
-        } catch (DataAccessException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

@@ -48,7 +48,18 @@ public class TeacherController implements Initializable {
     int maxcours = 60;
     private String[][] creneau = new String[maxcours][8];
 
-    EnseignantDAO enseignantDAO = new EnseignantDAO();
+    EnseignantDAO enseignantDAO;
+
+    {
+        try {
+            enseignantDAO = new EnseignantDAO();
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private AnchorPane scene1; //le planning
     @FXML
@@ -338,7 +349,7 @@ public class TeacherController implements Initializable {
         setI(0);
         try (CreneauxDAO c2 = new CreneauxDAO();){
             setI( c2.castdatetime2(getmonday(w), getmonday(w + 7), cren ,i));
-        } catch (DataAccessException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

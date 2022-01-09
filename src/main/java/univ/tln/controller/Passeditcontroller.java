@@ -11,6 +11,8 @@ import univ.tln.daos.EtudiantDAO;
 import univ.tln.daos.ResponsableDAO;
 import univ.tln.daos.exceptions.DataAccessException;
 
+import java.sql.SQLException;
+
 public class Passeditcontroller {
 
     @FXML
@@ -63,7 +65,7 @@ public class Passeditcontroller {
             } else {
                 errormsg.setText("Old password unvalid try again");
             }
-        } catch (DataAccessException e) {
+        } catch (DataAccessException | SQLException e) {
             e.printStackTrace();
         }
 

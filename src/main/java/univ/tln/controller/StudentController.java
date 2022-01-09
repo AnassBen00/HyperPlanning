@@ -136,6 +136,9 @@ public class StudentController implements Initializable {
     List<Label> l = new ArrayList<>();
     List<Label> l2 = new ArrayList<>();
 
+    public StudentController() throws SQLException, DataAccessException {
+    }
+
 
     @Override
     @FXML
@@ -233,7 +236,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         try (AbsenceDAO absenceDAO = new AbsenceDAO();) {
 
 
-            absences = FXCollections.observableArrayList(absenceDAO.findAllabs(LoginController.user1));
+            absences = FXCollections.observableArrayList(absenceDAO.findAllabsN(LoginController.user1));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -341,7 +344,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
     public void castdatetime(int Z,String[][] cren) { //fonction qui remplie une liste des creneaux d'une semaine
         try (CreneauxDAO c2 = new CreneauxDAO();){
             setI(c2.castdatetime(getmonday(Z), getmonday(Z + 7), cren ,i));
-        } catch (DataAccessException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

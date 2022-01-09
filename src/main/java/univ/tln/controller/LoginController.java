@@ -18,6 +18,7 @@ import univ.tln.daos.exceptions.DataAccessException;
 
 import java.io.IOException;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 
@@ -98,7 +99,7 @@ String c ;
           } else {
               loginmessage.setText("invalid try again");
           }
-      } catch (DataAccessException e) {
+      } catch (DataAccessException | SQLException e) {
           e.printStackTrace();
       }
 
