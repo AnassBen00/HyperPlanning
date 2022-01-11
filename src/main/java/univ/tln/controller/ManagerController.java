@@ -26,16 +26,14 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import lombok.Setter;
 import univ.tln.App;
-import univ.tln.DatabaseConnection;
 import univ.tln.daos.*;
 import univ.tln.daos.exceptions.DataAccessException;
+import univ.tln.entities.creneaux.Cours;
 import univ.tln.entities.filieres.Filiere;
-
 import univ.tln.entities.groupes.Groupe;
 import univ.tln.entities.groupes.GroupeEtudiant;
 import univ.tln.entities.utilisateurs.Enseignant;
 import univ.tln.entities.utilisateurs.Etudiant;
-import univ.tln.entities.utilisateurs.Responsable;
 import univ.tln.entities.utilisateurs.Utilisateur;
 
 import java.io.IOException;
@@ -48,8 +46,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.*;
-
-import static com.google.common.hash.Hashing.farmHashFingerprint64;
 import static com.google.common.hash.Hashing.sha256;
 
 
@@ -244,6 +240,14 @@ public class ManagerController implements Initializable {
     @FXML
     private Label ajouterprofmessage;
 
+    @FXML
+    private ComboBox<String> idnatureComboBox;
+
+    @FXML
+    private TextField idcoursText;
+
+    @FXML
+    private ComboBox<String> ifFormationComboBox;
 
     private int r=-7;
     private int w = 7;
@@ -274,12 +278,14 @@ public class ManagerController implements Initializable {
         affichageinfo();
         initniveaux();
         initgroups();
+        initNature2();
         initfiliere();
         setminuteandhour();
         drawrect(); //on dessine l'emploie du temps
         arrowinputback();
         arrowinputfront();
         setcalendar(0);
+        c.initialize_pickformation(ifFormationComboBox);
     }
     /**
      * Cette fonction initialise le login le nom et le rôle d'un utilisateur
@@ -341,9 +347,13 @@ public class ManagerController implements Initializable {
                 "master 2"
         );
     }
-/**
-*cette fonction concerne la partie création étudiant elle sert à initialiser les groupes
- */
+
+    public void initNature2(){
+        idnatureComboBox.getItems().addAll("CM", "TP", "TD");
+    }
+    /**
+     *cette fonction concerne la partie création étudiant elle sert à initialiser les groupes
+     */
 
     public void initgroups(){
 
@@ -365,6 +375,7 @@ public class ManagerController implements Initializable {
     }
 
 
+
     /**
      * Cette fonction est reliée à au bouton qui permet d'ajouter un enseignant elle appelle la DAO utilisateur pour créer l'utilisateur
      * et après la DAO enseignant pour créer l'enseignant,
@@ -374,23 +385,25 @@ public class ManagerController implements Initializable {
 
     @FXML
     public void ConfirmAction (ActionEvent e)  {
-        
+
         try(UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
             EnseignantDAO enseignantDAO = new EnseignantDAO();) {
-            
+            CoursDAO coursDAO = new CoursDAO();
+
         utilisateurDAO.persist(new Utilisateur(loginId.getText(), sha256()
                 .hashString(passwordId.getText(), StandardCharsets.UTF_8)
-                .toString(), nomId.getText() , prenomId.getText(), emailId.getText()));
+                .toString(), nomId.getText(), prenomId.getText(), emailId.getText()));
         enseignantDAO.persist(new Enseignant(loginId.getText(), sha256()
                 .hashString(passwordId.getText(), StandardCharsets.UTF_8)
                 .toString(), nomId.getText(), prenomId.getText(), emailId.getText()));
-
+        coursDAO.insertCours(new Cours(idnatureComboBox.getValue(),idcoursText.getText(),loginId.getText()));
+        coursDAO.insertGroupeCours(ifFormationComboBox.getValue().toString(), coursDAO.find(idcoursText.getText()));
             ajouterprofmessage.setTextFill(Color.rgb(0, 133, 33));
-            ajouterprofmessage.setText("etudiant bien ajouter");
-        
+            ajouterprofmessage.setText("enseignant bien ajouter");
+
         } catch (DataAccessException | SQLException ex) {
             ajouterprofmessage.setTextFill(Color.rgb(220, 0, 0));
-            ajouterprofmessage.setText("données saisies invalide");
+            ajouterprofmessage.setText("données saisies invalides");
         }
     }
 
@@ -417,7 +430,7 @@ public class ManagerController implements Initializable {
             
         } catch (DataAccessException | SQLException ex) {
             ajouteretudmessage.setTextFill(Color.rgb(220, 0, 0));
-            ajouteretudmessage.setText("données saisies invalide");
+            ajouteretudmessage.setText("données saisies invalides");
         } 
        
     }

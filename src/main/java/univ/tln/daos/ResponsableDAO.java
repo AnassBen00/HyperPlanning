@@ -8,10 +8,9 @@ import java.util.Optional;
 
 public class ResponsableDAO extends AbstractDAO<Responsable>{
 
-    Statement statement;
     PreparedStatement preparedStatement;
 
-    public ResponsableDAO() throws DataAccessException, SQLException {
+    public ResponsableDAO() {
         super("INSERT INTO UTILISATEUR(LOGIN, NOM, PRENOM, PASSWORD, EMAIL) VALUES (?,?,?,?,?);",
                 "UPDATE UTILISATEUR SET LOGIN=?, NOM=?, PRENOM=?, PASSWORD=?, EMAIL=? WHERE LOGIN=?",
                 "SELECT * from RESPONSABLE join UTILISATEUR ON RESPONSABLE.login = UTILISATEUR.login  ");
@@ -33,6 +32,13 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
                 .build();
     }
 
+    /**
+     *
+     * @params username et password
+     * @return boolean
+     *
+     * cette methode verifie si le responsable existe dans la bdd
+     */
     public boolean checkResponsable(String username, String password) throws SQLException {
         try {
             statement = connection.createStatement();
@@ -53,6 +59,13 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
         return false;
     }
 
+    /**
+     *
+     * @params l : String
+     * @return String
+     *
+     * cette methode retourne le nom d'un responsable en passant son login comme parametre
+     */
     public String getResponsableNameBylogin(String l) throws SQLException {
         String m = null;
         try {
@@ -72,6 +85,13 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
         return m;
     }
 
+    /**
+     *
+     * @params login
+     * @return Responsable
+     *
+     * cette methode retourne un responsable en passant le login comme parametre
+     */
     public Optional<Responsable> find(String login) throws SQLException {
         Responsable responsable = null;
 
@@ -86,6 +106,9 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
         return Optional.ofNullable(responsable);
     }
 
+    /**
+     * methode pour eviter la redendance
+     * */
     public PreparedStatement implementPS(PreparedStatement ps, Responsable responsable) throws SQLException {
         ps.setString(1, responsable.getLogin());
         ps.setString(2, responsable.getNom());
@@ -105,6 +128,13 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
         }
     }
 
+    /**
+     *
+     * @params responsable
+     * @return void
+     *
+     * cette methode permet de supprimer un responsable
+     */
     @Override
     public void remove(Object responsable) throws DataAccessException, SQLException {
         try {
@@ -117,6 +147,13 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
         }
     }
 
+    /**
+     *
+     * @params responsable
+     * @return void
+     *
+     * cette methode permet de modifier un responsable
+     */
     @Override
     public void update(Responsable responsable) throws DataAccessException {
         try {
@@ -128,6 +165,13 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
 
     }
 
+    /**
+     *
+     * @params login
+     * @return Responsable
+     *
+     * cette methode retourne un responsable en passant son login comme parametre
+     */
     public Responsable findbyLogin(String login) throws SQLException {
         Responsable responsable = new Responsable();
         preparedStatement = connection.prepareStatement("select * from RESPONSABLE join UTILISATEUR on RESPONSABLE.login = RESPONSABLE.login where RESPONSABLE.login = ?");
@@ -143,6 +187,13 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
         return responsable;
     }
 
+    /**
+     *
+     * @params passwrd
+     * @return boolean
+     *
+     * cette methode verifie le mot de passe d'un responsable en le passant comme parametre
+     */
     public boolean checkResPass(String passwrd) throws SQLException {
         try {
             statement = connection.createStatement();
@@ -160,6 +211,19 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
             statement.close();
         }
         return false;
+    }
+
+    /**
+     *
+     * @params psswrd et login
+     * @return void
+     *
+     * cette methode permet de modifier un responsable
+     */
+    public void updatePassByLogin(String psswrd,String login) throws  SQLException{
+        PreparedStatement pstmt = connection.prepareStatement("update UTILISATEUR set PASSWORD = HASH('SHA256','"+psswrd+"') where LOGIN = ?");
+        pstmt.setString(1,login);
+        pstmt.executeUpdate();
     }
 
 

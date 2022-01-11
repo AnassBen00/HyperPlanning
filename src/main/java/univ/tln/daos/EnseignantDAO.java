@@ -30,6 +30,13 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
         return new Enseignant(resultSet.getString("LOGIN"),resultSet.getString("NOM"),resultSet.getString("PRENOM"),resultSet.getString("PASSWORD"),resultSet.getString("EMAIL"));
     }
 
+    /**
+     *
+     * @params login and password
+     * @return boolean
+     *
+     * cette methode verifie si un responsable existe dans la bdd
+     */
     public boolean checkEnseignant(String username, String password) throws SQLException {
         try {
             statement = connection.createStatement();
@@ -48,6 +55,13 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
         return false;
     }
 
+    /**
+     *
+     * @params login
+     * @return String : login
+     *
+     * cette methode retourne le nom d'un enseignant en passant son login comme parametre
+     */
     public String getEnseignantNameBylogin(String l) throws SQLException {
         String m = null;
         try {
@@ -66,6 +80,13 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
         return m;
     }
 
+    /**
+     *
+     * @params login
+     * @return Etudiant
+     *
+     * cette methode retourne un enseignant en passant son login comme parametre
+     */
     public Optional<Enseignant> find(String login) throws SQLException {
         Enseignant enseignant = null;
         try {
@@ -83,6 +104,13 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
         return Optional.ofNullable(enseignant);
     }
 
+    /**
+     *
+     * @params enseignant
+     * @return void
+     *
+     * cette methode ajoute un enseignant dans la bdd
+     */
     @Override
     public void persist(Enseignant enseignant) throws DataAccessException, SQLException {
         try {
@@ -93,6 +121,13 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
         }
     }
 
+    /**
+     *
+     * @params enseignant
+     * @return void
+     *
+     * cette methode supprime un enseignant dans la bdd
+     */
     @Override
     public void remove(Object enseignant) throws DataAccessException, SQLException {
         try {
@@ -104,6 +139,7 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
             statement.close();
         }
     }
+
 
     @Override
     public void update(Enseignant enseignant) throws DataAccessException {
@@ -120,6 +156,13 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
 
     }
 
+    /**
+     *
+     * @params password
+     * @return boolean
+     *
+     * cette methode permet de verifie le mot de passe d'un enseignant
+     */
     public boolean checkEnseignantPass(String passwrd) throws SQLException {
         try {
             statement = connection.createStatement();
@@ -140,6 +183,13 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
         return false;
     }
 
+    /**
+     *
+     * @params login
+     * @return Etudiant
+     *
+     * cette methode retourne un enseignant par login
+     */
     public Enseignant findbyLogin(String login) throws SQLException {
         Enseignant enseignant = new Enseignant();
         preparedStatement = connection.prepareStatement("select * from ENSEIGNANT join UTILISATEUR on ENSEIGNANT.login = UTILISATEUR.login where ENSEIGNANT.login = ?");
@@ -156,4 +206,19 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
         preparedStatement.close();
         return enseignant;
     }
+
+    /**
+     *
+     * @params password et login
+     * @return void
+     *
+     * cette methode permet modifier le mot de passe
+     */
+    public void updatePassByLogin(String psswrd,String login) throws  SQLException{
+        PreparedStatement pstmt = connection.prepareStatement("update UTILISATEUR set PASSWORD = HASH('SHA256','"+psswrd+"') where LOGIN = ?");
+        pstmt.setString(1,login);
+        pstmt.executeUpdate();
+    }
+
+
 }

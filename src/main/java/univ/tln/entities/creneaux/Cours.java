@@ -1,37 +1,28 @@
 package univ.tln.entities.creneaux;
 
+import lombok.Getter;
 import lombok.Setter;
 
 public class Cours {
 
-    private String id;
     @Setter
-    private int duree;
+    @Getter
+    private int id;
     @Setter
+    @Getter
     private String nature;
     @Setter
+    @Getter
     private String nomduCours;
+    @Setter
+    @Getter
+    private String login;
 
-    public Cours(String id, int duree, String nature, String nomduCours) {
-        this.id = id;
-        this.duree = duree;
+
+    public Cours(String nature, String nomduCours, String login) {
         this.nature = nature;
         this.nomduCours = nomduCours;
+        this.login = login;
     }
 
-    public String getId() {
-        return this.id;
-    }
-
-    public int getDuree() {
-        return this.duree;
-    }
-
-    public String getNature() {
-        return this.nature;
-    }
-
-    public String getNomduCours() {
-        return this.nomduCours;
-    }
 }

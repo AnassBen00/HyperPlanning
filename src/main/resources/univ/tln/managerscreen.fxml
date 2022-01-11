@@ -1,28 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Group?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="stack" prefHeight="782.0" prefWidth="1305.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.controller.ManagerController">
+<AnchorPane fx:id="stack" prefHeight="782.0" prefWidth="1305.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.controller.ManagerController">
    <children>
       <Group layoutX="91.0" layoutY="47.0" />
       <StackPane layoutX="267.0" layoutY="126.0">
@@ -53,6 +39,56 @@
                      </font>
                   </Label>
                   <Button layoutX="504.0" layoutY="590.0" mnemonicParsing="false" text="Modifier" textFill="WHITE" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="scene3" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
+               <children>
+                  <Label layoutX="321.0" layoutY="14.0" prefHeight="95.0" prefWidth="366.0" text="Données personnelles" textFill="#500f75">
+                     <padding>
+                        <Insets bottom="30.0" left="50.0" right="30.0" top="30.0" />
+                     </padding>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="632.0" layoutY="134.0" text="Nom :" />
+                  <Label layoutX="619.0" layoutY="207.0" text="Prénom :" />
+                  <Label layoutX="182.0" layoutY="134.0" stylesheets="@styes.css" text="Login :" />
+                  <Label layoutX="183.0" layoutY="207.0" text="Email :" />
+                  <Label layoutX="135.0" layoutY="277.0" text="Mot de passe :" />
+                  <TextField fx:id="loginField" editable="false" layoutX="242.0" layoutY="129.0" stylesheets="@styes.css" />
+                  <TextField fx:id="nameField" editable="false" layoutX="697.0" layoutY="129.0" />
+                  <TextField fx:id="lastnameField" editable="false" layoutX="705.0" layoutY="202.0" />
+                  <TextField fx:id="emailField" layoutX="242.0" layoutY="202.0" />
+                  <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="802.0" layoutY="440.0">
+                     <image>
+                        <Image url="@corner.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="8.0" layoutY="1.0">
+                     <image>
+                        <Image url="@corner1.png" />
+                     </image>
+                  </ImageView>
+                  <PasswordField fx:id="passwordField" layoutX="242.0" layoutY="272.0" onMouseClicked="#editPass" />
+                  <Button layoutX="424.0" layoutY="273.0" mnemonicParsing="false" onAction="#editPass" text="Edit" textFill="#f8f5f5" />
+                  <Line endX="129.0" layoutX="504.0" layoutY="88.0" startX="-132.0" stroke="#3c1672" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="scene1" prefHeight="645.0" prefWidth="1007.0">
+               <children>
+                  <ImageView fitHeight="645.0" fitWidth="1007.0">
+                     <image>
+                        <Image url="@planning.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="idlundi" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idmardi" alignment="CENTER" contentDisplay="CENTER" layoutX="276.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idmercredi" alignment="CENTER" contentDisplay="CENTER" layoutX="403.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idjeudi" alignment="CENTER" contentDisplay="CENTER" layoutX="531.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idvendredi" alignment="CENTER" contentDisplay="CENTER" layoutX="653.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="idsamedi" alignment="CENTER" contentDisplay="CENTER" layoutX="777.0" layoutY="28.0" text="06/12/2021" />
+                  <Label fx:id="iddimanche" alignment="CENTER" contentDisplay="CENTER" layoutX="903.0" layoutY="28.0" text="06/12/2021" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="scene2" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
@@ -133,13 +169,13 @@
                                    <Label layoutX="83.0" layoutY="128.0" prefHeight="16.0" prefWidth="71.0" text="identifiant" />
                                    <Label layoutX="91.0" layoutY="200.0" text="prenom" />
                                    <Label layoutX="91.0" layoutY="269.0" text="nom" />
-                                   <Label layoutX="514.0" layoutY="128.0" text="Email" />
-                                   <Label layoutX="504.0" layoutY="200.0" text="mot de passe" />
+                                   <Label layoutX="412.0" layoutY="128.0" text="Email" />
+                                   <Label layoutX="402.0" layoutY="200.0" text="mot de passe" />
                                    <TextField fx:id="loginId" layoutX="173.0" layoutY="124.0" />
                                    <TextField fx:id="prenomId" layoutX="173.0" layoutY="196.0" />
                                    <TextField fx:id="nomId" layoutX="173.0" layoutY="257.0" />
-                                   <TextField fx:id="emailId" layoutX="603.0" layoutY="124.0" />
-                                   <TextField fx:id="passwordId" layoutX="603.0" layoutY="196.0" />
+                                   <TextField fx:id="emailId" layoutX="501.0" layoutY="124.0" />
+                                   <TextField fx:id="passwordId" layoutX="501.0" layoutY="196.0" />
                                    <Button fx:id="confirmAjoutEnseignantId" layoutX="396.0" layoutY="446.0" mnemonicParsing="false" onAction="#ConfirmAction" prefHeight="24.0" prefWidth="260.0" style="-fx-background-color: Green;" text="ajouter" textFill="WHITE" />
                                     <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="809.0" layoutY="415.0">
                                        <image>
@@ -147,61 +183,17 @@
                                        </image>
                                     </ImageView>
                                     <Label fx:id="ajouterprofmessage" alignment="CENTER" contentDisplay="CENTER" layoutX="382.0" layoutY="397.0" prefHeight="24.0" prefWidth="288.0" textFill="#05ff71" />
+                                    <Label layoutX="706.0" layoutY="129.0" text="cours" />
+                                    <TextField fx:id="idcoursText" layoutX="798.0" layoutY="124.0" />
+                                    <Label layoutX="709.0" layoutY="191.0" text="nature cours" />
+                                    <ComboBox fx:id="idnatureComboBox" layoutX="799.0" layoutY="187.0" prefWidth="150.0" />
+                                    <Label layoutX="715.0" layoutY="262.0" text="Formation" />
+                                    <ComboBox fx:id="ifFormationComboBox" layoutX="799.0" layoutY="257.0" prefWidth="150.0" />
                                 </children></AnchorPane>
                           </content>
                        </Tab>
                     </tabs>
                   </TabPane>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="scene3" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
-               <children>
-                  <Label layoutX="321.0" layoutY="14.0" prefHeight="95.0" prefWidth="366.0" text="Données personnelles" textFill="#500f75">
-                     <padding>
-                        <Insets bottom="30.0" left="50.0" right="30.0" top="30.0" />
-                     </padding>
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="632.0" layoutY="134.0" text="Nom :" />
-                  <Label layoutX="619.0" layoutY="207.0" text="Prénom :" />
-                  <Label layoutX="182.0" layoutY="134.0" stylesheets="@styes.css" text="Login :" />
-                  <Label layoutX="183.0" layoutY="207.0" text="Email :" />
-                  <Label layoutX="135.0" layoutY="277.0" text="Mot de passe :" />
-                  <TextField fx:id="loginField" editable="false" layoutX="242.0" layoutY="129.0" stylesheets="@styes.css" />
-                  <TextField fx:id="nameField" editable="false" layoutX="697.0" layoutY="129.0" />
-                  <TextField fx:id="lastnameField" editable="false" layoutX="705.0" layoutY="202.0" />
-                  <TextField fx:id="emailField" layoutX="242.0" layoutY="202.0" />
-                  <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="802.0" layoutY="440.0">
-                     <image>
-                        <Image url="@corner.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="8.0" layoutY="1.0">
-                     <image>
-                        <Image url="@corner1.png" />
-                     </image>
-                  </ImageView>
-                  <PasswordField fx:id="passwordField" layoutX="242.0" layoutY="272.0" onMouseClicked="#editPass" />
-                  <Button layoutX="424.0" layoutY="273.0" mnemonicParsing="false" onAction="#editPass" text="Edit" textFill="#f8f5f5" />
-                  <Line endX="129.0" layoutX="504.0" layoutY="88.0" startX="-132.0" stroke="#3c1672" />
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="scene1" prefHeight="645.0" prefWidth="1007.0">
-               <children>
-                  <ImageView fitHeight="645.0" fitWidth="1007.0">
-                     <image>
-                        <Image url="@planning.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="idlundi" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="28.0" text="06/12/2021" />
-                  <Label fx:id="idmardi" alignment="CENTER" contentDisplay="CENTER" layoutX="276.0" layoutY="28.0" text="06/12/2021" />
-                  <Label fx:id="idmercredi" alignment="CENTER" contentDisplay="CENTER" layoutX="403.0" layoutY="28.0" text="06/12/2021" />
-                  <Label fx:id="idjeudi" alignment="CENTER" contentDisplay="CENTER" layoutX="531.0" layoutY="28.0" text="06/12/2021" />
-                  <Label fx:id="idvendredi" alignment="CENTER" contentDisplay="CENTER" layoutX="653.0" layoutY="28.0" text="06/12/2021" />
-                  <Label fx:id="idsamedi" alignment="CENTER" contentDisplay="CENTER" layoutX="777.0" layoutY="28.0" text="06/12/2021" />
-                  <Label fx:id="iddimanche" alignment="CENTER" contentDisplay="CENTER" layoutX="903.0" layoutY="28.0" text="06/12/2021" />
                </children>
             </AnchorPane>
          </children>

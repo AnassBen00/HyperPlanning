@@ -5,14 +5,12 @@ import univ.tln.entities.utilisateurs.Etudiant;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class EtudiantDAO extends AbstractDAO<Etudiant> {
-
-    private Statement statement;
+    
     private PreparedStatement preparedStatement;
 
     public EtudiantDAO() throws DataAccessException, SQLException {
@@ -33,6 +31,13 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
                 resultSet.getString("nvx_etude"), resultSet.getString("promo"), resultSet.getInt("id_f"));
     }
 
+    /**
+     *
+     * @params login and password
+     * @return boolean
+     *
+     * cette methode verifie si un etudiant existe dans la bdd
+     */
     public boolean checkEtudiant(String username, String password) throws SQLException {
         try {
             statement = connection.createStatement();
@@ -49,6 +54,13 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
         return false;
     }
 
+    /**
+     *
+     * @params login
+     * @return String : login
+     *
+     * cette methode retourne le nom d'un etudiant en passant son login comme parametre
+     */
     public String getEtudiantNameBylogin(String l) throws SQLException {
         String m = null;
         try {
@@ -65,6 +77,13 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
         return m;
     }
 
+    /**
+     *
+     * @params
+     * @return List<Etudiant>
+     *
+     * cette methode retourne tous les etudiants
+     */
     public List<Etudiant> findAll() {
         List<Etudiant> etudiants = new ArrayList<>();
         try {
@@ -83,7 +102,13 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
     }
 
 
-
+    /**
+     *
+     * @params
+     * @return List<Etudiant>
+     *
+     * cette methode retourne tous les etudiants par groupe
+     */
     public List<Etudiant> findbygrp(String grp) {
         List<Etudiant> etudiants = new ArrayList<>();
         try {
@@ -102,6 +127,13 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
         return etudiants;
     }
 
+    /**
+     *
+     * @params login
+     * @return Etudiant
+     *
+     * cette methode retourne un etudiant en passant son login comme parametre
+     */
     public Optional<Etudiant> find(String login) throws SQLException {
         Etudiant etudiant = null;
 
@@ -115,6 +147,13 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
         return Optional.ofNullable(etudiant);
     }
 
+    /**
+     *
+     * @params etudiant
+     * @return void
+     *
+     * cette methode ajoute un etudiant dans la bdd
+     */
     @Override
     public void persist(Etudiant etudiant) throws DataAccessException, SQLException {
         try {
@@ -128,6 +167,13 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
         }
     }
 
+    /**
+     *
+     * @params etudiant
+     * @return void
+     *
+     * cette methode supprime un etudiant dans la bdd
+     */
     @Override
     public void remove(Object etudiant) throws DataAccessException {
         try {
@@ -138,11 +184,19 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
         }
     }
 
+
     @Override
     public void update(Etudiant etudiant) throws DataAccessException {
-        return;
+        return; // methode non utilie
     }
 
+    /**
+     *
+     * @params password
+     * @return boolean
+     *
+     * cette methode permet de verifie le mot de passe d'un etudiant
+     */
     public boolean checkEtudiantPass(String passwrd) {
         try {
             statement = connection.createStatement();
@@ -160,6 +214,13 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
         return false;
     }
 
+    /**
+     *
+     * @params login
+     * @return Etudiant
+     *
+     * cette methode retourne un etudiant par login
+     */
     public Etudiant findbyLogin(String login) throws SQLException {
         Etudiant etudiant = new Etudiant();
         preparedStatement = connection.prepareStatement("select * from ETUDIANT join UTILISATEUR on ETUDIANT.login = UTILISATEUR.login where ETUDIANT.login = ?");
@@ -173,5 +234,18 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
             etudiant.setPassword(resultSet.getString("PASSWORD"));
         }
         return etudiant;
+    }
+
+    /**
+     *
+     * @params password et login
+     * @return void
+     *
+     * cette methode permet modifier le mot de passe
+     */
+    public void updatePassByLogin(String psswrd,String login) throws  SQLException{
+        PreparedStatement pstmt = connection.prepareStatement("update UTILISATEUR set PASSWORD = HASH('SHA256','"+psswrd+"') where LOGIN = ?");
+        pstmt.setString(1,login);
+        pstmt.executeUpdate();
     }
 }
