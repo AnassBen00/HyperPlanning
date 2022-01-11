@@ -38,14 +38,13 @@ AbsenceDAO extends AbstractDAO<Absence>{
      * cette methode permet de trouver si un etuadiant est absent en donnant son login et la date
      */
     public boolean find(String login, String date) throws SQLException {
-        preparedStatement = connection.prepareStatement("SELECT * FROM absence WHERE login=? and date_d = ?");
+        PreparedStatement findPS = connection.prepareStatement("SELECT * FROM absence WHERE login=? and date_d = ?");
         findPS.setString(1, login);
         findPS.setString(2, date);
         ResultSet rs = findPS.executeQuery();
         while (rs.next()){
             return true;
         }
-        preparedStatement.close();
         return false;
     }
 

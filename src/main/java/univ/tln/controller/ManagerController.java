@@ -532,23 +532,22 @@ public class ManagerController implements Initializable {
     public void initens(){
 
 
-        md_n.valueProperty().addListener((options, oldValue, newValue) ->{
-            c.initialize_enseignant(md_date,md_m_f,md_m_d,md_h_f,md_h_d, md_ens,md_c,md_n,md_f);
-
-        });
+        md_n.valueProperty().addListener((options, oldValue, newValue) ->
+            c.initialize_enseignant(md_date,md_m_f,md_m_d,md_h_f,md_h_d, md_ens,md_c,md_n,md_f)
+        );
     }
 
     public void initSalle(){
-        md_bat.valueProperty().addListener((options, oldValue, newValue) ->{
-            c.initialize_salle(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date,md_s);
+        md_bat.valueProperty().addListener((options, oldValue, newValue) ->
+            c.initialize_salle(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date,md_s)
 
-        });
+        );
     }
     public void initnature(){
-        md_c.valueProperty().addListener((options1, oldValue1, newValue1) ->{
-            c.initialize_nature_cours(md_f,md_c,md_n);
+        md_c.valueProperty().addListener((options1, oldValue1, newValue1) ->
+            c.initialize_nature_cours(md_f,md_c,md_n)
 
-        });
+        );
 
     }
     public void initcours(){
@@ -556,10 +555,10 @@ public class ManagerController implements Initializable {
         md_f.valueProperty().addListener((options, oldValue, newValue) ->{
             md_n.getItems().removeAll(md_n.getItems());
             c.initialize_cours(md_f,md_c);
-            md_c.valueProperty().addListener((options1, oldValue1, newValue1) ->{
-                c.initialize_nature_cours(md_f,md_c,md_n);
+            md_c.valueProperty().addListener((options1, oldValue1, newValue1) ->
+                c.initialize_nature_cours(md_f,md_c,md_n)
 
-            });
+            );
 
         });
     }
@@ -987,7 +986,7 @@ public class ManagerController implements Initializable {
             passwordField.setText(LoginController.psswrd);
             loginField.setText(LoginController.user1);
 
-        } catch (SQLException | DataAccessException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
