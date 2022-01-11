@@ -34,6 +34,13 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
                 .build();
     }
 
+    /**
+     *
+     * @param
+     * @return void
+     *
+     * cette methode retourne tous les utilisateurs
+     */
     public void findAll() throws SQLException {
         try {
             preparedStatement = connection.prepareStatement("SELECT * from ENSEIGNANT join UTILISATEUR ON ENSEIGNANT.login = UTILISATEUR.login ");
@@ -51,6 +58,13 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
         }
     }
 
+    /**
+     *
+     * @param login
+     * @return Utilisateur
+     *
+     * cette methode retourne un utilisateur en passant le login comme parametre
+     */
     public Optional<Utilisateur> find(String login) throws SQLException {
         Utilisateur utilisateur = null;
 
@@ -64,6 +78,14 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
         return Optional.ofNullable(utilisateur);
     }
 
+
+    /**
+     *
+     * @param utilisateur
+     * @return void
+     *
+     * cette methode permet d'ajouter un utilisateur en bdd
+     */
     @Override
     public void persist(Utilisateur utilisateur) throws DataAccessException, SQLException {
         try {
@@ -78,6 +100,13 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
         }
     }
 
+    /**
+     *
+     * @param utilisateur
+     * @return void
+     *
+     * cette methode permet de supprmier un utilisateur de la bdd
+     */
     @Override
     public void remove(Object utilisateur) throws DataAccessException, SQLException {
         try {
@@ -90,6 +119,13 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
         }
     }
 
+    /**
+     *
+     * @param utilisateur
+     * @return void
+     *
+     * cette methode permet de modifier un utilisateur
+     */
     @Override
     public void update(Utilisateur utilisateur) throws DataAccessException {
         try {

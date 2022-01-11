@@ -30,6 +30,13 @@ AbsenceDAO extends AbstractDAO<Absence>{
         return null;
     }
 
+    /**
+     *
+     * @params login et date d'absence
+     * @return boolean
+     *
+     * cette methode permet de trouver si un etuadiant est absent en donnant son login et la date
+     */
     public boolean find(String login, String date) throws SQLException {
         preparedStatement = connection.prepareStatement("SELECT * FROM absence WHERE login=? and date_d = ?");
         findPS.setString(1, login);
@@ -42,6 +49,13 @@ AbsenceDAO extends AbstractDAO<Absence>{
         return false;
     }
 
+    /**
+     *
+     * @params absence
+     * @return void
+     *
+     * cette methode permet d'ajouter absence
+     */
     @Override
     public void persist(Absence absence) throws DataAccessException, SQLException {
         try {
@@ -56,6 +70,13 @@ AbsenceDAO extends AbstractDAO<Absence>{
         }
     }
 
+    /**
+     *
+     * @params login
+     * @return List<Absence>
+     *
+     * cette methode retourne tous les absences pour l'enseignant
+     */
     public List<Absence> findAllabs(String login) {
         List<Absence> absences = new ArrayList<Absence>();
         try {
@@ -90,6 +111,13 @@ AbsenceDAO extends AbstractDAO<Absence>{
         return absences;
     }
 
+    /**
+     *
+     * @params absence
+     * @return void
+     *
+     * cette methode retourne tous les etudiants
+     */
     public void remove(Absence absence) throws DataAccessException {
         try {
             statement = connection.createStatement();
@@ -97,8 +125,15 @@ AbsenceDAO extends AbstractDAO<Absence>{
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
         }
-
     }
+
+    /**
+     *
+     * @params login et date et boolean
+     * @return void
+     *
+     * cette methode modifie une absence en changant son etat justifie on non
+     */
     public void update(String login,String date_d,boolean justified)  {
         try {
             preparedStatement =connection.prepareStatement("update absence set justified =? WHERE LOGIN=? and date_d = ?");

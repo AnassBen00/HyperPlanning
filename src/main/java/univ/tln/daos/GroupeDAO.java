@@ -22,6 +22,14 @@ public class GroupeDAO extends AbstractDAO<Groupe>{
         return "GROUPS";
     }
 
+
+    /**
+     *
+     * @param
+     * @return  List<Groupe>
+     *
+     * cette methode retourne tous les groupes
+     */
     public List<Groupe> findAll() throws SQLException {
         List<Groupe> entityList = new ArrayList<>();
 
@@ -31,6 +39,13 @@ public class GroupeDAO extends AbstractDAO<Groupe>{
         return entityList;
     }
 
+    /**
+     *
+     * @params nom
+     * @return Groupe
+     *
+     * cette methode retourne un groupe en passant son nom comme parametre
+     */
     public Groupe find(String nom) throws SQLException {
         Groupe groupe = null;
 
