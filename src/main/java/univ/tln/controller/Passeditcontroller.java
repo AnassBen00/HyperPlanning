@@ -38,7 +38,7 @@ public class Passeditcontroller {
 
 
         } else {
-            errormsg.setText("Please enter the old and the new password");
+            errormsg.setText("Veuillez saisir un mot de passe");
         }
 
 
@@ -53,17 +53,20 @@ public class Passeditcontroller {
 
 
             if (enseignantDAO.checkEnseignantPass(oldPassField.getText())) {
+                enseignantDAO.updatePassByLogin(newPassField.getText(),LoginController.user1);
                 Stage stage = (Stage) clbtn.getScene().getWindow();
                 stage.close();
 
             } else if (etudiantDAO.checkEtudiantPass(oldPassField.getText())) {
+                etudiantDAO.updatePassByLogin(newPassField.getText(),LoginController.user1);
                 Stage stage = (Stage) clbtn.getScene().getWindow();
                 stage.close();
             } else if (responsableDao.checkResPass(oldPassField.getText())) {
+                responsableDao.updatePassByLogin(newPassField.getText(),LoginController.user1);
                 Stage stage = (Stage) clbtn.getScene().getWindow();
                 stage.close();
             } else {
-                errormsg.setText("Old password unvalid try again");
+                errormsg.setText("Ancien mot de passe invalide Veuillez réessayer");
             }
         } catch (DataAccessException | SQLException e) {
             e.printStackTrace();

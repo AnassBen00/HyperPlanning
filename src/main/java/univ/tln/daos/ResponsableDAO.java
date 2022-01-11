@@ -161,6 +161,12 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
         return false;
     }
 
+    public void updatePassByLogin(String psswrd,String login) throws  SQLException{
+        PreparedStatement pstmt = connection.prepareStatement("update UTILISATEUR set PASSWORD = HASH('SHA256','"+psswrd+"') where LOGIN = ?");
+        pstmt.setString(1,login);
+        pstmt.executeUpdate();
+    }
+
 
 }
 
