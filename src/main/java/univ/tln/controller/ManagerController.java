@@ -281,15 +281,56 @@ public class ManagerController implements Initializable {
         arrowinputfront();
         setcalendar(0);
     }
+    /**
+     * Cette fonction initialise le login le nom et le rôle d'un utilisateur
+     */
+    public void initnale() { //fonction qui remplie une liste des creneaux d'une semaine
 
-    public void setminuteandhour(){
+        name.setText("Login: " + LoginController.user1 + "\n" +LoginController.name1);
+        name.setTextFill(Color.rgb(255, 255, 255));
+
+    }
 
 
+    /**
+     *Cette fonction concerne la partie ajouter créneaux pour un responsable.
+     * Mdhf représente l'heure début, et mdmd représente minutes début
+     */
+    public void setminuteandhour() {
+
+        SpinnerValueFactory<Integer> valuehoure = new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 19, 1);
+        SpinnerValueFactory<Integer> valueminute = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 1);
         md_h_d.setValueFactory(valuehoure);
         md_m_d.setValueFactory(valueminute);
 
     }
+//la partie ajouter utilisateur
 
+    /**
+     * Cette fonction sera initialisée les différentes filières d'un étudiant
+     */
+
+    public void initfiliere(){
+        List<Filiere> filieres = null;
+        try (FiliereDAO filiereDAO = new FiliereDAO();) {
+
+            filieres = new ArrayList<>();
+
+            filiereDAO.findAll();
+        } catch (SQLException | DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        List<String> nomFilieres = new ArrayList<>();
+        for (Filiere f : filieres)
+            nomFilieres.add(f.getNomDuFiliere());
+    }
+
+
+
+    /**
+     * Cette fonction concerne partie de la création du compte de l'étudiant, id niveaux représente le niveau de l'étudiant
+     */
     public void initniveaux(){
 
         idNiveau.getItems().addAll(
@@ -300,7 +341,9 @@ public class ManagerController implements Initializable {
                 "master 2"
         );
     }
-
+/**
+*cette fonction concerne la partie création étudiant elle sert à initialiser les groupes
+ */
 
     public void initgroups(){
 
@@ -322,28 +365,12 @@ public class ManagerController implements Initializable {
     }
 
 
-    public void initnale() { //fonction qui remplie une liste des creneaux d'une semaine
-
-        name.setText("Login: " + LoginController.user1 + "\n" +LoginController.name1);
-        name.setTextFill(Color.rgb(255, 255, 255));
-
-    }
-
-    public void initfiliere(){
-        List<Filiere> filieres = null;
-        try (FiliereDAO filiereDAO = new FiliereDAO();) {
-
-            filieres = new ArrayList<>();
-
-            filiereDAO.findAll();
-        } catch (SQLException | DataAccessException e) {
-            e.printStackTrace();
-        }
-
-        List<String> nomFilieres = new ArrayList<>();
-        for (Filiere f : filieres)
-            nomFilieres.add(f.getNomDuFiliere());
-    }
+    /**
+     * Cette fonction est reliée à au bouton qui permet d'ajouter un enseignant elle appelle la DAO utilisateur pour créer l'utilisateur
+     * et après la DAO enseignant pour créer l'enseignant,
+     * elle a aussi une fonction pour hacher le mot de passe,
+     * si tout se passe bien elle affiche le message enseignants bien ajoutez sinon elle affiche le message donné saisie invalide
+     */
 
     @FXML
     public void ConfirmAction (ActionEvent e)  {
@@ -366,8 +393,10 @@ public class ManagerController implements Initializable {
             ajouterprofmessage.setText("données saisies invalide");
         }
     }
-        
 
+    /**
+     * Pareil que la dernière fonction cette fois-ci pour créer un d'étudiant
+     */
     @FXML
     public void ConfirmEtudAction ()  {
         try(        UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
@@ -394,7 +423,19 @@ public class ManagerController implements Initializable {
     }
 
 
-
+    /**
+     * cette partie concerne les flèches qui permettent d'accéder à la semaine prochaine et la semaine dernière d'un planning
+     *
+     * Chaque fois qu'on appuie sur la flèche elle efface tout les fils de la scène 1 regarde si l'utilisateur veut filtrer par formation dans ce cas-là on appelle la fonction castdatetimebyformation
+     *
+     * et s'il veut filtrer par enseignant on appelle la fonction castdatetimebyteacherlogin
+     *
+     * À la fin quand notre tableau de créneau est bien rempli on appelle la fonction drawrect
+     *
+     * qui permet d'afficher le planning
+     *
+     *
+     */
 
     public void arrowinputback(){ // pour voir la semaine precedente
 
@@ -456,6 +497,9 @@ public class ManagerController implements Initializable {
 
     }
 
+    /**
+     * Cette fonction concerne la partie ajouter créneau elle permet de mettre la date de aujourd'hui comme valeur par défaut quand un utilisateur va choisir une date et elle ne laisse pas le choix de choisir une date inférieure à la date de aujourd'hui
+     */
 
     public void disabledate() {
         md_date.setValue(java.time.LocalDate.now());
@@ -535,16 +579,7 @@ public class ManagerController implements Initializable {
                     })
                 ));
 
-
-
-
-
     }
-
-    SpinnerValueFactory<Integer> valuehoure = new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 19, 1);
-    SpinnerValueFactory<Integer> valueminute = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 1);
-
-    SpinnerValueFactory<Integer> valueminute2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 1);
 
 
     public void setPickfomation(){
@@ -564,6 +599,11 @@ public class ManagerController implements Initializable {
 
         });
     }
+
+    /**
+     *
+     * Cette fonction permet de naviguer dans l'application pour accéder au compte de l'utilisateur, au planning, À la partie ajouter où il peut ajouter un créneau, et à la partie absences où il peut regarder les absences des formations
+     */
 
     public void handleclicks(ActionEvent e) { //pour changer l'ecran
 
@@ -670,6 +710,9 @@ public class ManagerController implements Initializable {
         return etudiants;
     }
 
+    /**
+     * Cette fonction permet de nettoyer le planning et enlever tous les créneaux ajoutés
+     */
 
     public void clearscene(){
         for (Label g : l) {
@@ -678,6 +721,13 @@ public class ManagerController implements Initializable {
         }
 
     }
+
+
+    /**
+     *
+     * Ce bouton concerne la partie planning et il sert à filtrer le planning par formation ou par enseignant chaque fois qu'on clique sur ce bouton on revient à la date actuelle, on nettoie le planning en utilisant la fonction précédente, on remplit notre créneau par rapport au filtrage choisi, et à la fin on appelle la fonction qui permet d'afficher le planning
+     */
+
 
     @FXML
     public  void validatebuttononaction (ActionEvent e){
@@ -706,9 +756,6 @@ public class ManagerController implements Initializable {
     }
 
 
-
-    @FXML
-    Group group = new Group();
 
     public double houretopxl(double a) {
         return (a - 8) * 45.9 + 47;
@@ -747,6 +794,14 @@ public class ManagerController implements Initializable {
     }
 
 
+    /**
+     * Cette fonction concerne la partie planning, elle appelle la fonction de la DAOcréneau, cette fonction utilise une requête SQL qui permet D'initialiser un créneau d'un enseignant entre 2 dates données et à partir de son login
+     * @param w W dans cette fonction sert à naviguer dans le planning par défaut W égal à 0 donc la fonction get mondays renvoi le lundi de cette semaine et get mondays plus 6 renvoie le dimanche de la semaine
+     * Quand on clique sur la flèche suivante où précédente on incrémente ou bien on décrémente W comme ça on aura accès au lundi et dimanche de la semaine précédente ou des semaines suivantes
+     * @param login c'est le login de l'enseignant
+     * @param cren Créneau représente les créneaux de la semaine,Quand on appelle cette fonction on remplit le créneau avec le planning de la semaine sélectionnée
+     */
+
     public void castdatetimebyteacherlogin(int w, String login, String[][] cren) { //fonction qui remplie une liste des creneaux d'une semaine
         setI(0);
         try (CreneauxDAO c2 = new CreneauxDAO();){
@@ -756,6 +811,8 @@ public class ManagerController implements Initializable {
         }
 
     }
+
+    // la meme chose cette fois ci avec le nom d'une formation
     public void castdatetimebyformation(int w,String formation, String[][] cren) {//fonction qui remplie une liste des creneaux d'une semaine
         setI(0);
         try (CreneauxDAO c2 = new CreneauxDAO();){
@@ -765,6 +822,11 @@ public class ManagerController implements Initializable {
         }
 
     }
+
+    /**
+     *Cette fonction concerne le bouton ajouter créneau elle prend en paramètre la date l'heure de début l'heure de fin le nom du bâtiment le numéro de la salle le nom de la formation le nom du cours la nature du cours et l'enseignant
+     *
+     */
     @FXML
     public  void addcreneau (ActionEvent e) {
         c.insertcreneau(md_date,md_h_d,md_m_d,md_h_f,md_m_f,md_bat,md_s,md_f,md_c,md_n,md_ens,ajoutermessage);
@@ -831,6 +893,11 @@ public class ManagerController implements Initializable {
         }
     }
 
+    /**
+     * Quand on clique sur un créneau dans le planning ça nous affiche une autre fenêtre c'est dans cette fenêtre où on peut modifier le planning
+     */
+
+
     public void switchtopopupscene() { // on change l'ecran si c'est bon
 
         try {
@@ -849,6 +916,10 @@ public class ManagerController implements Initializable {
             e.getCause();
         }
     }
+
+    /**
+     * Dans la partie absence si on clique sur l'absence d'un étudiant ça va nous ouvrir une autre fenêtre c'est là où on pourrait justifier l'absence de cet étudiant et Regardez tous ces absences
+     */
 
     public void switchtodetailabs() { // on change l'ecran si c'est bon
 
@@ -869,6 +940,10 @@ public class ManagerController implements Initializable {
         }
     }
 
+    /**
+     * Dans la partie mon compte si on clique sur le bouton à côté du mot de passe avant nous ouvrir une autre fenêtre qui va nous permettre de changer le mot de passe
+     */
+
     public void swithtoPasseditscene() {
         try {
             Parent root = FXMLLoader.load(App.class.getResource("PassEditpopup.fxml"));
@@ -887,17 +962,9 @@ public class ManagerController implements Initializable {
         }
     }
 
-    @FXML
-    private Label welcomeText;
-
-    @FXML
-    private Label loginmessage;
-
-    @FXML
-    private TextField usernametxt;
-    @FXML
-    private PasswordField passwrdtxt;
-
+    /**
+     * Cette fonction permet d'afficher le nom le prénom le mail le mot de passe masqué et le login de l'utilisateur
+     */
 
     public void affichageinfo()  {
         try(ResponsableDAO responsableDAO = new ResponsableDAO();) {
