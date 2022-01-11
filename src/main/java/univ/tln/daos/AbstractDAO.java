@@ -24,8 +24,8 @@ public abstract class AbstractDAO<E extends Object> implements DAO<E> {
         Connection _connection = null;
         PreparedStatement _findPS = null, _persistPS = null, _updatePS = null;
         try {
-            DatabaseConnection connection = new DatabaseConnection();
-            Connection connection1 = connection.connectDB();
+            DatabaseConnection connection2 = new DatabaseConnection();
+            Connection connection1 = connection2.connectDB();
             _connection = connection1;
             _findPS = _connection.prepareStatement(findPS);
             _persistPS = _connection.prepareStatement(persistPS, Statement.RETURN_GENERATED_KEYS);

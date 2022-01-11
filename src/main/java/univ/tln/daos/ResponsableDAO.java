@@ -140,8 +140,6 @@ public class ResponsableDAO extends AbstractDAO<Responsable>{
             responsable.setPrenom(resultSet.getString("PRENOM"));
             responsable.setPassword(resultSet.getString("PASSWORD"));
         }
-
-        preparedStatement.close();
         return responsable;
     }
 

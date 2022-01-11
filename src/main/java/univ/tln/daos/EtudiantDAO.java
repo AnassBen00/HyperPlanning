@@ -66,7 +66,7 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
     }
 
     public List<Etudiant> findAll() {
-        List<Etudiant> etudiants = new ArrayList<Etudiant>();
+        List<Etudiant> etudiants = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement("SELECT * from ETUDIANT join UTILISATEUR  ON ETUDIANT.login = UTILISATEUR.login ");
             ResultSet resultset = preparedStatement.executeQuery();
@@ -85,7 +85,7 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
 
 
     public List<Etudiant> findbygrp(String grp) {
-        List<Etudiant> etudiants = new ArrayList<Etudiant>();
+        List<Etudiant> etudiants = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement("select distinct u.login,u.nom,u.prenom,nbabs, from UTILISATEUR u join (SELECT abs.login,count(abs.login) as nbabs from absence abs join groups g on abs.id_g=g.ID_G where nom=? group by abs.login)  absn on u.LOGIN=absn.login ");
             preparedStatement.setString(1, grp);

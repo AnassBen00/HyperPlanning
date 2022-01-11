@@ -12,6 +12,7 @@ import java.util.List;
 
 public class
 AbsenceDAO extends AbstractDAO<Absence>{
+    PreparedStatement preparedStatement;
 
     public AbsenceDAO() throws DataAccessException, SQLException {
         super("insert into absence values(?,select id_s from salle where batiment =? and num=?,select id_g from groups where nom=?,?,false)",
@@ -95,16 +96,17 @@ AbsenceDAO extends AbstractDAO<Absence>{
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
         }
+
     }
-    public void update(String login,String date_d,boolean justified) throws DataAccessException {
+    public void update(String login,String date_d,boolean justified)  {
         try {
-            PreparedStatement statement =connection.prepareStatement("update absence set justified =? WHERE LOGIN=? and date_d = ?");
-            statement.setBoolean(1, justified);
-            statement.setString(2, login);
-            statement.setString(3, date_d);
-            statement.executeUpdate();
-        } catch (SQLException throwables) {
-            throw new DataAccessException(throwables.getLocalizedMessage());
+            preparedStatement =connection.prepareStatement("update absence set justified =? WHERE LOGIN=? and date_d = ?");
+            preparedStatement.setBoolean(1, justified);
+            preparedStatement.setString(2, login);
+            preparedStatement.setString(3, date_d);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

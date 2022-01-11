@@ -14,17 +14,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import lombok.SneakyThrows;
 import univ.tln.daos.AbsenceDAO;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Absence;
-import univ.tln.entities.utilisateurs.Etudiant;
-
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ResourceBundle;
 
 public class
@@ -35,6 +32,8 @@ AbsdetailController implements Initializable  {
 
     @FXML
     private Label managerabstitle;
+    @FXML
+    private Button cancelbtn;
 
     @SneakyThrows
     @Override
@@ -53,26 +52,26 @@ AbsdetailController implements Initializable  {
 
         absdetails.setEditable(true);
 
-        TableColumn<Absence, String> date_debut//
-                = new TableColumn<Absence, String>("date debut cours");
-        date_debut.setEditable(false);
+        TableColumn<Absence, String> datedebut//
+                = new TableColumn<>("date debut cours");
+        datedebut.setEditable(false);
         TableColumn<Absence, String> nomcr//
-                = new TableColumn<Absence, String>("nom matiere");
+                = new TableColumn<>("nom matiere");
         nomcr.setEditable(false);
         TableColumn<Absence, String> nature//
-                = new TableColumn<Absence, String>("nature ");
+                = new TableColumn<>("nature ");
         nature.setEditable(false);
         TableColumn<Absence, Boolean> absenceCol//
-                = new TableColumn<Absence, Boolean>("Absence");
+                = new TableColumn<>("Absence");
         absenceCol.setEditable(true);
 
         //nom
 
-        date_debut.setCellValueFactory(new PropertyValueFactory<>("date_d"));
+        datedebut.setCellValueFactory(new PropertyValueFactory<>("date_d"));
 
-        date_debut.setCellFactory(TextFieldTableCell.<Absence>forTableColumn());
+        datedebut.setCellFactory(TextFieldTableCell.<Absence>forTableColumn());
 
-        date_debut.setMinWidth(200);
+        datedebut.setMinWidth(200);
 
         // prenom
 
@@ -94,7 +93,7 @@ AbsdetailController implements Initializable  {
             @Override
             public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Absence, Boolean> param) {
                 Absence absence = param.getValue();
-                AbsenceDAO absenceDAO = new AbsenceDAO();
+
                 SimpleBooleanProperty booleanProp = new SimpleBooleanProperty();
                 booleanProp.set(absence.isJustified());
                 booleanProp.addListener(new ChangeListener<Boolean>() {
@@ -103,7 +102,10 @@ AbsdetailController implements Initializable  {
                     @Override
                     public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
                                         Boolean newValue) {
-                        absenceDAO.update(absence.getLogin(),absence.getDate_d(),newValue);
+
+                        try (AbsenceDAO absenceDAO = new AbsenceDAO()) {
+                            absenceDAO.update(absence.getLogin(), absence.getDate_d(), newValue);
+                        }
                     }
                 });
                 return booleanProp;
@@ -121,13 +123,26 @@ AbsdetailController implements Initializable  {
         ObservableList<Absence> list = afficherAbsences();
         absdetails.setItems(list);
 
-        absdetails.getColumns().addAll(date_debut,nomcr, nature, absenceCol);
+        absdetails.getColumns().addAll(datedebut,nomcr, nature, absenceCol);
 
     }
     public ObservableList<Absence> afficherAbsences() throws SQLException, DataAccessException {
-        AbsenceDAO absenceDAO = new AbsenceDAO();
-        ObservableList<Absence> absences = FXCollections.observableArrayList(absenceDAO.findAllabs(ManagerController.m));
-        return absences;
+
+        try(AbsenceDAO absenceDAO = new AbsenceDAO();) {
+
+
+           return FXCollections.observableArrayList(absenceDAO.findAllabs(ManagerController.m));
+
+        }
     }
+
+
+    @FXML
+    void clbtnOnAction(ActionEvent event) {
+        Stage stage = (Stage) cancelbtn.getScene().getWindow();
+        stage.close();
+    }
+
+
 
 }

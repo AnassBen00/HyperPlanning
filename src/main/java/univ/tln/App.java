@@ -42,8 +42,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(App.class.getResource("hello-view.fxml"));
         stage.initStyle(StageStyle.UNDECORATED);
-        Scene scene = new Scene(root, 540, 400);
-        stage.setScene(scene);
+        Scene scene2 = new Scene(root, 540, 400);
+        stage.setScene(scene2);
         stage.show();
     }
 

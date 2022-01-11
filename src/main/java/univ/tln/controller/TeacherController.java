@@ -48,17 +48,10 @@ public class TeacherController implements Initializable {
     int maxcours = 60;
     private String[][] creneau = new String[maxcours][8];
 
-    EnseignantDAO enseignantDAO;
 
-    {
-        try {
-            enseignantDAO = new EnseignantDAO();
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
+
+
 
     @FXML
     private AnchorPane scene1; //le planning
@@ -348,7 +341,7 @@ public class TeacherController implements Initializable {
     public void castdatetime(int w, String[][] cren) { //fonction qui remplie une liste des creneaux d'une semaine
         setI(0);
         try (CreneauxDAO c2 = new CreneauxDAO();){
-            setI( c2.castdatetime2(getmonday(w), getmonday(w + 6), cren ,i));
+            setI( c2.castdatetime2(getmonday(w), getmonday(w + 6), cren));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -482,11 +475,16 @@ public class TeacherController implements Initializable {
     private PasswordField passwrdtxt;
 
     public void AffichageInfo() throws SQLException {
-        nameField.setText(enseignantDAO.findbyLogin(LoginController.user1).getPrenom());
-        lastnameField.setText(enseignantDAO.findbyLogin(LoginController.user1).getNom());
-        emailField.setText(enseignantDAO.findbyLogin(LoginController.user1).getEmail());
-        passwordField.setText(LoginController.psswrd);
-        loginField.setText(LoginController.user1);
+        try(EnseignantDAO enseignantDAO = new EnseignantDAO();) {
+
+            nameField.setText(enseignantDAO.findbyLogin(LoginController.user1).getPrenom());
+            lastnameField.setText(enseignantDAO.findbyLogin(LoginController.user1).getNom());
+            emailField.setText(enseignantDAO.findbyLogin(LoginController.user1).getEmail());
+            passwordField.setText(LoginController.psswrd);
+            loginField.setText(LoginController.user1);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public void swithtoPasseditscene() {
@@ -513,9 +511,6 @@ public class TeacherController implements Initializable {
         swithtoPasseditscene();
     }
 
-    @FXML
-    void SaveOnAction(ActionEvent event) {
 
-    }
 
 }

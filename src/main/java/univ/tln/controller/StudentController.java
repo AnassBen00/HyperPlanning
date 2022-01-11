@@ -30,6 +30,8 @@ import univ.tln.daos.CreneauxDAO;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Absence;
+import univ.tln.entities.utilisateurs.Etudiant;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -46,7 +48,7 @@ public class StudentController implements Initializable {
     @Setter
     public static int i ;
     int max_cours = 60;
-    EtudiantDAO etudiantDAO = new EtudiantDAO();
+
 
     private static String[][] creneau= new String[60][10];
     @FXML
@@ -136,8 +138,6 @@ public class StudentController implements Initializable {
     List<Label> l = new ArrayList<>();
     List<Label> l2 = new ArrayList<>();
 
-    public StudentController() throws SQLException, DataAccessException {
-    }
 
 
     @Override
@@ -145,20 +145,11 @@ public class StudentController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         castdatetime(0,creneau);
         inistudentname();
-
-        try {
-            drawrect(); //on dessine l'emploie du temps
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        drawrect(); //on dessine l'emploie du temps
         arrowinputback();
         arrowinputfront();
         setcalendar(0);
-        try {
-            AffichageInfo();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        AffichageInfo();
         initabsdetail();
     }
 
@@ -256,11 +247,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         }
         castdatetime(r,creneau);
 
-        try {
-            drawrect();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        drawrect();
         setcalendar(r);
 
         r=r-7;
@@ -280,11 +267,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
             }
             castdatetime(w,creneau);
 
-            try {
-                drawrect();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            drawrect();
             setcalendar(w);
 
 
@@ -343,7 +326,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
     public void castdatetime(int Z,String[][] cren) { //fonction qui remplie une liste des creneaux d'une semaine
         try (CreneauxDAO c2 = new CreneauxDAO();){
-            setI(c2.castdatetime(getmonday(Z), getmonday(Z + 6), cren ,i));
+            setI(c2.castdatetime(getmonday(Z), getmonday(Z + 6), cren ));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -355,7 +338,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
 
 
         @FXML
-    public void drawrect() throws ParseException { //fonction qui dessine l'emlpoie du temps
+    public void drawrect()  { //fonction qui dessine l'emlpoie du temps
     Calendar x = Calendar.getInstance();
 
 
@@ -363,26 +346,30 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         String m ;
         Label cours = new Label();
         l.add(cours);
-        Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[g][0]);
-        Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[g][1]);
-        x.setTime(date1);
-        int dayOfWeek = x.get(Calendar.DAY_OF_WEEK);
-        datetopxl(dayOfWeek);
-        double hourofday = x.get(Calendar.HOUR_OF_DAY) + (float) x.get(Calendar.MINUTE) / 60;
+        try {
+            Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[g][0]);
+            Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[g][1]);
+            x.setTime(date1);
+            int dayOfWeek = x.get(Calendar.DAY_OF_WEEK);
+            datetopxl(dayOfWeek);
+            double hourofday = x.get(Calendar.HOUR_OF_DAY) + (float) x.get(Calendar.MINUTE) / 60;
 
-        int z = datetopxl(dayOfWeek);
-        double y = houretopxl(hourofday);
-        x.setTime(date2);
-        double hourofday2 = x.get(Calendar.HOUR_OF_DAY) + (float) x.get(Calendar.MINUTE) / 60;
-        double h = houretopxl(hourofday2) - y;
+            int z = datetopxl(dayOfWeek);
+            double y = houretopxl(hourofday);
+            x.setTime(date2);
+            double hourofday2 = x.get(Calendar.HOUR_OF_DAY) + (float) x.get(Calendar.MINUTE) / 60;
+            double h = houretopxl(hourofday2) - y;
 
 
-        cours.setTranslateX(z);
-        cours.setTranslateY(y);
-        cours.setMinWidth(126);
-        cours.setMaxWidth(126);
-        cours.setMaxHeight(h);
-        cours.setMinHeight(h);
+            cours.setTranslateX(z);
+            cours.setTranslateY(y);
+            cours.setMinWidth(126);
+            cours.setMaxWidth(126);
+            cours.setMaxHeight(h);
+            cours.setMinHeight(h);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (creneau[g][4].equals("true")) m = "Oui";
         else m = "Non";
         cours.setText("Salle: " + creneau[g][2] + " " + creneau[g][3] + "\n" + creneau[g][5] + " " + creneau[g][6] + "\n"+creneau[g][8]+ "\n"+creneau[g][9]+ "\nprojecteur: " + m );
@@ -412,12 +399,16 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
     @FXML
     private  PasswordField passwrdtxt;
 
-    public void AffichageInfo() throws SQLException {
-        nameField.setText(etudiantDAO.findbyLogin(LoginController.user1).getPrenom());
-        lastnameField.setText(etudiantDAO.findbyLogin(LoginController.user1).getNom());
-        emailField.setText(etudiantDAO.findbyLogin(LoginController.user1).getEmail());
-        passwordField.setText(LoginController.psswrd);
-        loginField.setText(LoginController.user1);
+    public void AffichageInfo() {
+        try(EtudiantDAO etudiantDAO = new EtudiantDAO();) {
+            nameField.setText(etudiantDAO.findbyLogin(LoginController.user1).getPrenom());
+            lastnameField.setText(etudiantDAO.findbyLogin(LoginController.user1).getNom());
+            emailField.setText(etudiantDAO.findbyLogin(LoginController.user1).getEmail());
+            passwordField.setText(LoginController.psswrd);
+            loginField.setText(LoginController.user1);
+        } catch (DataAccessException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void swithtoPasseditscene() {
@@ -444,10 +435,7 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         swithtoPasseditscene();
 
     }
-    @FXML
-    void SaveOnAction(ActionEvent event) {
 
-    }
 
 
 

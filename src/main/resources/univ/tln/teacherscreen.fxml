@@ -51,7 +51,6 @@
                         <Image url="@corner.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="saveButton" layoutX="428.0" layoutY="460.0" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="25.0" prefWidth="151.0" stylesheets="@styes.css" text="Sauvegarder" textFill="#f8f3f3" />
                   <Button layoutX="422.0" layoutY="273.0" mnemonicParsing="false" onAction="#editPass" stylesheets="@styes.css" text="Edit" textFill="#f8f5f5" />
                   <Label layoutX="342.0" layoutY="14.0" prefHeight="95.0" prefWidth="353.0" text="Données Personnelles" textFill="#500f75">
                      <padding>
@@ -181,14 +180,14 @@
                         <Image url="@right.png" />
                      </image>
                   </ImageView>
+                  <Label fx:id="name" alignment="CENTER_RIGHT" layoutX="824.0" layoutY="3.0" prefHeight="72.0" prefWidth="187.0" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>
       </StackPane>
-      <Label fx:id="name" layoutX="1090.0" layoutY="26.0" prefHeight="67.0" prefWidth="187.0" textFill="WHITE">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>

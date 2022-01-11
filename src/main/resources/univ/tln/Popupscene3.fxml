@@ -55,13 +55,18 @@
    <right>
       <AnchorPane fx:id="abscence" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
          <children>
-            <Button layoutX="310.0" layoutY="565.0" mnemonicParsing="false" text="terminer" textFill="WHITE" />
+            <Button fx:id="cancelbtn" layoutX="310.0" layoutY="565.0" mnemonicParsing="false" onAction="#clbtnOnAction" text="terminer" textFill="WHITE" />
             <Label fx:id="managerabstitle" alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="14.0" prefHeight="31.0" prefWidth="634.0" textFill="#601d8d">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <TableView fx:id="absdetails" layoutX="5.0" layoutY="143.0" prefHeight="373.0" prefWidth="667.0" />
+            <TableView fx:id="absdetails" layoutX="-2.0" layoutY="143.0" prefHeight="373.0" prefWidth="685.0" />
+            <Label layoutX="124.0" layoutY="94.0" prefHeight="26.0" prefWidth="430.0" text="Veuillez cocher les absences justifiées " textFill="#8a117f">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </right>

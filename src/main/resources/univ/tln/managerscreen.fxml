@@ -55,14 +55,6 @@
                   <Button layoutX="504.0" layoutY="590.0" mnemonicParsing="false" text="Modifier" textFill="WHITE" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="scene4" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="180.0" prefHeight="190.0" prefWidth="522.0" style="-fx-background-color: #fff;" text="Informations" textFill="#ab1c1c">
-                     <font>
-                        <Font size="76.0" />
-                     </font></Label>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="scene2" layoutX="10.0" layoutY="10.0" prefHeight="645.0" prefWidth="1007.0" style="-fx-background-color: #fff;">
                <children>
                   <TabPane prefHeight="647.0" prefWidth="1007.0" stylesheets="@styes.css" tabClosingPolicy="UNAVAILABLE">
@@ -90,7 +82,7 @@
                                     <ComboBox fx:id="md_s" layoutX="468.0" layoutY="182.0" prefWidth="150.0" />
                                     <ComboBox fx:id="md_n" layoutX="845.0" layoutY="182.0" prefWidth="150.0" />
                                     <Label layoutX="729.0" layoutY="186.0" text="Nature cours" />
-                                    <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="805.0" layoutY="411.0">
+                                    <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="808.0" layoutY="411.0">
                                        <image>
                                           <Image url="@corner.png" />
                                        </image>
@@ -118,13 +110,19 @@
                                    <TextField fx:id="passwordEtdId" layoutX="441.0" layoutY="198.0" />
                                    <Button fx:id="confirmAjoutEtudiantId" layoutX="399.0" layoutY="515.0" mnemonicParsing="false" onAction="#ConfirmEtudAction" prefHeight="24.0" prefWidth="260.0" style="-fx-background-color: Green;" text="ajouter" textFill="WHITE" />
                                    <Label layoutX="515.0" layoutY="282.0" />
-                                   <Label layoutX="676.0" layoutY="200.0" prefHeight="17.0" prefWidth="45.0" text="Promo" />
+                                   <Label layoutX="683.0" layoutY="202.0" prefHeight="17.0" prefWidth="45.0" text="Promo" />
                                    <Label layoutX="515.0" layoutY="300.0" />
                                    <Label layoutX="682.0" layoutY="130.0" text="Niveau" />
                                    <ComboBox fx:id="idNiveau" layoutX="762.0" layoutY="125.0" prefWidth="150.0" />
                                    <TextField fx:id="idPromo" editable="false" layoutX="763.0" layoutY="198.0" text="2021/2022" />
-                                    <Label layoutX="681.0" layoutY="339.0" text="Groupe" />
-                                    <ComboBox fx:id="idGroupe" layoutX="764.0" layoutY="335.0" prefWidth="150.0" />
+                                    <Label layoutX="681.0" layoutY="274.0" text="Groupe" />
+                                    <ComboBox fx:id="idGroupe" layoutX="762.0" layoutY="266.0" prefWidth="150.0" />
+                                    <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="809.0" layoutY="415.0">
+                                       <image>
+                                          <Image url="@corner.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="ajouteretudmessage" alignment="CENTER" contentDisplay="CENTER" layoutX="384.0" layoutY="460.0" prefHeight="24.0" prefWidth="288.0" textFill="#05ff71" />
                                 </children></AnchorPane>
                           </content>
                        </Tab>
@@ -143,6 +141,12 @@
                                    <TextField fx:id="emailId" layoutX="603.0" layoutY="124.0" />
                                    <TextField fx:id="passwordId" layoutX="603.0" layoutY="196.0" />
                                    <Button fx:id="confirmAjoutEnseignantId" layoutX="396.0" layoutY="446.0" mnemonicParsing="false" onAction="#ConfirmAction" prefHeight="24.0" prefWidth="260.0" style="-fx-background-color: Green;" text="ajouter" textFill="WHITE" />
+                                    <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="809.0" layoutY="415.0">
+                                       <image>
+                                          <Image url="@corner.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="ajouterprofmessage" alignment="CENTER" contentDisplay="CENTER" layoutX="382.0" layoutY="397.0" prefHeight="24.0" prefWidth="288.0" textFill="#05ff71" />
                                 </children></AnchorPane>
                           </content>
                        </Tab>
@@ -241,14 +245,6 @@
                </font>
             </Button>
             <Button fx:id="btnaccount" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Mon compte" textAlignment="CENTER" textFill="WHITE">
-               <padding>
-                  <Insets left="50.0" />
-               </padding>
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnsettings" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Informations" textFill="WHITE">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -377,7 +373,7 @@
             </AnchorPane>
          </children>
       </StackPane>
-      <Label fx:id="name" layoutX="1067.0" layoutY="15.0" prefHeight="79.0" prefWidth="200.0" textFill="WHITE">
+      <Label fx:id="name" alignment="CENTER_RIGHT" layoutX="1062.0" layoutY="10.0" prefHeight="72.0" prefWidth="205.0" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>

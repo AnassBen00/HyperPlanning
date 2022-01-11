@@ -35,6 +35,7 @@ import univ.tln.entities.groupes.Groupe;
 import univ.tln.entities.groupes.GroupeEtudiant;
 import univ.tln.entities.utilisateurs.Enseignant;
 import univ.tln.entities.utilisateurs.Etudiant;
+import univ.tln.entities.utilisateurs.Responsable;
 import univ.tln.entities.utilisateurs.Utilisateur;
 
 import java.io.IOException;
@@ -56,7 +57,7 @@ public class ManagerController implements Initializable {
 
     CreneauxDAO c = new CreneauxDAO();
 
-    ResponsableDAO responsableDAO = new ResponsableDAO();
+
 
     private static   String[][] creneau = new String[60][7];
 
@@ -237,6 +238,13 @@ public class ManagerController implements Initializable {
     private Label ajoutermessage;
 
 
+    @FXML
+    private Label ajouteretudmessage;
+
+    @FXML
+    private Label ajouterprofmessage;
+
+
     private int r=-7;
     private int w = 7;
     List<Label> l = new ArrayList<>();
@@ -251,13 +259,9 @@ public class ManagerController implements Initializable {
     @Setter
     public  static   int i;
 
-    public ManagerController() throws SQLException, DataAccessException {
-    }
-
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         disabledate();
         initnale();
         setspinner();
@@ -267,11 +271,26 @@ public class ManagerController implements Initializable {
         initens();
         inittableAbsence();
         setPickfomation();
-        try {
-            affichageinfo();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        affichageinfo();
+        initniveaux();
+        initgroups();
+        initfiliere();
+        setminuteandhour();
+        drawrect(); //on dessine l'emploie du temps
+        arrowinputback();
+        arrowinputfront();
+        setcalendar(0);
+    }
+
+    public void setminuteandhour(){
+
+
+        md_h_d.setValueFactory(valuehoure);
+        md_m_d.setValueFactory(valueminute);
+
+    }
+
+    public void initniveaux(){
 
         idNiveau.getItems().addAll(
                 "licence 1",
@@ -280,79 +299,50 @@ public class ManagerController implements Initializable {
                 "master 1",
                 "master 2"
         );
+    }
 
 
-        GroupeDAO groupeDAO = null;
-        try {
-            groupeDAO = new GroupeDAO();
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void initgroups(){
+
+
         List<Groupe> groupes = new ArrayList<>();
-        try {
+        try (GroupeDAO groupeDAO = new GroupeDAO();) {
+
             groupes = groupeDAO.findAll();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (DataAccessException | SQLException e) {
+            e.printStackTrace();
         }
-        finally {
-            try {
-                groupeDAO.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+
         List<String> nomGroupes = new ArrayList<>();
-        for(Groupe g : groupes){
+        for (Groupe g : groupes) {
 
             nomGroupes.add(g.getNomDuGroupe());
         }
-
-
         idGroupe.getItems().addAll(nomGroupes);
-
-        FiliereDAO filiereDAO = null;
-        try {
-            filiereDAO = new FiliereDAO();
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        List<Filiere> filieres = new ArrayList<>();
-        try {
-            filieres = filiereDAO.findAll();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        finally {
-            try {
-                filiereDAO.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        List<String> nomFilieres = new ArrayList<>();
-        for(Filiere f : filieres)
-            nomFilieres.add(f.getNomDuFiliere());
-
-        try {
-            md_h_d.setValueFactory(valuehoure);
-            md_m_d.setValueFactory(valueminute);
-            drawrect(); //on dessine l'emploie du temps
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        arrowinputback();
-        arrowinputfront();
-        setcalendar(0);
     }
+
+
     public void initnale() { //fonction qui remplie une liste des creneaux d'une semaine
 
         name.setText("Login: " + LoginController.user1 + "\n" +LoginController.name1);
         name.setTextFill(Color.rgb(255, 255, 255));
 
+    }
+
+    public void initfiliere(){
+        List<Filiere> filieres = null;
+        try (FiliereDAO filiereDAO = new FiliereDAO();) {
+
+            filieres = new ArrayList<>();
+
+            filiereDAO.findAll();
+        } catch (SQLException | DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        List<String> nomFilieres = new ArrayList<>();
+        for (Filiere f : filieres)
+            nomFilieres.add(f.getNomDuFiliere());
     }
 
     @FXML
@@ -367,9 +357,13 @@ public class ManagerController implements Initializable {
         enseignantDAO.persist(new Enseignant(loginId.getText(), sha256()
                 .hashString(passwordId.getText(), StandardCharsets.UTF_8)
                 .toString(), nomId.getText(), prenomId.getText(), emailId.getText()));
+
+            ajouterprofmessage.setTextFill(Color.rgb(0, 133, 33));
+            ajouterprofmessage.setText("etudiant bien ajouter");
         
         } catch (DataAccessException | SQLException ex) {
-            ex.printStackTrace();
+            ajouterprofmessage.setTextFill(Color.rgb(220, 0, 0));
+            ajouterprofmessage.setText("données saisies invalide");
         }
     }
         
@@ -389,9 +383,12 @@ public class ManagerController implements Initializable {
                     .hashString(passwordEtdId.getText(), StandardCharsets.UTF_8)
                     .toString(), nomEtdId.getText(), prenomEtdId.getText(), emailEtdId.getText(), idNiveau.getValue(), idPromo.getText(), 1));
             groupeEtudiantDAO.persist(new GroupeEtudiant(groupeDAO.find(idGroupe.getValue()).getId(),loginEtdId.getText()));
+            ajouteretudmessage.setTextFill(Color.rgb(0, 133, 33));
+            ajouteretudmessage.setText("etudiant bien ajouter");
             
         } catch (DataAccessException | SQLException ex) {
-            ex.printStackTrace();
+            ajouteretudmessage.setTextFill(Color.rgb(220, 0, 0));
+            ajouteretudmessage.setText("données saisies invalide");
         } 
        
     }
@@ -422,11 +419,7 @@ public class ManagerController implements Initializable {
 
                 castdatetimebyformation(r,pickfomation.getValue(),creneau);
             }
-            try {
-                drawrect();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            drawrect();
             setcalendar(r);
 
 
@@ -454,11 +447,7 @@ public class ManagerController implements Initializable {
 
                 castdatetimebyformation(w,pickfomation.getValue(),creneau);
             }
-            try {
-                drawrect();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            drawrect();
             setcalendar(w);
 
             w=w+7;
@@ -487,32 +476,20 @@ public class ManagerController implements Initializable {
 
 
         md_n.valueProperty().addListener((options, oldValue, newValue) ->{
-            try {
-                c.initialize_enseignant(md_date,md_m_f,md_m_d,md_h_f,md_h_d, md_ens,md_c,md_n,md_f);
-            } catch (SQLException | ParseException e) {
-                e.printStackTrace();
-            }
+            c.initialize_enseignant(md_date,md_m_f,md_m_d,md_h_f,md_h_d, md_ens,md_c,md_n,md_f);
 
         });
     }
 
     public void initSalle(){
         md_bat.valueProperty().addListener((options, oldValue, newValue) ->{
-            try {
-                c.initialize_salle(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date,md_s);
-            } catch (SQLException | ParseException e) {
-                e.printStackTrace();
-            }
+            c.initialize_salle(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date,md_s);
 
         });
     }
     public void initnature(){
         md_c.valueProperty().addListener((options1, oldValue1, newValue1) ->{
-            try {
-                c.initialize_nature_cours(md_f,md_c,md_n);
-            } catch (SQLException | ParseException e) {
-                e.printStackTrace();
-            }
+            c.initialize_nature_cours(md_f,md_c,md_n);
 
         });
 
@@ -520,20 +497,12 @@ public class ManagerController implements Initializable {
     public void initcours(){
 
         md_f.valueProperty().addListener((options, oldValue, newValue) ->{
-            try {
-                md_n.getItems().removeAll(md_n.getItems());
-                c.initialize_cours(md_f,md_c);
-                md_c.valueProperty().addListener((options1, oldValue1, newValue1) ->{
-                    try {
-                        c.initialize_nature_cours(md_f,md_c,md_n);
-                    } catch (SQLException | ParseException e) {
-                        e.printStackTrace();
-                    }
+            md_n.getItems().removeAll(md_n.getItems());
+            c.initialize_cours(md_f,md_c);
+            md_c.valueProperty().addListener((options1, oldValue1, newValue1) ->{
+                c.initialize_nature_cours(md_f,md_c,md_n);
 
-                });
-            } catch (SQLException | ParseException e) {
-                e.printStackTrace();
-            }
+            });
 
         });
     }
@@ -555,21 +524,13 @@ public class ManagerController implements Initializable {
         });
                 md_date.valueProperty().addListener((ov, oldValue, newValue) -> md_h_f.valueProperty().addListener((obs, oldValue3, newValue3) ->
                     md_m_f.valueProperty().addListener((obs2, oldValue2, newValue2) -> {
-                        try {
+
+                        c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date);
+                        c.initialize_formation(md_m_f,md_m_d,md_h_f,md_h_d,md_f, md_date);
+                        if (md_m_f.getValue() != null && md_h_f.getValue() != null) {
 
                             c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date);
                             c.initialize_formation(md_m_f,md_m_d,md_h_f,md_h_d,md_f, md_date);
-                        } catch (SQLException | ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (md_m_f.getValue() != null && md_h_f.getValue() != null) {
-
-                            try {
-                                c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date);
-                                c.initialize_formation(md_m_f,md_m_d,md_h_f,md_h_d,md_f, md_date);
-                            } catch (SQLException | ParseException e) {
-                                e.printStackTrace();
-                            }
                         }
                     })
                 ));
@@ -587,33 +548,17 @@ public class ManagerController implements Initializable {
 
 
     public void setPickfomation(){
-        try {
-            c.initialize_pickformation(filiereidd);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        c.initialize_pickformation(filiereidd);
         pickfomation.setOnMouseClicked(mouseEvent -> {
             pickteacher.valueProperty().set(null);
-            try {
-                c.initialize_pickformation(pickfomation);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            c.initialize_pickformation(pickfomation);
             boolean disable = !pickteacher.isDisabled();
             pickteacher.setDisable(disable);
 
         });
         pickteacher.setOnMouseClicked(mouseEvent -> {
-            try {
-                pickfomation.valueProperty().set(null);
-                c.initialize_pickenseignant(pickteacher);
-            } catch (SQLException | ParseException e) {
-                e.printStackTrace();
-            }
+            pickfomation.valueProperty().set(null);
+            c.initialize_pickenseignant(pickteacher);
             boolean disable = !pickfomation.isDisabled();
             pickfomation.setDisable(disable);
 
@@ -642,12 +587,6 @@ public class ManagerController implements Initializable {
             scene1.toFront();
             scenep.toFront();
 
-        } else if (e.getSource() == btnsettings) {
-
-            btnaccount.setBackground(new Background(new BackgroundFill(Color.rgb(63, 43, 99), CornerRadii.EMPTY, Insets.EMPTY)));
-
-            scene4.toFront();
-            scenes.toFront();
         } else if (e.getSource() == btnabsences) {
 
 
@@ -725,9 +664,7 @@ public class ManagerController implements Initializable {
 
             etudiants = FXCollections.observableArrayList(etudiantDAO.findbygrp(filiereidd.getValue()));
 
-        } catch (DataAccessException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (DataAccessException | SQLException e) {
             e.printStackTrace();
         }
         return etudiants;
@@ -751,21 +688,13 @@ public class ManagerController implements Initializable {
         if(pickfomation.getValue() == null && pickteacher.getValue() != null ) {
             clearscene();
             castdatetimebyteacherlogin(0, pickteacher.getValue(),creneau);
-            try {
-                drawrect();
-            } catch (ParseException ex) {
-                ex.printStackTrace();
-            }
+            drawrect();
             setcalendar(0);
         }
         else if (pickfomation.getValue() != null && pickteacher.getValue() == null ){
             clearscene();
             castdatetimebyformation(0, pickfomation.getValue(),creneau);
-            try {
-                drawrect();
-            } catch (ParseException ex) {
-                ex.printStackTrace();
-            }
+            drawrect();
             setcalendar(0);
         }
         else {
@@ -838,16 +767,12 @@ public class ManagerController implements Initializable {
     }
     @FXML
     public  void addcreneau (ActionEvent e) {
-        try {
-            c.insertcreneau(md_date,md_h_d,md_m_d,md_h_f,md_m_f,md_bat,md_s,md_f,md_c,md_n,md_ens,ajoutermessage);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        c.insertcreneau(md_date,md_h_d,md_m_d,md_h_f,md_m_f,md_bat,md_s,md_f,md_c,md_n,md_ens,ajoutermessage);
     }
 
 
     @FXML
-    public void drawrect() throws ParseException { //fonction qui dessine l'emlpoie du temps
+    public void drawrect()  { //fonction qui dessine l'emlpoie du temps
 
         Calendar x = Calendar.getInstance();
 
@@ -856,27 +781,29 @@ public class ManagerController implements Initializable {
 
             Label cours = new Label();
             l.add(cours);
+            try {
+                Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[q][0]);
+                Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[q][1]);
+                x.setTime(date1);
+                int dayOfWeek = x.get(Calendar.DAY_OF_WEEK);
+                datetopxl(dayOfWeek);
+                double hourofday = x.get(Calendar.HOUR_OF_DAY) + (float) x.get(Calendar.MINUTE) / 60;
 
-            Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[q][0]);
-            Date date2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creneau[q][1]);
-            x.setTime(date1);
-            int dayOfWeek = x.get(Calendar.DAY_OF_WEEK);
-            datetopxl(dayOfWeek);
-            double hourofday = x.get(Calendar.HOUR_OF_DAY) + (float) x.get(Calendar.MINUTE) / 60;
+                int z = datetopxl(dayOfWeek);
+                double y = houretopxl(hourofday);
+                x.setTime(date2);
+                double hourofday2 = x.get(Calendar.HOUR_OF_DAY) + (float) x.get(Calendar.MINUTE) / 60;
+                double w2 = houretopxl(hourofday2) - y;
+                cours.setTranslateX(z);
+                cours.setTranslateY(y);
+                cours.setMinWidth(126);
+                cours.setMaxWidth(126);
+                cours.setMaxHeight(w2);
+                cours.setMinHeight(w2);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-            int z = datetopxl(dayOfWeek);
-            double y = houretopxl(hourofday);
-            x.setTime(date2);
-            double hourofday2 = x.get(Calendar.HOUR_OF_DAY) + (float) x.get(Calendar.MINUTE) / 60;
-            double w2 = houretopxl(hourofday2) - y;
-
-
-            cours.setTranslateX(z);
-            cours.setTranslateY(y);
-            cours.setMinWidth(126);
-            cours.setMaxWidth(126);
-            cours.setMaxHeight(w2);
-            cours.setMinHeight(w2);
 
             if (creneau[q][4].equals("true")) message = "Oui";
             else message = "Non";
@@ -972,14 +899,17 @@ public class ManagerController implements Initializable {
     private PasswordField passwrdtxt;
 
 
-    public void affichageinfo() throws SQLException {
-        nameField.setText(responsableDAO.findbyLogin(LoginController.user1).getPrenom());
-        lastnameField.setText(responsableDAO.findbyLogin(LoginController.user1).getNom());
-        emailField.setText(responsableDAO.findbyLogin(LoginController.user1).getEmail());
-        passwordField.setText(LoginController.psswrd);
-        loginField.setText(LoginController.user1);
+    public void affichageinfo()  {
+        try(ResponsableDAO responsableDAO = new ResponsableDAO();) {
+            nameField.setText(responsableDAO.findbyLogin(LoginController.user1).getPrenom());
+            lastnameField.setText(responsableDAO.findbyLogin(LoginController.user1).getNom());
+            emailField.setText(responsableDAO.findbyLogin(LoginController.user1).getEmail());
+            passwordField.setText(LoginController.psswrd);
+            loginField.setText(LoginController.user1);
 
-
+        } catch (SQLException | DataAccessException e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -988,13 +918,8 @@ public class ManagerController implements Initializable {
         swithtoPasseditscene();
 
     }
-    @FXML
-    void SaveOnAction(ActionEvent event) {
 
-    }
-    @FXML
-    void delete_abs(ActionEvent event) {
 
-    }
+
 
 }
