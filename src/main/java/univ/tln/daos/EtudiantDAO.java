@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class EtudiantDAO extends AbstractDAO<Etudiant> {
-
-    private Statement statement;
+    
     private PreparedStatement preparedStatement;
 
     public EtudiantDAO() throws DataAccessException, SQLException {

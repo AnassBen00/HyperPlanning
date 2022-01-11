@@ -10,8 +10,7 @@ import java.util.Optional;
 
 public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
 
-    PreparedStatement preparedStatement;
-    Statement statement;
+    private PreparedStatement preparedStatement;
 
     public UtilisateurDAO() throws DataAccessException, SQLException {
         super("INSERT INTO UTILISATEUR (LOGIN, NOM, PRENOM, PASSWORD, EMAIL) VALUES(?,?,?,?,?);",

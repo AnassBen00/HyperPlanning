@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public class ResponsableDAO extends AbstractDAO<Responsable>{
 
-    Statement statement;
     PreparedStatement preparedStatement;
 
     public ResponsableDAO() throws DataAccessException, SQLException {
