@@ -466,6 +466,10 @@ insert into GROUP_COURS(ID_G, ID_C) values ( 5,2 ) ;
 
 UPDATE UTILISATEUR SET PASSWORD = HASH('SHA256', PASSWORD);
 
+INSERT INTO PUBLIC.CRENEAUX (DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ('2022-01-13 10:03:00.000000', '2022-01-13 12:04:00.000000', 4, 3, 4);
+INSERT INTO PUBLIC.CRENEAUX (DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ('2022-01-13 13:04:00.000000', '2022-01-13 16:05:00.000000', 10, 3, 9);
+INSERT INTO PUBLIC.CRENEAUX (DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ('2022-01-13 17:06:00.000000', '2022-01-13 19:06:00.000000', 5, 3, 3);
+
 //select distinct batiment from salle where ID_S not in ( select ID_S FROM CRENEAUX WHERE(DATE_D <= ? and date_f >= ?)and ((date_d between ? and ?)or (date_f between ? and ?)))
 
 //select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,U.NOM,U.PRENOM,U.EMAIL,C2.NOM,C2.NATURE from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C JOIN GROUP_ETUDIANT GE on GC.ID_G=GE.ID_G JOIN COURS C2 on GC.ID_C = C2.ID_C JOIN UTILISATEUR U on C2.LOGIN = U.LOGIN WHERE GE.LOGIN='U2WAs';
@@ -490,3 +494,5 @@ select * from absence;
 select abs.login from absence abs join GROUPs g on abs.ID_G=g.ID_G;
 
 select nom from UTILISATEUR where login = 'zoom'
+
+select date_d,date_f,num,BATIMENT,c.nom,nature,concat(u.nom,' ',u.prenom)as prof from CRENEAUX cr left join salle s on cr.id_s=s.ID_S join COURS c on cr.id_c=c.ID_C join UTILISATEUR U on c.LOGIN = U.LOGIN join GROUPS g on cr.id_g=g.ID_G

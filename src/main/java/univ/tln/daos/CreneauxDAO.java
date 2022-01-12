@@ -574,7 +574,7 @@ public static String dateformat = "yyyy-MM-dd";
     public int castdatetimebyformation(String formation, Calendar monday,Calendar sunday, String[][] creneau,int i) {//fonction qui remplie une liste des creneaux d'une semaine
 
         try  {
-            preparedStatement = connection.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,cours.NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) join GROUPS on GROUPS.ID_G=GROUP_COURS.ID_G where GROUPS.NOM=? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            preparedStatement = connection.prepareStatement("select date_d,date_f,BATIMENT,num,VIDEO_P,c.nom,nature,concat(u.nom,' ',u.prenom)as prof from CRENEAUX cr left join salle s on cr.id_s=s.ID_S join COURS c on cr.id_c=c.ID_C join UTILISATEUR U on c.LOGIN = U.LOGIN join GROUPS g on cr.id_g=g.ID_G where g.NOM=? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
             preparedStatement.setString(1,formation);
             DateFormat df = new SimpleDateFormat(dateformat);
             preparedStatement.setDate(2, java.sql.Date.valueOf(df.format(monday.getTime())));
@@ -589,6 +589,7 @@ public static String dateformat = "yyyy-MM-dd";
                 creneau[i][5] = queryResult.getString("NOM");
                 System.out.println(creneau[i][5]);
                 creneau[i][6] = queryResult.getString(NAT);
+                creneau[i][7] = queryResult.getString("prof");
                 i++;
             }
 
