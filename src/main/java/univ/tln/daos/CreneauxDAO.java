@@ -137,10 +137,10 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
 
     /**
      *
-     * @params login et date et boolean
+     * @params date debut et fin (heure,minute et jour) et batiment
      * @return void
      *
-     * cette methode modifie une absence en changant son etat justifie on non
+     * cette methode affiche les batiment dont il'y a une salle libre pour une date donnéé
      */
     public void initialize_batiment(Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner <Integer> md_h_f, Spinner<Integer> md_h_d, ComboBox<String> md_bat, DatePicker md_date) {
 
@@ -182,6 +182,13 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
 
     }
 
+    /**
+     *
+     * @params date debut et fin (heure,minute et jour) , batiment et salle
+     * @return void
+     *
+     * cette methode affiche les salle  libre pour une date et un batiment donnéé
+     */
     public void initialize_salle(Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner<Integer> md_h_f, Spinner<Integer> md_h_d, ComboBox<String> md_bat, DatePicker md_date,ComboBox<String> md_s) {
 
         String[] Salle_libre = new String[13];
@@ -219,6 +226,14 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         }
 
     }
+
+    /**
+     *
+     * @params date debut et fin (heure,minute et jour) et group
+     * @return void
+     *
+     * cette methode affiche les groupe libre pour une date donnéé
+     */
     public void initialize_formation(Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner<Integer> md_h_f, Spinner<Integer> md_h_d, ComboBox<String> md_f, DatePicker md_date)  {
 
         String[] formation_libre = new String[13];
@@ -256,6 +271,13 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         }
     }
 
+    /**
+     *
+     * @params
+     * @return void
+     *
+     * cette methode affiche touts formation pour filtrer les planing par formation
+     */
     public void initialize_pickformation(ComboBox<String>  pickfomation)  {
 
         String[] formation_libre = new String[13];
@@ -281,7 +303,13 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
             }
     }
 
-
+    /**
+     *
+     * @params
+     * @return void
+     *
+     * cette methode affiche les enseignant pour filtrer les planing par enseignant
+     */
     public void initialize_pickenseignant(ComboBox<String>  pickteacher)  {
 
         String[] formation_libre = new String[13];
@@ -310,7 +338,13 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
     }
 
 
-
+    /**
+     *
+     * @params group ,cours
+     * @return void
+     *
+     * cette methode affiche cours d'un group
+     */
     public void initialize_cours(ComboBox<String> md_f,ComboBox<String> md_c)  {
 
         String[] cours_libre = new String[13];
@@ -336,6 +370,13 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
 
         }
 
+    /**
+     *
+     * @params group,cours et nature
+     * @return void
+     *
+     * cette methode affiche nature des cours d'un group
+     */
     public void initialize_nature_cours(ComboBox<String> md_f,ComboBox<String> md_c,ComboBox<String> md_n)  {
 
         String[] ncours_libre = new String[13];
@@ -364,6 +405,14 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         }
 
     }
+
+    /**
+     *
+     * @params date debut et fin (heure,minute et jour) group,cours,et nature
+     * @return void
+     *
+     * cette methode affiche les enseignat d un group pour un cours d une nature donnée
+     */
     public void initialize_enseignant( DatePicker md_date,Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner <Integer> md_h_f, Spinner<Integer> md_h_d,ComboBox<String> md_ens,ComboBox<String> md_c,ComboBox<String> md_n,ComboBox<String> md_f)  {
 
         String[] ens_libre = new String[20];
@@ -474,6 +523,13 @@ catch (Exception e) {
 
 public static String dateformat = "yyyy-MM-dd";
 
+    /**
+     *
+     * @params login ,semaine
+     * @return void
+     *
+     * cette methode affiche les creneau d un enseignant donnée
+     */
     public  int   castdatetimebyteacherlogin(String login, Calendar monday,Calendar sunday, String[][] creneau,int i) {//fonction qui remplie une liste des creneaux d'une semaine
 try {
             preparedStatement = connection.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
@@ -499,6 +555,13 @@ try {
         return i;
     }
 
+    /**
+     *
+     * @params group formation ,semaine
+     * @return void
+     *
+     * cette methode affiche les creneau d un group donnée
+     */
     public int castdatetimebyformation(String formation, Calendar monday,Calendar sunday, String[][] creneau,int i) {//fonction qui remplie une liste des creneaux d'une semaine
 
         try  {
@@ -525,6 +588,13 @@ try {
         return i;
     }
 
+    /**
+     *
+     * @params login ,semaine
+     * @return void
+     *
+     * cette methode affiche les creneau d un utilisateur donnée
+     */
     public int castdatetime(Calendar monday,Calendar sunday, String[][] creneau){ //fonction qui remplie une liste des creneaux d'une semaine
        int j = 0;
         try {
