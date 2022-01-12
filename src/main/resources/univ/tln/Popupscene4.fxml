@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="667.0" prefWidth="919.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univ.tln.controller.PopupControler">
+   <left>
+      <AnchorPane prefHeight="407.0" prefWidth="228.0" style="-fx-background-color: #3F2B63;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="1.0" layoutY="162.0" prefHeight="0.0" prefWidth="227.0" text="Bien plus que le planning!" textFill="WHITE">
+               <font>
+                  <Font name="Rasa" size="15.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect></Label>
+            <Label alignment="CENTER" layoutX="1.0" layoutY="91.0" prefHeight="0.0" prefWidth="227.0" text="HyperPlanning" textFill="WHITE">
+               <font>
+                  <Font name="Yrsa SemiBold" size="30.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <Line endX="100.0" layoutX="114.0" layoutY="147.0" startX="-100.0" stroke="#391616" />
+            <Label alignment="CENTER" layoutX="15.0" layoutY="363.0" prefHeight="0.0" prefWidth="227.0" text="Copyright (c). All Rights Reserved" textFill="WHITE">
+               <font>
+                  <Font name="Rasa" size="12.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <ImageView fitHeight="48.0" fitWidth="52.0" layoutX="15.0" layoutY="14.0">
+               <image>
+                  <Image url="@H.jpeg" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnupdate" alignment="BASELINE_LEFT" layoutX="2.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleclicks" prefHeight="52.0" prefWidth="246.0" stylesheets="@styes.css" text="Update" textFill="WHITE">
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <StackPane BorderPane.alignment="CENTER">
+         <children>
+            <StackPane>
+               <children>
+                  <AnchorPane fx:id="abscence" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
+                     <children>
+                        <Button layoutX="310.0" layoutY="565.0" mnemonicParsing="false" text="Valider" textFill="WHITE" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="234.0" layoutY="14.0" prefHeight="31.0" prefWidth="169.0" text="Absence" textFill="#601d8d">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="listEtudiantId" layoutX="91.0" layoutY="143.0" prefHeight="373.0" prefWidth="489.0">
+                           <columns>
+                              <TableColumn fx:id="checkBoxTableColumn" maxWidth="34.0" minWidth="26.0" prefWidth="34.0" resizable="false" sortable="false" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="update" prefHeight="667.0" prefWidth="690.0" style="-fx-background-color: #fff;" stylesheets="@styes.css">
+                     <children>
+                        <ImageView fitHeight="31.0" fitWidth="134.0" layoutX="9.0" layoutY="14.0">
+                           <image>
+                              <Image url="@univ.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" layoutX="58.0" layoutY="85.0" prefHeight="0.0" prefWidth="227.0" text="ancien creneau " textFill="#1a0b43">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="17.0" layoutY="349.0" prefHeight="18.0" prefWidth="82.0" text="Date" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="370.0" layoutY="350.0" prefHeight="18.0" prefWidth="100.0" text="Heure depart" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Button fx:id="supbtn" layoutX="358.0" layoutY="519.0" mnemonicParsing="false" onAction="#cancelbtnOnAction2" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: red;" text="supprimer le cours" textFill="WHITE" />
+                        <Label fx:id="loginmessage" alignment="CENTER" layoutX="16.0" layoutY="117.0" prefHeight="18.0" prefWidth="255.0" textFill="#ff0909" />
+                        <Label alignment="CENTER" layoutX="17.0" layoutY="466.0" prefHeight="18.0" prefWidth="82.0" text="Salle" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="370.0" layoutY="409.0" prefHeight="18.0" prefWidth="81.0" text="Heure fin" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Button layoutX="99.0" layoutY="519.0" mnemonicParsing="false" onAction="#validateupdate2" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: green;" text="modifier" textFill="WHITE" />
+                        <DatePicker fx:id="md_date" layoutX="110.0" layoutY="344.0" />
+                        <Spinner fx:id="md_h_d" layoutX="483.0" layoutY="345.0" prefHeight="24.0" prefWidth="66.0" />
+                        <Spinner fx:id="md_m_d" layoutX="548.0" layoutY="345.0" prefHeight="24.0" prefWidth="64.0" />
+                        <Spinner fx:id="md_h_f" layoutX="485.0" layoutY="406.0" prefHeight="24.0" prefWidth="68.0" />
+                        <Spinner fx:id="md_m_f" layoutX="550.0" layoutY="406.0" prefHeight="24.0" prefWidth="62.0" />
+                        <ComboBox fx:id="md_s" layoutX="110.0" layoutY="462.0" prefWidth="150.0" />
+                        <Label alignment="CENTER" layoutX="17.0" layoutY="414.0" prefHeight="18.0" prefWidth="82.0" text="Batiment" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <ComboBox fx:id="md_bat" layoutX="110.0" layoutY="410.0" prefWidth="150.0" />
+                        <Label alignment="CENTER" layoutX="81.0" layoutY="296.0" prefHeight="0.0" prefWidth="227.0" text="nouveau creneau" textFill="#1a0b43">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="40.0" layoutY="144.0" prefHeight="18.0" prefWidth="100.0" text="Date debut" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="35.0" layoutY="246.0" prefHeight="18.0" prefWidth="82.0" text="Salle" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="387.0" layoutY="144.0" prefHeight="18.0" prefWidth="81.0" text="Date fin" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="49.0" layoutY="197.0" prefHeight="18.0" prefWidth="82.0" text="Batiment" textFill="#575757">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Label>
+                        <TextField fx:id="datedebutold" editable="false" layoutX="156.0" layoutY="141.0" />
+                        <TextField fx:id="datefinold" editable="false" layoutX="470.0" layoutY="142.0" />
+                        <TextField fx:id="batimentold" editable="false" layoutX="157.0" layoutY="194.0" />
+                        <TextField fx:id="salleold" editable="false" layoutX="157.0" layoutY="243.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </StackPane>
+         </children>
+      </StackPane>
+   </right>
+</BorderPane>

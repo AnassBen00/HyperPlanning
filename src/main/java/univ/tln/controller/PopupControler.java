@@ -42,7 +42,14 @@ import java.util.ResourceBundle;
 public class PopupControler implements Initializable {
     CreneauxDAO c = new CreneauxDAO();
 
-
+    @FXML
+    private TextField batimentold;
+    @FXML
+    private TextField datedebutold;
+    @FXML
+    private TextField salleold;
+    @FXML
+    private TextField datefinold;
     @FXML
     private Button supbtn;
     @FXML
@@ -97,6 +104,7 @@ public class PopupControler implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initold();
         md_h_d.setValueFactory(valuehoure);
         md_m_d.setValueFactory(valueminute);
         setspinner();
@@ -105,7 +113,12 @@ public class PopupControler implements Initializable {
 
 
     }
-
+    public void initold(){
+        datedebutold.setText(ManagerController.old[0]);
+        datefinold.setText(ManagerController.old[1]);
+        batimentold.setText(ManagerController.old[2]);
+        salleold.setText(ManagerController.old[3]);
+    }
     public void cancelbtnOnAction() {
         Stage stage = (Stage) supbtn.getScene().getWindow();
 

@@ -39,7 +39,7 @@ public class UtilisateurDAO extends AbstractDAO<Utilisateur> {
      * @param
      * @return void
      *
-     * cette methode retourne tous les utilisateurs
+     * cette methode retourne tous les enseignant
      */
     public void findAll() throws SQLException {
         try {

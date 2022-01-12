@@ -35,7 +35,7 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
      * @params login and password
      * @return boolean
      *
-     * cette methode verifie si un responsable existe dans la bdd
+     * cette methode verifie si un enseignant existe dans la bdd
      */
     public boolean checkEnseignant(String username, String password) throws SQLException {
         try {
