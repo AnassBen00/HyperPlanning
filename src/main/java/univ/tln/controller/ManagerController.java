@@ -562,6 +562,10 @@ public class ManagerController implements Initializable {
 
         });
     }
+
+    /**
+     * cette fonction concerne la partie ajouter créneau , on voulait que notre formulaire soit réactif donc dans cette fonction si un utilisateur augmente l’heur début d'un cours ça va automatiquement augmenter l’heur fin de ce cours et cette valeur ça va être la valeur minimum, comme ça l’heur début sera toujours supérieur à l'heure fin et c'est que après avoir choisi la date l'heure début et l’heure fin qu'on donne accès aux utilisateurs de choisir le bâtiment et la formation comme ça utilisateur ne pourra pas choisir un créneau dans une salle déjà occupé tout ça est géré dans la DAO créneau
+     */
     public void setspinner(){
 
         md_h_d.valueProperty().addListener((obs, oldValue, newValue) ->{
@@ -593,7 +597,15 @@ public class ManagerController implements Initializable {
 
     }
 
-
+    /**
+     * Cette fonction concerne la partie filtrage du planning,
+     * si on choisit par exemple de filtrer par formation ça va automatiquement désactiver l'option de filtrer par enseignant
+     * et après ça va appelez la méthode initialize_pickformation qui prend paramètre pickformation
+     * et le remplit avec une liste des formations,
+     * la même chose arrives quand on choisit de filtrer par enseignant
+     * cette fois-ci on appelle la méthode initialize_pickenseignant
+     * qui va prendre en paramètre pickteacherR et le remplir avec les id des enseignants disponibles
+     */
     public void setPickfomation(){
         c.initialize_pickformation(filiereidd);
         pickfomation.setOnMouseClicked(mouseEvent -> {
@@ -768,15 +780,28 @@ public class ManagerController implements Initializable {
     }
 
 
-
+    /**
+     * Cette fonction prend en paramètre l'heure d’un certains créneaux e et retourne le pixel correspondant à cette heure (dans notre application on utilise une image de planning)
+     * @param a c'est lheure debut ou fin d'un creneau
+     * @return le pixel correspondent
+     */
     public double houretopxl(double a) {
         return (a - 8) * 45.9 + 47;
-    } //fonction qui donne le pixel exact de l'heure
+    }
 
+    /**Cette fonction prend paramètre la date d'un créneau et retourne le pixel correspondant à ce créneau Par exemple le pixel 304 correspond au jour lundi ou plutôt le pixel de lundi
+     * @param a  la date d'un creeau
+     * @return le pixel correspondent
+     */
     public int datetopxl(int a) {
         return (a - 2) * 126 + 125;
-    } // fonction qui retourne le pixel exact de la date
+    }
 
+
+    /**Cette fonction retourne le lundi d'une semaine
+     * @param i on utilise I pour parcourir les semaines par exemple si I égal à 0 cette fonction ça va retourner le lundi de cette semaine si I égal à moins 7 ça retourne le lundi de la semaine dernière siii égal à plus 7 ça retourne le lundi de la semaine prochaine et si égal à moins 14 ça retourne le lundi de la semaine d'avant dernière et cetera
+     * @return le lundi de la semaine q'on veut
+     */
     public Calendar getmonday(int i) { //retoune le lundi de cette semaine
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -784,6 +809,9 @@ public class ManagerController implements Initializable {
         return calendar;
     }
 
+    /** Cette fonction permet d'initialiser les valeurs des dates sous les jours
+     * @param z Z permet de parcourir les semaines donc 6Z égal à 0 tlabel aura les jours de cette semaine si Z égal à moins 7 elle aura les jours de la semaine dernière
+     */
     public void setcalendar(int z) { //pour afficher les dates sous les jours
         Label[]tlabel = new Label[7];
         tlabel[0] = idlundi;
@@ -824,7 +852,12 @@ public class ManagerController implements Initializable {
 
     }
 
-    // la meme chose cette fois ci avec le nom d'une formation
+    /**
+     * Elle fait exactement la même chose que la fonction dernière cette fois-ci avec le nom d'une formation
+     * @param w
+     * @param formation
+     * @param cren
+     */
     public void castdatetimebyformation(int w,String formation, String[][] cren) {//fonction qui remplie une liste des creneaux d'une semaine
         setI(0);
         try (CreneauxDAO c2 = new CreneauxDAO();){
@@ -845,6 +878,17 @@ public class ManagerController implements Initializable {
     }
 
 
+    /**
+     * Cette fonction crée un Label avec une largeur fixe et une hauteur qui est égal à la durée du cours en utilisant la fonction hourofday
+     *
+     * donc on prend pixel de heures fin moins le pixel de heures début et on aura la hauteur du label
+     *
+     * on positionne alors ce label dans un axe XY en utilisant les 2 fonctions datetopxl et houretopxl
+     *
+     * on choisit la couleur du Labal en regardant le type de cours dans la table créneau
+     *
+     * et si on clique sur ce label on ouvre une autre fenêtre et c'est là pour on pourra modifier la date du cours
+     */
     @FXML
     public void drawrect()  { //fonction qui dessine l'emlpoie du temps
 
