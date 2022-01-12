@@ -29,6 +29,7 @@ import univ.tln.App;
 import univ.tln.daos.*;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.creneaux.Cours;
+import univ.tln.entities.creneaux.Creneau;
 import univ.tln.entities.filieres.Filiere;
 import univ.tln.entities.groupes.Groupe;
 import univ.tln.entities.groupes.GroupeEtudiant;
@@ -52,6 +53,7 @@ import static com.google.common.hash.Hashing.sha256;
 public class ManagerController implements Initializable {
 
     CreneauxDAO c = new CreneauxDAO();
+    static String old[]=new String[7];
 
 
 
@@ -896,8 +898,9 @@ public class ManagerController implements Initializable {
                 cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
             int finalR = q;
             cours.setOnMouseClicked (mouseEvent -> {
-
-                setD2(creneau[finalR][0]);
+                for (int i =0;i<7;i++){
+                    old[i]=creneau[finalR][i];
+                }
                 switchtopopupscene();
             });
 
@@ -913,7 +916,7 @@ public class ManagerController implements Initializable {
     public void switchtopopupscene() { // on change l'ecran si c'est bon
 
         try {
-            Parent root = FXMLLoader.load(App.class.getResource("Popupscene2.fxml"));
+            Parent root = FXMLLoader.load(App.class.getResource("Popupscene4.fxml"));
 
             Stage managerstage = new Stage();
 

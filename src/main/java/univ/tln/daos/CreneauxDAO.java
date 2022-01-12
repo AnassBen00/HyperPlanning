@@ -135,7 +135,13 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
 
     }
 
-
+    /**
+     *
+     * @params login et date et boolean
+     * @return void
+     *
+     * cette methode modifie une absence en changant son etat justifie on non
+     */
     public void initialize_batiment(Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner <Integer> md_h_f, Spinner<Integer> md_h_d, ComboBox<String> md_bat, DatePicker md_date) {
 
         String[] Salle_libre = new String[13];

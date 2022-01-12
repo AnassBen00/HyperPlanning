@@ -74,7 +74,7 @@ AbsenceDAO extends AbstractDAO<Absence>{
      * @params login
      * @return List<Absence>
      *
-     * cette methode retourne tous les absences pour l'enseignant
+     * cette methode retourne tous les absences d un etudiant donné
      */
     public List<Absence> findAllabs(String login) {
         List<Absence> absences = new ArrayList<Absence>();
@@ -92,7 +92,13 @@ AbsenceDAO extends AbstractDAO<Absence>{
         }
         return absences;
     }
-
+    /**
+     *
+     * @params login
+     * @return List<Absence>
+     *
+     * cette methode retourne tous les absences non justifié d un etudiant donné
+     */
     public List<Absence> findAllabsN(String login) {
         List<Absence> absences = new ArrayList<Absence>();
         try {
@@ -115,7 +121,7 @@ AbsenceDAO extends AbstractDAO<Absence>{
      * @params absence
      * @return void
      *
-     * cette methode retourne tous les etudiants
+     * cette methode supprime l absence d'un etudiant pour un creneau
      */
     public void remove(Absence absence) throws DataAccessException {
         try {
