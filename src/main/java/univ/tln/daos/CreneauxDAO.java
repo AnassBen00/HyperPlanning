@@ -415,6 +415,8 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
      */
     public void initialize_enseignant( DatePicker md_date,Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner <Integer> md_h_f, Spinner<Integer> md_h_d,ComboBox<String> md_ens,ComboBox<String> md_c,ComboBox<String> md_n,ComboBox<String> md_f)  {
 
+
+
         String[] ens_libre = new String[20];
         int i = 0;
         try {
@@ -531,28 +533,35 @@ public static String dateformat = "yyyy-MM-dd";
      * cette methode affiche les creneau d un enseignant donnée
      */
     public  int   castdatetimebyteacherlogin(String login, Calendar monday,Calendar sunday, String[][] creneau,int i) {//fonction qui remplie une liste des creneaux d'une semaine
-try {
-            preparedStatement = connection.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,NOM,NATURE from SALLE join CRENEAUX ON(SALLE.ID_S=CRENEAUX.ID_S) join GROUP_COURS ON (CRENEAUX.ID_G=GROUP_COURS.ID_G)join COURS ON (GROUP_COURS.ID_C = COURS.ID_C) where LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
-            preparedStatement.setString(1,login);
+        int j=0;
+
+        try {
+            preparedStatement = connection.prepareStatement("select DATE_D, DATE_F, BATIMENT,NUM,VIDEO_P,C2.NOM as Nomcours,C2.NATURE,G.nom as grpname from SALLE join CRENEAUX C on SALLE.ID_S = C.ID_S join GROUP_COURS GC on C.ID_G = GC.ID_G and C.ID_C = GC.ID_C join COURS C2 on GC.ID_C = C2.ID_C join GROUPS G on GC.ID_G = G.ID_G where C2.LOGIN =? AND FORMATDATETIME(DATE_D ,'yyyy-MM-dd')>=?  AND FORMATDATETIME(DATE_F ,'yyyy-MM-dd') <=?  ");
+            preparedStatement.setString(1, login);
             DateFormat df = new SimpleDateFormat(dateformat);
             preparedStatement.setDate(2, java.sql.Date.valueOf(df.format(monday.getTime())));
+
+
             preparedStatement.setDate(3, java.sql.Date.valueOf(df.format(sunday.getTime())));
             ResultSet queryResult = preparedStatement.executeQuery();
+
             while ((queryResult.next())) {
-                creneau[i][0] = String.valueOf(queryResult.getTimestamp( DATED));
-                creneau[i][1] = String.valueOf(queryResult.getTimestamp( DATEF));
-                creneau[i][2] = queryResult.getString(BAT);
-                creneau[i][3] = String.valueOf(queryResult.getInt("NUM"));
-                creneau[i][4] = String.valueOf(queryResult.getBoolean(VID));
-                creneau[i][5] = queryResult.getString("NOM");
-                creneau[i][6] = queryResult.getString(NAT);
-                i++;
+                creneau[j][0] = String.valueOf(queryResult.getTimestamp( DATED));
+                creneau[j][1] = String.valueOf(queryResult.getTimestamp( DATEF));
+                creneau[j][2] = queryResult.getString(BAT);
+                creneau[j][3] = queryResult.getString("NUM");
+                creneau[j][4] = String.valueOf(queryResult.getBoolean(VID));
+                creneau[j][5] = queryResult.getString("Nomcours");
+                System.out.println(creneau[i][5]);
+                creneau[j][6] = queryResult.getString(NAT);
+                creneau[j][7] = queryResult.getString("grpname");
+                j++;
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return i;
+        return j;
     }
 
     /**
@@ -578,6 +587,7 @@ try {
                 creneau[i][3] = String.valueOf(queryResult.getInt("NUM"));
                 creneau[i][4] = String.valueOf(queryResult.getBoolean(VID));
                 creneau[i][5] = queryResult.getString("NOM");
+                System.out.println(creneau[i][5]);
                 creneau[i][6] = queryResult.getString(NAT);
                 i++;
             }

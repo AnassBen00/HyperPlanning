@@ -53,11 +53,11 @@ import static com.google.common.hash.Hashing.sha256;
 public class ManagerController implements Initializable {
 
     CreneauxDAO c = new CreneauxDAO();
-    static String old[]=new String[7];
+    static String old[]=new String[8];
 
 
 
-    private static   String[][] creneau = new String[60][7];
+    private  String[][] creneau = new String[60][8];
 
 
 
@@ -942,6 +942,7 @@ public class ManagerController implements Initializable {
                 cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
             int finalR = q;
             cours.setOnMouseClicked (mouseEvent -> {
+                setD2(creneau[finalR][0]);
                 for (int i =0;i<7;i++){
                     old[i]=creneau[finalR][i];
                 }
