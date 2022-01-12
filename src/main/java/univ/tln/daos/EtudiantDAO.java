@@ -107,7 +107,7 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
      * @params
      * @return List<Etudiant>
      *
-     * cette methode retourne tous les etudiants par groupe
+     * cette methode retourne tous les etudiants qui etaient absent par groupe
      */
     public List<Etudiant> findbygrp(String grp) {
         List<Etudiant> etudiants = new ArrayList<>();
@@ -127,6 +127,23 @@ public class EtudiantDAO extends AbstractDAO<Etudiant> {
         return etudiants;
     }
 
+    public List<Etudiant> findbygrps(String grp) {
+        List<Etudiant> etudiants = new ArrayList<>();
+        try {
+            preparedStatement = connection.prepareStatement("select distinct u.login,u.nom,u.prenom from UTILISATEUR u join group_etudiant ge on u.LOGIN=ge.login join groups g on ge.id_g=g.id_g  where g.nom=?");
+            preparedStatement.setString(1, grp);
+            ResultSet resultset = preparedStatement.executeQuery();
+            while (resultset.next()) {
+                Etudiant etudiant = new Etudiant(resultset.getString("login"), resultset.getString("nom"),
+                        resultset.getString("prenom"));
+                etudiants.add(etudiant);
+            }
+        } catch (SQLException e) {
+            e.getLocalizedMessage();
+
+        }
+        return etudiants;
+    }
     /**
      *
      * @params login

@@ -34,4 +34,8 @@ public class Etudiant extends Utilisateur{
         super(login,nom,prenom);
         this.nbabs=nbabs;
     }
+    public Etudiant(String login, String nom, String prenom) {
+        super(login,nom,prenom);
+    }
+
 }

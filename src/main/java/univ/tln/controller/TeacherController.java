@@ -47,6 +47,7 @@ public class TeacherController implements Initializable {
     public static int i;
     int maxcours = 60;
     private String[][] creneau = new String[maxcours][8];
+    static String old[]=new String[8];
 
 
 
@@ -393,15 +394,19 @@ public class TeacherController implements Initializable {
             cours.setAlignment(Pos.CENTER);
 
             if (creneau[r][6].trim().equals("TP"))
-                cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
+                cours.setBackground(new Background(new BackgroundFill(Color.rgb(41, 141, 141), CornerRadii.EMPTY, Insets.EMPTY)));
             else if (creneau[r][6].trim().equals("TD"))
-                cours.setBackground(new Background(new BackgroundFill(Color.rgb(5, 52, 14), CornerRadii.EMPTY, Insets.EMPTY)));
+                cours.setBackground(new Background(new BackgroundFill(Color.rgb(160, 166, 4), CornerRadii.EMPTY, Insets.EMPTY)));
             else if (creneau[r][6].trim().equals("CM"))
                 cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
+            else if (creneau[r][6].trim().equals("EX"))
+                cours.setBackground(new Background(new BackgroundFill(Color.rgb(178, 111, 217), CornerRadii.EMPTY, Insets.EMPTY)));
             int finalR = r;
             cours.setOnMouseClicked(mouseEvent -> {
                 setD1(creneau[finalR][0]);
-
+                for (int i =0;i<8;i++){
+                    old[i]=creneau[finalR][i];
+                }
                setS1(creneau[finalR][3]);
                 setB1(creneau[finalR][2]);
                 setG1(creneau[finalR][7]);
@@ -415,7 +420,7 @@ public class TeacherController implements Initializable {
     public void switchtopopupscene() { // on change l'ecran si c'est bon
 
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("Popupscene.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("Popupscene2.fxml")));
 
             Stage managerstage = new Stage();
 

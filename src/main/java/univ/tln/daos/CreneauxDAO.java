@@ -350,7 +350,7 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         String[] cours_libre = new String[13];
         int i = 0;
             try {
-                preparedStatement= connection.prepareStatement(" select c.nom from cours c join group_cours gc on c.id_c=gc.id_c join groups g on gc.id_g=g.id_g where g.nom=?");preparedStatement.setString(1, md_f.getValue());
+                preparedStatement= connection.prepareStatement(" select distinct c.nom from cours c join group_cours gc on c.id_c=gc.id_c join groups g on gc.id_g=g.id_g where g.nom=?");preparedStatement.setString(1, md_f.getValue());
 
                 ResultSet queryResult = preparedStatement.executeQuery();
 

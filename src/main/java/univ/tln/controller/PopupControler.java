@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import univ.tln.daos.AbsenceDAO;
 import univ.tln.daos.CreneauxDAO;
+import univ.tln.daos.EnseignantDAO;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Absence;
@@ -41,6 +42,7 @@ import java.util.ResourceBundle;
 
 public class PopupControler implements Initializable {
     CreneauxDAO c = new CreneauxDAO();
+    String grp;
 
     @FXML
     private TextField batimentold;
@@ -102,6 +104,7 @@ public class PopupControler implements Initializable {
     private PasswordField oldPassField;
 
 
+    @SneakyThrows
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initold();
@@ -113,11 +116,24 @@ public class PopupControler implements Initializable {
 
 
     }
-    public void initold(){
-        datedebutold.setText(ManagerController.old[0]);
-        datefinold.setText(ManagerController.old[1]);
-        batimentold.setText(ManagerController.old[2]);
-        salleold.setText(ManagerController.old[3]);
+    public void initold() throws SQLException, DataAccessException {
+        EnseignantDAO enseignantDAO =new EnseignantDAO();
+        if(enseignantDAO.find(LoginController.user1)!=null){
+            datedebutold.setText(TeacherController.old[0]);
+            datefinold.setText(TeacherController.old[1]);
+            batimentold.setText(TeacherController.old[2]);
+            salleold.setText(TeacherController.old[3]);
+
+            grp=TeacherController.old[7];
+            System.out.println(grp);
+        }else {
+
+            datedebutold.setText(ManagerController.old[0]);
+            datefinold.setText(ManagerController.old[1]);
+            batimentold.setText(ManagerController.old[2]);
+            salleold.setText(ManagerController.old[3]);
+            grp=ManagerController.old[5];
+        }
     }
     public void cancelbtnOnAction() {
         Stage stage = (Stage) supbtn.getScene().getWindow();
@@ -370,7 +386,7 @@ public class PopupControler implements Initializable {
         try( EtudiantDAO etudiantDAO = new EtudiantDAO();) {
 
 
-            return FXCollections.observableArrayList(etudiantDAO.findAll());
+            return FXCollections.observableArrayList(etudiantDAO.findbygrps(grp));
         }
     }
 
