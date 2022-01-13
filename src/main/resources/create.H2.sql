@@ -419,6 +419,18 @@ insert into salle (NUM,BATIMENT, video_p) values ( '003','B','oui' );
 insert into salle (NUM,BATIMENT, video_p) values ( '001','C','oui' );
 insert into salle (NUM,BATIMENT, video_p) values ( '002','C','non' );
 insert into salle (NUM,BATIMENT, video_p) values ( '003','C','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '001','D','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '002','D','non' );
+insert into salle (NUM,BATIMENT, video_p) values ( '003','D','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '001','E','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '002','E','non' );
+insert into salle (NUM,BATIMENT, video_p) values ( '003','E','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '001','F','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '002','F','non' );
+insert into salle (NUM,BATIMENT, video_p) values ( '003','F','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '001','G','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '002','G','non' );
+insert into salle (NUM,BATIMENT, video_p) values ( '003','G','oui' );
 
 
 
