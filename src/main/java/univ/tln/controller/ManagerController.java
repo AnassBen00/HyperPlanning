@@ -582,9 +582,18 @@ public class ManagerController implements Initializable {
             SpinnerValueFactory<Integer> valuehoure2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(newValue, 59, 1);
             md_m_f.setValueFactory(valuehoure2);
 
+        });
 
+
+        md_h_f.valueProperty().addListener((obs, oldValue, newValue) ->{
+            if(md_h_f.getValue()>md_h_d.getValue()){
+                SpinnerValueFactory<Integer> valuehoure3 = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59,1);
+                md_m_f.setValueFactory(valuehoure3);
+            }
 
         });
+
+
                 md_date.valueProperty().addListener((ov, oldValue, newValue) -> md_h_f.valueProperty().addListener((obs, oldValue3, newValue3) ->
                     md_m_f.valueProperty().addListener((obs2, oldValue2, newValue2) -> {
 
@@ -942,9 +951,7 @@ public class ManagerController implements Initializable {
             }
 
 
-            if (creneau[q][4].equals("true")) message = "Oui";
-            else message = "Non";
-            cours.setText("Salle: " + creneau[q][2] + " " + creneau[q][3] + "\n" + creneau[q][5] + " " + creneau[q][6] + "\nprojecteur: " + message +"\n"+creneau[q][7]);
+            cours.setText("Salle: " + creneau[q][2] + " " + creneau[q][3] + "\n" + creneau[q][5] + " " + creneau[q][6] + "\nprojecteur: " + creneau[q][4] +"\n"+creneau[q][7]);
 
             cours.setTextFill(Color.rgb(255, 255, 255));
             cours.setTextAlignment(TextAlignment.CENTER);

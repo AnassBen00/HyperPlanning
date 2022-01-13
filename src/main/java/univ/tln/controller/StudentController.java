@@ -370,9 +370,8 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (creneau[g][4].equals("true")) m = "Oui";
-        else m = "Non";
-        cours.setText("Salle: " + creneau[g][2] + " " + creneau[g][3] + "\n" + creneau[g][5] + " " + creneau[g][6] + "\n"+creneau[g][8]+ "\n"+creneau[g][9]+ "\nprojecteur: " + m );
+
+        cours.setText("Salle: " + creneau[g][2] + " " + creneau[g][3] + "\n" + creneau[g][5] + " " + creneau[g][6] + "\n"+creneau[g][8]+ "\n"+creneau[g][9]+ "\nprojecteur: " + creneau[g][4] );
 
         cours.setTextFill(Color.rgb(255, 255, 255));
         cours.setTextAlignment(TextAlignment.CENTER);

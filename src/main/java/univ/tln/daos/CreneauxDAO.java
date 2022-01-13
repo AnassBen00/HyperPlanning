@@ -462,7 +462,10 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         try {
             preparedStatement = connection.prepareStatement("insert into creneaux values( ?,?,(select id_s from salle where num=? and batiment=?),(select id_g from groups where nom=? ),(select id_c from cours where nom=? and nature =? and login in(select login from utilisateur where CONCAT(nom, ' ', prenom)=?)))");
 
-        if (md_bat.getValue() != null && md_s.getValue() != null && md_f.getValue() != null && md_c.getValue() != null && md_n.getValue() != null && md_ens.getValue() != null && md_date.getValue() != null) {
+            int x = md_h_f.getValue() - md_h_d.getValue();
+            int y = md_m_f.getValue() - md_m_d.getValue();
+
+        if (md_bat.getValue() != null && md_s.getValue() != null && md_f.getValue() != null && md_c.getValue() != null && md_n.getValue() != null && md_ens.getValue() != null && md_date.getValue() != null && (x>0 || (x==0 && y==0))) {
             preparedStatement.setString(1, date1);
             preparedStatement.setString(2, date2);
             preparedStatement.setString(3, md_s.getValue());

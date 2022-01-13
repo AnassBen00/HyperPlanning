@@ -385,9 +385,8 @@ public class TeacherController implements Initializable {
             cours.setMaxWidth(126);
             cours.setMaxHeight(w);
             cours.setMinHeight(w);
-            if (creneau[r][4].equals("true")) m = "Oui";
-            else m = "Non";
-            cours.setText("Salle: " + creneau[r][2] + " " + creneau[r][3] + "\n" + creneau[r][5] + " " + creneau[r][6] + "\nprojecteur: " + m +"\n"+creneau[r][7]);
+
+            cours.setText("Salle: " + creneau[r][2] + " " + creneau[r][3] + "\n" + creneau[r][5] + " " + creneau[r][6] + "\nprojecteur: " + creneau[r][4] +"\n"+creneau[r][7]);
             cours.setTextFill(Color.rgb(255, 255, 255));
             cours.setTextAlignment(TextAlignment.CENTER);
             cours.setAlignment(Pos.CENTER);
