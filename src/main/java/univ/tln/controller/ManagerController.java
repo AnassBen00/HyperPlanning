@@ -44,6 +44,7 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.*;
@@ -517,6 +518,7 @@ public class ManagerController implements Initializable {
      * Cette fonction concerne la partie ajouter créneau elle permet de mettre la date de aujourd'hui comme valeur par défaut quand un utilisateur va choisir une date et elle ne laisse pas le choix de choisir une date inférieure à la date de aujourd'hui
      */
 
+
     public void disabledate() {
         md_date.setValue(java.time.LocalDate.now());
         md_date.setDayCellFactory(picker -> new DateCell() {
@@ -524,11 +526,12 @@ public class ManagerController implements Initializable {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 LocalDate today = LocalDate.now();
-
-                setDisable(empty || date.compareTo(today) < 0);
+                if (date.getDayOfWeek() == DayOfWeek.SUNDAY //
+                        || date.compareTo(today) < 0 //
+                ) {
+                    setDisable(true);
+                }
             }
-
-
         });
     }
 

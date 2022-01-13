@@ -36,6 +36,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 
@@ -112,9 +114,28 @@ public class PopupControler implements Initializable {
         setspinner();
         initSalle();
         initAbsence();
+        disabledate();
 
 
     }
+
+    public void disabledate() {
+        md_date.setValue(java.time.LocalDate.now());
+        md_date.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                LocalDate today = LocalDate.now();
+                if (date.getDayOfWeek() == DayOfWeek.SUNDAY //
+                        || date.compareTo(today) < 0 //
+                ) {
+                    setDisable(true);
+                }
+            }
+        });
+    }
+
+
     public void initold()  {
         if(TeacherController.old[0]!=null){
             datedebutold.setText(TeacherController.old[0]);
