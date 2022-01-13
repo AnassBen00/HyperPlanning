@@ -78,7 +78,7 @@
                      </font>
                   </Label>
                   <Line endX="67.0" layoutX="117.0" layoutY="120.0" startX="-84.0" stroke="#821cb2" />
-                  <TextArea editable="false" layoutX="47.0" layoutY="185.0" prefHeight="350.0" prefWidth="876.0" text="Vacances de la Toussaint 2021 :    Fin des cours : samedi 17 octobre 2021 Jour de reprise : lundi 2 novembre 2021 &#10;&#10;Vacances de Noël 2021              :  Fin des cours : samedi 19 décembre 2021 Jour de reprise : lundi 4 janvier 2022&#10;&#10;Vacances d'hiver 2022                :  Fin des cours samedi 20 février 2022 Jour de reprise &#10;&#10;Vacances de printemps 2021      : Fin des cours : samedi 10 avril 2022 Jour de reprise : lundi 26 avril 2022&#10;" />
+                  <TextArea editable="false" layoutX="66.0" layoutY="186.0" prefHeight="174.0" prefWidth="876.0" text="Vacances de la Toussaint 2021   :    Fin des cours : samedi 17 octobre 2021 Jour de reprise : lundi 2 novembre 2021 &#10;&#10;Vacances de Noël 2021               :  Fin des cours : samedi 19 décembre 2021 Jour de reprise : lundi 4 janvier 2022&#10;&#10;Vacances d'hiver 2022                :  Fin des cours samedi 20 février 2022 Jour de reprise &#10;&#10;Vacances de printemps 2022      : Fin des cours : samedi 10 avril 2022 Jour de reprise : lundi 26 avril 2022&#10;&#10;Grandes vacances 2022&#9;            : Fin des cours : jeudi 7 juillet 2022&#10;" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="scene1" prefHeight="645.0" prefWidth="1007.0">

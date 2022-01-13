@@ -26,7 +26,6 @@ import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import univ.tln.daos.AbsenceDAO;
 import univ.tln.daos.CreneauxDAO;
-import univ.tln.daos.EnseignantDAO;
 import univ.tln.daos.EtudiantDAO;
 import univ.tln.daos.exceptions.DataAccessException;
 import univ.tln.entities.utilisateurs.Absence;
@@ -116,16 +115,14 @@ public class PopupControler implements Initializable {
 
 
     }
-    public void initold() throws SQLException, DataAccessException {
-        EnseignantDAO enseignantDAO =new EnseignantDAO();
-        if(enseignantDAO.find(LoginController.user1)!=null){
+    public void initold()  {
+        if(TeacherController.old[0]!=null){
             datedebutold.setText(TeacherController.old[0]);
             datefinold.setText(TeacherController.old[1]);
             batimentold.setText(TeacherController.old[2]);
             salleold.setText(TeacherController.old[3]);
 
             grp=TeacherController.old[7];
-            System.out.println(grp);
         }else {
 
             datedebutold.setText(ManagerController.old[0]);
@@ -278,10 +275,10 @@ public class PopupControler implements Initializable {
 
     public void initSalle() {
         md_bat.setEditable(true);
-        md_bat.valueProperty().addListener((options, oldValue, newValue) -> {
-            c.initialize_salle(md_m_f, md_m_d, md_h_f, md_h_d, md_bat, md_date, md_s);
+        md_bat.valueProperty().addListener((options, oldValue, newValue) ->
+            c.initialize_salle(md_m_f, md_m_d, md_h_f, md_h_d, md_bat, md_date, md_s)
 
-        });
+        );
     }
 
     public void handleclicks(ActionEvent e) { //pour changer l'ecran

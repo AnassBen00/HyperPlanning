@@ -24,9 +24,7 @@ public class StartH2 {
                         new InputStreamReader(StartH2.class.getClassLoader().getResourceAsStream("create.H2.sql")));
             }
             log.info(server.getStatus());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }

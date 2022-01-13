@@ -53,7 +53,8 @@ import static com.google.common.hash.Hashing.sha256;
 public class ManagerController implements Initializable {
 
     CreneauxDAO c = new CreneauxDAO();
-    static String old[]=new String[8];
+    @Setter
+    static String [] old=new String[8];
 
 
 
@@ -283,7 +284,7 @@ public class ManagerController implements Initializable {
         initNature2();
         initfiliere();
         setminuteandhour();
-        drawrect(); //on dessine l'emploie du temps
+        //drawrect(); //on dessine l'emploie du temps
         arrowinputback();
         arrowinputfront();
         setcalendar(0);
@@ -456,26 +457,24 @@ public class ManagerController implements Initializable {
 
         backarrow.setOnMouseClicked( mouseEvent -> {
             getmonday(r);
-            for (Label g : l) {
-                scene1.getChildren().remove(g);
-            }
+          clearscene();
             if(pickfomation.getValue() == null && pickteacher.getValue() != null ){
-                for (Label g : l) {
-                    scene1.getChildren().remove(g);
-                }
+                clearscene();
 
                 castdatetimebyteacherlogin(r,pickteacher.getValue(),creneau);
 
-
+                drawrect();
             }
             else if (pickfomation.getValue() != null && pickteacher.getValue() == null ){
-                for (Label g : l) {
-                    scene1.getChildren().remove(g);
-                }
+                clearscene();
 
                 castdatetimebyformation(r,pickfomation.getValue(),creneau);
+                drawrect();
             }
-            drawrect();
+            else if (pickfomation.getValue() == null && pickteacher.getValue() == null ){
+                clearscene();
+            }
+
             setcalendar(r);
 
 
@@ -491,25 +490,27 @@ public class ManagerController implements Initializable {
             getmonday(w);
             getmonday(w+7);
 
-            for (Label g : l) {
-                scene1.getChildren().remove(g);
-            }
+            clearscene();
             if(pickfomation.getValue() == null && pickteacher.getValue() != null ){
-
+                clearscene();
                 castdatetimebyteacherlogin(w,pickteacher.getValue(),creneau);
+                drawrect();
 
             }
             else if (pickfomation.getValue() != null && pickteacher.getValue() == null ){
-
+                clearscene();
                 castdatetimebyformation(w,pickfomation.getValue(),creneau);
+                drawrect();
             }
-            drawrect();
+            else if (pickfomation.getValue() == null && pickteacher.getValue() == null ){
+                clearscene();
+            }
+
             setcalendar(w);
 
             w=w+7;
             r=r+7;
         });
-
     }
 
     /**
@@ -877,8 +878,24 @@ public class ManagerController implements Initializable {
     @FXML
     public  void addcreneau (ActionEvent e) {
         c.insertcreneau(md_date,md_h_d,md_m_d,md_h_f,md_m_f,md_bat,md_s,md_f,md_c,md_n,md_ens,ajoutermessage);
+        resetvalues();
+
     }
 
+    public void resetvalues(){
+        SpinnerValueFactory<Integer> valuehoure = new SpinnerValueFactory.IntegerSpinnerValueFactory(8, 19, 1);
+        SpinnerValueFactory<Integer> valueminute = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 1);
+        md_date.setValue(java.time.LocalDate.now());
+        md_h_d.setValueFactory(valuehoure);
+        md_m_d.setValueFactory(valueminute);
+        md_bat.setValue("");
+        md_s.setValue("");
+        md_f.setValue("");
+        md_c.setValue("");
+        md_ens.setValue("");
+        ajouterprofmessage.setText("");
+
+    }
 
     /**
      * Cette fonction crée un Label avec une largeur fixe et une hauteur qui est égal à la durée du cours en utilisant la fonction hourofday
@@ -927,7 +944,7 @@ public class ManagerController implements Initializable {
 
             if (creneau[q][4].equals("true")) message = "Oui";
             else message = "Non";
-            cours.setText("Salle: " + creneau[q][2] + " " + creneau[q][3] + "\n" + creneau[q][5] + " " + creneau[q][6] + "\nprojecteur: " + message +"\n prof :");
+            cours.setText("Salle: " + creneau[q][2] + " " + creneau[q][3] + "\n" + creneau[q][5] + " " + creneau[q][6] + "\nprojecteur: " + message +"\n"+creneau[q][7]);
 
             cours.setTextFill(Color.rgb(255, 255, 255));
             cours.setTextAlignment(TextAlignment.CENTER);
@@ -935,16 +952,19 @@ public class ManagerController implements Initializable {
 
 
             if (creneau[q][6].trim().equals("TP"))
-                cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
+                cours.setBackground(new Background(new BackgroundFill(Color.rgb(41, 141, 141), CornerRadii.EMPTY, Insets.EMPTY)));
             else if (creneau[q][6].trim().equals("TD"))
-                cours.setBackground(new Background(new BackgroundFill(Color.rgb(5, 52, 14), CornerRadii.EMPTY, Insets.EMPTY)));
+                cours.setBackground(new Background(new BackgroundFill(Color.rgb(218, 157, 38), CornerRadii.EMPTY, Insets.EMPTY)));
             else if (creneau[q][6].trim().equals("CM"))
                 cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
+            else if (creneau[q][6].trim().equals("EX"))
+                cours.setBackground(new Background(new BackgroundFill(Color.rgb(178, 111, 217), CornerRadii.EMPTY, Insets.EMPTY)));
             int finalR = q;
             cours.setOnMouseClicked (mouseEvent -> {
                 setD2(creneau[finalR][0]);
-                for (int i =0;i<7;i++){
-                    old[i]=creneau[finalR][i];
+                for (int f =0;f<7;f++){
+                    old[f]=creneau[finalR][f];
+
                 }
                 switchtopopupscene();
             });

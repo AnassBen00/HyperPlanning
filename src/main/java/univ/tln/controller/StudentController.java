@@ -378,9 +378,14 @@ public void handleclicks (ActionEvent e){ //pour changer l'ecran
         cours.setTextAlignment(TextAlignment.CENTER);
         cours.setAlignment(Pos.CENTER);
 
-        if(creneau[g][9].trim().equals("TP"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(50, 18, 71), CornerRadii.EMPTY, Insets.EMPTY)));
-        else if(creneau[g][9].trim().equals("TD"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(5, 52, 14), CornerRadii.EMPTY, Insets.EMPTY)));
-        else if(creneau[g][9].trim().equals("CM"))cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
+        if (creneau[g][9].trim().equals("TP"))
+            cours.setBackground(new Background(new BackgroundFill(Color.rgb(41, 141, 141), CornerRadii.EMPTY, Insets.EMPTY)));
+        else if (creneau[g][9].trim().equals("TD"))
+            cours.setBackground(new Background(new BackgroundFill(Color.rgb(160, 166, 4), CornerRadii.EMPTY, Insets.EMPTY)));
+        else if (creneau[g][9].trim().equals("CM"))
+            cours.setBackground(new Background(new BackgroundFill(Color.rgb(26, 31, 38), CornerRadii.EMPTY, Insets.EMPTY)));
+        else if (creneau[g][9].trim().equals("EX"))
+            cours.setBackground(new Background(new BackgroundFill(Color.rgb(178, 111, 217), CornerRadii.EMPTY, Insets.EMPTY)));
 
         scene1.getChildren().add(cours);
     }

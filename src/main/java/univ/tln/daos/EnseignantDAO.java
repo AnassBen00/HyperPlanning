@@ -215,9 +215,9 @@ public class EnseignantDAO extends AbstractDAO<Enseignant> {
      * cette methode permet modifier le mot de passe
      */
     public void updatePassByLogin(String psswrd,String login) throws  SQLException{
-        PreparedStatement pstmt = connection.prepareStatement("update UTILISATEUR set PASSWORD = HASH('SHA256','"+psswrd+"') where LOGIN = ?");
-        pstmt.setString(1,login);
-        pstmt.executeUpdate();
+        preparedStatement = connection.prepareStatement("update UTILISATEUR set PASSWORD = HASH('SHA256','"+psswrd+"') where LOGIN = ?");
+        preparedStatement.setString(1,login);
+        preparedStatement.executeUpdate();
     }
 
 

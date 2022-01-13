@@ -491,8 +491,8 @@ select * from absence;
 //select cr.date_d ,nom ,nature from absence a join CRENEAUX cr on a.date_d=cr.DATE_D and a.id_s=cr.ID_S and a.ID_G=cr.ID_G join cours c on c.ID_C=cr.ID_C where login=? ;
 //select distinct u.login,u.nom,u.prenom,nbabs, from UTILISATEUR u join (SELECT abs.login,count(abs.login) as nbabs from absence abs join groups g on abs.id_g=g.ID_G where nom=? group by abs.login)  absn on u.LOGIN=absn.login ;
 
-select abs.login from absence abs join GROUPs g on abs.ID_G=g.ID_G;
+//select abs.login from absence abs join GROUPs g on abs.ID_G=g.ID_G;
 
-select nom from UTILISATEUR where login = 'zoom'
+//select nom from UTILISATEUR where login = 'zoom';
 
-select date_d,date_f,num,BATIMENT,c.nom,nature,concat(u.nom,' ',u.prenom)as prof from CRENEAUX cr left join salle s on cr.id_s=s.ID_S join COURS c on cr.id_c=c.ID_C join UTILISATEUR U on c.LOGIN = U.LOGIN join GROUPS g on cr.id_g=g.ID_G
+//select date_d,date_f,num,BATIMENT,c.nom,nature,concat(u.nom,' ',u.prenom)as prof from CRENEAUX cr left join salle s on cr.id_s=s.ID_S join COURS c on cr.id_c=c.ID_C join UTILISATEUR U on c.LOGIN = U.LOGIN join GROUPS g on cr.id_g=g.ID_G

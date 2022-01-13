@@ -91,7 +91,9 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
     @Override
     public void remove(Object creneau) throws DataAccessException {
         try {
-            connection.createStatement().execute("DELETE FROM " + getTableName() + " WHERE DATE_D=" + ((Creneau)creneau).getDateDebut()  + ", ID_G= " + ((Creneau)creneau).getDateFin()  + ", ID_C="  + ((Creneau)creneau).getIdCours()  + "" );
+            String creneaux = "DELETE FROM " + getTableName() + " WHERE DATE_D=" + ((Creneau)creneau).getDateDebut()  + ", ID_G= " + ((Creneau)creneau).getDateFin()  + ", ID_C="  + ((Creneau)creneau).getIdCours()  + "" ;
+            statement = connection.createStatement();
+            statement.execute(creneaux);
         } catch (SQLException throwables) {
             throw new DataAccessException(throwables.getLocalizedMessage());
         }
@@ -523,7 +525,7 @@ catch (Exception e) {
 
     }
 
-public static String dateformat = "yyyy-MM-dd";
+public static final String dateformat = "yyyy-MM-dd";
 
     /**
      *
@@ -552,7 +554,6 @@ public static String dateformat = "yyyy-MM-dd";
                 creneau[j][3] = queryResult.getString("NUM");
                 creneau[j][4] = String.valueOf(queryResult.getBoolean(VID));
                 creneau[j][5] = queryResult.getString("Nomcours");
-                System.out.println(creneau[i][5]);
                 creneau[j][6] = queryResult.getString(NAT);
                 creneau[j][7] = queryResult.getString("grpname");
                 j++;
@@ -587,7 +588,6 @@ public static String dateformat = "yyyy-MM-dd";
                 creneau[i][3] = String.valueOf(queryResult.getInt("NUM"));
                 creneau[i][4] = String.valueOf(queryResult.getBoolean(VID));
                 creneau[i][5] = queryResult.getString("NOM");
-                System.out.println(creneau[i][5]);
                 creneau[i][6] = queryResult.getString(NAT);
                 creneau[i][7] = queryResult.getString("prof");
                 i++;

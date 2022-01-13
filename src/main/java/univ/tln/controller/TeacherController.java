@@ -47,7 +47,7 @@ public class TeacherController implements Initializable {
     public static int i;
     int maxcours = 60;
     private String[][] creneau = new String[maxcours][8];
-    static String old[]=new String[8];
+    static String [] old=new String[8];
 
 
 
@@ -387,8 +387,7 @@ public class TeacherController implements Initializable {
             cours.setMinHeight(w);
             if (creneau[r][4].equals("true")) m = "Oui";
             else m = "Non";
-            cours.setText("Salle: " + creneau[r][2] + " " + creneau[r][3] + "\n" + creneau[r][5] + " " + creneau[r][6] + "\nprojecteur: " + m +"\n prof :");
-
+            cours.setText("Salle: " + creneau[r][2] + " " + creneau[r][3] + "\n" + creneau[r][5] + " " + creneau[r][6] + "\nprojecteur: " + m +"\n"+creneau[r][7]);
             cours.setTextFill(Color.rgb(255, 255, 255));
             cours.setTextAlignment(TextAlignment.CENTER);
             cours.setAlignment(Pos.CENTER);
@@ -404,8 +403,8 @@ public class TeacherController implements Initializable {
             int finalR = r;
             cours.setOnMouseClicked(mouseEvent -> {
                 setD1(creneau[finalR][0]);
-                for (int i =0;i<8;i++){
-                    old[i]=creneau[finalR][i];
+                for (int f =0;f<8;f++){
+                    old[f]=creneau[finalR][f];
                 }
                setS1(creneau[finalR][3]);
                 setB1(creneau[finalR][2]);
