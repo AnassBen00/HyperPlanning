@@ -88,9 +88,10 @@ CREATE TABLE if not exists SALLE(
                                     ID_S int not null auto_increment,
                                     NUM CHAR(15) not null ,
                                     BATIMENT CHAR(15) not null,
-                                    VIDEO_P BOOLEAN,
+                                    VIDEO_P char(3) check (VIDEO_P in ('oui','non')) ,
                                     constraint SALLE_PK
                                         primary key (NUM,BATIMENT)
+
 );
 
 CREATE TABLE if not exists COURS (
@@ -409,19 +410,16 @@ insert into ETUDIANT (nvx_etude, promo, login, ID_F) values ( 'licence 2',	'2021
 insert into ETUDIANT (nvx_etude, promo, login, ID_F) values ( 'licence 3',	'2021/2022',	'Bi6JY',	1);
 
 
-insert into salle (NUM,BATIMENT, video_p) values ( '001','U',true );
-insert into salle (NUM,BATIMENT, video_p) values ( '003','F',true );
-insert into salle (NUM,BATIMENT, video_p) values ( '002','W',true );
-insert into salle (NUM,BATIMENT, video_p) values ( '001','F',FALSE );
-insert into salle (NUM,BATIMENT, video_p) values ( '003','U',FALSE );
-insert into salle (NUM,BATIMENT, video_p) values ( '001','W',FALSE );
+insert into salle (NUM,BATIMENT, video_p) values ( '001','A','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '002','A','non' );
+insert into salle (NUM,BATIMENT, video_p) values ( '003','A','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '001','B','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '002','B','non' );
+insert into salle (NUM,BATIMENT, video_p) values ( '003','B','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '001','C','oui' );
+insert into salle (NUM,BATIMENT, video_p) values ( '002','C','non' );
+insert into salle (NUM,BATIMENT, video_p) values ( '003','C','oui' );
 
-insert into salle (NUM,BATIMENT, video_p) values ( '008','U',true );
-insert into salle (NUM,BATIMENT, video_p) values ( '003','B',true );
-insert into salle (NUM,BATIMENT, video_p) values ( '002','A',true );
-insert into salle (NUM,BATIMENT, video_p) values ( '005','F',FALSE );
-insert into salle (NUM,BATIMENT, video_p) values ( '013','U',FALSE );
-insert into salle (NUM,BATIMENT, video_p) values ( '001','X',FALSE );
 
 
 insert into COURS(LOGIN, nature, nom) values ( '1jJQ0','CM','Anglais 1' );
@@ -466,9 +464,7 @@ insert into GROUP_COURS(ID_G, ID_C) values ( 5,2 ) ;
 
 UPDATE UTILISATEUR SET PASSWORD = HASH('SHA256', PASSWORD);
 
-INSERT INTO PUBLIC.CRENEAUX (DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ('2022-01-13 10:03:00.000000', '2022-01-13 12:04:00.000000', 4, 3, 4);
-INSERT INTO PUBLIC.CRENEAUX (DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ('2022-01-13 13:04:00.000000', '2022-01-13 16:05:00.000000', 10, 3, 9);
-INSERT INTO PUBLIC.CRENEAUX (DATE_D, DATE_F, ID_S, ID_G, ID_C) VALUES ('2022-01-13 17:06:00.000000', '2022-01-13 19:06:00.000000', 5, 3, 3);
+
 
 //select distinct batiment from salle where ID_S not in ( select ID_S FROM CRENEAUX WHERE(DATE_D <= ? and date_f >= ?)and ((date_d between ? and ?)or (date_f between ? and ?)))
 

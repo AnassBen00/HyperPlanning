@@ -56,6 +56,11 @@ public class ManagerController implements Initializable {
     CreneauxDAO c = new CreneauxDAO();
     @Setter
     static String [] old=new String[8];
+    ObservableList<String> options =
+            FXCollections.observableArrayList(
+                    "oui",
+                    "non"
+            );
 
 
 
@@ -140,6 +145,8 @@ public class ManagerController implements Initializable {
     private ComboBox<String> md_bat;
     @FXML
     private ComboBox<String> pickfomation;
+    @FXML
+    private ComboBox<String> md_vp;
 
     @FXML
     private ComboBox<String> pickteacher;
@@ -273,6 +280,7 @@ public class ManagerController implements Initializable {
         disabledate();
         initnale();
         setspinner();
+        initBat();
         initSalle();
         initcours();
         initnature();
@@ -543,9 +551,16 @@ public class ManagerController implements Initializable {
         );
     }
 
+    public void initBat(){
+        md_vp.valueProperty().addListener((options, oldValue, newValue) ->
+                c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_vp,md_bat, md_date)
+
+        );
+    }
+
     public void initSalle(){
         md_bat.valueProperty().addListener((options, oldValue, newValue) ->
-            c.initialize_salle(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date,md_s)
+            c.initialize_salle(md_m_f,md_m_d,md_h_f,md_h_d,md_vp,md_bat, md_date,md_s)
 
         );
     }
@@ -600,11 +615,11 @@ public class ManagerController implements Initializable {
                 md_date.valueProperty().addListener((ov, oldValue, newValue) -> md_h_f.valueProperty().addListener((obs, oldValue3, newValue3) ->
                     md_m_f.valueProperty().addListener((obs2, oldValue2, newValue2) -> {
 
-                        c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date);
+                        c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_vp,md_bat, md_date);
                         c.initialize_formation(md_m_f,md_m_d,md_h_f,md_h_d,md_f, md_date);
                         if (md_m_f.getValue() != null && md_h_f.getValue() != null) {
+                            md_vp.setItems(options);
 
-                            c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_bat, md_date);
                             c.initialize_formation(md_m_f,md_m_d,md_h_f,md_h_d,md_f, md_date);
                         }
                     })

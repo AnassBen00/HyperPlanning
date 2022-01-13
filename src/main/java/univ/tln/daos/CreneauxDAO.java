@@ -144,22 +144,23 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
      *
      * cette methode affiche les batiment dont il'y a une salle libre pour une date donnéé
      */
-    public void initialize_batiment(Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner <Integer> md_h_f, Spinner<Integer> md_h_d, ComboBox<String> md_bat, DatePicker md_date) {
+    public void initialize_batiment(Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner <Integer> md_h_f, Spinner<Integer> md_h_d, ComboBox<String> md_vp,ComboBox<String> md_bat, DatePicker md_date) {
 
         String[] Salle_libre = new String[13];
 
         if ((  md_m_f.getValue() >   md_m_d.getValue() && Objects.equals(md_h_f.getValue(), md_h_d.getValue())) || (  md_h_f.getValue() >   md_h_d.getValue())) {
             int i = 0;
             try {
-                preparedStatement = connection.prepareStatement(" select distinct batiment from salle where ID_S not in ( select ID_S FROM CRENEAUX WHERE(DATE_D <= ? and date_f >= ?)or ((date_d between ? and ?)or (date_f between ? and ?)))");
+                preparedStatement = connection.prepareStatement(" select distinct batiment from salle where video_p= ? and ID_S not in ( select ID_S FROM CRENEAUX WHERE(DATE_D <= ? and date_f >= ?)or ((date_d between ? and ?)or (date_f between ? and ?)))");
                 String date1 = md_date.getValue().toString() + " " + md_h_d.getValue().toString() + ":" + md_m_d.getValue().toString() + ":00";
                 String date2 = md_date.getValue().toString() + " " + md_h_f.getValue().toString() + ":" + md_m_f.getValue().toString() + ":00";
-                preparedStatement.setString(1, date1);
-                preparedStatement.setString(3, date1);
-                preparedStatement.setString(5, date1);
-                preparedStatement.setString(2, date2);
-                preparedStatement.setString(4, date2);
-                preparedStatement.setString(6, date2);
+                preparedStatement.setString(1, md_vp.getValue());
+                preparedStatement.setString(2, date1);
+                preparedStatement.setString(4, date1);
+                preparedStatement.setString(6, date1);
+                preparedStatement.setString(3, date2);
+                preparedStatement.setString(5, date2);
+                preparedStatement.setString(7, date2);
 
                 ResultSet queryResult = preparedStatement.executeQuery();
 
@@ -191,23 +192,24 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
      *
      * cette methode affiche les salle  libre pour une date et un batiment donnéé
      */
-    public void initialize_salle(Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner<Integer> md_h_f, Spinner<Integer> md_h_d, ComboBox<String> md_bat, DatePicker md_date,ComboBox<String> md_s) {
+    public void initialize_salle(Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner<Integer> md_h_f, Spinner<Integer> md_h_d,ComboBox<String> md_vp ,ComboBox<String> md_bat, DatePicker md_date,ComboBox<String> md_s) {
 
         String[] Salle_libre = new String[13];
 
         if ((  md_m_f.getValue() >   md_m_d.getValue() &&   md_h_f.getValue().equals(md_h_d.getValue())) || (  md_h_f.getValue() >   md_h_d.getValue())) {
             int i = 0;
             try {
-                preparedStatement = connection.prepareStatement(" select distinct num from salle where batiment =? and ID_S not in ( select ID_S FROM CRENEAUX WHERE (DATE_D <= ? and date_f >= ?)or ((date_d between ? and ?)or (date_f between ? and ?)))");
+                preparedStatement = connection.prepareStatement(" select distinct num from salle where batiment =? and video_p=? and ID_S not in ( select ID_S FROM CRENEAUX WHERE (DATE_D <= ? and date_f >= ?)or ((date_d between ? and ?)or (date_f between ? and ?)))");
                 String date1 = md_date.getValue().toString() + " " + md_h_d.getValue().toString() + ":" + md_m_d.getValue().toString() + ":00";
                 String date2 = md_date.getValue().toString() + " " + md_h_f.getValue().toString() + ":" + md_m_f.getValue().toString() + ":00";
                 preparedStatement.setString(1, md_bat.getValue());
-                preparedStatement.setString(2, date1);
-                preparedStatement.setString(4, date1);
-                preparedStatement.setString(6, date1);
-                preparedStatement.setString(3, date2);
-                preparedStatement.setString(5, date2);
-                preparedStatement.setString(7, date2);
+                preparedStatement.setString(2, md_vp.getValue());
+                preparedStatement.setString(3, date1);
+                preparedStatement.setString(5, date1);
+                preparedStatement.setString(7, date1);
+                preparedStatement.setString(4, date2);
+                preparedStatement.setString(6, date2);
+                preparedStatement.setString(8, date2);
 
                 ResultSet queryResult = preparedStatement.executeQuery();
 
@@ -516,15 +518,19 @@ catch (Exception e) {
     }
 
     public void updateCreneaux(DatePicker md_date,Spinner<Integer>heureD,Spinner<Integer>minuteD,Spinner<Integer>heureF,Spinner<Integer>minuteF,ComboBox<String>md_bat,ComboBox<String>nums,String datecondition) throws SQLException {
-        String date1 = md_date.getValue().toString() + " " + heureD.getValue().toString() + ":" + minuteD.getValue().toString() + ":00";
-        String date2 = md_date.getValue().toString() + " " + heureF.getValue().toString() + ":" + minuteF.getValue().toString() + ":00";
-        preparedStatement = connection.prepareStatement("update creneaux set DATE_D = ? , DATE_F = ? , ID_S = (select ID_S from SALLE where NUM = ? and BATIMENT = ?) where DATE_D = ?");
-        preparedStatement.setString(1, date1);
-        preparedStatement.setString(2, date2);
-        preparedStatement.setString(3, nums.getValue());
-        preparedStatement.setString(4, md_bat.getValue());
-        preparedStatement.setString(5,datecondition);
-        preparedStatement.executeUpdate();
+        int x = heureF.getValue() - heureD.getValue();
+        int y = minuteF.getValue() - minuteD.getValue();
+        if (md_bat.getValue() != null && nums!=null && md_date.getValue() != null && (x>0 || (x==0 && y==0))) {
+            String date1 = md_date.getValue().toString() + " " + heureD.getValue().toString() + ":" + minuteD.getValue().toString() + ":00";
+            String date2 = md_date.getValue().toString() + " " + heureF.getValue().toString() + ":" + minuteF.getValue().toString() + ":00";
+            preparedStatement = connection.prepareStatement("update creneaux set DATE_D = ? , DATE_F = ? , ID_S = (select ID_S from SALLE where NUM = ? and BATIMENT = ?) where DATE_D = ?");
+            preparedStatement.setString(1, date1);
+            preparedStatement.setString(2, date2);
+            preparedStatement.setString(3, nums.getValue());
+            preparedStatement.setString(4, md_bat.getValue());
+            preparedStatement.setString(5, datecondition);
+            preparedStatement.executeUpdate();
+        }
 
     }
 

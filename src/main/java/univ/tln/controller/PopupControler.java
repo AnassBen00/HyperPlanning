@@ -44,6 +44,11 @@ import java.util.ResourceBundle;
 public class PopupControler implements Initializable {
     CreneauxDAO c = new CreneauxDAO();
     String grp;
+    ObservableList<String> options =
+            FXCollections.observableArrayList(
+                    "oui",
+                    "non"
+            );
 
     @FXML
     private TextField batimentold;
@@ -58,6 +63,8 @@ public class PopupControler implements Initializable {
     @FXML
     private ComboBox<String> md_bat;
 
+    @FXML
+    private ComboBox<String> md_vp;
     @FXML
     private DatePicker md_date;
 
@@ -112,6 +119,7 @@ public class PopupControler implements Initializable {
         md_h_d.setValueFactory(valuehoure);
         md_m_d.setValueFactory(valueminute);
         setspinner();
+        initBat();
         initSalle();
         initAbsence();
         disabledate();
@@ -293,20 +301,24 @@ public class PopupControler implements Initializable {
         md_date.valueProperty().addListener((ov, oldValue, newValue) -> md_h_f.valueProperty().addListener((obs, oldValue3, newValue3) ->
             md_m_f.valueProperty().addListener((obs2, oldValue2, newValue2) -> {
 
-                c.initialize_batiment(md_m_f, md_m_d, md_h_f, md_h_d, md_bat, md_date);
                 if (md_m_f.getValue() != null && md_h_f.getValue() != null) {
-
-
-                    c.initialize_batiment(md_m_f, md_m_d, md_h_f, md_h_d, md_bat, md_date);
+                    md_vp.setItems(options);
                 }
             })
         ));
     }
 
+    public void initBat() {
+        md_vp.setEditable(true);
+        md_vp.valueProperty().addListener((options, oldValue, newValue) ->
+                c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_vp,md_bat, md_date)
+
+        );
+    }
     public void initSalle() {
         md_bat.setEditable(true);
         md_bat.valueProperty().addListener((options, oldValue, newValue) ->
-            c.initialize_salle(md_m_f, md_m_d, md_h_f, md_h_d, md_bat, md_date, md_s)
+            c.initialize_salle(md_m_f, md_m_d, md_h_f, md_h_d,md_vp ,md_bat, md_date, md_s)
 
         );
     }
