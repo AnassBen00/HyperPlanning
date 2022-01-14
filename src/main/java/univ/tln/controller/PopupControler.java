@@ -276,6 +276,9 @@ public class PopupControler implements Initializable {
 
 
     public void setspinner() {
+        md_vp.setDisable(true);
+        md_bat.setDisable(true);
+        md_s.setDisable(true);
 
         md_h_d.valueProperty().addListener((obs, oldValue, newValue) -> {
             SpinnerValueFactory<Integer> valuehoure2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(newValue, 19, 1);
@@ -298,14 +301,24 @@ public class PopupControler implements Initializable {
 
         });
 
-        md_date.valueProperty().addListener((ov, oldValue, newValue) -> md_h_f.valueProperty().addListener((obs, oldValue3, newValue3) ->
+        md_vp.valueProperty().addListener((obs, oldValue, newValue) ->{
+            if (md_vp!=null)
+            md_bat.setDisable(false);
+        });
+        md_bat.valueProperty().addListener((obs, oldValue, newValue) ->{
+            if (md_bat!=null)
+                md_s.setDisable(false);
+        });
+
+         md_h_f.valueProperty().addListener((obs, oldValue3, newValue3) ->
             md_m_f.valueProperty().addListener((obs2, oldValue2, newValue2) -> {
 
                 if (md_m_f.getValue() != null && md_h_f.getValue() != null) {
+                    md_vp.setDisable(false);
                     md_vp.setItems(options);
                 }
             })
-        ));
+        );
     }
 
     public void initBat() {

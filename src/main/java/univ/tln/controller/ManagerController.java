@@ -277,6 +277,7 @@ public class ManagerController implements Initializable {
     @Override
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        resetvalues();
         disabledate();
         initnale();
         setspinner();
@@ -401,18 +402,24 @@ public class ManagerController implements Initializable {
         try(UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
             EnseignantDAO enseignantDAO = new EnseignantDAO();) {
             CoursDAO coursDAO = new CoursDAO();
+            if(loginId.getText() !=null && passwordId.getText()!=null && nomId.getText() !=null && prenomId.getText() !=null && emailId.getText() !=null && idcoursText.getText() !=null && idnatureComboBox.getValue() !=null && ifFormationComboBox.getValue() !=null) {
 
-        utilisateurDAO.persist(new Utilisateur(loginId.getText(), sha256()
-                .hashString(passwordId.getText(), StandardCharsets.UTF_8)
-                .toString(), nomId.getText(), prenomId.getText(), emailId.getText()));
-        enseignantDAO.persist(new Enseignant(loginId.getText(), sha256()
-                .hashString(passwordId.getText(), StandardCharsets.UTF_8)
-                .toString(), nomId.getText(), prenomId.getText(), emailId.getText()));
-        coursDAO.insertCours(new Cours(idnatureComboBox.getValue(),idcoursText.getText(),loginId.getText()));
-        coursDAO.insertGroupeCours(ifFormationComboBox.getValue().toString(), coursDAO.find(idcoursText.getText()));
-            ajouterprofmessage.setTextFill(Color.rgb(0, 133, 33));
-            ajouterprofmessage.setText("enseignant bien ajouter");
 
+                utilisateurDAO.persist(new Utilisateur(loginId.getText(), sha256()
+                        .hashString(passwordId.getText(), StandardCharsets.UTF_8)
+                        .toString(), nomId.getText(), prenomId.getText(), emailId.getText()));
+                enseignantDAO.persist(new Enseignant(loginId.getText(), sha256()
+                        .hashString(passwordId.getText(), StandardCharsets.UTF_8)
+                        .toString(), nomId.getText(), prenomId.getText(), emailId.getText()));
+                coursDAO.insertCours(new Cours(idnatureComboBox.getValue(), idcoursText.getText(), loginId.getText()));
+                coursDAO.insertGroupeCours(ifFormationComboBox.getValue().toString(), coursDAO.find(idcoursText.getText()));
+                ajouterprofmessage.setTextFill(Color.rgb(0, 133, 33));
+                ajouterprofmessage.setText("enseignant bien ajouter");
+            }
+            else  {
+                ajouterprofmessage.setTextFill(Color.rgb(220, 0, 0));
+                ajouterprofmessage.setText("données saisies invalides");
+            }
         } catch (DataAccessException | SQLException ex) {
             ajouterprofmessage.setTextFill(Color.rgb(220, 0, 0));
             ajouterprofmessage.setText("données saisies invalides");
@@ -429,17 +436,25 @@ public class ManagerController implements Initializable {
                     FiliereDAO filiereDAO = new FiliereDAO();
                     GroupeEtudiantDAO groupeEtudiantDAO = new GroupeEtudiantDAO();
                     GroupeDAO groupeDAO = new GroupeDAO();) {
-            
-            utilisateurDAO.persist(new Utilisateur(loginEtdId.getText(), sha256()
-                    .hashString(passwordEtdId.getText(), StandardCharsets.UTF_8)
-                    .toString(), nomEtdId.getText(), prenomEtdId.getText(), emailEtdId.getText()));
-            etudiantDAO.persist(new Etudiant(loginEtdId.getText(), sha256()
-                    .hashString(passwordEtdId.getText(), StandardCharsets.UTF_8)
-                    .toString(), nomEtdId.getText(), prenomEtdId.getText(), emailEtdId.getText(), idNiveau.getValue(), idPromo.getText(), 1));
-            groupeEtudiantDAO.persist(new GroupeEtudiant(groupeDAO.find(idGroupe.getValue()).getId(),loginEtdId.getText()));
-            ajouteretudmessage.setTextFill(Color.rgb(0, 133, 33));
-            ajouteretudmessage.setText("etudiant bien ajouter");
-            
+            if(loginEtdId.getText() !=null && passwordEtdId.getText()!=null && nomEtdId.getText() !=null && prenomEtdId.getText() !=null && emailEtdId.getText() !=null && idNiveau.getValue() !=null && idPromo.getText() !=null) {
+
+
+                utilisateurDAO.persist(new Utilisateur(loginEtdId.getText(), sha256()
+                        .hashString(passwordEtdId.getText(), StandardCharsets.UTF_8)
+                        .toString(), nomEtdId.getText(), prenomEtdId.getText(), emailEtdId.getText()));
+                etudiantDAO.persist(new Etudiant(loginEtdId.getText(), sha256()
+                        .hashString(passwordEtdId.getText(), StandardCharsets.UTF_8)
+                        .toString(), nomEtdId.getText(), prenomEtdId.getText(), emailEtdId.getText(), idNiveau.getValue(), idPromo.getText(), 1));
+
+                groupeEtudiantDAO.persist(new GroupeEtudiant(groupeDAO.find(idGroupe.getValue()).getId(), loginEtdId.getText()));
+                ajouteretudmessage.setTextFill(Color.rgb(0, 133, 33));
+                ajouteretudmessage.setText("etudiant bien ajouter");
+            }
+            else  {
+                ajouteretudmessage.setTextFill(Color.rgb(220, 0, 0));
+                ajouteretudmessage.setText("données saisies invalides");
+            }
+
         } catch (DataAccessException | SQLException ex) {
             ajouteretudmessage.setTextFill(Color.rgb(220, 0, 0));
             ajouteretudmessage.setText("données saisies invalides");
@@ -575,6 +590,7 @@ public class ManagerController implements Initializable {
 
         md_f.valueProperty().addListener((options, oldValue, newValue) ->{
             md_n.getItems().removeAll(md_n.getItems());
+            md_c.setDisable(false);
             c.initialize_cours(md_f,md_c);
             md_c.valueProperty().addListener((options1, oldValue1, newValue1) ->
                 c.initialize_nature_cours(md_f,md_c,md_n)
@@ -588,12 +604,17 @@ public class ManagerController implements Initializable {
      * cette fonction concerne la partie ajouter créneau , on voulait que notre formulaire soit réactif donc dans cette fonction si un utilisateur augmente l’heur début d'un cours ça va automatiquement augmenter l’heur fin de ce cours et cette valeur ça va être la valeur minimum, comme ça l’heur début sera toujours supérieur à l'heure fin et c'est que après avoir choisi la date l'heure début et l’heure fin qu'on donne accès aux utilisateurs de choisir le bâtiment et la formation comme ça utilisateur ne pourra pas choisir un créneau dans une salle déjà occupé tout ça est géré dans la DAO créneau
      */
     public void setspinner(){
+        md_vp.setDisable(true);
+        md_bat.setDisable(true);
+        md_s.setDisable(true);
+        md_f.setDisable(true);
+        md_c.setDisable(true);
+        md_n.setDisable(true);
+        md_ens.setDisable(true);
 
         md_h_d.valueProperty().addListener((obs, oldValue, newValue) ->{
             SpinnerValueFactory<Integer> valuehoure2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(newValue, 19, 1);
             md_h_f.setValueFactory(valuehoure2);
-
-
 
         });
         md_m_d.valueProperty().addListener((obs, oldValue, newValue) ->{
@@ -610,20 +631,52 @@ public class ManagerController implements Initializable {
             }
 
         });
+        md_vp.valueProperty().addListener((obs, oldValue, newValue) ->{
+            if (md_vp!=null)
+                md_bat.setDisable(false);
+            else  md_bat.setDisable(true);
+        });
+        md_bat.valueProperty().addListener((obs, oldValue, newValue) ->{
+            if (md_bat!=null)
+                md_s.setDisable(false);
+            else md_s.setDisable(false);
+        });
+
+        md_f.valueProperty().addListener((obs, oldValue, newValue) ->{
+            if (md_f!=null)
+                md_c.setDisable(false);
+            else md_c.setDisable(true);
+        });
+        md_c.valueProperty().addListener((obs, oldValue, newValue) ->{
+            if (md_c!=null)
+                md_n.setDisable(false);
+            else md_n.setDisable(true);
+        });
+        md_n.valueProperty().addListener((obs, oldValue, newValue) ->{
+            if (md_n!=null)
+                md_ens.setDisable(false);
+           else md_ens.setDisable(true);
+        });
+        md_m_f.valueProperty().addListener((obs, oldValue, newValue) ->{
+            md_vp.setDisable(false);
+            md_f.setDisable(false);
+            c.initialize_formation(md_m_f,md_m_d,md_h_f,md_h_d,md_f, md_date);
+        });
 
 
-                md_date.valueProperty().addListener((ov, oldValue, newValue) -> md_h_f.valueProperty().addListener((obs, oldValue3, newValue3) ->
+                md_h_f.valueProperty().addListener((obs, oldValue3, newValue3) ->
                     md_m_f.valueProperty().addListener((obs2, oldValue2, newValue2) -> {
+
 
                         c.initialize_batiment(md_m_f,md_m_d,md_h_f,md_h_d,md_vp,md_bat, md_date);
                         c.initialize_formation(md_m_f,md_m_d,md_h_f,md_h_d,md_f, md_date);
                         if (md_m_f.getValue() != null && md_h_f.getValue() != null) {
                             md_vp.setItems(options);
 
-                            c.initialize_formation(md_m_f,md_m_d,md_h_f,md_h_d,md_f, md_date);
+
                         }
                     })
-                ));
+                );
 
     }
 
@@ -915,11 +968,13 @@ public class ManagerController implements Initializable {
         md_date.setValue(java.time.LocalDate.now());
         md_h_d.setValueFactory(valuehoure);
         md_m_d.setValueFactory(valueminute);
-        md_bat.setValue("");
-        md_s.setValue("");
-        md_f.setValue("");
-        md_c.setValue("");
-        md_ens.setValue("");
+        md_s.setDisable(true);
+        md_c.setDisable(true);
+        md_n.setDisable(true);
+        md_vp.setDisable(true);
+        md_bat.setDisable(true);
+        md_f.setDisable(true);
+        md_ens.setDisable(true);
         ajouterprofmessage.setText("");
 
     }
