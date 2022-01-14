@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ABSENCE</OriginalElement>
+  <nodes>
+    <node x="81.68351063829789" y="336.0">b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.FILIERE</node>
+    <node x="349.6835106382979" y="313.0">b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.COURS</node>
+    <node x="215.6835106382979" y="336.5">b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.GROUPS</node>
+    <node x="3.75" y="494.0">b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ETUDIANT</node>
+    <node x="200.4122340425532" y="877.0">b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ABSENCE</node>
+    <node x="349.6835106382979" y="202.0">b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ENSEIGNANT</node>
+    <node x="135.6462765957447" y="0.0">b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.UTILISATEUR</node>
+    <node x="136.1835106382979" y="202.0">b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.RESPONSABLE</node>
+    <node x="64.875" y="710.0">b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.GROUP_ETUDIANT</node>
+    <node x="449.7579787234043" y="494.0">b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.SALLE</node>
+    <node x="276.7579787234042" y="494.0">b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.GROUP_COURS</node>
+    <node x="341.9122340425532" y="675.0">b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.CRENEAUX</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ENSEIGNANT" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.UTILISATEUR" relationship="REFERENCES">
+      <point x="0.0" y="-28.5" />
+      <point x="415.6835106382979" y="176.0" />
+      <point x="204.1462765957447" y="176.0" />
+      <point x="0.0" y="75.0" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.COURS" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ENSEIGNANT" relationship="REFERENCES">
+      <point x="0.0" y="-63.5" />
+      <point x="0.0" y="28.5" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.CRENEAUX" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.GROUP_COURS" relationship="REFERENCES">
+      <point x="-32.75" y="-75.0" />
+      <point x="374.6622340425532" y="648.0" />
+      <point x="353.2579787234042" y="648.0" />
+      <point x="0.0" y="63.5" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ABSENCE" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.CRENEAUX" relationship="REFERENCES">
+      <point x="32.75" y="-75.0" />
+      <point x="298.6622340425532" y="851.0" />
+      <point x="407.4122340425532" y="851.0" />
+      <point x="0.0" y="75.0" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.GROUP_COURS" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.COURS" relationship="REFERENCES">
+      <point x="51.0" y="-63.5" />
+      <point x="404.2579787234042" y="472.0" />
+      <point x="415.6835106382979" y="472.0" />
+      <point x="0.0" y="63.5" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.CRENEAUX" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.SALLE" relationship="REFERENCES">
+      <point x="32.75" y="-75.0" />
+      <point x="440.1622340425532" y="648.0" />
+      <point x="522.7579787234042" y="648.0" />
+      <point x="0.0" y="63.5" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ETUDIANT" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.FILIERE" relationship="REFERENCES">
+      <point x="38.25" y="-63.5" />
+      <point x="118.5" y="472.0" />
+      <point x="138.6835106382979" y="472.0" />
+      <point x="0.0" y="40.5" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.GROUP_COURS" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.FILIERE" relationship="REFERENCES">
+      <point x="-51.0" y="-63.5" />
+      <point x="302.2579787234042" y="472.0" />
+      <point x="138.6835106382979" y="472.0" />
+      <point x="0.0" y="40.5" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.GROUP_COURS" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.GROUPS" relationship="REFERENCES">
+      <point x="0.0" y="-63.5" />
+      <point x="353.2579787234042" y="462.0" />
+      <point x="272.6835106382979" y="462.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.GROUP_ETUDIANT" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.GROUPS" relationship="REFERENCES">
+      <point x="42.75" y="-40.0" />
+      <point x="193.125" y="648.0" />
+      <point x="205.375" y="648.0" />
+      <point x="205.375" y="462.0" />
+      <point x="272.6835106382979" y="462.0" />
+      <point x="0.0" y="40.0" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.RESPONSABLE" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.UTILISATEUR" relationship="REFERENCES">
+      <point x="0.0" y="-28.5" />
+      <point x="205.6835106382979" y="176.0" />
+      <point x="204.1462765957447" y="176.0" />
+      <point x="0.0" y="75.0" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.GROUP_ETUDIANT" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ETUDIANT" relationship="REFERENCES">
+      <point x="-42.75" y="-40.0" />
+      <point x="107.625" y="648.0" />
+      <point x="80.25" y="648.0" />
+      <point x="0.0" y="63.5" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ABSENCE" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ETUDIANT" relationship="REFERENCES">
+      <point x="-32.75" y="-75.0" />
+      <point x="233.1622340425532" y="851.0" />
+      <point x="54.375" y="851.0" />
+      <point x="54.375" y="648.0" />
+      <point x="80.25" y="648.0" />
+      <point x="0.0" y="63.5" />
+    </edge>
+    <edge source="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ETUDIANT" target="b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.UTILISATEUR" relationship="REFERENCES">
+      <point x="-38.25" y="-63.5" />
+      <point x="42.0" y="472.0" />
+      <point x="70.30851063829789" y="472.0" />
+      <point x="70.30851063829789" y="176.0" />
+      <point x="204.1462765957447" y="176.0" />
+      <point x="0.0" y="75.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.901766953199618" showDependencies="false" x="298.0" y="572.1585623678648" />
+  <SelectedNodes>
+    <node>b03fcea7-d07f-4e01-8c73-37618a51faee.TABLE:TEST.PUBLIC.ABSENCE</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+

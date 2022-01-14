@@ -436,41 +436,75 @@ insert into salle (NUM,BATIMENT, video_p) values ( '003','G','oui' );
 
 insert into COURS(LOGIN, nature, nom) values ( '1jJQ0','CM','Anglais 1' );
 insert into COURS(LOGIN, nature, nom) values ( '1jJQ0','EX','Anglais 1' );
+
 insert into COURS(LOGIN , NATURE ,nom) values ('LmaqA' , 'TP' , 'JAVA');
 insert into COURS(LOGIN , NATURE ,nom) values ('LmaqA' , 'TD' , 'JAVA');
 insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'EX' , 'JAVA');
 insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'TP' , 'JAVA');
 insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'TD' , 'JAVA');
 insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'CM' , 'JAVA');
-insert into COURS(LOGIN , NATURE,nom) values ('NrsB7' , 'CM' , 'UML');
+
+
+insert into COURS(LOGIN , NATURE,nom) values ('NrsB7' , 'CM' , 'Modelisation');
+insert into COURS(LOGIN , NATURE,nom) values ('NrsB7' , 'TD' , 'Modelisation');
+insert into COURS(LOGIN , NATURE,nom) values ('NrsB7' , 'TP' , 'Modelisation');
+
 insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'CM' , 'M_learning');
 insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'TD' , 'M_learning');
+insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'TP' , 'M_learning');
+
 insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'TD' , 'Traitement_db_1');
+insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'CM' , 'Traitement_db_1');
+insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'TP' , 'Traitement_db_1');
+
+
 insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'TP' , 'Analyse_conception_II');
+insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'TD' , 'Analyse_conception_II');
+insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'CM' , 'Analyse_conception_II');
+insert into COURS(LOGIN, NATURE,nom) values ('xYQhW' , 'CM' , 'Traitement_db_1');
+insert into COURS(LOGIN , NATURE ,nom) values ('LrKK4' , 'CM' , 'JAVA');
+insert into COURS(LOGIN , NATURE,nom) values ('NrsB7' , 'EX' , 'Modelisation');
+insert into COURS(LOGIN , NATURE ,nom) values ('xYQhW' , 'EX' , 'Analyse_conception_II');
+insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'EX' , 'Traitement_db_1');
+insert into COURS(LOGIN, NATURE,nom) values ('LrKK4' , 'EX' , 'M_learning');
 
 
 
-INSERT into GROUPS(NOM) values ( 'anglais L1' ),('DID master1'),('DID L1'),('MIR L1'),('INFO L1'),('ECO L1'),('MIAGE L1');
+INSERT into GROUPS(NOM) values ( 'Anglais L1' ),('DID M1'),('DID L1'),('MIR L1'),('INFO L1'),('ECO L1'),('MIAGE M1');
 
 insert into GROUP_ETUDIANT(ID_G,LOGIN) values (1,'88PVC'),(1,'U2WAs'),(1,'7aH93'),(1,'SDQyB'),(1,'lYF6R'),(1,'MOgJV'),(1,'VTq3z'),(1,'tybMi'),(1,'SfnDp'),(1,'u5elS'),(1,'hXUTx'),(1,'Iglkc'),(1,'kvIEo'),(1,'V0C2V'),(1,'McAHi'),(1,'hV23S'),(1,'2WVJA'),(1,'KBXO7');
 insert into GROUP_ETUDIANT(ID_G,LOGIN) select 2,login from ETUDIANT where NVX_ETUDE='master 1' LIMIT 14;
 insert into GROUP_ETUDIANT(ID_G,LOGIN) select 3,login from ETUDIANT where NVX_ETUDE='licence 1' LIMIT 14;
 insert into GROUP_ETUDIANT(ID_G,LOGIN) select 5,login from ETUDIANT where NVX_ETUDE='licence 1' and login not in (select login from GROUP_ETUDIANT where ID_G=3) LIMIT 14;
+
+insert into GROUP_COURS(ID_G, ID_C) values ( 1,1 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 1,2 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 3,20 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 3,19 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 3,18 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 5,20 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 5,19 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 5,18 ) ;
 insert into GROUP_COURS(ID_G, ID_C) values ( 3,8 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 5,8 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 3,5 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 5,5 ) ;
 insert into GROUP_COURS(ID_G, ID_C) values ( 3,3 ) ;
 insert into GROUP_COURS(ID_G, ID_C) values ( 3,4 ) ;
-insert into GROUP_COURS(ID_G, ID_C) values ( 3,5 ) ;
-insert into GROUP_COURS(ID_G, ID_C) values ( 5,8 ) ;
-insert into GROUP_COURS(ID_G, ID_C) values ( 5,5 ) ;
 insert into GROUP_COURS(ID_G, ID_C) values ( 5,6 ) ;
 insert into GROUP_COURS(ID_G, ID_C) values ( 5,7 ) ;
-insert into GROUP_COURS(ID_G, ID_C) values ( 3,9) ;
-insert into GROUP_COURS(ID_G, ID_C) values ( 5,10) ;
-insert into GROUP_COURS(ID_G, ID_C) values ( 3,1 ) ;
-insert into GROUP_COURS(ID_G, ID_C) values ( 5,1 ) ;
-insert into GROUP_COURS(ID_G, ID_C) values ( 3,2 ) ;
-insert into GROUP_COURS(ID_G, ID_C) values ( 5,2 ) ;
-
+insert into GROUP_COURS(ID_G, ID_C) values ( 3,21 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 5,21 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 3,22 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 5,22 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 3,23 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 5,23 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 3,24 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 5,24 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 3,25 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 5,25 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 3,26 ) ;
+insert into GROUP_COURS(ID_G, ID_C) values ( 5,26 ) ;
 
 
 
