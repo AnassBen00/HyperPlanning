@@ -240,12 +240,12 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
      */
     public void initialize_formation(Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner<Integer> md_h_f, Spinner<Integer> md_h_d, ComboBox<String> md_f, DatePicker md_date)  {
 
-        String[] formation_libre = new String[13];
+        String[] formation_libre = new String[50];
 
         if (( md_m_f.getValue() > md_m_d.getValue() && md_h_f.getValue().equals(md_h_d.getValue())) || ( md_h_f.getValue() > md_h_d.getValue())) {
             int i = 0;
             try {
-                preparedStatement = connection.prepareStatement(" select nom from groups where ID_G not in ( select ID_G FROM CRENEAUX WHERE(DATE_D <= ? and date_f >= ?)and ((date_d between ? and ?)or (date_f between ? and ?)))");
+                preparedStatement = connection.prepareStatement("select distinct nom from groups g left join group_etudiant ge on g.id_g=ge.id_g where login not in ( select login FROM CRENEAUX c join group_etudiant ge on c.id_g=ge.id_g WHERE(DATE_D <= ? and date_f >= ?)or ((date_d between ? and ?)or (date_f between ? and ?))) union select nom from groups where id_g not in (select id_g from GROUP_ETUDIANT)" );
                 String date1 = md_date.getValue().toString() + " " + md_h_d.getValue().toString() + ":" + md_m_d.getValue().toString() + ":00";
                 String date2 = md_date.getValue().toString() + " " + md_h_f.getValue().toString() + ":" + md_m_f.getValue().toString() + ":00";
                 preparedStatement.setString(1, date1);
@@ -273,6 +273,38 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
             }
 
         }
+    }
+
+    public String[] formation_libre(Spinner<Integer> md_m_f, Spinner<Integer> md_m_d, Spinner<Integer> md_h_f, Spinner<Integer> md_h_d, DatePicker md_date)  {
+
+        String[] formation_libre = new String[50];
+
+        if (( md_m_f.getValue() > md_m_d.getValue() && md_h_f.getValue().equals(md_h_d.getValue())) || ( md_h_f.getValue() > md_h_d.getValue())) {
+            int i = 0;
+            try {
+                preparedStatement = connection.prepareStatement("select distinct nom from groups g left join group_etudiant ge on g.id_g=ge.id_g where login not in ( select login FROM CRENEAUX c left join group_etudiant ge on c.id_g=ge.id_g WHERE(DATE_D <= ? and date_f >= ?)or ((date_d between ? and ?)or (date_f between ? and ?))) union select nom from groups where id_g not in (select id_g from GROUP_ETUDIANT)" );
+                String date1 = md_date.getValue().toString() + " " + md_h_d.getValue().toString() + ":" + md_m_d.getValue().toString() + ":00";
+                String date2 = md_date.getValue().toString() + " " + md_h_f.getValue().toString() + ":" + md_m_f.getValue().toString() + ":00";
+                preparedStatement.setString(1, date1);
+                preparedStatement.setString(3, date1);
+                preparedStatement.setString(5, date1);
+                preparedStatement.setString(2, date2);
+                preparedStatement.setString(4, date2);
+                preparedStatement.setString(6, date2);
+
+                ResultSet queryResult = preparedStatement.executeQuery();
+
+                while ((queryResult.next())) {
+                    formation_libre[i] = String.valueOf(queryResult.getString("nom"));
+                    i++;
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+        return formation_libre;
     }
 
     /**
@@ -386,7 +418,7 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         String[] ncours_libre = new String[13];
         int i = 0;
         try {
-            preparedStatement = connection.prepareStatement(" select c.nature from cours c join group_cours gc on c.id_c=gc.id_c join groups g on gc.id_g=g.id_g where g.nom=? and c.nom=?");
+            preparedStatement = connection.prepareStatement(" select distinct c.nature from cours c join group_cours gc on c.id_c=gc.id_c join groups g on gc.id_g=g.id_g where g.nom=? and c.nom=?");
 
             preparedStatement.setString(1, md_f.getValue());
             preparedStatement.setString(2, md_c.getValue());
@@ -424,7 +456,7 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
         String[] ens_libre = new String[20];
         int i = 0;
         try {
-            preparedStatement= connection.prepareStatement(" select distinct U.nom,U.prenom from utilisateur U join cours C on C.login=U.login join group_cours gc on C.id_c=gc.id_c join groups g on g.id_g=gc.id_g where C.nom=? and g.nom=? and C.nature=? and U.login not in(select login from creneaux CR join cours C1 on CR.id_c=C1.id_c and ((DATE_D <= ? and date_f >= ?)and ((date_d between ? and ?)or (date_f between ? and ?))))");
+            preparedStatement= connection.prepareStatement(" select distinct U.nom,U.prenom from utilisateur U join cours C on C.login=U.login join group_cours gc on C.id_c=gc.id_c join groups g on g.id_g=gc.id_g where C.nom=? and g.nom=? and C.nature=? and U.login not in(select login from creneaux CR join cours C1 on CR.id_c=C1.id_c and ((DATE_D <= ? and date_f >= ?)or ((date_d between ? and ?)or (date_f between ? and ?))))");
             preparedStatement.setString(1, md_c.getValue());
             preparedStatement.setString(2, md_f.getValue());
             preparedStatement.setString(3, md_n.getValue());
@@ -482,10 +514,10 @@ public class CreneauxDAO extends AbstractDAO<Creneau>{
 
         } else {
             ajoutermessage.setTextFill(Color.color(1, 0, 0));
-            ajoutermessage.setText("veuillez remplir tout le formulaire");
-        }
+            ajoutermessage.setText("Information incorrecte ");        }
     } catch (Exception e) {
-            e.printStackTrace();
+            ajoutermessage.setTextFill(Color.color(1, 0, 0));
+            ajoutermessage.setText("Information incorrecte ");
         }
     }
 
@@ -523,7 +555,7 @@ catch (Exception e) {
         if (md_bat.getValue() != null && nums!=null && md_date.getValue() != null && (x>0 || (x==0 && y==0))) {
             String date1 = md_date.getValue().toString() + " " + heureD.getValue().toString() + ":" + minuteD.getValue().toString() + ":00";
             String date2 = md_date.getValue().toString() + " " + heureF.getValue().toString() + ":" + minuteF.getValue().toString() + ":00";
-            preparedStatement = connection.prepareStatement("update creneaux set DATE_D = ? , DATE_F = ? , ID_S = (select ID_S from SALLE where NUM = ? and BATIMENT = ?) where DATE_D = ?");
+            preparedStatement = connection.prepareStatement("update creneaux set DATE_D = ? , DATE_F = ? , ID_S = (select ID_S from SALLE where NUM = ? and BATIMENT = ?) where DATE_D = ? and id_g=? ");
             preparedStatement.setString(1, date1);
             preparedStatement.setString(2, date2);
             preparedStatement.setString(3, nums.getValue());
@@ -561,7 +593,7 @@ public static final String dateformat = "yyyy-MM-dd";
                 creneau[j][1] = String.valueOf(queryResult.getTimestamp( DATEF));
                 creneau[j][2] = queryResult.getString(BAT);
                 creneau[j][3] = queryResult.getString("NUM");
-                creneau[j][4] = String.valueOf(queryResult.getBoolean(VID));
+                creneau[j][4] = queryResult.getString(VID);
                 creneau[j][5] = queryResult.getString("Nomcours");
                 creneau[j][6] = queryResult.getString(NAT);
                 creneau[j][7] = queryResult.getString("grpname");

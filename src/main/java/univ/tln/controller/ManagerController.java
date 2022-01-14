@@ -264,7 +264,7 @@ public class ManagerController implements Initializable {
     private int w = 7;
     List<Label> l = new ArrayList<>();
     @Setter
-    public static String d2 ;
+    public static String d2,f2 ;
     @Setter
     public static String d;
     @Setter
